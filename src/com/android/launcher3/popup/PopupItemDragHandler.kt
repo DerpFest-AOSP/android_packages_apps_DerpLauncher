@@ -23,6 +23,7 @@ import android.view.View.OnLongClickListener
 import android.view.View.OnTouchListener
 import com.android.launcher3.Launcher
 import com.android.launcher3.LauncherSettings
+import com.android.launcher3.Utilities
 import com.android.launcher3.dragndrop.DragOptions
 import com.android.launcher3.dragndrop.DraggableView
 import com.android.launcher3.popup.ArrowPopup.TYPE_FOLDER
@@ -56,6 +57,9 @@ internal constructor(
         if (!ItemLongClickListener.canStartDrag(mLauncher)) return false
         // Return early if not the correct view
         if (v.parent !is DeepShortcutView) return false
+
+        // Return early if workspace edit is disabled
+        if (!Utilities.isWorkspaceEditAllowed(mLauncher.applicationContext)) return false
 
         // Long clicked on a shortcut.
         val sv = v.parent as DeepShortcutView

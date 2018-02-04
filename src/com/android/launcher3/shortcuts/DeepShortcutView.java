@@ -178,7 +178,8 @@ public class DeepShortcutView extends FrameLayout implements BubbleTextHolder {
         mBubbleText.setOnClickListener(container.getItemClickListener());
         mBubbleText.setOnLongClickListener(container.getItemDragHandler());
         mBubbleText.setOnTouchListener(container.getItemDragHandler());
-        if (ac instanceof Launcher launcher && isPinnable(container)) {
+        if (ac instanceof Launcher launcher && isPinnable(container)
+                && Utilities.isWorkspaceEditAllowed(ac.asContext())) {
             setupAddButton();
             setAddButtonClickListener(launcher, info, container);
         }

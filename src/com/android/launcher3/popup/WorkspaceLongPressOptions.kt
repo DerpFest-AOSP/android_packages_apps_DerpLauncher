@@ -62,7 +62,7 @@ object WorkspaceLongPressOptions {
                 startWallpaperPicker(ac, v)
             }
         )
-        if (BuildConfig.WIDGETS_ENABLED) {
+        if (BuildConfig.WIDGETS_ENABLED && Utilities.isWorkspaceEditAllowed(ctx)) {
             add(
                 PopupData(
                     R.drawable.ic_widget,
@@ -240,6 +240,10 @@ object WorkspaceLongPressOptions {
     /** Opens the widget picker UI. Returns true if opened. */
     @JvmStatic
     fun openWidgetPicker(ctx: Context): Boolean {
+        if (!Utilities.isWorkspaceEditAllowed(ctx)) {
+            Toast.makeText(ctx, R.string.settings_edit_widgets_error, Toast.LENGTH_SHORT).show()
+            return false
+        }
         if (ctx.packageManager.isSafeMode) {
             Toast.makeText(ctx, R.string.safemode_widget_error, Toast.LENGTH_SHORT).show()
             return false

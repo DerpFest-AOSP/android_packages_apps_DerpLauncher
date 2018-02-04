@@ -32,6 +32,7 @@ import androidx.annotation.Nullable;
 import com.android.launcher3.DropTarget;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.R;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.widget.util.WidgetDragScaleUtils;
 
@@ -160,5 +161,14 @@ public class LauncherDragController extends DragController {
         mLauncher.getDragLayer().mapCoordInSelfToDescendant(mLauncher.getWorkspace(),
                 dropCoordinates);
         return mLauncher.getWorkspace();
+    }
+
+    @Override
+    public boolean onControllerInterceptTouchEvent(MotionEvent ev) {
+        if (!Utilities.isWorkspaceEditAllowed(mLauncher)) {
+            cancelDrag();
+            return false;
+        }
+        return super.onControllerInterceptTouchEvent(ev);
     }
 }
