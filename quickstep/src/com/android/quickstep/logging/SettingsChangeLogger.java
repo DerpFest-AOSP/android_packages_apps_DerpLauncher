@@ -156,8 +156,15 @@ public class SettingsChangeLogger implements OnSharedPreferenceChangeListener {
     }
 
     private static ArrayMap<String, LoggablePref> loadPrefKeys(Context context) {
-        XmlPullParser parser = context.getResources().getXml(R.xml.launcher_preferences);
         ArrayMap<String, LoggablePref> result = new ArrayMap<>();
+        loadPrefKeysFromXml(context, R.xml.launcher_preferences, result);
+        loadPrefKeysFromXml(context, R.xml.launcher_home_screen_preferences, result);
+        return result;
+    }
+
+    private static void loadPrefKeysFromXml(Context context, int xmlResId,
+            ArrayMap<String, LoggablePref> result) {
+        XmlPullParser parser = context.getResources().getXml(xmlResId);
 
         try {
             for (XmlElement el : getRootElement(parser).childIterator(BOOLEAN_PREF)) {
@@ -176,7 +183,6 @@ public class SettingsChangeLogger implements OnSharedPreferenceChangeListener {
         } catch (XmlPullParserException | IOException e) {
             Log.e(TAG, "Error parsing preference xml", e);
         }
-        return result;
     }
 
     private Unit onNotificationDotsChanged(boolean isDotsEnabled) {

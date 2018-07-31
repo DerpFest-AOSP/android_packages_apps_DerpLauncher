@@ -69,6 +69,7 @@ import androidx.annotation.Nullable;
 import androidx.core.graphics.ColorUtils;
 
 import com.android.launcher3.deviceprofile.DeviceProperties;
+import com.android.launcher3.derpfest.DerpFestUtils;
 import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.graphics.TintedDrawableSpan;
 import com.android.launcher3.testing.shared.ResourceUtils;
@@ -99,6 +100,8 @@ public final class Utilities {
 
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
     public static final Person[] EMPTY_PERSON_ARRAY = new Person[0];
+
+    public static final String GSA_PACKAGE = "com.google.android.googlequicksearchbox";
 
     @ChecksSdkIntAtLeast(api = VERSION_CODES.TIRAMISU, codename = "T")
     public static final boolean ATLEAST_T = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU;
@@ -945,5 +948,9 @@ public final class Utilities {
 
     public static boolean isWorkspaceEditAllowed(Context context) {
         return !LauncherPrefs.WORKSPACE_LOCK.get(context);
+    }
+
+    public static boolean isGSAEnabled(Context context) {
+        return DerpFestUtils.isPackageEnabled(context, GSA_PACKAGE);
     }
 }

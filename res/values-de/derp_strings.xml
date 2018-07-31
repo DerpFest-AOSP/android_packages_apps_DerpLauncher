@@ -34,4 +34,9 @@
     <string name="summary_desktop_labels">Symbolbeschriftungen auf dem Startbildschirm anzeigen</string>
     <string name="title_drawer_labels">App-Übersicht-Beschriftungen</string>
     <string name="summary_drawer_labels">Symbolbeschriftungen in der App-Übersicht anzeigen</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Google-App anzeigen</string>
+    <string name="msg_minus_one_on_left">Beim Wischen nach rechts vom Startbildschirm</string>
+    <string name="msg_minus_one_on_right">Beim Wischen nach links vom Startbildschirm</string>
 </resources>

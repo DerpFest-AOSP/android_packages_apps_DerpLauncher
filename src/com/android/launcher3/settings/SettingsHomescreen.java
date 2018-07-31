@@ -16,12 +16,18 @@
 
 package com.android.launcher3.settings;
 
+import androidx.preference.Preference;
+
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
+import com.android.launcher3.derpfest.DerpFestUtils;
 
 /**
  * Settings activity for home screen preferences.
  */
 public class SettingsHomescreen extends SettingsCategoryActivity {
+
+    private static final String SEARCH_PACKAGE = "com.google.android.googlequicksearchbox";
 
     @Override
     protected String getSettingsFragmentName() {
@@ -33,6 +39,14 @@ public class SettingsHomescreen extends SettingsCategoryActivity {
         @Override
         protected int getPreferencesXmlResId() {
             return R.xml.launcher_home_screen_preferences;
+        }
+
+        @Override
+        protected boolean initPreference(Preference preference) {
+            if (LauncherPrefs.ENABLE_MINUS_ONE.getSharedPrefKey().equals(preference.getKey())) {
+                return DerpFestUtils.isPackageEnabled(getContext(), SEARCH_PACKAGE);
+            }
+            return super.initPreference(preference);
         }
     }
 }

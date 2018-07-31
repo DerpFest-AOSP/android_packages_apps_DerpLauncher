@@ -262,6 +262,7 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
             }
 
         @JvmField val WORKSPACE_LOCK = backedUpItem("pref_workspace_lock", false)
+        @JvmField val ENABLE_MINUS_ONE = backedUpItem("pref_enable_minus_one", true)
         @JvmField val SHOW_DESKTOP_LABELS = backedUpItem("pref_desktop_show_labels", true)
         @JvmField val SHOW_DRAWER_LABELS = backedUpItem("pref_drawer_show_labels", true)
         @JvmField

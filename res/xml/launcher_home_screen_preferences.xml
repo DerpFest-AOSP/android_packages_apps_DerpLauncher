@@ -47,6 +47,19 @@
     <PreferenceCategory
         android:title="@string/interface_category_title">
 
+        <!--
+          LAUNCHER_GOOGLE_APP_SWIPE_LEFT_ENABLED(617)
+          LAUNCHER_GOOGLE_APP_SWIPE_LEFT_DISABLED(618)
+        -->
+        <SwitchPreferenceCompat
+            android:key="pref_enable_minus_one"
+            android:title="@string/title_show_google_app"
+            android:summary="@string/pref_show_google_now_summary"
+            android:defaultValue="true"
+            android:persistent="true"
+            launcher:logIdOn="617"
+            launcher:logIdOff="618" />
+
         <SwitchPreferenceCompat
             android:key="pref_desktop_show_labels"
             android:title="@string/title_desktop_labels"
