@@ -222,6 +222,7 @@ import com.android.launcher3.pm.PinRequestHelper;
 import com.android.launcher3.popup.ArrowPopup;
 import com.android.launcher3.popup.PopupDataProvider;
 import com.android.launcher3.popup.SystemShortcut;
+import com.android.launcher3.quickspace.QuickSpaceView;
 import com.android.launcher3.statemanager.StateManager;
 import com.android.launcher3.statemanager.StateManager.StateHandler;
 import com.android.launcher3.statemanager.StatefulActivity;
@@ -413,6 +414,8 @@ public class Launcher extends StatefulActivity<LauncherState>
 
     protected long mLastTouchUpTime = -1;
     private boolean mTouchInProgress;
+    // QuickSpace
+    private QuickSpaceView mQuickSpace;
 
     // New InstanceId is assigned to mAllAppsSessionLogId for each AllApps sessions.
     // When Launcher is not in AllApps state mAllAppsSessionLogId will be null.
@@ -454,6 +457,9 @@ public class Launcher extends StatefulActivity<LauncherState>
                         case Utilities.KEY_DRAWER_SEARCH:
                         case Utilities.KEY_RECENTS_CHIPS:
                         case Utilities.KEY_RECENTS_MEMINFO:
+                            mNeedsRestart = true;
+                            break;
+                        case Utilities.DESKTOP_SHOW_QUICKSPACE:
                             mNeedsRestart = true;
                             break;
                         default:
@@ -617,6 +623,7 @@ public class Launcher extends StatefulActivity<LauncherState>
         // For handling default keys
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
+        mQuickSpace = findViewById(R.id.reserved_container_workspace);
         setContentView(getRootView());
 
         if (mOnInitialBindListener != null) {
@@ -1355,6 +1362,10 @@ public class Launcher extends StatefulActivity<LauncherState>
     protected void onResume() {
         TraceHelper.INSTANCE.beginSection(ON_RESUME_EVT);
         super.onResume();
+
+        if (mQuickSpace != null) {
+            mQuickSpace.onResume();
+        }
 
         if (mDeferOverlayCallbacks) {
             scheduleDeferredCheck();
