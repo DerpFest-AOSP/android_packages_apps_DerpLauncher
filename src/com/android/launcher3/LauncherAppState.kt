@@ -16,6 +16,7 @@
 package com.android.launcher3
 
 import android.content.Context
+import android.content.pm.PackageManager
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.icons.IconCache
 import com.android.launcher3.icons.LauncherIconProvider
@@ -36,6 +37,8 @@ constructor(
     @Named("SAFE_MODE") val isSafeModeEnabled: Boolean,
 ) {
 
+    private val mIsCalendarAppAvailable: Boolean = isGSAEnabled(context)
+
     companion object {
 
         @JvmField var INSTANCE = DaggerSingletonObject { it.launcherAppState }
@@ -44,5 +47,15 @@ constructor(
 
         /** Shorthand for [.getInvariantDeviceProfile] */
         @JvmStatic fun getIDP(context: Context) = InvariantDeviceProfile.INSTANCE[context]
+
+        @JvmStatic fun isGSAEnabled(context: Context): Boolean {
+            return try {
+                context.packageManager.getApplicationInfo("com.google.android.calendar", 0).enabled
+            } catch (e: PackageManager.NameNotFoundException) {
+                false
+            }
+        }
     }
+
+    fun isCalendarAppAvailable(): Boolean = mIsCalendarAppAvailable
 }
