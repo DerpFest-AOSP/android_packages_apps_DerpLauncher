@@ -64,8 +64,8 @@
     <string name="drawer_open_keyboard_summary">當應用程式抽屜可見時自動開啟鍵盤</string>
 
     <!-- Trust apps -->
-    <string name="trust_apps_manager_name">隱藏與受保護的應用程式</string>
-    <string name="trust_apps_auth_manager">解鎖以管理隱藏與受保護的應用程式</string>
+    <string name="trust_apps_manager_name">隱藏的應用程式</string>
+    <string name="trust_apps_auth_manager">解鎖以管理隱藏的應用程式</string>
     <string name="trust_apps_auth_open_app">驗證以開啟 %1$s</string>
     <string name="trust_apps_loading">載入中\u2026</string>
     <string name="trust_apps_no_lock_error">請設定安全鎖定畫面以限制應用程式存取</string>

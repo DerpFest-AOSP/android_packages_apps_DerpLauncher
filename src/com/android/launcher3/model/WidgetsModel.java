@@ -33,6 +33,7 @@ import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.dragndrop.PinShortcutRequestActivityInfo;
 import com.android.launcher3.icons.IconCache;
 import com.android.launcher3.icons.cache.CachedObject;
+import com.android.launcher3.lineage.trust.HiddenAppsFilter;
 import com.android.launcher3.model.data.PackageItemInfo;
 import com.android.launcher3.pm.ShortcutConfigActivityInfo;
 import com.android.launcher3.util.ComponentKey;
@@ -83,6 +84,14 @@ public class WidgetsModel {
             @ApplicationContext Context context,
             InvariantDeviceProfile idp,
             IconCache iconCache,
+            HiddenAppsFilter appFilter) {
+        this(context, idp, iconCache, (AppFilter) appFilter);
+    }
+
+    public WidgetsModel(
+            Context context,
+            InvariantDeviceProfile idp,
+            IconCache iconCache,
             AppFilter appFilter) {
         mContext = context;
         mIdp = idp;
@@ -93,7 +102,8 @@ public class WidgetsModel {
     public WidgetsModel(Context context) {
         this(context,
                 LauncherAppState.getIDP(context),
-                LauncherAppState.getInstance(context).getIconCache(), new AppFilter(context));
+                LauncherAppState.getInstance(context).getIconCache(),
+                new HiddenAppsFilter(context));
     }
 
     /**

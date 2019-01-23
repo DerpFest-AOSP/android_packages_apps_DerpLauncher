@@ -20,6 +20,7 @@ import static com.android.launcher3.InvariantDeviceProfile.TYPE_MULTI_DISPLAY;
 import static com.android.launcher3.InvariantDeviceProfile.TYPE_TABLET;
 import static com.android.launcher3.settings.SettingsActivity.FIXED_LANDSCAPE_MODE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 
@@ -32,6 +33,8 @@ import com.android.launcher3.R;
 import com.android.launcher3.derpfest.DerpFestUtils;
 import com.android.launcher3.display.DisplayController;
 import com.android.launcher3.display.LauncherDisplayInfo;
+import com.android.launcher3.lineage.LineageUtils;
+import com.android.launcher3.lineage.trust.TrustAppsActivity;
 import com.android.systemui.shared.system.BlurUtils;
 
 /**
@@ -40,6 +43,7 @@ import com.android.systemui.shared.system.BlurUtils;
 public class SettingsMisc extends SettingsCategoryActivity {
 
     private static final String KEY_SUGGESTIONS = "pref_suggestions";
+    private static final String KEY_TRUST_APPS = "pref_trust_apps";
     private static final String SUGGESTIONS_PACKAGE = "com.google.android.as";
 
     @Override
@@ -78,6 +82,16 @@ public class SettingsMisc extends SettingsCategoryActivity {
                 return !info.isLargeScreen(info.realBounds);
             } else if (KEY_SUGGESTIONS.equals(preference.getKey())) {
                 return DerpFestUtils.isPackageEnabled(getContext(), SUGGESTIONS_PACKAGE);
+            } else if (KEY_TRUST_APPS.equals(preference.getKey())) {
+                preference.setOnPreferenceClickListener(p -> {
+                    LineageUtils.showLockScreen(getActivity(),
+                            getString(R.string.trust_apps_auth_manager), () -> {
+                                Intent intent = new Intent(getActivity(), TrustAppsActivity.class);
+                                startActivity(intent);
+                            });
+                    return true;
+                });
+                return true;
             } else if (LauncherPrefs.BLUR_DEPTH.getSharedPrefKey().equals(preference.getKey())) {
                 return BlurUtils.supportsBlursOnWindows();
             }

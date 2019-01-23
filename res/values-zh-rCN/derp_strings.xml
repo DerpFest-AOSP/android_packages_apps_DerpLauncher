@@ -58,8 +58,8 @@
     <string name="drawer_open_keyboard_summary">当应用抽屉可见时自动打开键盘</string>
 
     <!-- Trust apps -->
-    <string name="trust_apps_manager_name">隐藏的与受保护的应用</string>
-    <string name="trust_apps_auth_manager">解锁以管理隐藏的与受保护的应用</string>
+    <string name="trust_apps_manager_name">隐藏的应用</string>
+    <string name="trust_apps_auth_manager">解锁以管理隐藏的应用</string>
     <string name="trust_apps_auth_open_app">进行身份验证以打开 %1$s</string>
     <string name="trust_apps_loading">加载中\u2026</string>
     <string name="trust_apps_no_lock_error">请设置安全的锁屏方式以限制访问应用</string>

@@ -337,14 +337,14 @@
     <string name="title_drawer_labels">Лейбли в панелі програм</string>
     <!-- Settings title to show Google Now at -1 screen on launcher. [CHAR LIMIT=50] -->
     <string name="title_show_google_app">Свайпніть, щоб отримати доступ до програми Google</string>
-    <string name="trust_apps_auth_manager">Розблокуйте, щоб керувати прихованими та захищеними програмами</string>
+    <string name="trust_apps_auth_manager">Розблокуйте, щоб керувати прихованими програмами</string>
     <string name="trust_apps_auth_open_app">Автентифікуйте, щоб відкрити %1$s</string>
     <string name="trust_apps_help">Допомога</string>
     <string name="trust_apps_info_hidden">Приховані програми та їхні віджети приховані від панелі програм</string>
     <string name="trust_apps_info_protected">Для відкриття захищених програм із лаунчера потрібна автентифікація</string>
     <string name="trust_apps_loading">Завантаження\u2026</string>
     <!-- Trust apps -->
-    <string name="trust_apps_manager_name">Приховані та захищені програми</string>
+    <string name="trust_apps_manager_name">Приховані програми</string>
     <string name="trust_apps_no_lock_error">Будь ласка, налаштуйте безпечний екран блокування, щоб обмежувати доступ до програм</string>
     <string name="video_category_label">Відео</string>
     <string-array name="welcome_message_variants">

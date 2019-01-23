@@ -35,6 +35,7 @@ import com.android.launcher3.automation.AutomationRepository;
 import com.android.launcher3.compat.AlphabeticIndexCompat;
 import com.android.launcher3.dagger.LauncherAppSingleton;
 import com.android.launcher3.icons.IconCache;
+import com.android.launcher3.lineage.trust.HiddenAppsFilter;
 import com.android.launcher3.model.data.AppInfo;
 import com.android.launcher3.model.data.AppsListData;
 import com.android.launcher3.model.data.ItemInfo;
@@ -97,6 +98,12 @@ public class AllAppsList {
      * Boring constructor.
      */
     @Inject
+    public AllAppsList(@NonNull IconCache iconCache,
+            @NonNull HiddenAppsFilter appFilter,
+            @NonNull Provider<AppsListRepository> repositoryProvider) {
+        this(iconCache, (AppFilter) appFilter, repositoryProvider);
+    }
+
     public AllAppsList(@NonNull IconCache iconCache,
             @NonNull AppFilter appFilter,
             @NonNull Provider<AppsListRepository> repositoryProvider) {

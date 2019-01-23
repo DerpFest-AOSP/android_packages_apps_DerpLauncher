@@ -248,4 +248,12 @@
     <!-- Auto-hide page indicator dots -->
     <string name="auto_hide_dots">Seitenzahlpunkte automatisch ausblenden</string>
     <string name="auto_hide_dots_summary">Blendet die unten angezeigten Seitenpunkte automatisch aus</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Versteckte Apps</string>
+    <string name="trust_apps_auth_manager">Entsperren, um versteckte Apps zu verwalten</string>
+    <string name="trust_apps_loading">Wird geladen\u2026</string>
+    <string name="trust_apps_no_lock_error">Bitte richte eine sichere Displaysperre ein, um den App-Zugriff einzuschränken</string>
+    <string name="trust_apps_help">Hilfe</string>
+    <string name="trust_apps_info_hidden">Versteckte Apps und ihre Widgets werden in der App-Übersicht ausgeblendet</string>
 </resources>

@@ -36,6 +36,12 @@
         settings:units="px"
         android:defaultValue="34" />
 
+    <Preference
+        android:key="pref_trust_apps"
+        android:persistent="false"
+        android:title="@string/trust_apps_manager_name"
+        android:summary="@string/trust_apps_info_hidden" />
+
     <androidx.preference.PreferenceScreen
         android:key="pref_suggestions"
         android:persistent="false"
