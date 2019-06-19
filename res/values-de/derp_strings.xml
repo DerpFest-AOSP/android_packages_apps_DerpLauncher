@@ -181,7 +181,7 @@
     <string name="background_blur_summary">Tiefenschärfegrad in App-Übersicht und -Verlauf anpassen</string>
 
     <!-- QuickSpace: QuickEvent: Device Intro Event -->
-    <string name="quick_event_rom_intro_welcome">Hallo!</string>
+    <string name="quick_event_rom_intro_welcome">Willkommen beim DerpFest!</string>
     <string name="quick_event_rom_intro_learn">Hier tippen und Spaß haben!</string>
 
     <!-- QuickSpace: QuickEvent: Ambient Play -->
