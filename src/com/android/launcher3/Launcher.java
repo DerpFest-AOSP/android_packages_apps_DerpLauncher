@@ -457,9 +457,8 @@ public class Launcher extends StatefulActivity<LauncherState>
                         case Utilities.KEY_DRAWER_SEARCH:
                         case Utilities.KEY_RECENTS_CHIPS:
                         case Utilities.KEY_RECENTS_MEMINFO:
-                            mNeedsRestart = true;
-                            break;
                         case Utilities.DESKTOP_SHOW_QUICKSPACE:
+                        case Utilities.KEY_SHOW_QUICKSPACE_NOWPLAYING:
                             mNeedsRestart = true;
                             break;
                         default:
