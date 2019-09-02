@@ -193,4 +193,79 @@
     <string name="quickspace_now_playing_summary">Zeigt den gerade gespielten Song in „Auf einen Blick" an. WARNUNG: Es ist nicht vollständig mit allen Medienplayern kompatibel!</string>
     <string name="quickspace_now_playing_showdate_title">...stattdessen Datum anzeigen</string>
     <string name="quickspace_now_playing_showdate_summary">Zeigt das Datum in der ersten Zeile anstatt „Wiedergabe" an</string>
+
+    <!-- Quickspace PSA - Custom messages for the glance -->
+    <string name="quickspace_psa_title">Zufällige Nachrichten anzeigen</string>
+    <string name="quickspace_psa_summary">Zeigt manchmal nette Nachrichten in „Auf einen Blick" an.</string>
+
+    <string-array name="quickspace_psa_morning">
+        <item>Ein kleiner Spaziergang scheint nett.</item>
+        <item>Putzen Sie aufmerksam ihre Zähne.</item>
+        <item>Beginnen Sie ihren Tag mit genug Wasser!</item>
+        <item>Treiben Sie ein wenig Sport!</item>
+        <item>Ziehe Dinge in die Länge!</item>
+        <item>Starte mit positiven Gedanken in den Tag.</item>
+        <item>Es ist ein schöner Morgen!</item>
+        <item>Batteriestatus immer überprüfen!</item>
+        <item>Vergessen Sie nicht, das Frühstück vorzubereiten.</item>
+        <item>Schau lieber nach dem Wetter, man weiß ja nie.</item>
+        <item>Vergiss nicht, deine Notizen zu überprüfen!</item>
+        <item>Überprüfen Sie immer Ihre E-Mails/Nachrichten.</item>
+        <item>Checken Sie Ihren Zeitplan, wenn Sie einen haben.</item>
+        <item>Viel Glück heute!</item>
+        <item>Das Umlegen des Schalters kann stockende Antworten beheben.</item>
+        <item>Beginnen Sie Ihren Tag mit einem heißen Getränk.</item>
+        <item>Vergessen Sie Eiweiße nicht.</item>
+        <item>Eier stellen ein einfaches, nahrhaftes Frühstück dar.</item>
+        <item>Genießen Sie Ihr Frühstück.</item>
+    </string-array>
+    <string-array name="quickspace_psa_evening">
+        <item>Trinken Sie vor dem Schlafen nicht zu viel Wasser.</item>
+        <item>Es ist jetzt Abend.</item>
+        <item>Versuchen Sie, wenn möglich, das Aufladen des Handys über Nacht zu vermeiden.</item>
+        <item>Denken Sie daran, Ihre E-Mails/Nachrichten zu überprüfen.</item>
+        <item>Bitte überprüfen Sie Ihre To-Do-Liste, wenn Sie eine haben.</item>
+        <item>Vergessen Sie das Abendessen nicht.</item>
+        <item>8 Stunden Schlaf ist ein Muss.</item>
+        <item>Genieße die Nacht.</item>
+        <item>Lugaw ist ein schönes Rezept für das Abendessen.</item>
+        <item>Genießen Sie Ihren Schlaf.</item>
+    </string-array>
+    <string-array name="quickspace_psa_midnight">
+        <item>Schlafmangel ist schlecht für ihre Gesundheit.</item>
+        <item>Vergiss nicht, immer genug Wasser zu trinken.</item>
+        <item>Ein Schlafdefizit kann die Melatonin-Produktion unterbrechen.</item>
+        <item>Es ist jetzt Mitternacht.</item>
+        <item>Spät schlafen zu gehen ist nicht gesund.</item>
+        <item>Du musst jetzt schlafen.</item>
+        <item>Vergiss nicht, zu schlafen/das Frühstück vorzubereiten.</item>
+        <item>Genießen Sie die Mitternacht.</item>
+        <item>Schlafmangel wirkt sich auf Ihre Körperuhr aus.</item>
+        <item>Pass auf dich auf.</item>
+    </string-array>
+    <string-array name="quickspace_psa_random">
+        <item>Auf dieser ROM sind Easter Eggs versteckt.</item>
+        <item>Überprüfen Sie die Wettereinstellungen.</item>
+        <item>Versuchen Sie, UV-Strahlen während der Mittagszeit zu vermeiden.</item>
+        <item>Trinken nicht vergessen!</item>
+        <item>Pringles sind eigentlich keine Kartoffelchips..</item>
+        <item>Lachen kann die Durchblutung verbessern.</item>
+        <item>Kaffee enthält Antioxidantien.</item>
+        <item>Ketchup wurde einst als Medizin verkauft.</item>
+        <item>Zuckerwatte wurde von einem Zahnarzt erfunden.</item>
+        <item>Überspringe dein Essen nicht!</item>
+        <item>Denken Sie daran, den Akkustand des Geräts zu überprüfen!</item>
+        <item>Überprüfen Sie immer Ihre E-Mails/Nachrichten.</item>
+        <item>Bitte überprüfen Sie Ihre To-Do-Liste, wenn Sie eine haben.</item>
+        <item>Sie können Quickspace über die Home-Einstellungen deaktivieren.</item>
+        <item>Hol sie dir!</item>
+        <item>Zeit, etwas Reis zu kaufen!</item>
+        <item>Zeit zum Mittagessen!</item>
+        <item>Kalamay ist aus Klebreis.</item>
+        <item>Weißer Reis ist anfangs braun.</item>
+        <item>Willst du eine Limonade?</item>
+        <item>Hab immer Wasser dabei, um hydriert zu bleiben.</item>
+        <item>Der Weltraum riecht nach gebratenem Steak..</item>
+        <item>Genieße deinen Tag!</item>
+    </string-array>
 </resources>
