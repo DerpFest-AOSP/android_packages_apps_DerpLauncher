@@ -120,4 +120,11 @@
     <!-- Top shadow -->
     <string name="show_top_shadow_title">Show top shadow</string>
     <string name="show_top_shadow_summary">Add shadow underneath the status bar</string>
+
+    <!-- About info -->
+    <string name="about_derp_title" translatable="false">@string/derp_app_name</string>
+    <string name="about_thanks_cat">Special thanks to</string>
+    <string name="about">About</string>
+    <string name="about_summary">Info about the DerpLauncher</string>
+    <string name="about_app_version">Version 1.0</string>
 </resources>
