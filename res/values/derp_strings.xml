@@ -123,4 +123,8 @@
     <!-- Kill App recents action shortcut -->
     <string name="recent_task_option_kill_app">Kill</string>
     <string name="recents_app_killed" formatted="false">%s killed</string>
+
+    <!-- DT2S -->
+    <string name="pref_sleep_gesture_title">Double tap to sleep</string>
+    <string name="pref_sleep_gesture_summary">Double tap on empty space for screen off</string>
 </resources>
