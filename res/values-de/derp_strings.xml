@@ -39,4 +39,8 @@
     <string name="title_show_google_app">Google-App anzeigen</string>
     <string name="msg_minus_one_on_left">Beim Wischen nach rechts vom Startbildschirm</string>
     <string name="msg_minus_one_on_right">Beim Wischen nach links vom Startbildschirm</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Vorschläge</string>
+    <string name="suggestion_pref_screen_desc">Für App-Übersicht- und Startbildschirm-Vorschläge</string>
 </resources>
