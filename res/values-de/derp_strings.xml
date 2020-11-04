@@ -63,4 +63,8 @@
     <string name="trust_apps_help">Hilfe</string>
     <string name="trust_apps_info_hidden">Versteckte Apps und ihre Widgets werden in der App-Übersicht nicht angezeigt</string>
     <string name="trust_apps_info_protected">Geschützte Apps erfordern eine Authentifizierung, um gestartet werden zu können</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">App-Vorschläge</string>
+    <string name="suggestion_pref_screen_desc">In Liste aller Apps &amp; auf Startbildschirm</string>
 </resources>
