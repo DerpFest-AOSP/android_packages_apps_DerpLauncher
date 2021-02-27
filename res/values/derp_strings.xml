@@ -109,4 +109,11 @@
 
     <!-- Icon pack -->
     <string name="icon_pack_default_label">Default</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Icon size</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Font size</string>
+
 </resources>
