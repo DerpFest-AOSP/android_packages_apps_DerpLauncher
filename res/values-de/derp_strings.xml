@@ -67,4 +67,10 @@
     <!-- Suggestions -->
     <string name="suggestion_pref_screen_title">App-Vorschläge</string>
     <string name="suggestion_pref_screen_desc">In Liste aller Apps &amp; auf Startbildschirm</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Symbolgröße</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Schriftgröße</string>
 </resources>
