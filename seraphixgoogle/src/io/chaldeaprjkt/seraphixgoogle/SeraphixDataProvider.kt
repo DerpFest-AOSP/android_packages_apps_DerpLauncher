@@ -36,36 +36,55 @@ class SeraphixDataProvider(
     private val smartspaceProviderComponent = ComponentName(QSB_PACKAGE, SMARTSPACE_PROVIDER)
     private var widgetId = hostWidgetId
     private var isWidgetBound = false
+    private var isListening = false
 
-    fun bind(onBounded: SeraphixBindAction? = null) {
-        if (!context.isPackageEnabled(QSB_PACKAGE)) {
-            Log.i(TAG, "No $QSB_PACKAGE installed/enabled")
-            return
+    fun setOnDataUpdated(listener: DataProviderListener? = null): SeraphixDataProvider {
+        widgetHost.setOnDataUpdated(listener)
+        return this
+    }
+
+    fun pauseListening() {
+        if (isListening) {
+            widgetHost.stopListening()
+            isListening = false
         }
+    }
+
+    fun resumeListening() {
+        if (isWidgetBound && !isListening) {
+            widgetHost.startListening()
+            isListening = true
+        }
+    }
+
+    fun bind(onBounded: DataProviderBinder? = null) {
+        if (isWidgetBound) return
+        if (!context.isPackageEnabled(QSB_PACKAGE)) return
 
         val wInfo = widgetManager.getAppWidgetInfo(widgetId)
         isWidgetBound = wInfo != null && providerInfo?.provider == wInfo.provider
         if (!isWidgetBound) {
-            if (widgetId > -1) {
-                widgetHost.deleteHost()
-            }
+            if (widgetId > -1) widgetHost.deleteHost()
             widgetId = widgetHost.allocateAppWidgetId()
-            isWidgetBound =
-                widgetManager.bindAppWidgetIdIfAllowed(widgetId, smartspaceProviderComponent)
+            isWidgetBound = widgetManager.bindAppWidgetIdIfAllowed(widgetId, smartspaceProviderComponent)
         }
 
         if (isWidgetBound) {
-            onBounded?.useId(widgetId)
+            onBounded?.onBound(widgetId)
+            resumeListening()
             widgetHostView = widgetHost.createView(context, widgetId, providerInfo)
                     as EphemeralWidgetHostViewGoogle
-            widgetHost.startListening()
         }
     }
 
     fun unbind() {
         if (!isWidgetBound) return
-        widgetHost.stopListening()
+        pauseListening()
         widgetHost.deleteHost()
+        if (::widgetHostView.isInitialized) {
+            widgetHostView.setOnUpdateAppWidget(null)
+        }
+        isWidgetBound = false
     }
 
     companion object {
@@ -73,8 +92,5 @@ class SeraphixDataProvider(
         const val SMARTSPACE_PROVIDER =
             "com.google.android.apps.gsa.staticplugins.smartspace.widget.SmartspaceWidgetProvider"
         const val QSB_PACKAGE = "com.google.android.googlequicksearchbox"
-        const val WEATHER_UPDATE = "io.chaldeaprjkt.seraphix.action.WEATHER_UPDATE"
-        const val EXTRA_WEATHER_TEXT = "weather_text"
-        const val EXTRA_WEATHER_ICON = "weather_icon"
     }
 }

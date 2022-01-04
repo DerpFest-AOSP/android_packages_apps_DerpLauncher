@@ -17,8 +17,6 @@ package io.chaldeaprjkt.seraphixgoogle
 
 import android.appwidget.AppWidgetHostView
 import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.widget.ImageView
 import android.widget.RemoteViews
@@ -26,53 +24,35 @@ import android.widget.TextView
 import io.chaldeaprjkt.seraphixgoogle.SeraphixCompanion.allChildren
 
 class EphemeralWidgetHostViewGoogle(context: Context?) : AppWidgetHostView(context) {
-    private var weatherText = ""
-    private var weatherIcon: Bitmap? = null
+    private var listener: DataProviderListener? = null
 
     override fun updateAppWidget(remoteViews: RemoteViews?) {
         super.updateAppWidget(remoteViews)
-        allChildren().forEach {
-            when (it) {
-                is ImageView -> grabWeatherIcon(it)
-                is TextView -> grabWeatherText(it)
-            }
-        }
-        sendContent()
+        val weather = Card()
+
+        val leaves = allChildren()
+        val textViews = leaves.filterIsInstance<TextView>().filter { it.text?.isNotEmpty() == true }
+        val imageViews = leaves.filterIsInstance<ImageView>().filter { it.drawable != null && it.drawable is BitmapDrawable }
+
+        val tempTv = textViews.firstOrNull { tv ->
+            val t = tv.text.toString()
+            t.contains("°") || t.contains("℃") || t.contains("℉")
+        } ?: textViews.lastOrNull()
+
+        weather.text = tempTv?.text?.toString()
+
+        val iconIv = imageViews.firstOrNull { iv ->
+            val n = try { resources.getResourceEntryName(iv.id) } catch (_: Exception) { "" }
+            n.contains("weather", true) || n.contains("icon", true) || n.contains("temp", true)
+        } ?: imageViews.firstOrNull()
+
+        weather.image = (iconIv?.drawable as? BitmapDrawable)?.bitmap
+
+        listener?.onDataUpdated(weather)
     }
 
-    private fun sendContent() {
-        Intent(SeraphixDataProvider.WEATHER_UPDATE).apply {
-            putExtra(SeraphixDataProvider.EXTRA_WEATHER_TEXT, weatherText)
-            putExtra(SeraphixDataProvider.EXTRA_WEATHER_ICON, weatherIcon)
-            setPackage(context.packageName)
-            context.sendBroadcast(this)
-        }
-    }
-
-    private fun grabWeatherText(view: TextView) {
-        if (view.id == -1) return
-
-        val strId = view.resources.getResourceEntryName(view.id)
-        if (strId == VID_WEATHER_TEXT) {
-            view.text.takeIf { it.isNotEmpty() }?.let {
-                weatherText = it.toString()
-            }
-        }
-    }
-
-    private fun grabWeatherIcon(view: ImageView) {
-        if (view.id == -1) return
-
-        val strId = view.resources.getResourceEntryName(view.id)
-        if (strId == VID_WEATHER_ICON) {
-            (view.drawable as? BitmapDrawable)?.bitmap?.let {
-                weatherIcon = it
-            }
-        }
-    }
-
-    companion object {
-        const val VID_WEATHER_TEXT = "title_weather_text"
-        const val VID_WEATHER_ICON = "title_weather_icon"
+    fun setOnUpdateAppWidget(listener: DataProviderListener? = null): EphemeralWidgetHostViewGoogle {
+        this.listener = listener
+        return this
     }
 }

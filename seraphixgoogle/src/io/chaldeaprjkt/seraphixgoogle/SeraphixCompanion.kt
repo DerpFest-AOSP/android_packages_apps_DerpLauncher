@@ -40,6 +40,6 @@ object SeraphixCompanion {
             }
         }
     }
-    fun ViewGroup.allChildren() = ArrayList<View>().also { allChildren(it) }
 
+    fun ViewGroup.allChildren() = ArrayList<View>().also { allChildren(it) }
 }
