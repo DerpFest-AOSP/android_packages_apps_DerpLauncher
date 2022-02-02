@@ -39,4 +39,9 @@
         @android:color/system_accent1_800</color>
     <color name="widget_picker_unselected_tab_text_color_dark">
         @android:color/system_neutral2_200</color>
+
+    <color name="qsb_primary">@*android:color/system_accent3_100</color>
+    <color name="qsb_secondary">@*android:color/system_accent1_300</color>
+    <color name="qsb_tertiary">@*android:color/system_accent2_500</color>
+    <color name="qsb_quaternary">@*android:color/system_accent1_100</color>
 </resources>
