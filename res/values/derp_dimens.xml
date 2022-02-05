@@ -51,4 +51,7 @@
 
     <!-- App drawer styles -->
     <dimen name="all_apps_page_indicator_bottom_margin">32dp</dimen>
+
+    <!-- Overview scrolling scale animation -->
+    <dimen name="overview_scroll_scale">0.9</dimen>
 </resources>
