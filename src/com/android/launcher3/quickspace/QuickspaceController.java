@@ -51,6 +51,7 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
     private RemoteController mRemoteController;
     private boolean mClientLost = true;
     private boolean mMediaActive = false;
+    private String mLastMediaInfo = "";
 
     private String weatherText = "";
     private Icon weatherIcon;
@@ -110,9 +111,11 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
                 break;
             case RemoteControlClient.PLAYSTATE_ERROR:
             case RemoteControlClient.PLAYSTATE_PAUSED:
-            default:
+            case RemoteControlClient.PLAYSTATE_STOPPED:
                 active = false;
                 break;
+            default:
+                return;
         }
         if (active != mMediaActive) {
             mMediaActive = active;
@@ -121,7 +124,13 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
     }
 
     public void updateMediaInfo() {
-        if (mEventsController != null) {
+        if (mEventsController == null) return;
+
+        String mediaInfo = mMetadata.trackTitle + mMetadata.trackArtist +
+            String.valueOf(mClientLost) + String.valueOf(mMediaActive);
+
+        if (!mediaInfo.equals(mLastMediaInfo)) {
+            mLastMediaInfo = mediaInfo;
             mEventsController.setMediaInfo(mMetadata.trackTitle, mMetadata.trackArtist, mClientLost, mMediaActive);
             mEventsController.updateQuickEvents();
             notifyListeners();
