@@ -568,6 +568,10 @@ public class Launcher extends StatefulActivity<LauncherState>
         getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         setTitle(R.string.home_screen);
 
+        if (Utilities.getInitTimestamp(this) == 0) {
+            Utilities.setInitTimestamp(this, System.currentTimeMillis());
+        }
+
         if (BuildCompat.isAtLeastV()
                 && com.android.launcher3.Flags.enableTwoPaneLauncherSettings()) {
             RuleController.getInstance(this).setRules(
