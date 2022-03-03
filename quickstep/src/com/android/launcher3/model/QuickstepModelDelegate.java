@@ -50,6 +50,7 @@ import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.display.DisplayController;
 import com.android.launcher3.display.LauncherDisplayInfo;
+import com.android.launcher3.lineage.trust.db.TrustDatabaseHelper;
 import com.android.launcher3.logger.LauncherAtom;
 import com.android.launcher3.logging.InstanceId;
 import com.android.launcher3.logging.InstanceIdSequence;
@@ -297,10 +298,11 @@ public class QuickstepModelDelegate extends ModelDelegate {
             return;
         }
 
+        int hiddenCount = getHiddenPackageCount();
         mAllPredictionAppsState.registerPredictor(mContext,
                 new AppPredictionContext.Builder(mContext)
                     .setUiSurface("home")
-                    .setPredictedTargetCount(mIDP.numDatabaseAllAppsColumns)
+                    .setPredictedTargetCount(mIDP.numDatabaseAllAppsColumns + hiddenCount)
                     .build(),
                 mModel,
                 PredictionUpdateTask::new);
@@ -322,10 +324,15 @@ public class QuickstepModelDelegate extends ModelDelegate {
         mHotseatPredictionState.registerPredictor(context,
                 new AppPredictionContext.Builder(context)
                     .setUiSurface("hotseat")
-                    .setPredictedTargetCount(mIDP.numDatabaseHotseatIcons)
+                    .setPredictedTargetCount(mIDP.numDatabaseHotseatIcons + getHiddenPackageCount())
                     .setExtras(getBundleForHotseatPredictions(context, mDataModel))
                     .build(),
                 mModel, PredictionUpdateTask::new);
+    }
+
+    private int getHiddenPackageCount() {
+        TrustDatabaseHelper trustData = TrustDatabaseHelper.getInstance(mContext);
+        return trustData != null ? trustData.getTotalPackageHidden() : 0;
     }
 
     @VisibleForTesting
