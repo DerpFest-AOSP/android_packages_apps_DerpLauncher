@@ -16,7 +16,11 @@
 
 package com.android.launcher3.settings;
 
+import androidx.preference.Preference;
+
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
+import com.android.launcher3.graphics.ThemeManager;
 
 /**
  * Settings activity for app drawer preferences.
@@ -30,9 +34,36 @@ public class SettingsAppDrawer extends SettingsCategoryActivity {
 
     public static class AppDrawerSettingsFragment extends CategorySettingsFragment {
 
+        private Preference mThemeAllAppsIconsPref;
+
         @Override
         protected int getPreferencesXmlResId() {
             return R.xml.launcher_app_drawer_preferences;
+        }
+
+        @Override
+        protected boolean initPreference(Preference preference) {
+            if (LauncherPrefs.ALLAPPS_THEMED_ICONS.getSharedPrefKey().equals(preference.getKey())) {
+                mThemeAllAppsIconsPref = preference;
+                updateThemeAllAppsIconsPref();
+            }
+            return super.initPreference(preference);
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            if (mThemeAllAppsIconsPref != null) {
+                updateThemeAllAppsIconsPref();
+            }
+        }
+
+        private void updateThemeAllAppsIconsPref() {
+            boolean enabled = ThemeManager.INSTANCE.get(getContext()).isMonoThemeEnabled();
+            mThemeAllAppsIconsPref.setEnabled(enabled);
+            mThemeAllAppsIconsPref.setSummary(getContext().getString(enabled
+                    ? R.string.pref_themed_icons_summary
+                    : R.string.themed_icons_disabled_summary));
         }
     }
 }

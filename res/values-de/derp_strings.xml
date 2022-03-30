@@ -35,6 +35,11 @@
     <string name="title_drawer_labels">App-Übersicht-Beschriftungen</string>
     <string name="summary_drawer_labels">Symbolbeschriftungen in der App-Übersicht anzeigen</string>
 
+    <!-- All apps themed icons -->
+    <string name="pref_themed_icons_title">Themen-Symbole in der App-Übersicht</string>
+    <string name="pref_themed_icons_summary">Themen-Symbole vom Startbildschirm übernehmen</string>
+    <string name="themed_icons_disabled_summary">Themen-Symbole sind in „Hintergrund &amp; Stil“ deaktiviert</string>
+
     <!-- Google Feed -->
     <string name="title_show_google_app">Google-App anzeigen</string>
     <string name="msg_minus_one_on_left">Beim Wischen nach rechts vom Startbildschirm</string>
