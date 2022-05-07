@@ -121,8 +121,8 @@
     <string name="font_size_title">Font size</string>
 
     <!-- Kill App recents action shortcut -->
-    <string name="recent_task_option_kill_app">Kill</string>
-    <string name="recents_app_killed" formatted="false">%s killed</string>
+    <string name="recent_task_option_kill_app">Force close</string>
+    <string name="recents_app_killed" formatted="false">%s closed</string>
 
     <!-- DT2S -->
     <string name="pref_sleep_gesture_title">Double tap to sleep</string>
