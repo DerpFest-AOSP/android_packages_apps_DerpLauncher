@@ -54,17 +54,15 @@ public class SettingsHomescreen extends SettingsCategoryActivity {
         }
 
         @Override
-        public void onResume() {
-            super.onResume();
-            getPreferenceManager().getSharedPreferences()
-                    .registerOnSharedPreferenceChangeListener(this);
+        public void onStart() {
+            super.onStart();
+            LauncherPrefs.getPrefs(getContext()).registerOnSharedPreferenceChangeListener(this);
         }
 
         @Override
-        public void onPause() {
-            super.onPause();
-            getPreferenceManager().getSharedPreferences()
-                    .unregisterOnSharedPreferenceChangeListener(this);
+        public void onStop() {
+            super.onStop();
+            LauncherPrefs.getPrefs(getContext()).unregisterOnSharedPreferenceChangeListener(this);
         }
 
         @Override

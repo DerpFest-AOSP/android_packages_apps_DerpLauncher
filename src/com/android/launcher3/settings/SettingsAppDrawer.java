@@ -55,20 +55,23 @@ public class SettingsAppDrawer extends SettingsCategoryActivity {
         }
 
         @Override
-        public void onResume() {
-            super.onResume();
-            getPreferenceManager().getSharedPreferences()
-                    .registerOnSharedPreferenceChangeListener(this);
-            if (mThemeAllAppsIconsPref != null) {
-                updateThemeAllAppsIconsPref();
-            }
+        public void onStart() {
+            super.onStart();
+            LauncherPrefs.getPrefs(getContext()).registerOnSharedPreferenceChangeListener(this);
         }
 
         @Override
-        public void onPause() {
-            super.onPause();
-            getPreferenceManager().getSharedPreferences()
-                    .unregisterOnSharedPreferenceChangeListener(this);
+        public void onStop() {
+            super.onStop();
+            LauncherPrefs.getPrefs(getContext()).unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            if (mThemeAllAppsIconsPref != null) {
+                updateThemeAllAppsIconsPref();
+            }
         }
 
         @Override
