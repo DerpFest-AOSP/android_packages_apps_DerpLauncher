@@ -93,6 +93,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.LocusId;
+import android.content.SharedPreferences;
 import android.content.pm.LauncherApps;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -151,6 +152,7 @@ import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.BuildConfig;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Insettable;
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.MotionEventsUtils;
 import com.android.launcher3.PagedView;
 import com.android.launcher3.R;
@@ -543,6 +545,8 @@ public abstract class RecentsView<
     private float mTopBottomRowHeightDiff;
     // mTaskGridVerticalDiff and mTopBottomRowHeightDiff summed together provides the top
     // position for bottom row of grid tasks.
+
+    private static final String KEY_SCROLL_VIBRATION = "pref_scroll_vibration";
 
     @Nullable
     protected RemoteTargetHandle[] mRemoteTargetHandles;
@@ -1905,6 +1909,9 @@ public abstract class RecentsView<
     }
 
     private void vibrateForScroll() {
+        if (!LauncherPrefs.getPrefs(mContext).getBoolean(KEY_SCROLL_VIBRATION, true)) {
+            return;
+        }
         long now = SystemClock.uptimeMillis();
         if (now - mScrollLastHapticTimestamp > mScrollHapticMinGapMillis) {
             mScrollLastHapticTimestamp = now;
