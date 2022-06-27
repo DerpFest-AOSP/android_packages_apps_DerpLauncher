@@ -42,6 +42,13 @@
             launcher:logIdOn="613"
             launcher:logIdOff="614" />
 
+        <SwitchPreferenceCompat
+            android:key="pref_allow_wallpaper_scrolling"
+            android:title="@string/allow_wallpaper_scrolling"
+            android:summary="@string/allow_wallpaper_scrolling_summary"
+            android:defaultValue="true"
+            launcher:iconSpaceReserved="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
