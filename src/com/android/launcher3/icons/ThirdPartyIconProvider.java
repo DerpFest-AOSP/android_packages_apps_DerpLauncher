@@ -18,7 +18,7 @@ import javax.inject.Inject;
 import static com.android.launcher3.icons.BaseIconFactory.CONFIG_HINT_NO_WRAP;
 
 @LauncherAppSingleton
-public class ThirdPartyIconProvider extends RoundIconProvider {
+public class ThirdPartyIconProvider extends LauncherIconProvider {
 
     private final Context mContext;
     private final ThemeManager mThemeManager;
