@@ -156,4 +156,10 @@
     <!-- Auto keyboard -->
     <string name="pref_auto_keyboard_title">Tastaturautomatik</string>
     <string name="pref_auto_keyboard_summary">Suche direkt starten, sobald die App-Übersicht geöffnet ist</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_title">Symbolpaket</string>
+    <string name="icon_pack_default_label">Standard</string>
+    <string name="icon_pack_add">Weitere installieren</string>
+    <string name="icon_pack_no_market">Es ist kein App-Store verfügbar</string>
 </resources>
