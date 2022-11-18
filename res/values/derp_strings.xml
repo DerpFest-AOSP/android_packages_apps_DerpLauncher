@@ -412,4 +412,7 @@
     <string name="pref_homescreen_gestures_notifications">Notifications</string>
     <string name="pref_homescreen_gestures_qs_panel">QS panel</string>
     <string name="pref_homescreen_gestures_powermenu">Power menu</string>
+
+    <!-- Shake Clear Recents -->
+    <string name="shake_clear_summary">Or Shake phone to clear recents</string>
 </resources>
