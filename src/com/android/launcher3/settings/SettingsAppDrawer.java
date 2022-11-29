@@ -16,8 +16,11 @@
 
 package com.android.launcher3.settings;
 
+import android.content.SharedPreferences;
+
 import androidx.preference.Preference;
 
+import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
 import com.android.launcher3.graphics.ThemeManager;
@@ -32,7 +35,8 @@ public class SettingsAppDrawer extends SettingsCategoryActivity {
         return getString(R.string.app_drawer_settings_fragment_name);
     }
 
-    public static class AppDrawerSettingsFragment extends CategorySettingsFragment {
+    public static class AppDrawerSettingsFragment extends CategorySettingsFragment
+            implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private Preference mThemeAllAppsIconsPref;
 
@@ -53,8 +57,24 @@ public class SettingsAppDrawer extends SettingsCategoryActivity {
         @Override
         public void onResume() {
             super.onResume();
+            getPreferenceManager().getSharedPreferences()
+                    .registerOnSharedPreferenceChangeListener(this);
             if (mThemeAllAppsIconsPref != null) {
                 updateThemeAllAppsIconsPref();
+            }
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+            getPreferenceManager().getSharedPreferences()
+                    .unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (LauncherPrefs.DRAWER_SEARCH.getSharedPrefKey().equals(key)) {
+                LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
             }
         }
 
