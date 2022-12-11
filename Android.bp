@@ -328,6 +328,7 @@ android_library {
         "widget_picker_component",
         "workspace-functions",
         "org.lineageos.platform",
+        "SettingsLib",
         // Compose dependencies
         "androidx.compose.runtime_runtime",
         "androidx.compose.material3_material3",
