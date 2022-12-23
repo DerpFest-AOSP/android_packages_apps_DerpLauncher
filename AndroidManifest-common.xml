@@ -144,7 +144,7 @@
         -->
         <activity
             android:name="com.android.launcher3.settings.SettingsActivity"
-            android:label="@string/settings_button_text"
+            android:label="@string/derp_app_name"
             android:icon="@drawable/ic_setting"
             android:theme="@style/HomeSettings.Theme"
             android:exported="true"
