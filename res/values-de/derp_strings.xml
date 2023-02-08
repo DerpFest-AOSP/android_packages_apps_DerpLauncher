@@ -146,4 +146,9 @@
     <string name="paused_apps_dialog_title">App pausiert</string>
     <string name="paused_apps_dialog_message">%1$s ist mithilfe des Launchers pausiert worden</string>
     <string name="paused_apps_drop_target_label">App pausieren</string>
+    <string name="work_apps_paused_title_custom">Geschäftliche Apps sind deaktiviert</string>
+    <string name="work_apps_pause_btn_text_custom">Geschäftliche Apps deaktivieren</string>
+    <string name="work_apps_enable_btn_text_custom">Geschäftliche Apps aktivieren</string>
+    <string name="work_apps_paused_info_body_custom">Geschäftliche Apps können dir keine Benachrichtigungen senden, deinen Akku nicht nutzen und nicht auf deinen Standort zugreifen</string>
+    <string name="work_apps_paused_telephony_unavailable_body_custom">Geschäftliche Apps können keine Anrufe und SMS empfangen, dir keine Benachrichtigungen senden, deinen Akku nicht nutzen und nicht auf deinen Standort zugreifen</string>
 </resources>
