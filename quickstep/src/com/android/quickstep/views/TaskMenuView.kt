@@ -205,7 +205,7 @@ constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int = 0) :
 
         // Set divider spacing
         val divider = ShapeDrawable(RectShape())
-        divider.paint.color = resources.getColor(android.R.color.transparent)
+        divider.paint.color = resources.getColor(android.R.color.transparent, /* theme= */ null)
         val dividerSpacing = resources.getDimension(R.dimen.task_menu_spacing).toInt()
         optionLayout.showDividers = SHOW_DIVIDER_NONE
 
