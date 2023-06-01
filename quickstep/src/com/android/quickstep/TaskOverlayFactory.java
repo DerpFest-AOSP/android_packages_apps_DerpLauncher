@@ -125,7 +125,6 @@ public class TaskOverlayFactory implements ResourceBasedOverride {
             TaskShortcutFactory.SAVE_APP_PAIR,
             TaskShortcutFactory.SCREENSHOT,
             TaskShortcutFactory.KILL_APP,
-            TaskShortcutFactory.UNINSTALL,
             TaskShortcutFactory.MODAL,
             TaskShortcutFactory.CLOSE,
     };
