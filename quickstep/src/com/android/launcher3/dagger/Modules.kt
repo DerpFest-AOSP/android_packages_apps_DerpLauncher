@@ -337,17 +337,17 @@ object TaskOverlayModule {
         listOf(
             TaskShortcutFactory.APP_INFO,
             TaskShortcutFactory.SPLIT_SELECT,
-            TaskShortcutFactory.UNINSTALL,
-            TaskShortcutFactory.PIN,
-            TaskShortcutFactory.INSTALL,
             TaskShortcutFactory.FREE_FORM,
             desktopShortcutFactory,
             externalDisplayShortcutFactory,
             aspectRatioSystemShortcutFactory,
             wellbeingShortcutFactory,
+            TaskShortcutFactory.PIN,
+            TaskShortcutFactory.INSTALL,
             TaskShortcutFactory.SAVE_APP_PAIR,
             TaskShortcutFactory.SCREENSHOT,
             TaskShortcutFactory.REMOVE_TASK,
+            TaskShortcutFactory.UNINSTALL,
             TaskShortcutFactory.MODAL,
         )
 }
