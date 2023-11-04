@@ -110,7 +110,7 @@ public class ImageActionsApi {
 
     @UiThread
     public void startLensActivity() {
-        ImageActionUtils.startLensActivity(mContext, mBitmapSupplier, null, null, TAG);
+        ImageActionUtils.startLensActivity(mContext, mBitmapSupplier, null, TAG);
     }
 
     /**
