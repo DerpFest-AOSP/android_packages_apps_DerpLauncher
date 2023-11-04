@@ -162,13 +162,13 @@ public class QsbLayout extends FrameLayout implements Reorderable {
                 .setComponent(new android.content.ComponentName(
                         com.android.launcher3.Utilities.GSA_PACKAGE,
                         com.android.launcher3.Utilities.LENS_ACTIVITY))
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             return intent;
         }
         // Fallback: try google://lens URI
         Intent uriIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(LENS_URI))
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 .setPackage(com.android.launcher3.Utilities.GSA_PACKAGE);
         if (uriIntent.resolveActivity(context.getPackageManager()) != null) {
             return uriIntent;
