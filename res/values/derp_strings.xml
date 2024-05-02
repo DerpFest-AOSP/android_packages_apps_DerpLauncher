@@ -106,4 +106,7 @@
     <string name="about_thanks_cat">Special thanks to</string>
     <string name="about">About</string>
     <string name="about_summary">Info about the DerpLauncher</string>
+
+    <!-- Branding -->
+    <string name="derp_branding">derpfest.</string>
 </resources>
