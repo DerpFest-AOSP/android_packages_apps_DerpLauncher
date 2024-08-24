@@ -129,6 +129,9 @@
     <string name="recent_task_option_kill_app">Force close</string>
     <string name="recents_app_killed" formatted="false">%s closed</string>
 
+    <!-- LMOFreeform -->
+    <string name="floating_window">Floating</string>
+
     <!-- DT2S -->
     <string name="pref_sleep_gesture_title">Double tap to sleep</string>
     <string name="pref_sleep_gesture_summary">Double tap on empty space for screen off</string>

@@ -116,6 +116,9 @@
     <string name="recent_task_option_kill_app">Beenden</string>
     <string name="recents_app_killed" formatted="false">%s beendet</string>
 
+    <!-- LMOFreeform -->
+    <string name="floating_window">Schwebend</string>
+
     <!-- DT2S -->
     <string name="pref_sleep_gesture_title">Doppeltippen zum Sperren</string>
     <string name="pref_sleep_gesture_summary">Zum Sperren auf einen leeren Bereich doppeltippen</string>

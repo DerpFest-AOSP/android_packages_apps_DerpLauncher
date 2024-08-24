@@ -338,6 +338,7 @@ object TaskOverlayModule {
             TaskShortcutFactory.APP_INFO,
             TaskShortcutFactory.SPLIT_SELECT,
             TaskShortcutFactory.FREE_FORM,
+            TaskShortcutFactory.FLOATING,
             desktopShortcutFactory,
             externalDisplayShortcutFactory,
             aspectRatioSystemShortcutFactory,
