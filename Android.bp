@@ -330,6 +330,7 @@ android_library {
         "workspace-functions",
         "org.lineageos.platform",
         "SettingsLib",
+        "VendorSupport-preference",
         // Compose dependencies
         "androidx.compose.runtime_runtime",
         "androidx.compose.material3_material3",
