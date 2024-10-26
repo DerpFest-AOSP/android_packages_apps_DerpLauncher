@@ -451,6 +451,7 @@ android_library {
         "launcher-executors-module",
         "SettingsLib",
         "libGoogleFeed",
+        "VendorSupport-preference",
     ],
     manifest: "AndroidManifest-common.xml",
     sdk_version: "current",
