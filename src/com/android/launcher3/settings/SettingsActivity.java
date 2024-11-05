@@ -198,8 +198,8 @@ public class SettingsActivity extends CollapsingToolbarBaseActivity
             getPreferenceManager().setSharedPreferencesName(LauncherFiles.SHARED_PREFERENCES_KEY);
             setPreferencesFromResource(R.xml.launcher_preferences, rootKey);
 
-            if (getActivity() != null && !TextUtils.isEmpty(getPreferenceScreen().getTitle())) {
-                getActivity().setTitle(getPreferenceScreen().getTitle());
+            if (getActivity() != null) {
+                getActivity().setTitle(null);
             }
         }
 
