@@ -191,7 +191,7 @@ public class SettingsActivity extends FragmentActivity
             }
 
             if (getActivity() != null) {
-                getActivity().setTitle(null);
+                getActivity().setTitle(getString(R.string.settings_title));
             }
         }
 
