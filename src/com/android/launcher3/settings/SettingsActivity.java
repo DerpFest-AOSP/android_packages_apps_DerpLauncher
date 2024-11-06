@@ -199,7 +199,7 @@ public class SettingsActivity extends CollapsingToolbarBaseActivity
             setPreferencesFromResource(R.xml.launcher_preferences, rootKey);
 
             if (getActivity() != null) {
-                getActivity().setTitle(null);
+                getActivity().setTitle(getString(R.string.settings_button_text));
             }
         }
 
