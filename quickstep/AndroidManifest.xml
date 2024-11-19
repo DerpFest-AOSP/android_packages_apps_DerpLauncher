@@ -42,6 +42,7 @@
     <uses-permission android:name="android.permission.ACCESS_SHORTCUTS"/>
     <uses-permission android:name="android.permission.READ_REMOTE_TASKS"/>
     <uses-permission android:name="android.permission.REQUEST_TASK_HANDOFF"/>
+    <uses-permission android:name="android.permission.REGISTER_STATS_PULL_ATOM"/>
 
     <uses-permission android:name="android.permission.SYSTEM_APPLICATION_OVERLAY" />
 
