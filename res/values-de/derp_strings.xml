@@ -117,7 +117,7 @@
     <string name="recents_app_killed" formatted="false">%s beendet</string>
 
     <!-- LMOFreeform -->
-    <string name="floating_window">Schwebend</string>
+    <string name="floating_window">Schwebendes Fenster</string>
 
     <!-- DT2S -->
     <string name="pref_sleep_gesture_title">Doppeltippen zum Sperren</string>

@@ -130,7 +130,7 @@
     <string name="recents_app_killed" formatted="false">%s closed</string>
 
     <!-- LMOFreeform -->
-    <string name="floating_window">Floating</string>
+    <string name="floating_window">Floating window</string>
 
     <!-- DT2S -->
     <string name="pref_sleep_gesture_title">Double tap to sleep</string>
