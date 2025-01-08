@@ -21,6 +21,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.ArrayMap;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.android.launcher3.R;
+import com.android.launcher3.data.wallpaper.service.WallpaperService;
 import com.android.launcher3.logging.StatsLogManager.EventEnum;
 import com.android.launcher3.popup.ArrowPopup;
 import com.android.launcher3.shortcuts.DeepShortcutView;
@@ -160,13 +162,22 @@ public class OptionsPopupView<T extends Context & ActivityContext> extends Arrow
         if (activityContext == null) {
             return null;
         }
+
+        final Context context = (Context) activityContext;
+        final List<com.android.launcher3.data.wallpaper.Wallpaper> wallpapers = 
+                WallpaperService.INSTANCE.get(context).getTopWallpapersBlocking();
+        final boolean isEmpty = wallpapers.isEmpty();
+        Log.d("OptionsPopupView", "Wallpapers in DB: " + wallpapers.size() + ", isEmpty: " + isEmpty);
+        var layout = isEmpty ? R.layout.longpress_options_menu : R.layout.wallpaper_options_popup;
+
         OptionsPopupView<T> popup = (OptionsPopupView<T>) activityContext.getLayoutInflater()
-                .inflate(R.layout.longpress_options_menu, activityContext.getDragLayer(), false);
+                .inflate(layout, activityContext.getDragLayer(), false);
         popup.mTargetRect = targetRect;
         popup.setShouldAddArrow(shouldAddArrow);
 
         for (OptionItem item : items) {
-            DeepShortcutView view = popup.inflateAndAdd(R.layout.system_shortcut, popup);
+            var deepLayout = isEmpty ? R.layout.system_shortcut : R.layout.wallpaper_options_popup_item;
+            DeepShortcutView view = popup.inflateAndAdd(deepLayout, popup);
             if (width > 0) {
                 view.getLayoutParams().width = width;
             }

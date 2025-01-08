@@ -75,3 +75,7 @@
     <fields>;
     <init>(...);
 }
+
+-keep class com.android.launcher3.data.** {
+  *;
+}
