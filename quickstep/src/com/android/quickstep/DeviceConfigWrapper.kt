@@ -83,14 +83,9 @@ class DeviceConfigWrapper private constructor(propReader: PropReader) {
             "Percentage of gesture slop region to trigger the extended long press duration."
         )
 
-    val animateLpnh = propReader.get("ANIMATE_LPNH", false, "Animates navbar when long pressing")
+    val animateLpnh = true
 
-    val shrinkNavHandleOnPress =
-        propReader.get(
-            "SHRINK_NAV_HANDLE_ON_PRESS",
-            false,
-            "Shrinks navbar when long pressing if ANIMATE_LPNH is enabled"
-        )
+    val shrinkNavHandleOnPress = true
 
     val enableLongPressNavHandle =
         propReader.get(
