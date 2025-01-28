@@ -49,4 +49,8 @@
     <string name="pref_themed_icons_title">Symboldesigns</string>
     <string name="pref_themed_icons_summary">Stil der Symboldesigns auf dem Startbildschirm folgen</string>
     <string name="themed_icons_disabled_summary">Themenbezogene Symbole sind in „Hintergrundbild &amp; Stil“ deaktiviert.</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Wischen zum Starten der Suche</string>
+    <string name="drawer_open_keyboard_summary">Tastatur immer öffnen, sobald die App-Übersicht sichtbar ist</string>
 </resources>
