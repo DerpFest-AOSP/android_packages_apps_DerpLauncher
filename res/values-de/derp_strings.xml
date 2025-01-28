@@ -40,6 +40,10 @@
     <string name="pref_themed_icons_summary">Themen-Symbole vom Startbildschirm übernehmen</string>
     <string name="themed_icons_disabled_summary">Themen-Symbole sind in „Hintergrund &amp; Stil“ deaktiviert</string>
 
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Zum Suchen wischen</string>
+    <string name="drawer_open_keyboard_summary">Tastatur öffnen, sobald die App-Übersicht sichtbar wird</string>
+
     <!-- Google Feed -->
     <string name="title_show_google_app">Google-App anzeigen</string>
     <string name="msg_minus_one_on_left">Beim Wischen nach rechts vom Startbildschirm</string>
