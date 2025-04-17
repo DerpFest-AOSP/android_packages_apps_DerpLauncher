@@ -36,8 +36,6 @@ import android.view.SurfaceControl
 import android.view.SurfaceControl.Transaction
 import android.view.View
 import android.view.WindowManager.TRANSIT_CHANGE
-import android.view.WindowManager.TRANSIT_OPEN
-import android.view.WindowManager.TRANSIT_TO_FRONT
 import android.window.TransitionInfo
 import android.window.TransitionInfo.Change
 import android.window.WindowContainerToken
@@ -1174,16 +1172,9 @@ class SplitAnimationController(val splitSelectStateController: SplitSelectStateC
         for (change in transitionInfo.changes) {
             val taskInfo: RunningTaskInfo = change.taskInfo ?: continue
             val taskId = taskInfo.taskId
-            val mode = change.mode
 
             // Find the target tasks' root tasks since those are the split stages that need to
             // be animated (the tasks themselves are children and thus inherit animation).
-            if (taskId == initialTaskId || taskId == secondTaskId) {
-                check(mode == TRANSIT_OPEN || mode == TRANSIT_TO_FRONT) {
-                    "Expected task to be showing, but it is $mode"
-                }
-            }
-
             if (taskId == initialTaskId) {
                 splitRoot1 = change
                 val parentToken1 = change.parent
