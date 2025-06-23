@@ -288,7 +288,7 @@
             launcher:minWidthDps="800"
             launcher:name="Pixel C"
             launcher:startAlignTaskbar="true"
-            launcher:startAlignTaskbarLandscape="false"
+            launcher:startAlignTaskbarLandscape="true"
             launcher:transientTaskbarIconSize="57.2"/>
 
         <display-option
