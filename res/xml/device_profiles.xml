@@ -29,7 +29,7 @@
         launcher:isScalable="true"
         launcher:folderStyle="@style/Folder2x2Style"
         launcher:defaultLayoutId="@xml/default_workspace_2x2"
-        launcher:deviceCategory="phone|multi_display" >
+        launcher:deviceCategory="phone" >
 
         <display-option
             launcher:allAppsBorderSpace="16"
