@@ -322,7 +322,7 @@
             launcher:minWidthDps="941"
             launcher:name="Pixel C (display: small)"
             launcher:startAlignTaskbar="true"
-            launcher:startAlignTaskbarLandscape="false"
+            launcher:startAlignTaskbarLandscape="true"
             launcher:transientTaskbarIconSize="57.2"/>
 
         <display-option
@@ -356,7 +356,7 @@
             launcher:minWidthDps="723"
             launcher:name="Pixel C (display: large)"
             launcher:startAlignTaskbar="true"
-            launcher:startAlignTaskbarLandscape="false"
+            launcher:startAlignTaskbarLandscape="true"
             launcher:transientTaskbarIconSize="57.2"/>
 
         <display-option
@@ -392,7 +392,7 @@
             launcher:minWidthDps="656"
             launcher:name="Pixel C (display: larger)"
             launcher:startAlignTaskbar="true"
-            launcher:startAlignTaskbarLandscape="false"/>
+            launcher:startAlignTaskbarLandscape="true"/>
 
         <display-option
             launcher:allAppsBorderSpaceHorizontal="8"
@@ -427,7 +427,7 @@
             launcher:minWidthDps="603"
             launcher:name="Pixel C (display: largest)"
             launcher:startAlignTaskbar="true"
-            launcher:startAlignTaskbarLandscape="false"/>
+            launcher:startAlignTaskbarLandscape="true"/>
 
     </grid-option>
 
