@@ -82,7 +82,7 @@
 
     <!-- Kill App recents action shortcut -->
     <string name="recent_task_option_kill_app">Beenden</string>
-    <string name="recents_app_killed">App beendet</string>
+    <string name="recents_app_killed" formatted="false">%s beendet</string>
 
     <!-- Hotseat Background -->
     <string name="hotseat_bg_title">Hintergrund im Dock</string>
