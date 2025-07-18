@@ -100,7 +100,7 @@
 
     <!-- Kill App recents action shortcut -->
     <string name="recent_task_option_kill_app">Force close</string>
-    <string name="recents_app_killed">App closed</string>
+    <string name="recents_app_killed" formatted="false">%s closed</string>
 
     <!-- Hotseat Background -->
     <string name="hotseat_bg_title">Hotseat background</string>
