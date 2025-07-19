@@ -91,6 +91,7 @@ import com.android.launcher3.recyclerview.AllAppsRecyclerViewPool;
 import com.android.launcher3.util.ItemInfoMatcher;
 import com.android.launcher3.util.Preconditions;
 import com.android.launcher3.util.Themes;
+import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.views.BaseDragLayer;
 import com.android.launcher3.views.RecyclerViewFastScroller;
@@ -300,7 +301,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
         if (LauncherPrefs.DRAWER_SEARCH.get(getContext())) {
             mSearchContainer.setVisibility(View.VISIBLE);
-            if (!Themes.isThemedIconEnabled(getContext())) {
+            if (!ThemeManager.INSTANCE.get(getContext()).isMonoThemeEnabled()) {
                 getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google);
             } else {
                 getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google_themed);
@@ -829,7 +830,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             mTabsProtectionAlpha = tabsAlpha;
             invalidateHeader();
         }
-        if (!Themes.isThemedIconEnabled(getContext())) {
+        if (!ThemeManager.INSTANCE.get(getContext()).isMonoThemeEnabled()) {
             getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google);
         } else {
             getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google_themed);
