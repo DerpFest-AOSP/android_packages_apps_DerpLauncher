@@ -47,6 +47,7 @@ import com.android.launcher3.allapps.SearchUiManager;
 import com.android.launcher3.search.SearchCallback;
 import com.android.launcher3.util.ApiWrapper;
 import com.android.launcher3.util.Themes;
+import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.views.ActivityContext;
 
 import java.util.ArrayList;
@@ -135,9 +136,9 @@ public class AppsSearchContainerLayout extends ExtendedEditText
         int shift = expectedLeft - left;
         setTranslationX(shift);
 
-        if (Utilities.showQSB(getContext()) && !Themes.isThemedIconEnabled(getContext())) {
+        if (Utilities.showQSB(getContext()) && !ThemeManager.INSTANCE.get(getContext()).isMonoThemeEnabled()) {
           setCompoundDrawablesRelativeWithIntrinsicBounds(gIcon, null, null, null);
-        } else if (Utilities.showQSB(getContext()) && Themes.isThemedIconEnabled(getContext())) {
+        } else if (Utilities.showQSB(getContext()) && ThemeManager.INSTANCE.get(getContext()).isMonoThemeEnabled()) {
           setCompoundDrawablesRelativeWithIntrinsicBounds(gIconThemed, null, null, null);
         } else {
           setCompoundDrawablesRelativeWithIntrinsicBounds(sIcon, null, null, null);

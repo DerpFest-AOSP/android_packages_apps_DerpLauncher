@@ -19,6 +19,7 @@ import com.android.launcher3.Utilities;
 import com.android.launcher3.qsb.QsbContainerView;
 import com.android.launcher3.util.MultiTranslateDelegate;
 import com.android.launcher3.util.Themes;
+import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.LauncherPrefs;
 
 public class QsbLayout extends FrameLayout implements Reorderable,
@@ -80,13 +81,13 @@ public class QsbLayout extends FrameLayout implements Reorderable,
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-        if (key.equals(Themes.KEY_THEMED_ICONS)) {
+        if (key.equals(ThemeManager.KEY_THEMED_ICONS)) {
             setIcons();
         }
     }
 
     private void setIcons() {
-        if (Themes.isThemedIconEnabled(mContext)) {
+        if (ThemeManager.INSTANCE.get(mContext).isMonoThemeEnabled()) {
             mAssistantIcon.setImageResource(R.drawable.ic_mic_themed);
             mGoogleIcon.setImageResource(R.drawable.ic_super_g_themed);
             mLensIcon.setImageResource(R.drawable.ic_lens_themed);
