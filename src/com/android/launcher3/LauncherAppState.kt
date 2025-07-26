@@ -22,7 +22,6 @@ import com.android.launcher3.icons.LauncherIconProvider
 import com.android.launcher3.util.DaggerSingletonObject
 import javax.inject.Inject
 import javax.inject.Named
-import android.widget.Toast
 
 /** A collection of common dependencies used across Launcher */
 @Deprecated("Inject the specific targets directly instead of using LauncherAppState")
@@ -36,21 +35,6 @@ constructor(
     val invariantDeviceProfile: InvariantDeviceProfile,
     @Named("SAFE_MODE") val isSafeModeEnabled: Boolean,
 ) {
-
-    private var needsRestart: Boolean = false
-
-    fun setNeedsRestart() {
-        needsRestart = true
-    }
-
-    fun checkIfRestartNeeded() {
-        // we destroyed Settings activity with the back button
-        // so we force a restart now if needed without waiting for home button press
-        if (needsRestart) {
-            Toast.makeText(context, R.string.restarting_launcher_changes, Toast.LENGTH_SHORT).show();
-            Utilities.restart()
-        }
-    }
 
     companion object {
 
