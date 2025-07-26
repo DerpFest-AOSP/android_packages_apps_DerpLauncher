@@ -28,7 +28,7 @@ import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 
 import java.util.Calendar;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class QuickEventsController {
 
@@ -253,8 +253,7 @@ public class QuickEventsController {
     }
 
     public int getLuckyNumber(int min, int max) {
-        Random r = new Random();
-        return r.nextInt((max - min) + 1) + min;
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 
     public void setMediaInfo(String title, String artist, boolean clientLost, boolean activePlayback) {
