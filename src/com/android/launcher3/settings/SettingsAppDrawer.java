@@ -203,13 +203,7 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            switch (key) {
-                case Utilities.KEY_DRAWER_SEARCH:
-                    LauncherAppState.getInstance(getContext()).setNeedsRestart();
-                    break;
-                default:
-                    break;
-            }
+            // Restart is now handled by Launcher activity
         }
 
         @Override

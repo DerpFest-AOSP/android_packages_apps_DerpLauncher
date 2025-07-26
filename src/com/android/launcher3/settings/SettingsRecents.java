@@ -100,14 +100,7 @@ public class SettingsRecents extends CollapsingToolbarBaseActivity
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        switch (key) {
-            case Utilities.KEY_RECENTS_CHIPS:
-            case Utilities.KEY_RECENTS_MEMINFO:
-                LauncherAppState.getInstance(getApplicationContext()).setNeedsRestart();
-                break;
-            default:
-                break;
-        }
+        // Restart is now handled by Launcher activity
     }
 
     private boolean startPreference(String fragment, Bundle args, String key) {
