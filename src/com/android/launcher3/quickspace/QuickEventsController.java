@@ -29,6 +29,8 @@ import com.android.launcher3.Utilities;
 
 import java.util.Calendar;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.HashMap;
+import java.util.Map;
 
 public class QuickEventsController {
 
@@ -42,6 +44,8 @@ public class QuickEventsController {
     private boolean mIsQuickEvent = false;
     private boolean mRunning = true;
     private boolean mRegistered = false;
+
+    private final Map<Integer, String[]> mCachedPSAMap = new HashMap<>();
 
     // Device Intro
     private long mInitTimestamp = 0;
@@ -175,10 +179,10 @@ public class QuickEventsController {
         if (!Utilities.isQuickspacePersonalityEnabled(mContext)) return;
 
         mEventTitle = Utilities.formatDateTime(mContext, System.currentTimeMillis());
-        mPSAMorningStr = mContext.getResources().getStringArray(R.array.quickspace_psa_morning);
-        mPSAEvenStr = mContext.getResources().getStringArray(R.array.quickspace_psa_evening);
-        mPSAMidniteStr = mContext.getResources().getStringArray(R.array.quickspace_psa_midnight);
-        mPSARandomStr = mContext.getResources().getStringArray(R.array.quickspace_psa_random);
+        mPSAMorningStr = getCachedArray(R.array.quickspace_psa_morning);
+        mPSAEvenStr = getCachedArray(R.array.quickspace_psa_evening);
+        mPSAMidniteStr = getCachedArray(R.array.quickspace_psa_midnight);
+        mPSARandomStr = getCachedArray(R.array.quickspace_psa_random);
         int psaLength;
 
         // Clean the onClick event to avoid any weird behavior
@@ -271,5 +275,12 @@ public class QuickEventsController {
     public void onResume() {
         mRunning = true;
         registerPSAListener();
+    }
+
+    private String[] getCachedArray(int resId) {
+        if (!mCachedPSAMap.containsKey(resId)) {
+            mCachedPSAMap.put(resId, mContext.getResources().getStringArray(resId));
+        }
+        return mCachedPSAMap.get(resId);
     }
 }
