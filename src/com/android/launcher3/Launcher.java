@@ -126,6 +126,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -438,6 +439,29 @@ public class Launcher extends StatefulActivity<LauncherState>
 
     private boolean mWasImeOpened = false;
 
+    private boolean mNeedsRestart = false;
+
+    private final OnSharedPreferenceChangeListener mSharedPrefListener =
+            new OnSharedPreferenceChangeListener() {
+                @Override
+                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                    switch (key) {
+                        case Utilities.KEY_DOCK_SEARCH:
+                        case Utilities.KEY_SHOW_HOTSEAT_BG:
+                        case Utilities.KEY_STATUS_BAR:
+                        case Utilities.KEY_SHORT_PARALLAX:
+                        case Utilities.KEY_SINGLE_PAGE_CENTER:
+                        case Utilities.KEY_DRAWER_SEARCH:
+                        case Utilities.KEY_RECENTS_CHIPS:
+                        case Utilities.KEY_RECENTS_MEMINFO:
+                            mNeedsRestart = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            };
+
     public static Launcher getLauncher(Context context) {
         return fromContext(context);
     }
@@ -611,6 +635,8 @@ public class Launcher extends StatefulActivity<LauncherState>
                 || mSharedPrefs.getBoolean(KEY_DARK_STATUS_BAR, false));
 
         mSharedPrefs.registerOnSharedPreferenceChangeListener(this);
+
+        mSharedPrefs.registerOnSharedPreferenceChangeListener(mSharedPrefListener);
 
         mOverlayManager = getDefaultOverlay();
         PluginManagerWrapper.INSTANCE.get(this)
@@ -1339,7 +1365,10 @@ public class Launcher extends StatefulActivity<LauncherState>
         DragView.removeAllViews(this);
         TraceHelper.INSTANCE.endSection();
 
-        LauncherAppState.INSTANCE.get(this).checkIfRestartNeeded();
+        if (mNeedsRestart) {
+            Toast.makeText(this, R.string.restarting_launcher_changes, Toast.LENGTH_SHORT).show();
+            Utilities.restart();
+        }
     }
 
     @Override
@@ -1875,6 +1904,8 @@ public class Launcher extends StatefulActivity<LauncherState>
         getRootView().getViewTreeObserver().removeOnPreDrawListener(mOnInitialBindListener);
         mOverlayManager.onActivityDestroyed();
         PillColorProvider.getInstance(mWorkspace.getContext()).unregisterObserver();
+
+        mSharedPrefs.unregisterOnSharedPreferenceChangeListener(mSharedPrefListener);
     }
 
     public LauncherAccessibilityDelegate getAccessibilityDelegate() {
