@@ -333,5 +333,12 @@
         <item>Charlie Watts is dead and you are alive</item>
         <item>rm -rf \/</item>
     </string-array>
+    <string-array name="quickspace_psa_blaze_it">
+        <item>420</item>
+        <item>#420 blaze it</item>
+        <item>Let\'s roll one up...</item>
+        <item>Enjoying the herbs, are ya?</item>
+        <item>Ever been to Amsterdam?</item>
+    </string-array>
 
 </resources>
