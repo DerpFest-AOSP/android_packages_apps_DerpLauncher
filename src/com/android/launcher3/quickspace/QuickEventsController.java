@@ -58,6 +58,7 @@ public class QuickEventsController {
     private String[] mPSAEvenStr;
     private String[] mPSAMidniteStr;
     private String[] mPSARandomStr;
+    private String[] mPSABlazeItStr;
     private BroadcastReceiver mPSAListener = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -186,6 +187,7 @@ public class QuickEventsController {
         mPSAEvenStr = getCachedArray(R.array.quickspace_psa_evening);
         mPSAMidniteStr = getCachedArray(R.array.quickspace_psa_midnight);
         mPSARandomStr = getCachedArray(R.array.quickspace_psa_random);
+        mPSABlazeItStr = getCachedArray(R.array.quickspace_psa_blaze_it);
         int psaLength;
 
         // Clean the onClick event to avoid any weird behavior
@@ -196,7 +198,21 @@ public class QuickEventsController {
             }
         };
 
-        switch (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) {
+        Calendar now = Calendar.getInstance();
+        int hour = now.get(Calendar.HOUR_OF_DAY);
+        int minute = now.get(Calendar.MINUTE);
+
+        //420 quote at
+        //04:20 - 04:29 and 
+        //16:20 - 16:29
+        if((hour == 4 || hour == 16) && (minute >= 20 && minute < 30)) 
+        {
+            psaLength = mPSABlazeItStr.length - 1;
+            mEventTitleSub = mPSABlazeItStr[getLuckyNumber(0, psaLength)];;
+            mEventSubIcon = R.drawable.ic_quickspace_morning; //todo 420 icon
+            mIsQuickEvent = true;
+        }
+        else switch (hour) {
             case 5: case 6: case 7: case 8: case 9:
                 psaLength = mPSAMorningStr.length - 1;
                 mEventTitleSub = mPSAMorningStr[getLuckyNumber(0, psaLength)];
