@@ -41,7 +41,7 @@ public class QuickEventsController {
     private OnClickListener mEventTitleSubAction = null;
     private int mEventSubIcon;
 
-    private const int mRandomDayQuotePercent = 25;
+    private int mRandomDayQuotePercent;
 
     private boolean mIsQuickEvent = false;
     private boolean mRunning = true;
@@ -80,6 +80,7 @@ public class QuickEventsController {
     public void initQuickEvents() {
         mInitTimestamp = Utilities.getInitTimestamp(mContext);
         mIntroTimeout = mContext.getResources().getInteger(R.integer.config_quickSpaceIntroTimeout);
+        mRandomDayQuotePercent = mContext.getResources().getInteger(R.integer.config_quickSpaceChanceOfQuoteDuringDayPercent);
         registerPSAListener();
         updateQuickEvents();
     }
