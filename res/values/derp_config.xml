@@ -38,4 +38,7 @@
 
     <!-- Quickspace: Device intro timeout (in minutes) -->
     <integer name="config_quickSpaceIntroTimeout">15</integer>
+
+    <!-- Quickspace: Chance of random quote happening during the day (in percent) -->
+    <integer name="config_quickSpaceChanceOfQuoteDuringDayPercent">25</integer>
 </resources>
