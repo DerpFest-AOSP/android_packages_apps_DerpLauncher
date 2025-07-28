@@ -41,6 +41,8 @@ public class QuickEventsController {
     private OnClickListener mEventTitleSubAction = null;
     private int mEventSubIcon;
 
+    private const int mRandomDayQuotePercent = 25;
+
     private boolean mIsQuickEvent = false;
     private boolean mRunning = true;
     private boolean mRegistered = false;
@@ -216,7 +218,7 @@ public class QuickEventsController {
                 break;
 
             default:
-                if (getLuckyNumber(13) == 7) {
+                if ((ThreadLocalRandom.current().nextDouble() * 100) < mRandomDayQuotePercent) {
                     psaLength = mPSARandomStr.length - 1;
                     mEventTitleSub = mPSARandomStr[getLuckyNumber(0, psaLength)];
                     mEventSubIcon = R.drawable.ic_quickspace_derp;
