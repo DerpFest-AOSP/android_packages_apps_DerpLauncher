@@ -40,5 +40,11 @@
     <integer name="config_quickSpaceIntroTimeout">15</integer>
 
     <!-- Quickspace: Chance of random quote happening during the day (in percent) -->
-    <integer name="config_quickSpaceChanceOfQuoteDuringDayPercent">25</integer>
+    <integer name="config_quickSpaceChanceOfQuoteDuringDayPercent">50</integer>
+
+    <!-- Quickspace: Whether to show the memory QuickSpace uses as prefix -->
+    <bool name="config_quickSpaceMemoryInfo">false</bool>
+
+    <!-- Quickspace: Whether QuickSpace should report memory usage of encouraged/discouraged apps -->
+    <bool name="config_quickSpaceAppMemoryInfo">false</bool>
 </resources>
