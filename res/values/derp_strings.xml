@@ -340,5 +340,21 @@
         <item>Enjoying the herbs, are ya?</item>
         <item>Ever been to Amsterdam?</item>
     </string-array>
-
+    <string-array name="quickspace_psa_encouraged_apps_messages">
+        <item>Enjoying §...?</item>
+        <item>Great choice in §!</item>
+        <item>§? Love to see it!</item>
+        <item>§ is amazing indeed</item>
+    </string-array>
+    <string-array name="quickspace_psa_discouraged_apps_messages">
+        <item>Confident in §...?</item>
+        <item>Not so sure about §...</item>
+        <item>§? Uhm...</item>
+    </string-array>
+    <string-array name="quickspace_psa_encouraged_apps_keywords">
+    <!-- todo default empty - consult with alex-->
+    </string-array>
+    <string-array name="quickspace_psa_discouraged_apps_keywords">
+    <!-- todo default empty - consult with alex-->
+    </string-array>
 </resources>
