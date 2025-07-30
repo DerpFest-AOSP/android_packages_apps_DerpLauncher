@@ -352,9 +352,18 @@
         <item>§? Uhm...</item>
     </string-array>
     <string-array name="quickspace_psa_encouraged_apps_keywords">
-    <!-- todo default empty - consult with alex-->
+    <!-- todo default empty - consult with alex
+        <item>viper</item>
+        <item>telegram</item>
+        <item>youtube</item>
+        <item>metrolist</item>
+    -->
     </string-array>
     <string-array name="quickspace_psa_discouraged_apps_keywords">
-    <!-- todo default empty - consult with alex-->
+    <!-- todo default empty - consult with alex
+        <item>messaging</item>
+        <item>dialer</item>
+        <item>vending</item>
+    -->
     </string-array>
 </resources>
