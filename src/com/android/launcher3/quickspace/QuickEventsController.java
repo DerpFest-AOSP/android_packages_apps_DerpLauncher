@@ -155,23 +155,22 @@ public class QuickEventsController {
 
     private void registerPSAListener() {
         if (mPSAListenerRegistered) return;
-        mPSAListenerRegistered = true;
         IntentFilter psonalityIntent = new IntentFilter();
         psonalityIntent.addAction(Intent.ACTION_TIME_TICK);
         psonalityIntent.addAction(Intent.ACTION_TIME_CHANGED);
         psonalityIntent.addAction(Intent.ACTION_TIMEZONE_CHANGED);
         mContext.registerReceiver(mPSAListener, psonalityIntent);
+        mPSAListenerRegistered = true;
     }
 
     private void unregisterPSAListener() {
         if (!mPSAListenerRegistered) return;
-        mPSAListenerRegistered = false;
         mContext.unregisterReceiver(mPSAListener);
+        mPSAListenerRegistered = false;
     }
 
     private void registerPackageChangeReceiver() {
         if (mPackageChangeListenerRegistered) return;
-        mPackageChangeListenerRegistered = true;
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_PACKAGE_ADDED);
         filter.addAction(Intent.ACTION_PACKAGE_CHANGED);
@@ -179,12 +178,13 @@ public class QuickEventsController {
         filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         filter.addDataScheme("package");
         mContext.registerReceiver(mPackageChangeReceiver, filter);
+        mPackageChangeListenerRegistered = true;
     }
 
     private void unregisterPackageChangeReceiver() {
         if (mPackageChangeListenerRegistered) return;
-        mPackageChangeListenerRegistered = false;
         mContext.unregisterReceiver(mPackageChangeReceiver);
+        mPackageChangeListenerRegistered = false;
     }
 
     private void checkAppForKeywords(String packageName) {
@@ -222,7 +222,9 @@ public class QuickEventsController {
             ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
             return pm.getApplicationLabel(appInfo).toString();
         } catch (PackageManager.NameNotFoundException e) {
-            return packageName;
+          //may result in com.packagename.appname to be shown in an edge case until refresh,
+          //but better than empty (or exception)
+          return packageName;
         }
     }
 
@@ -301,12 +303,15 @@ public class QuickEventsController {
         mPSARandomStr = getCachedArray(R.array.quickspace_psa_random);
         mPSABlazeItStr = getCachedArray(R.array.quickspace_psa_blaze_it);
 
+        //unregister for time or random quotes
+        //todo maybe make unassigned 'skippable'
         mEventTitleSubAction = view -> { /* haha yes */ };
 
         Calendar now = Calendar.getInstance();
         int hour = now.get(Calendar.HOUR_OF_DAY);
         int minute = now.get(Calendar.MINUTE);
 
+        //§ is placeholder to be substituted for appName
         String appMessage = "§";
         
         //dedicated 420 quote
@@ -368,16 +373,18 @@ public class QuickEventsController {
                         
                         if (mQuickEventAppMemoryInfo) {
                             String appMemInfo = getMemoryInfoForPackage(detectedApp);
-                            mEventTitleSub += " | " + appMemInfo;
+                            //avoid <packageName> | <nothing> aka ""
+                            mEventTitleSub += appMemInfo == "" ? "" : " | " + appMemInfo;
                         }
                         mEventSubIcon = R.drawable.ic_quickspace_derp;
-                        mIsQuickEvent = true;
                     } else {
                         //regular random derp quote
                         mEventTitleSub = mPSARandomStr[getLuckyNumber(0, mPSARandomStr.length - 1)];
                         mEventSubIcon = R.drawable.ic_quickspace_derp;
-                        mIsQuickEvent = true;
                     }
+
+                    //it's always a quickEvent in these cases
+                    mIsQuickEvent = true;
                 } else {
                     mIsQuickEvent = false;
                 }
@@ -444,6 +451,7 @@ public class QuickEventsController {
         registerPSAListener();
         registerPackageChangeReceiver();
 
+        //this might be useful in the future
         //if (mQuickEventMemoryInfo) {
         //    Log.d("QuickEvents", "Current RAM: " + getOwnMemoryFootprint());
         //}
