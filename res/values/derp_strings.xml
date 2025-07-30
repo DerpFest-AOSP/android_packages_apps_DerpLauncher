@@ -343,13 +343,18 @@
     <string-array name="quickspace_psa_encouraged_apps_messages">
         <item>Enjoying §...?</item>
         <item>Great choice in §!</item>
-        <item>§? Love to see it!</item>
-        <item>§ is amazing indeed</item>
+        <item>§... Love to see it!</item>
+        <item>§? Cool.</item>
+        <item>Using §? Nice!</item>
+        <item>§ is amazing indeed.</item>
     </string-array>
     <string-array name="quickspace_psa_discouraged_apps_messages">
         <item>Confident in §...?</item>
         <item>Not so sure about §...</item>
-        <item>§? Uhm...</item>
+        <item>Uhm... using §?</item>
+        <item>§? You can do better than that.</item>
+        <item>Are you sure about §?</item>
+        <item>So you\'re still using §...</item>
     </string-array>
     <string-array name="quickspace_psa_encouraged_apps_keywords">
     <!-- todo default empty - consult with alex
@@ -361,9 +366,15 @@
     </string-array>
     <string-array name="quickspace_psa_discouraged_apps_keywords">
     <!-- todo default empty - consult with alex
-        <item>messaging</item>
-        <item>dialer</item>
-        <item>vending</item>
+        <item>musically</item> //that's tiktok btw
+        <item>discord</item>
+        <item>snapchat</item>
+        <item>reddit</item>
+        <item>twitter</item>
+        <item>facebook</item>
+        <item>instagram</item>
+        <item>whatsapp</item>
+        <item>pinterest</item>
     -->
     </string-array>
 </resources>
