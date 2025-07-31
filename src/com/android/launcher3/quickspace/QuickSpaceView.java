@@ -131,17 +131,11 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (mController != null && mFinishedInflate) {
-            mController.addListener(this);
-        }
     }
 
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (mController != null) {
-            mController.removeListener(this);
-        }
     }
 
     private void onGlobalLayout() {
@@ -170,7 +164,17 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
     }
 
     public void onResume() {
+        if (mController != null && mFinishedInflate) {
+            mController.addListener(this);
+        }
         mController.onResume();
+    }
+
+    public void onDestroy() {
+        mController.onDestroy();
+        mActionReceiver = null;
+        mController = null;
+        mSeraphixDataProvider = null;
     }
 
     private final DataProviderListener mDataProviderListener = new DataProviderListener() {
