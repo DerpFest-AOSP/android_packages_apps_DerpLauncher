@@ -196,15 +196,17 @@ public class QuickspaceController implements NotificationListener.NotificationsC
         }
     }
 
-    public void notifyListeners() {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                for (OnDataListener list : mListeners) {
-                    list.onDataUpdated();
-                }
+    private Runnable mOnDataUpdatedRunnable = new Runnable() {
+        @Override
+        public void run() {
+            for (OnDataListener list : mListeners) {
+                list.onDataUpdated();
             }
-        });
+        }
+    };
+
+    public void notifyListeners() {
+        mHandler.post(mOnDataUpdatedRunnable);
     }
 
     public void updateWeatherData(String text, Bitmap image) {
@@ -253,6 +255,25 @@ public class QuickspaceController implements NotificationListener.NotificationsC
         public void onClientTransportControlUpdate(int transportControlFlags) {
         }
     };
+
+    private void cancelListeners() {
+        if (mEventsController != null) {
+            mEventsController.onPause();
+        }
+        if (mRemoteController != null) {
+            mAudioManager.unregisterRemoteController(mRemoteController);
+            mRemoteController = null;
+        }
+        for (OnDataListener listener : new ArrayList<>(mListeners)) {
+            removeListener(listener);
+        }
+        mHandler.removeCallbacksAndMessages(null);
+    }
+
+    public void onDestroy() {
+        cancelListeners();
+        mMetadata.clear();
+    }
 
     class Metadata {
         private String trackTitle;
