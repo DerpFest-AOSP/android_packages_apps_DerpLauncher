@@ -312,7 +312,7 @@ public class PendingAppWidgetHostView extends LauncherAppWidgetHostView
             mSettingIconDrawable = null;
         } else if (isReadyForClickSetup()) {
             mCenterDrawable = drawableFactory.newIcon(getContext(), info);
-            mSettingIconDrawable = getResources().getDrawable(R.drawable.ic_setting).mutate();
+            mSettingIconDrawable = getContext().getResources().getDrawable(R.drawable.ic_setting, getContext().getTheme()).mutate();
             updateSettingColor(info.bitmap.color);
 
             mDragFlags |= FLAG_DRAW_SETTINGS | FLAG_DRAW_LABEL;
