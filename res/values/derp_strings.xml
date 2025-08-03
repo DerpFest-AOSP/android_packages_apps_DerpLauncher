@@ -359,18 +359,17 @@
         <item>So you\'re still using §...</item>
     </string-array>
     <string-array name="quickspace_psa_encouraged_apps_keywords">
-    <!-- todo default empty - consult with alex
         <item>viper</item>
+        <item>wavelet</item>
         <item>telegram</item>
-        <item>youtube</item>
+    <!--<item>youtube</item>
         <item>metrolist</item>
     -->
     </string-array>
     <string-array name="quickspace_psa_discouraged_apps_keywords">
-    <!-- todo default empty - consult with alex
-        <item>musically</item> //that's tiktok btw
+    <!--<item>musically</item> //that's tiktok btw -->
         <item>discord</item>
-        <item>snapchat</item>
+    <!--<item>snapchat</item>
         <item>reddit</item>
         <item>twitter</item>
         <item>facebook</item>
