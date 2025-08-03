@@ -204,6 +204,8 @@ public final class Utilities {
     public static final String KEY_SHOW_QUICKSPACE_NOWPLAYING = "pref_quickspace_np";
     public static final String KEY_SHOW_QUICKSPACE_NOWPLAYING_SHOWDATE = "pref_quickspace_np_showdate";
     public static final String KEY_SHOW_QUICKSPACE_PSONALITY = "pref_quickspace_psonality";
+    public static final String KEY_SHOW_QUICKSPACE_MEMORY_INFO = "pref_quickspace_memory_info";
+    public static final String KEY_SHOW_QUICKSPACE_APP_MEMORY_INFO = "pref_quickspace_app_memory_info";
 
     /**
      * Returns true if theme is dark.
@@ -1269,6 +1271,16 @@ public final class Utilities {
     public static boolean isQuickspacePersonalityEnabled(Context context) {
         SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
         return prefs.getBoolean(KEY_SHOW_QUICKSPACE_PSONALITY, true);
+    }
+
+    public static boolean isQuickspaceMemoryInfoEnabled(Context context) {
+        SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
+        return prefs.getBoolean(KEY_SHOW_QUICKSPACE_MEMORY_INFO, false);
+    }
+
+    public static boolean isQuickspaceAppMemoryInfoEnabled(Context context) {
+        SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
+        return prefs.getBoolean(KEY_SHOW_QUICKSPACE_APP_MEMORY_INFO, false);
     }
 
     public static void setInitTimestamp(Context context, long time) {

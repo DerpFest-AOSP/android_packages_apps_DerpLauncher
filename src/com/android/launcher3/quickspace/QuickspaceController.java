@@ -171,6 +171,9 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
 
     public void updateSettings() {
         Log.i(TAG, "updateSettings");
+        if (mEventsController != null) {
+            mEventsController.updateMemoryInfoSettings();
+        }
         notifyListeners();
     }
 

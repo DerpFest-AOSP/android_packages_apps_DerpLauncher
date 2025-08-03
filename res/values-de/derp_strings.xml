@@ -268,4 +268,10 @@
         <item>Der Weltraum riecht nach gebratenem Steak..</item>
         <item>Genieße deinen Tag!</item>
     </string-array>
+
+    <!-- Quickspace Memory Info -->
+    <string name="quickspace_memory_info_title">Speicher-Info anzeigen</string>
+    <string name="quickspace_memory_info_summary">Zeigt Speichernutzung von Quickspace in Nachrichten an</string>
+    <string name="quickspace_app_memory_info_title">App-Speicher-Info anzeigen</string>
+    <string name="quickspace_app_memory_info_summary">Zeigt Speichernutzung von geförderten/nicht geförderten Apps in Nachrichten an</string>
 </resources>
