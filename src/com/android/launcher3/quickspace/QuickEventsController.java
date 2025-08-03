@@ -135,8 +135,8 @@ public class QuickEventsController {
         registerPackageChangeReceiver();
 
         // memory stats
-        mQuickEventMemoryInfo = mContext.getResources().getBoolean(R.bool.config_quickSpaceMemoryInfo);
-        mQuickEventAppMemoryInfo = mContext.getResources().getBoolean(R.bool.config_quickSpaceAppMemoryInfo);
+        mQuickEventMemoryInfo = Utilities.isQuickspaceMemoryInfoEnabled(mContext);
+        mQuickEventAppMemoryInfo = Utilities.isQuickspaceAppMemoryInfoEnabled(mContext);
 
         // keyword app classification init
         mPSAEncouragedAppsStr = getCachedArray(R.array.quickspace_psa_encouraged_apps_keywords);
@@ -151,6 +151,11 @@ public class QuickEventsController {
 
         scanAllInstalledAppsForKeywords();
         updateQuickEvents();
+    }
+
+    public void updateMemoryInfoSettings() {
+        mQuickEventMemoryInfo = Utilities.isQuickspaceMemoryInfoEnabled(mContext);
+        mQuickEventAppMemoryInfo = Utilities.isQuickspaceAppMemoryInfoEnabled(mContext);
     }
 
     private void registerPSAListener() {

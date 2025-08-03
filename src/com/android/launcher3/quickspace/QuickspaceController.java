@@ -185,6 +185,9 @@ public class QuickspaceController implements NotificationListener.NotificationsC
 
     public void updateSettings() {
         Log.i(TAG, "updateSettings");
+        if (mEventsController != null) {
+            mEventsController.updateMemoryInfoSettings();
+        }
         notifyListeners();
     }
 
