@@ -249,6 +249,12 @@
     <string name="quickspace_psa_title">Show a random message</string>
     <string name="quickspace_psa_summary">Show some nice messages sometimes on At a Glance.</string>
 
+    <!-- Quickspace Memory Info -->
+    <string name="quickspace_memory_info_title">Show memory info</string>
+    <string name="quickspace_memory_info_summary">Show QuickSpace memory usage in messages</string>
+    <string name="quickspace_app_memory_info_title">Show app memory info</string>
+    <string name="quickspace_app_memory_info_summary">Show memory usage of encouraged/discouraged apps in messages</string>
+
     <string-array name="quickspace_psa_morning">
         <item>Good morning!</item>
         <item>Good morning, gamer!</item>
