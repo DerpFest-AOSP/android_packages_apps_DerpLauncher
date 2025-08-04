@@ -31,6 +31,7 @@ import com.android.launcher3.R;
 import com.android.launcher3.util.PackageUserKey;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class QuickspaceController implements LauncherNotifications.NotificationUpdateListener {
@@ -73,13 +74,23 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
     }
 
     public void addListener(OnDataListener listener) {
-        mListeners.add(listener);
+        if (listener == null) return;
+        
+        synchronized (mListeners) {
+            if (!mListeners.contains(listener)) {
+                mListeners.add(listener);
+            }
+        }
         addWeatherProvider();
         listener.onDataUpdated();
     }
 
     public void removeListener(OnDataListener listener) {
-        mListeners.remove(listener);
+        if (listener == null) return;
+        
+        synchronized (mListeners) {
+            mListeners.remove(listener);
+        }
     }
 
     public boolean isQuickEvent() {
@@ -181,15 +192,24 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
         try {
             notifyListeners();
         } catch(Exception e) {
-            // Do nothing
+            Log.e(TAG, "Error updating weather", e);
         }
     }
 
     private Runnable mOnDataUpdatedRunnable = new Runnable() {
         @Override
         public void run() {
-            for (OnDataListener list : mListeners) {
-                list.onDataUpdated();
+            List<OnDataListener> listenersCopy;
+            synchronized (mListeners) {
+                listenersCopy = new ArrayList<>(mListeners);
+            }
+            
+            for (OnDataListener listener : listenersCopy) {
+                try {
+                    listener.onDataUpdated();
+                } catch (Exception e) {
+                    Log.e(TAG, "Error notifying listener", e);
+                }
             }
         }
     };
@@ -262,6 +282,29 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
     public void onDestroy() {
         cancelListeners();
         mMetadata.clear();
+        
+        // Properly cleanup RemoteController
+        if (mRemoteController != null && mAudioManager != null) {
+            try {
+                mAudioManager.unregisterRemoteController(mRemoteController);
+            } catch (Exception e) {
+                Log.w(TAG, "Error unregistering RemoteController", e);
+            }
+            mRemoteController = null;
+        }
+        
+        // Clear all pending handler callbacks
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
+        
+        // Clear listeners safely
+        synchronized (mListeners) {
+            mListeners.clear();
+        }
+        
+        // Clear context reference
+        mContext = null;
     }
 
     class Metadata {

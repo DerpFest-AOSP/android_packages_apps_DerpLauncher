@@ -47,7 +47,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class QuickEventsController {
 
-    private final Context mContext;
+    private Context mContext;
 
     private String mEventTitle;
     private String mEventTitleSub;
@@ -68,10 +68,10 @@ public class QuickEventsController {
     private boolean mAppsScanned = false;
     private final boolean mDebugMode = false;
 
-    private final Map<Integer, String[]> mCachedPSAMap = new HashMap<>();
-    private final Set<String> mKnownMatchedApps = new HashSet<>();
-    private final Map<String, AppType> mWatchedKeywordMap = new HashMap<>();
-    private final Map<String, AppType> mMatchedAppTypes = new HashMap<>();
+    private Map<Integer, String[]> mCachedPSAMap = new HashMap<>();
+    private Set<String> mKnownMatchedApps = new HashSet<>();
+    private Map<String, AppType> mWatchedKeywordMap = new HashMap<>();
+    private Map<String, AppType> mMatchedAppTypes = new HashMap<>();
 
     private enum AppType {
         ENCOURAGED,
@@ -159,37 +159,53 @@ public class QuickEventsController {
     }
 
     private void registerPSAListener() {
-        if (mPSAListenerRegistered) return;
-        IntentFilter psonalityIntent = new IntentFilter();
-        psonalityIntent.addAction(Intent.ACTION_TIME_TICK);
-        psonalityIntent.addAction(Intent.ACTION_TIME_CHANGED);
-        psonalityIntent.addAction(Intent.ACTION_TIMEZONE_CHANGED);
-        mContext.registerReceiver(mPSAListener, psonalityIntent);
-        mPSAListenerRegistered = true;
+        if (mPSAListenerRegistered || mContext == null) return;
+        try {
+            IntentFilter psonalityIntent = new IntentFilter();
+            psonalityIntent.addAction(Intent.ACTION_TIME_TICK);
+            psonalityIntent.addAction(Intent.ACTION_TIME_CHANGED);
+            psonalityIntent.addAction(Intent.ACTION_TIMEZONE_CHANGED);
+            mContext.registerReceiver(mPSAListener, psonalityIntent);
+            mPSAListenerRegistered = true;
+        } catch (Exception e) {
+            Log.e("QuickEvents", "Error registering PSA listener", e);
+        }
     }
 
     private void unregisterPSAListener() {
-        if (!mPSAListenerRegistered) return;
-        mContext.unregisterReceiver(mPSAListener);
-        mPSAListenerRegistered = false;
+        if (!mPSAListenerRegistered || mContext == null) return;
+        try {
+            mContext.unregisterReceiver(mPSAListener);
+            mPSAListenerRegistered = false;
+        } catch (Exception e) {
+            Log.e("QuickEvents", "Error unregistering PSA listener", e);
+        }
     }
 
     private void registerPackageChangeReceiver() {
-        if (mPackageChangeListenerRegistered) return;
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_PACKAGE_ADDED);
-        filter.addAction(Intent.ACTION_PACKAGE_CHANGED);
-        filter.addAction(Intent.ACTION_PACKAGE_REPLACED);
-        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
-        filter.addDataScheme("package");
-        mContext.registerReceiver(mPackageChangeReceiver, filter);
-        mPackageChangeListenerRegistered = true;
+        if (mPackageChangeListenerRegistered || mContext == null) return;
+        try {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(Intent.ACTION_PACKAGE_ADDED);
+            filter.addAction(Intent.ACTION_PACKAGE_CHANGED);
+            filter.addAction(Intent.ACTION_PACKAGE_REPLACED);
+            filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+            filter.addDataScheme("package");
+            mContext.registerReceiver(mPackageChangeReceiver, filter);
+            mPackageChangeListenerRegistered = true;
+        } catch (Exception e) {
+            Log.e("QuickEvents", "Error registering package change receiver", e);
+        }
     }
 
     private void unregisterPackageChangeReceiver() {
-        if (mPackageChangeListenerRegistered) return;
-        mContext.unregisterReceiver(mPackageChangeReceiver);
-        mPackageChangeListenerRegistered = false;
+        if (!mPackageChangeListenerRegistered || mContext == null) return;
+        try {
+            mContext.unregisterReceiver(mPackageChangeReceiver);
+            mPackageChangeListenerRegistered = false;
+        } catch (Exception e) {
+            Log.e("QuickEvents", "Error unregistering package change receiver", e);
+        }
     }
 
     private void checkAppForKeywords(String packageName) {
@@ -222,6 +238,8 @@ public class QuickEventsController {
     }
 
     private String getAppLabelSafe(String packageName) {
+        if (packageName == null || mContext == null) return "";
+        
         try {
             PackageManager pm = mContext.getPackageManager();
             ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
@@ -230,6 +248,9 @@ public class QuickEventsController {
           //may result in com.packagename.appname to be shown in an edge case until refresh,
           //but better than empty (or exception)
           return packageName;
+        } catch (Exception e) {
+            Log.e("QuickEvents", "Error getting app label for " + packageName, e);
+            return packageName;
         }
     }
 
@@ -462,6 +483,27 @@ public class QuickEventsController {
         //}
     }
 
+    public void onDestroy() {
+        onPause();
+        
+        // Clear cached data
+        if (mCachedPSAMap != null) {
+            mCachedPSAMap.clear();
+        }
+        if (mKnownMatchedApps != null) {
+            mKnownMatchedApps.clear();
+        }
+        if (mWatchedKeywordMap != null) {
+            mWatchedKeywordMap.clear();
+        }
+        if (mMatchedAppTypes != null) {
+            mMatchedAppTypes.clear();
+        }
+        
+        // Clear context reference
+        mContext = null;
+    }
+
     private String[] getCachedArray(int resId) {
         if (!mCachedPSAMap.containsKey(resId)) {
             mCachedPSAMap.put(resId, mContext.getResources().getStringArray(resId));
@@ -470,9 +512,14 @@ public class QuickEventsController {
     }
 
     private String getMemoryInfoForPackage(String packageName) {
+        if (packageName == null || mContext == null) return "";
+        
         try {
             ActivityManager activityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+            if (activityManager == null) return "";
+            
             List<ActivityManager.RunningAppProcessInfo> runningProcesses = activityManager.getRunningAppProcesses();
+            if (runningProcesses == null) return "";
 
             for (ActivityManager.RunningAppProcessInfo procInfo : runningProcesses) {
                 if (Arrays.asList(procInfo.pkgList).contains(packageName)) {
@@ -486,14 +533,18 @@ public class QuickEventsController {
                 }
             }
         } catch (Exception e) {
-            // ignored, fallback below
+            Log.e("QuickEvents", "Error getting memory info for " + packageName, e);
         }
         return "";
     }
 
     private String getOwnMemoryFootprint() {
+        if (mContext == null) return "- MB";
+        
         try {
             ActivityManager activityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+            if (activityManager == null) return "- MB";
+            
             int pid = android.os.Process.myPid();
             Debug.MemoryInfo[] memoryInfoArray = activityManager.getProcessMemoryInfo(new int[]{pid});
             if (memoryInfoArray.length > 0) {
@@ -502,7 +553,7 @@ public class QuickEventsController {
                 return String.format("%.1f MB", totalMb);
             }
         } catch (Exception e) {
-            // ignored, fallback below
+            Log.e("QuickEvents", "Error getting own memory footprint", e);
         }
         return "- MB";
     }
