@@ -319,8 +319,58 @@ public class QuickEventsController {
         //§ is placeholder to be substituted for appName
         String appMessage = "§";
         
-        //dedicated 420 quote
-        if ((hour == 4 || hour == 16) && (minute >= 20 && minute < 30)) {
+        int chance = (int)(ThreadLocalRandom.current().nextDouble() * 100);
+        if (chance < mRandomDayQuotePercent) {
+            String detectedApp = getMatchedKeywordApp();
+            //50% chance of random day quote chance to display app quote
+            //if any app match was found, that is.
+            if (detectedApp != null && chance < mRandomDayQuotePercent / 2) {
+                String appLabel = getAppLabelSafe(detectedApp);
+                AppType type = mMatchedAppTypes.get(detectedApp);
+                switch(type) {
+                    case AppType.ENCOURAGED:
+                        mPSAEncouragedStr = getCachedArray(R.array.quickspace_psa_encouraged_apps_messages);
+                        appMessage = mPSAEncouragedStr[getLuckyNumber(0, mPSAEncouragedStr.length - 1)];
+                        mEventTitleSub = replacePlaceholderWithContent(appMessage, appLabel);
+                        break;
+                    case AppType.DISCOURAGED:
+                        mPSADiscouragedStr = getCachedArray(R.array.quickspace_psa_discouraged_apps_messages);
+                        appMessage = mPSADiscouragedStr[getLuckyNumber(0, mPSADiscouragedStr.length - 1)];
+                        mEventTitleSub = replacePlaceholderWithContent(appMessage, appLabel);
+                        break;
+                    default:
+                        //should never happen, but let's cover it anyway.
+                        mEventTitleSub = "How's " + appLabel + " treating you?";
+                        break;
+                }
+
+                // make detected apps clickable
+                mEventTitleSubAction = view -> {
+                    Intent launchIntent =
+                        mContext.getPackageManager().getLaunchIntentForPackage(detectedApp);
+                    if (launchIntent != null) {
+                        launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Launcher.getLauncher(mContext).startActivitySafely(view, launchIntent, null);
+                    }
+                };
+                
+                if (mQuickEventAppMemoryInfo) {
+                    String appMemInfo = getMemoryInfoForPackage(detectedApp);
+                    //avoid <packageName> | <nothing> aka ""
+                    mEventTitleSub += appMemInfo == "" ? "" : " | " + appMemInfo;
+                }
+                mEventSubIcon = R.drawable.ic_quickspace_derp;
+            } else {
+                //regular random derp quote
+                mEventTitleSub = mPSARandomStr[getLuckyNumber(0, mPSARandomStr.length - 1)];
+                mEventSubIcon = R.drawable.ic_quickspace_derp;
+            }
+
+            //it's always a quickEvent in these cases
+            mIsQuickEvent = true;
+        }
+        else if ((hour == 4 || hour == 16) && (minute >= 20 && minute < 30)) {
+            //dedicated 420 quote
             mEventTitleSub = mPSABlazeItStr[getLuckyNumber(0, mPSABlazeItStr.length - 1)];
             mEventSubIcon = R.drawable.ic_quickspace_derp;
             mIsQuickEvent = true;
@@ -341,58 +391,8 @@ public class QuickEventsController {
                 mIsQuickEvent = true;
                 break;
             default:
-                int chance = (int)(ThreadLocalRandom.current().nextDouble() * 100);
-                if (chance < mRandomDayQuotePercent) {
-                    String detectedApp = getMatchedKeywordApp();
-                    //50% chance of random day quote chance to display app quote
-                    //if any app match was found, that is.
-                    if (detectedApp != null && chance < mRandomDayQuotePercent / 2) {
-                        String appLabel = getAppLabelSafe(detectedApp);
-                        AppType type = mMatchedAppTypes.get(detectedApp);
-                        switch(type) {
-                            case AppType.ENCOURAGED:
-                                mPSAEncouragedStr = getCachedArray(R.array.quickspace_psa_encouraged_apps_messages);
-                                appMessage = mPSAEncouragedStr[getLuckyNumber(0, mPSAEncouragedStr.length - 1)];
-                                mEventTitleSub = replacePlaceholderWithContent(appMessage, appLabel);
-                                break;
-                            case AppType.DISCOURAGED:
-                                mPSADiscouragedStr = getCachedArray(R.array.quickspace_psa_discouraged_apps_messages);
-                                appMessage = mPSADiscouragedStr[getLuckyNumber(0, mPSADiscouragedStr.length - 1)];
-                                mEventTitleSub = replacePlaceholderWithContent(appMessage, appLabel);
-                                break;
-                            default:
-                                //should never happen, but let's cover it anyway.
-                                mEventTitleSub = "How's " + appLabel + " treating you?";
-                                break;
-                        }
-
-                        // make detected apps clickable
-                        mEventTitleSubAction = view -> {
-                            Intent launchIntent =
-                                mContext.getPackageManager().getLaunchIntentForPackage(detectedApp);
-                            if (launchIntent != null) {
-                                launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                Launcher.getLauncher(mContext).startActivitySafely(view, launchIntent, null);
-                            }
-                        };
-                        
-                        if (mQuickEventAppMemoryInfo) {
-                            String appMemInfo = getMemoryInfoForPackage(detectedApp);
-                            //avoid <packageName> | <nothing> aka ""
-                            mEventTitleSub += appMemInfo == "" ? "" : " | " + appMemInfo;
-                        }
-                        mEventSubIcon = R.drawable.ic_quickspace_derp;
-                    } else {
-                        //regular random derp quote
-                        mEventTitleSub = mPSARandomStr[getLuckyNumber(0, mPSARandomStr.length - 1)];
-                        mEventSubIcon = R.drawable.ic_quickspace_derp;
-                    }
-
-                    //it's always a quickEvent in these cases
-                    mIsQuickEvent = true;
-                } else {
-                    mIsQuickEvent = false;
-                }
+                //no quote
+                mIsQuickEvent = false;
                 break;
         }
 
