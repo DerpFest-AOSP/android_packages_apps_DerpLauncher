@@ -38,6 +38,8 @@ import io.chaldeaprjkt.seraphixgoogle.Card;
 import io.chaldeaprjkt.seraphixgoogle.DataProviderListener;
 import io.chaldeaprjkt.seraphixgoogle.SeraphixDataProvider;
 
+import android.util.Log;
+
 public class QuickSpaceView extends FrameLayout implements OnDataListener {
 
     private static final String TAG = "Launcher3:QuickSpaceView";
@@ -131,11 +133,20 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
+        if (mController != null && mFinishedInflate) {
+            mController.addListener(this);
+        }
     }
 
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        if (mController != null) {
+            mController.removeListener(this);
+        }
+        if (mSeraphixDataProvider != null) {
+            mSeraphixDataProvider.unbind();
+        }
     }
 
     private void onGlobalLayout() {
@@ -160,28 +171,43 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
     }
 
     public void onPause() {
-        mController.onPause();
+        if (mController != null) {
+            mController.onPause();
+        }
     }
 
     public void onResume() {
         if (mController != null && mFinishedInflate) {
             mController.addListener(this);
         }
-        mController.onResume();
+        if (mController != null) {
+            mController.onResume();
+        }
     }
 
     public void onDestroy() {
-        mController.onDestroy();
-        mActionReceiver = null;
+        if (mController != null) {
+            mController.onDestroy();
+        }
+        if (mActionReceiver != null) {
+            mActionReceiver = null;
+        }
         mController = null;
-        mSeraphixDataProvider = null;
+        if (mSeraphixDataProvider != null) {
+            mSeraphixDataProvider.unbind();
+            mSeraphixDataProvider = null;
+        }
     }
 
     private final DataProviderListener mDataProviderListener = new DataProviderListener() {
         @Override
         public void onDataUpdated(@NonNull Card card) {
             if (mController == null) return;
-            mController.updateWeatherData(card.getText(), card.getImage());
+            try {
+                mController.updateWeatherData(card.getText(), card.getImage());
+            } catch (Exception e) {
+                Log.e(TAG, "Error updating weather data", e);
+            }
         }
     };
 
