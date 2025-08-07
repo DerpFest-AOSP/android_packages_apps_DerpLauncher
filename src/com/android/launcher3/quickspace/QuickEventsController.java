@@ -378,7 +378,9 @@ public class QuickEventsController {
                 if (mQuickEventAppMemoryInfo) {
                     String appMemInfo = getMemoryInfoForPackage(detectedApp);
                     //avoid <packageName> | <nothing> aka ""
-                    mEventTitleSub += appMemInfo == "" ? "" : " | " + appMemInfo;
+                    if (!appMemInfo.isEmpty()) {
+                        mEventTitleSub += " | " + appMemInfo;
+                    }
                 }
                 mEventSubIcon = R.drawable.ic_quickspace_derp;
             } else {
