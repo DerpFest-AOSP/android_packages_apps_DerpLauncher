@@ -16,6 +16,6 @@
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:color="@android:color/transparent" android:state_focused="true" />
-    <item android:color="?searchHintHighlight" />
+    <item android:color="?android:attr/textColorSecondary" />
 </selector>
 
