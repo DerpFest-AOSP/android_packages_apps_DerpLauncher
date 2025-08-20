@@ -23,7 +23,7 @@
     android:background="@drawable/bg_all_apps_searchbox"
     android:focusableInTouchMode="true"
     android:gravity="center_vertical"
-    android:hint="@string/qsb_search_hint"
+    android:hint="@null"
     android:imeOptions="actionSearch|flagNoExtractUi"
     android:importantForAutofill="no"
     android:inputType="text|textNoSuggestions|textCapWords"
