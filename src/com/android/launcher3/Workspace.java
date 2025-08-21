@@ -63,6 +63,7 @@ import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -415,6 +416,9 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
                 break;
             case 9: // Clear all apps
                 clearAllApps();
+                break;
+            case 10: // Recents
+                derpUtils.sendKeycode(KeyEvent.KEYCODE_APP_SWITCH);
                 break;
         }
     }

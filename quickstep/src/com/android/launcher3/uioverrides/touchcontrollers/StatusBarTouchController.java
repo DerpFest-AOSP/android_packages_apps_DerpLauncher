@@ -20,6 +20,7 @@ import static android.view.MotionEvent.ACTION_DOWN;
 import static android.view.MotionEvent.ACTION_MOVE;
 import static android.view.MotionEvent.ACTION_UP;
 import static android.view.WindowManager.LayoutParams.FLAG_SLIPPERY;
+import static android.view.KeyEvent.KEYCODE_APP_SWITCH;
 
 import static com.android.launcher3.LauncherState.OVERVIEW;
 import static com.android.launcher3.MotionEventsUtils.isTrackpadScroll;
@@ -138,6 +139,9 @@ public class StatusBarTouchController implements TouchController {
                 break;
             case 9: // Clear all apps
                 clearAllApps();
+                break;
+            case 10: // Recents
+                derpUtils.sendKeycode(KEYCODE_APP_SWITCH);
                 break;
         }
     }
