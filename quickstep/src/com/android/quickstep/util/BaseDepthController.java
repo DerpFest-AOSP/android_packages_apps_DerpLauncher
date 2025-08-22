@@ -189,8 +189,15 @@ public class BaseDepthController {
         } else {
             blurAmount = depth;
         }
+        
+        // Use custom blur radius for all apps when enabled
+        int maxBlurRadius = mMaxBlurRadius;
+        if (Utilities.shouldEnableAllAppsBlur(mLauncher)) {
+            maxBlurRadius = Utilities.getAllAppsBlurRadius(mLauncher);
+        }
+        
         mCurrentBlur = !mCrossWindowBlursEnabled || hasOpaqueBg || mPauseBlurs
-                ? 0 : (int) (blurAmount * mMaxBlurRadius);
+                ? 0 : (int) (blurAmount * maxBlurRadius);
 
         SurfaceControl.Transaction transaction = new SurfaceControl.Transaction();
         if (enableOverviewBackgroundWallpaperBlur() && mBlurSurface != null) {

@@ -194,4 +194,11 @@
 
     <!-- Shake Clear Recents -->
     <string name="recents_shake_clear_all_title">Telefon schütteln zum Schließen aller Apps</string>
+
+    <!-- All Apps Blur -->
+    <string name="blur_category_title">Unschärfe-Effekte</string>
+    <string name="allapps_blur_title">App-Übersicht-Unschärfe</string>
+    <string name="allapps_blur_summary">Hintergrund der App-Übersicht unscharf machen</string>
+    <string name="allapps_blur_radius_title">Unschärfe-Radius</string>
+    <string name="allapps_blur_radius_summary">Intensität des Unschärfe-Effekts anpassen</string>
 </resources>

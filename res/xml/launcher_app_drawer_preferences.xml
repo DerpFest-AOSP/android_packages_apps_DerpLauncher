@@ -50,12 +50,29 @@
         android:persistent="true"
         launcher:iconSpaceReserved="false" />
 
-    <SwitchPreferenceCompat
-        android:key="pref_allapps_blur"
-        android:title="@string/allapps_blur_title"
-        android:summary="@string/allapps_blur_summary"
-        android:defaultValue="true"
-        android:persistent="true"
-        launcher:iconSpaceReserved="false" />
+    <PreferenceCategory
+        android:title="@string/blur_category_title">
+
+        <SwitchPreferenceCompat
+            android:key="pref_allapps_blur"
+            android:title="@string/allapps_blur_title"
+            android:summary="@string/allapps_blur_summary"
+            android:defaultValue="true"
+            android:persistent="true"
+            launcher:iconSpaceReserved="false" />
+
+        <com.android.launcher3.settings.preferences.ProperSeekBarPreference
+            android:key="pref_allapps_blur_radius"
+            android:title="@string/allapps_blur_radius_title"
+            android:summary="@string/allapps_blur_radius_summary"
+            android:dependency="pref_allapps_blur"
+            android:persistent="true"
+            android:max="175"
+            android:min="30"
+            settings:units="px"
+            android:defaultValue="75"
+            launcher:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

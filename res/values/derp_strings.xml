@@ -204,8 +204,11 @@
     <string name="pref_auto_keyboard_summary">Start searching when the drawer is expanded</string>
 
     <!-- All Apps Blur -->
+    <string name="blur_category_title">Blur effects</string>
     <string name="allapps_blur_title">All Apps blur</string>
     <string name="allapps_blur_summary">Blur content behind the all apps panel</string>
+    <string name="allapps_blur_radius_title">Blur radius</string>
+    <string name="allapps_blur_radius_summary">Adjust the intensity of the blur effect</string>
 
     <!-- A widget category label for grouping widgets related to battery. [CHAR_LIMIT=30] -->
     <string name="widget_category_battery">Battery</string>

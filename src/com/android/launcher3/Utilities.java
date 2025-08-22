@@ -204,6 +204,7 @@ public final class Utilities {
     public static final String KEY_RECENTS_CHIPS = "pref_recents_chips";
     public static final String KEY_AUTO_KEYABORD = "pref_auto_keyboard";
     public static final String KEY_ALL_APPS_BLUR = "pref_allapps_blur";
+    public static final String KEY_ALL_APPS_BLUR_RADIUS = "pref_allapps_blur_radius";
 
     /**
      * Returns true if theme is dark.
@@ -1312,5 +1313,14 @@ public final class Utilities {
         SharedPreferences prefs = context.getSharedPreferences(
                 LauncherFiles.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
         return prefs.getBoolean(KEY_ALL_APPS_BLUR, true);
+    }
+
+    /**
+     * Returns the blur radius for all apps blur effect.
+     */
+    public static int getAllAppsBlurRadius(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(
+                LauncherFiles.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        return prefs.getInt(KEY_ALL_APPS_BLUR_RADIUS, 75);
     }
 }
