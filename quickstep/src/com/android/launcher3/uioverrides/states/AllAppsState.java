@@ -25,6 +25,7 @@ import com.android.internal.jank.Cuj;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Flags;
 import com.android.launcher3.Launcher;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.LauncherState;
 import com.android.launcher3.R;
 import com.android.launcher3.util.Themes;
@@ -154,7 +155,7 @@ public class AllAppsState extends LauncherState {
         return new PageAlphaProvider(DECELERATE_2) {
             @Override
             public float getPageAlpha(int pageIndex) {
-                return isWorkspaceVisible(launcher.getDeviceProfile())
+                return isWorkspaceVisible(launcher.getDeviceProfile(), launcher)
                         ? superPageAlphaProvider.getPageAlpha(pageIndex)
                         : 0;
             }
@@ -164,15 +165,15 @@ public class AllAppsState extends LauncherState {
     @Override
     public int getVisibleElements(Launcher launcher) {
         int elements = ALL_APPS_CONTENT | FLOATING_SEARCH_BAR;
-        if (isWorkspaceVisible(launcher.getDeviceProfile())) {
+        if (isWorkspaceVisible(launcher.getDeviceProfile(), launcher)) {
             elements |= HOTSEAT_ICONS;
         }
         return elements;
     }
 
-    private static boolean isWorkspaceVisible(DeviceProfile deviceProfile) {
+    private static boolean isWorkspaceVisible(DeviceProfile deviceProfile, Launcher launcher) {
         // Currently we hide the workspace with the all apps blur flag for simplicity.
-        return deviceProfile.isTablet && !Flags.allAppsBlur();
+        return deviceProfile.isTablet && !Utilities.shouldEnableAllAppsBlur(launcher);
     }
 
     @Override
@@ -209,7 +210,7 @@ public class AllAppsState extends LauncherState {
         if (!launcher.getDeviceProfile().shouldShowAllAppsOnSheet()) {
             return Themes.getAttrColor(launcher, R.attr.allAppsScrimColor);
         }
-        if (Flags.allAppsBlur()) {
+        if (Utilities.shouldEnableAllAppsBlur(launcher)) {
             return Themes.getAttrColor(launcher, R.attr.allAppsScrimColorOverBlur);
         }
         return launcher.getResources().getColor(R.color.widgets_picker_scrim);

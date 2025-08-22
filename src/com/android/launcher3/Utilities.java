@@ -98,6 +98,8 @@ import androidx.core.graphics.ColorUtils;
 import com.android.launcher3.LauncherModel;
 import com.android.launcher3.R;
 import com.android.launcher3.dragndrop.FolderAdaptiveIcon;
+import com.android.launcher3.Flags;
+import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.graphics.TintedDrawableSpan;
 import com.android.launcher3.icons.BitmapInfo;
@@ -201,6 +203,7 @@ public final class Utilities {
     public static final String KEY_SINGLE_PAGE_CENTER = "pref_single_page_center";
     public static final String KEY_RECENTS_CHIPS = "pref_recents_chips";
     public static final String KEY_AUTO_KEYABORD = "pref_auto_keyboard";
+    public static final String KEY_ALL_APPS_BLUR = "pref_allapps_blur";
 
     /**
      * Returns true if theme is dark.
@@ -1293,5 +1296,21 @@ public final class Utilities {
         return Settings.Secure.getInt(context.getContentResolver(),
                 Settings.Secure.SEARCH_ALL_ENTRYPOINTS_ENABLED, 1)
                 == 1;
+    }
+
+    /**
+     * Returns true if all apps blur should be enabled.
+     * This checks both the aconfig flag and user preference.
+     */
+    public static boolean shouldEnableAllAppsBlur(Context context) {
+        // First check the aconfig flag
+        if (!Flags.allAppsBlur()) {
+            return false;
+        }
+        
+        // Then check user preference (default to true if not set)
+        SharedPreferences prefs = context.getSharedPreferences(
+                LauncherFiles.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        return prefs.getBoolean(KEY_ALL_APPS_BLUR, true);
     }
 }

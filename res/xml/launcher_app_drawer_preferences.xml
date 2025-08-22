@@ -50,4 +50,12 @@
         android:persistent="true"
         launcher:iconSpaceReserved="false" />
 
+    <SwitchPreferenceCompat
+        android:key="pref_allapps_blur"
+        android:title="@string/allapps_blur_title"
+        android:summary="@string/allapps_blur_summary"
+        android:defaultValue="true"
+        android:persistent="true"
+        launcher:iconSpaceReserved="false" />
+
 </androidx.preference.PreferenceScreen>
