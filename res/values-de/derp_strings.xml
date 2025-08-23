@@ -203,4 +203,8 @@
     <string name="allapps_blur_summary">Hintergrund der App-Übersicht unscharf machen</string>
     <string name="allapps_blur_radius_title">Unschärfe-Radius</string>
     <string name="allapps_blur_radius_summary">Intensität des Unschärfe-Effekts anpassen</string>
+
+    <!-- Force All Apps on Bottom Sheet -->
+    <string name="force_all_apps_on_bottom_sheet_title">App-Übersicht als unteres Bottom Sheet erzwingen</string>
+    <string name="force_all_apps_on_bottom_sheet_summary">App-Übersicht wird in einem unteren Bottom Sheet anstatt im Vollbildmodus angezeigt</string>
 </resources>

@@ -212,6 +212,10 @@
     <string name="allapps_blur_radius_title">Blur radius</string>
     <string name="allapps_blur_radius_summary">Adjust the intensity of the blur effect</string>
 
+    <!-- Force All Apps on Bottom Sheet -->
+    <string name="force_all_apps_on_bottom_sheet_title">Force all apps on bottom sheet</string>
+    <string name="force_all_apps_on_bottom_sheet_summary">Force all apps to be presented on a bottom sheet instead of full screen</string>
+
     <!-- A widget category label for grouping widgets related to battery. [CHAR_LIMIT=30] -->
     <string name="widget_category_battery">Battery</string>
 

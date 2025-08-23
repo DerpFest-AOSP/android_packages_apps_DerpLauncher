@@ -465,6 +465,7 @@ public class Launcher extends StatefulActivity<LauncherState>
                         case Utilities.KEY_SHOW_QUICKSPACE_PSONALITY:
                         case Utilities.KEY_ALL_APPS_BLUR:
                         case Utilities.KEY_ALL_APPS_BLUR_RADIUS:
+                        case Utilities.KEY_FORCE_ALL_APPS_ON_BOTTOM_SHEET:
                             mNeedsRestart = true;
                             break;
                         default:
