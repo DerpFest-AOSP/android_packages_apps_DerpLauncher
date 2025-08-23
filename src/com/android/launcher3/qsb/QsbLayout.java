@@ -28,6 +28,7 @@ public class QsbLayout extends FrameLayout implements Reorderable,
     ImageView mAssistantIcon;
     ImageView mGoogleIcon;
     ImageView mLensIcon;
+    ImageView mAiModeButton;
     Context mContext;
 
     private final MultiTranslateDelegate mTranslateDelegate = new MultiTranslateDelegate(this);
@@ -49,6 +50,7 @@ public class QsbLayout extends FrameLayout implements Reorderable,
         mAssistantIcon = findViewById(R.id.mic_icon);
         mGoogleIcon = findViewById(R.id.g_icon);
         mLensIcon = findViewById(R.id.lens_icon);
+        mAiModeButton = findViewById(R.id.ai_mode_button);
         setIcons();
 
         LauncherPrefs.getPrefs(mContext).registerOnSharedPreferenceChangeListener(this);
@@ -91,10 +93,12 @@ public class QsbLayout extends FrameLayout implements Reorderable,
             mAssistantIcon.setImageResource(R.drawable.ic_mic_themed);
             mGoogleIcon.setImageResource(R.drawable.ic_super_g_themed);
             mLensIcon.setImageResource(R.drawable.ic_lens_themed);
+            mAiModeButton.setImageResource(R.drawable.ic_ai_mode_themed);
         } else {
             mAssistantIcon.setImageResource(R.drawable.ic_mic_color);
             mGoogleIcon.setImageResource(R.drawable.ic_super_g_color);
             mLensIcon.setImageResource(R.drawable.ic_lens_color);
+            mAiModeButton.setImageResource(R.drawable.ic_ai_mode_color);
         }
     }
 

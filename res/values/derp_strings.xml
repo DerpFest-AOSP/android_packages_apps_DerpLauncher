@@ -96,6 +96,8 @@
     <string name="label_search">Search</string>
     <string name="label_lens">Google Lens</string>
     <string name="label_voice_search">Voice search</string>
+    <string name="label_ai_mode">AI Mode</string>
+    <string name="ai_mode_not_available">AI functionality not available</string>
     <string name="dock_search_title">Google search bar</string>
     <string name="dock_search_summary">Search bar in the bottom dock</string>
 

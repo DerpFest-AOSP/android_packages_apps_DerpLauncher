@@ -40,13 +40,15 @@
 
     <dimen name="dynamic_grid_hotseat_side_padding">0dp</dimen>
 
-    <dimen name="qsb_g_icon_marginStart">16dp</dimen>
+    <dimen name="qsb_g_icon_marginStart">20dp</dimen>
     <dimen name="qsb_lens_padding">8dp</dimen>
-    <dimen name="qsb_marginEnd">4dp</dimen>
+    <dimen name="qsb_marginEnd">8dp</dimen>
     <dimen name="qsb_shadow_margin">6dp</dimen>
     <dimen name="qsb_widget_height">63dp</dimen>
     <dimen name="qsb_icon_tap_size">48dp</dimen>
     <dimen name="qsb_icon_padding">8dp</dimen>
+    <dimen name="qsb_ai_mode_button_size">40dp</dimen>
+    <dimen name="qsb_ai_mode_button_margin">8dp</dimen>
 
     <!-- Scalable Grid -->
     <dimen name="min_qsb_margin">8dp</dimen>
