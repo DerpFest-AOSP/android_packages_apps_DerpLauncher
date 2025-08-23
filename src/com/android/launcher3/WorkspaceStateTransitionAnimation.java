@@ -213,7 +213,7 @@ public class WorkspaceStateTransitionAnimation {
         
         // Set scrim view alpha to allow blur to show through when all apps blur is enabled
         if (state == LauncherState.ALL_APPS && Utilities.shouldEnableAllAppsBlur(mLauncher)) {
-            propertySetter.setFloat(mLauncher.getScrimView(), VIEW_ALPHA, 0.8f, LINEAR);
+            propertySetter.setFloat(mLauncher.getScrimView(), VIEW_ALPHA, 0.7f, LINEAR);
         } else {
             propertySetter.setFloat(mLauncher.getScrimView(), VIEW_ALPHA, 1f, LINEAR);
         }
