@@ -58,6 +58,9 @@ public class AiModeButtonView extends ImageView {
             } catch (ActivityNotFoundException e) {
                 Log.d(TAG, "Activity not found: " + activityName);
                 continue; // Try the next activity
+            } catch (SecurityException e) {
+                Log.w(TAG, "Security exception launching AI activity: " + activityName + ", " + e.getMessage());
+                continue; // Try the next activity
             }
         }
 
@@ -79,7 +82,23 @@ public class AiModeButtonView extends ImageView {
                 return;
             } catch (ActivityNotFoundException e) {
                 Log.d(TAG, "AI intent action not found: " + intentAction);
+            } catch (SecurityException e) {
+                Log.w(TAG, "Security exception launching AI intent: " + intentAction + ", " + e.getMessage());
             }
+        }
+
+        // Try launching Google app's main search activity as fallback
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW)
+                    .setPackage(Utilities.GSA_PACKAGE)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(intent);
+            Log.d(TAG, "Falling back to Google app main activity");
+            return;
+        } catch (ActivityNotFoundException e) {
+            Log.d(TAG, "Google app main activity not found");
+        } catch (SecurityException e) {
+            Log.w(TAG, "Security exception launching Google app: " + e.getMessage());
         }
 
         // Final fallback: use the original voice command behavior
@@ -91,6 +110,9 @@ public class AiModeButtonView extends ImageView {
             Log.d(TAG, "Falling back to voice command");
         } catch (ActivityNotFoundException e) {
             Log.e(TAG, "No AI or voice command activities found");
+            Toast.makeText(context, R.string.ai_mode_not_available, Toast.LENGTH_SHORT).show();
+        } catch (SecurityException e) {
+            Log.e(TAG, "Security exception launching voice command: " + e.getMessage());
             Toast.makeText(context, R.string.ai_mode_not_available, Toast.LENGTH_SHORT).show();
         }
     }
