@@ -176,6 +176,7 @@ import com.android.launcher3.util.IntArray;
 import com.android.launcher3.util.IntSet;
 import com.android.launcher3.util.ResourceBasedOverride.Overrides;
 import com.android.launcher3.util.RunnableList;
+import com.android.launcher3.util.SplitConfigurationOptions;
 import com.android.launcher3.util.SplitConfigurationOptions.SplitBounds;
 import com.android.launcher3.util.SplitConfigurationOptions.SplitSelectSource;
 import com.android.launcher3.util.SplitConfigurationOptions.StagePosition;
@@ -5343,9 +5344,13 @@ public abstract class RecentsView<
      * of split invocation as such.
      */
     public void initiateSplitSelect(TaskContainer taskContainer) {
-        int defaultSplitPosition = getPagedOrientationHandler()
-                .getDefaultSplitPosition(mContainer.getDeviceProfile());
-        initiateSplitSelect(taskContainer, defaultSplitPosition, LAUNCHER_OVERVIEW_ACTIONS_SPLIT);
+        List<SplitConfigurationOptions.SplitPositionOption> options = 
+                getPagedOrientationHandler().getSplitPositionOptions(mContainer.getDeviceProfile());
+        if (!options.isEmpty()) {
+            SplitConfigurationOptions.SplitPositionOption option = options.get(0);
+            initiateSplitSelect(taskContainer, option.stagePosition, 
+                    SplitConfigurationOptions.getLogEventForPosition(option.stagePosition));
+        }
     }
 
     /** TODO(b/266477929): Consolidate this call w/ the one below */
