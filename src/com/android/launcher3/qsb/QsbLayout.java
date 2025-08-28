@@ -83,22 +83,26 @@ public class QsbLayout extends FrameLayout implements Reorderable,
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-        if (key.equals(ThemeManager.KEY_THEMED_ICONS)) {
+        if (key.equals(ThemeManager.KEY_THEMED_ICONS) || 
+            key.equals(LauncherPrefs.DOCK_AI_MUSIC_SEARCH.getKey())) {
             setIcons();
         }
     }
 
     private void setIcons() {
-        if (ThemeManager.INSTANCE.get(mContext).isMonoThemeEnabled()) {
+        boolean isThemed = ThemeManager.INSTANCE.get(mContext).isMonoThemeEnabled();
+        boolean isMusicSearch = Utilities.isAiMusicSearchEnabled(mContext);
+
+        if (isThemed) {
             mAssistantIcon.setImageResource(R.drawable.ic_mic_themed);
             mGoogleIcon.setImageResource(R.drawable.ic_super_g_themed);
             mLensIcon.setImageResource(R.drawable.ic_lens_themed);
-            mAiModeButton.setImageResource(R.drawable.ic_ai_mode_themed);
+            mAiModeButton.setImageResource(isMusicSearch ? R.drawable.ic_music_themed : R.drawable.ic_ai_mode_themed);
         } else {
             mAssistantIcon.setImageResource(R.drawable.ic_mic_color);
             mGoogleIcon.setImageResource(R.drawable.ic_super_g_color);
             mLensIcon.setImageResource(R.drawable.ic_lens_color);
-            mAiModeButton.setImageResource(R.drawable.ic_ai_mode_color);
+            mAiModeButton.setImageResource(isMusicSearch ? R.drawable.ic_music_color : R.drawable.ic_ai_mode_color);
         }
     }
 

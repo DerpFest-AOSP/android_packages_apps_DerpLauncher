@@ -206,6 +206,7 @@ public final class Utilities {
     public static final String KEY_ALL_APPS_BLUR = "pref_allapps_blur";
     public static final String KEY_FORCE_ALL_APPS_ON_BOTTOM_SHEET = "pref_force_all_apps_on_bottom_sheet";
     public static final String KEY_ALL_APPS_BLUR_RADIUS = "pref_allapps_blur_radius";
+    public static final String KEY_DOCK_AI_MUSIC_SEARCH = "pref_dock_ai_music_search";
 
     /**
      * Returns true if theme is dark.
@@ -1333,5 +1334,9 @@ public final class Utilities {
         SharedPreferences prefs = context.getSharedPreferences(
                 LauncherFiles.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
         return prefs.getBoolean(KEY_FORCE_ALL_APPS_ON_BOTTOM_SHEET, true);
+    }
+
+    public static boolean isAiMusicSearchEnabled(Context context) {
+        return LauncherPrefs.DOCK_AI_MUSIC_SEARCH.get(context);
     }
 }

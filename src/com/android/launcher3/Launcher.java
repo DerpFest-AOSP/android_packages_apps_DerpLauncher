@@ -466,6 +466,7 @@ public class Launcher extends StatefulActivity<LauncherState>
                         case Utilities.KEY_ALL_APPS_BLUR:
                         case Utilities.KEY_ALL_APPS_BLUR_RADIUS:
                         case Utilities.KEY_FORCE_ALL_APPS_ON_BOTTOM_SHEET:
+                        case Utilities.KEY_DOCK_AI_MUSIC_SEARCH:
                             mNeedsRestart = true;
                             break;
                         default:
