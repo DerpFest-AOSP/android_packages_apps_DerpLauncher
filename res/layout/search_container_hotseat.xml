@@ -60,7 +60,7 @@
                 android:layout_width="@dimen/qsb_ai_mode_button_size"
                 android:layout_height="@dimen/qsb_ai_mode_button_size"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/qsb_ai_mode_button_margin"
                 android:background="@drawable/bg_ai_mode_button"
                 android:clickable="true"
                 android:contentDescription="@string/label_ai_mode"
