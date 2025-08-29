@@ -83,6 +83,8 @@
     <string name="dock_ai_music_search_summary">Musiksuche beim Drücken der KI-Modus-Taste starten</string>
     <string name="dock_search_title">Google-Suchleiste</string>
     <string name="dock_search_summary">Suchleiste im unteren Dock</string>
+    <string name="qsb_outer_opacity_title">Suchleiste äußere Transparenz</string>
+    <string name="qsb_outer_opacity_summary">Transparenz der äußeren Suchleisten-Form anpassen</string>
 
     <!-- Kill App recents action shortcut -->
     <string name="recent_task_option_kill_app">Beenden</string>

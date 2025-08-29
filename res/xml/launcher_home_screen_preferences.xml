@@ -197,6 +197,16 @@
             android:defaultValue="false"
             launcher:iconSpaceReserved="false" />
 
+        <com.android.launcher3.settings.preferences.ProperSeekBarPreference
+            android:key="pref_qsb_outer_opacity"
+            android:title="@string/qsb_outer_opacity_title"
+            android:summary="@string/qsb_outer_opacity_summary"
+            android:defaultValue="70"
+            android:max="100"
+            android:min="0"
+            settings:units="%"
+            launcher:iconSpaceReserved="false" />
+
     </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

@@ -207,6 +207,7 @@ public final class Utilities {
     public static final String KEY_FORCE_ALL_APPS_ON_BOTTOM_SHEET = "pref_force_all_apps_on_bottom_sheet";
     public static final String KEY_ALL_APPS_BLUR_RADIUS = "pref_allapps_blur_radius";
     public static final String KEY_DOCK_AI_MUSIC_SEARCH = "pref_dock_ai_music_search";
+    public static final String KEY_QSB_OUTER_OPACITY = "pref_qsb_outer_opacity";
 
     /**
      * Returns true if theme is dark.
@@ -1295,6 +1296,11 @@ public final class Utilities {
         return false;
     }
     
+    public static int getQsbOuterOpacity(Context context) {
+        SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
+        return prefs.getInt(KEY_QSB_OUTER_OPACITY, 70);
+    }
+
     public static boolean isLongPressSearchEnabled(Context context) {
         return Settings.Secure.getInt(context.getContentResolver(),
                 Settings.Secure.SEARCH_ALL_ENTRYPOINTS_ENABLED, 1)

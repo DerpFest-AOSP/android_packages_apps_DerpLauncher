@@ -64,6 +64,15 @@ public class QsbLayout extends FrameLayout implements Reorderable,
         if (Utilities.isGSAEnabled(mContext)) {
             enableLensIcon();
         }
+        
+        // Set the custom background drawable
+        post(() -> {
+            View parent = (View) getParent();
+            if (parent != null) {
+                QsbOuterDrawable customDrawable = new QsbOuterDrawable(mContext);
+                parent.setBackground(customDrawable);
+            }
+        });
     }
 
     @Override
@@ -86,6 +95,12 @@ public class QsbLayout extends FrameLayout implements Reorderable,
         if (key.equals(ThemeManager.KEY_THEMED_ICONS) || 
             key.equals(LauncherPrefs.DOCK_AI_MUSIC_SEARCH.getKey())) {
             setIcons();
+        } else if (key.equals(LauncherPrefs.QSB_OUTER_OPACITY.getKey())) {
+            // Update the drawable if it's already set
+            View parent = (View) getParent();
+            if (parent != null && parent.getBackground() instanceof QsbOuterDrawable) {
+                ((QsbOuterDrawable) parent.getBackground()).updateOpacity();
+            }
         }
     }
 
