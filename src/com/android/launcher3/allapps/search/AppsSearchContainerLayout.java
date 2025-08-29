@@ -22,16 +22,20 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
 import static com.android.launcher3.Utilities.prefixTextWithIcon;
 import static com.android.launcher3.icons.IconNormalizer.ICON_VISIBLE_AREA_FACTOR;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.text.Selection;
 import android.text.SpannableStringBuilder;
 import android.text.method.TextKeyListener;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup.MarginLayoutParams;
 
 import com.android.launcher3.DeviceProfile;
@@ -67,6 +71,7 @@ public class AppsSearchContainerLayout extends ExtendedEditText
 
     // The amount of pixels to shift down and overlap with the rest of the content.
     private final int mContentOverlap;
+    private final int searchSideMargin;
 
     public AppsSearchContainerLayout(Context context) {
         this(context, null);
@@ -87,6 +92,8 @@ public class AppsSearchContainerLayout extends ExtendedEditText
 
         mContentOverlap =
                 getResources().getDimensionPixelSize(R.dimen.all_apps_search_bar_content_overlap);
+        searchSideMargin =
+                getResources().getDimensionPixelSize(R.dimen.all_apps_search_bar_margin_side);
     }
 
     @Override
@@ -94,6 +101,7 @@ public class AppsSearchContainerLayout extends ExtendedEditText
         super.onAttachedToWindow();
         if(mAppsView != null)
             mAppsView.getAppsStore().addUpdateListener(this);
+        
     }
 
     @Override
@@ -108,16 +116,23 @@ public class AppsSearchContainerLayout extends ExtendedEditText
         // Update the width to match the grid padding
         DeviceProfile dp = mLauncher.getDeviceProfile();
         int myRequestedWidth = getSize(widthMeasureSpec);
-        int rowWidth = myRequestedWidth - mAppsView.getActiveRecyclerView().getPaddingLeft()
-                - mAppsView.getActiveRecyclerView().getPaddingRight();
+        
+        // Add null check for mAppsView
+        if (mAppsView != null && mAppsView.getActiveRecyclerView() != null) {
+            int rowWidth = myRequestedWidth - mAppsView.getActiveRecyclerView().getPaddingLeft()
+                    - mAppsView.getActiveRecyclerView().getPaddingRight();
 
-        int cellWidth = DeviceProfile.calculateCellWidth(rowWidth,
-                dp.cellLayoutBorderSpacePx.x, dp.numShownHotseatIcons);
-        int iconVisibleSize = Math.round(ICON_VISIBLE_AREA_FACTOR * dp.iconSizePx);
-        int iconPadding = cellWidth - iconVisibleSize;
+            int cellWidth = DeviceProfile.calculateCellWidth(rowWidth,
+                    dp.cellLayoutBorderSpacePx.x, dp.numShownHotseatIcons);
+            int iconVisibleSize = Math.round(ICON_VISIBLE_AREA_FACTOR * dp.iconSizePx);
+            int iconPadding = cellWidth - iconVisibleSize;
 
-        int myWidth = rowWidth - iconPadding + getPaddingLeft() + getPaddingRight();
-        super.onMeasure(makeMeasureSpec(myWidth, EXACTLY), heightMeasureSpec);
+            int myWidth = rowWidth - iconPadding + getPaddingLeft() + getPaddingRight();
+            super.onMeasure(makeMeasureSpec(myWidth, EXACTLY), heightMeasureSpec);
+        } else {
+            // Fallback to default measurement if mAppsView is not initialized yet
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
     }
 
     @Override
@@ -127,22 +142,91 @@ public class AppsSearchContainerLayout extends ExtendedEditText
         Drawable gIcon = getContext().getDrawable(R.drawable.ic_super_g_color);
         Drawable gIconThemed = getContext().getDrawable(R.drawable.ic_super_g_themed);
         Drawable sIcon = getContext().getDrawable(R.drawable.ic_allapps_search);
-        
+        Drawable lens = getContext().getDrawable(R.drawable.ic_lens_color);
+        Drawable lensThemed = getContext().getDrawable(R.drawable.ic_lens_themed);
+
         // Shift the widget horizontally so that its centered in the parent (b/63428078)
         View parent = (View) getParent();
-        int availableWidth = parent.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight();
-        int myWidth = right - left;
-        int expectedLeft = parent.getPaddingLeft() + (availableWidth - myWidth) / 2;
-        int shift = expectedLeft - left;
-        setTranslationX(shift);
-
-        if (Utilities.showQSB(getContext()) && !ThemeManager.INSTANCE.get(getContext()).isMonoThemeEnabled()) {
-          setCompoundDrawablesRelativeWithIntrinsicBounds(gIcon, null, null, null);
-        } else if (Utilities.showQSB(getContext()) && ThemeManager.INSTANCE.get(getContext()).isMonoThemeEnabled()) {
-          setCompoundDrawablesRelativeWithIntrinsicBounds(gIconThemed, null, null, null);
-        } else {
-          setCompoundDrawablesRelativeWithIntrinsicBounds(sIcon, null, null, null);
+        if (parent != null) {
+            int availableWidth = parent.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight();
+            int myWidth = right - left;
+            int expectedLeft = parent.getPaddingLeft() + (availableWidth - myWidth) / 2;
+            int shift = expectedLeft - left;
+            setTranslationX(shift);
         }
+
+        boolean showQSB = Utilities.showQSB(getContext());
+        boolean isDockThemed = ThemeManager.INSTANCE.get(getContext()).isMonoThemeEnabled();
+
+        if (showQSB) {
+            if (!isDockThemed) {
+                setCompoundDrawablesRelativeWithIntrinsicBounds(gIcon, null, null, null);
+            } else {
+                setCompoundDrawablesRelativeWithIntrinsicBounds(gIconThemed, null, null, null);
+            }
+        } else {
+            setCompoundDrawablesRelativeWithIntrinsicBounds(sIcon, null, lens, null);
+        }
+
+        setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    float touchX = event.getRawX();
+                    
+                    Drawable[] drawables = getCompoundDrawables();
+                    Drawable rightDrawable = drawables[2];
+                    Drawable leftDrawable = drawables[0];
+                    
+                    int paddingEnd = getPaddingEnd();
+                    int paddingLeft = getPaddingLeft();
+                
+                    if (rightDrawable != null) {
+                        int rightDrawableWidth = rightDrawable.getBounds().width();
+                        if (touchX >= (getWidth() - rightDrawableWidth - paddingEnd)) {
+                            Intent lensIntent = new Intent();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("caller_package", Utilities.GSA_PACKAGE);
+                            bundle.putLong("start_activity_time_nanos", SystemClock.elapsedRealtimeNanos());
+                            lensIntent.setComponent(new ComponentName(Utilities.GSA_PACKAGE, Utilities.LENS_ACTIVITY))
+                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    .setPackage(Utilities.GSA_PACKAGE)
+                                    .setData(Uri.parse(Utilities.LENS_URI))
+                                    .putExtra("lens_activity_params", bundle);
+                            getContext().startActivity(lensIntent);
+                            return true;
+                        }
+                    }
+                    
+                    if (leftDrawable != null) {
+                        int leftDrawableWidth = leftDrawable.getBounds().width();
+                        if (touchX <= (leftDrawableWidth + paddingLeft + searchSideMargin)) {
+                            Intent gIntent = getContext().getPackageManager().getLaunchIntentForPackage(Utilities.GSA_PACKAGE);
+                            gIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            getContext().startActivity(gIntent);
+                            return true;
+                        }
+                    }
+                    
+                    int leftBoundary = leftDrawable != null ? 
+                        (leftDrawable.getBounds().width() + paddingLeft) : paddingLeft;
+                    int rightBoundary = rightDrawable != null ? 
+                        (getWidth() - rightDrawable.getBounds().width() - paddingEnd) : (getWidth() - paddingEnd);
+                        
+                    if (touchX > leftBoundary && touchX < rightBoundary) {
+                        Intent pixelSearchIntent = getContext().getPackageManager().getLaunchIntentForPackage("rk.android.app.pixelsearch");
+                        if (pixelSearchIntent != null) {
+                            pixelSearchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            getContext().startActivity(pixelSearchIntent);
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
 
         offsetTopAndBottom(mContentOverlap);
     }
@@ -202,15 +286,13 @@ public class AppsSearchContainerLayout extends ExtendedEditText
         mSearchQueryBuilder.clearSpans();
         Selection.setSelection(mSearchQueryBuilder, 0);
         mAppsView.onClearSearchResult();
+        
     }
 
     @Override
     public void setInsets(Rect insets) {
-        DeviceProfile dp = mLauncher.getDeviceProfile();
         MarginLayoutParams mlp = (MarginLayoutParams) getLayoutParams();
-        mlp.topMargin = !dp.isTablet ? insets.top : mContentOverlap + 
-                getResources().getDimensionPixelSize(R.dimen.all_apps_search_bar_bottom_adjustment)
-                - getResources().getDimensionPixelSize(R.dimen.all_apps_search_top_row_extra_height);
+        mlp.topMargin = getResources().getDimensionPixelSize(R.dimen.all_apps_search_bar_margin_top);
         requestLayout();
     }
 
@@ -231,4 +313,7 @@ public class AppsSearchContainerLayout extends ExtendedEditText
             }
         }
     }
+
+
+
 }
