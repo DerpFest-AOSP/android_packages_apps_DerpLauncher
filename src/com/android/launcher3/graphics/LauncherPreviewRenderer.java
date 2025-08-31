@@ -80,6 +80,7 @@ import com.android.launcher3.celllayout.CellLayoutLayoutParams;
 import com.android.launcher3.celllayout.CellPosMapper;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.dagger.ApiWrapperModule;
+import com.android.launcher3.dagger.AppFilterModule;
 import com.android.launcher3.dagger.AppModule;
 import com.android.launcher3.dagger.LauncherAppComponent;
 import com.android.launcher3.dagger.LauncherAppSingleton;
@@ -669,7 +670,8 @@ public class LauncherPreviewRenderer extends BaseContext
             ApiWrapperModule.class,
             PluginManagerWrapperModule.class,
             StaticObjectModule.class,
-            AppModule.class})
+            AppModule.class,
+            AppFilterModule.class})
     public interface PreviewAppComponent extends LauncherAppComponent {
 
         LoaderTaskFactory getLoaderTaskFactory();
