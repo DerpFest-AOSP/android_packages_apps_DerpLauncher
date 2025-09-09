@@ -151,6 +151,9 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
 
     private void onGlobalLayout() {
         getViewTreeObserver().removeOnGlobalLayoutListener(this::onGlobalLayout);
+        if (mSeraphixDataProvider == null) {
+            return;
+        }
         if (isAttachedToWindow()) {
             mSeraphixDataProvider.bind((id) -> Utilities.setSeraphixHolderId(getContext(), id));
         } else {
