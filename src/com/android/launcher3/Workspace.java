@@ -1614,10 +1614,12 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mWallpaperOffset.setWindowToken(null);
+        mWallpaperOffset.destroy();
         mLauncher.getStateManager().removeStateListener(mAccessibilityDropListener);
         if (mLayoutTransition != null) {
             mLayoutTransition.removeTransitionListener(mTransitionListener);
         }
+        mOverlayCallbacks.clear();
     }
 
     @Override
