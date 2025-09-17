@@ -291,7 +291,7 @@
         <item>Looks like it\'s a beautiful day, isn\'t it?</item>
         <item>Let\'s get this bread.</item>
         <item>Check the weather just in case</item>
-        <item>Feeling a bit sleepy yet</item>
+        <item>Feeling a bit sleepy still?</item>
         <item>Have you looked outside yet?</item>
         <item>Let\'s get this done.</item>
     </string-array>
@@ -308,6 +308,7 @@
         <item>Time to charge the batteries!</item>
         <item>Tomorrow might be a great day</item>
         <item>Get your bones ready for tomorrow</item>
+        <item>Feeling a bit sleepy yet?</item>
     </string-array>
     <string-array name="quickspace_psa_midnight">
         <item>Um... good night?</item>
