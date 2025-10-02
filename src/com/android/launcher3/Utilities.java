@@ -166,6 +166,7 @@ public final class Utilities {
     public static final String KEY_SHOW_QUICKSPACE_PSONALITY = "pref_quickspace_psonality";
     public static final String KEY_SHOW_QUICKSPACE_MEMORY_INFO = "pref_quickspace_memory_info";
     public static final String KEY_SHOW_QUICKSPACE_APP_MEMORY_INFO = "pref_quickspace_app_memory_info";
+    public static final String KEY_QUICKSPACE_ACCENT_TINT = "pref_quickspace_accent_tint";
 
     /**
      * Set on a motion event dispatched from the nav bar. See {@link MotionEvent#setEdgeFlags(int)}.
@@ -1221,6 +1222,11 @@ public final class Utilities {
     public static boolean isQuickspaceAppMemoryInfoEnabled(Context context) {
         SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
         return prefs.getBoolean(KEY_SHOW_QUICKSPACE_APP_MEMORY_INFO, false);
+    }
+
+    public static boolean isQuickspaceAccentTintEnabled(Context context) {
+        SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
+        return prefs.getBoolean(KEY_QUICKSPACE_ACCENT_TINT, false);
     }
 
     public static void setInitTimestamp(Context context, long time) {
