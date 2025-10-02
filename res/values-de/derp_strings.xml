@@ -280,4 +280,6 @@
     <string name="quickspace_memory_info_summary">Zeigt Speichernutzung von Quickspace in Nachrichten an</string>
     <string name="quickspace_app_memory_info_title">App-Speicher-Info anzeigen</string>
     <string name="quickspace_app_memory_info_summary">Zeigt Speichernutzung von geförderten/nicht geförderten Apps in Nachrichten an</string>
+    <string name="quickspace_accent_tint_title">Quickspace-Elemente mit System-Akzentfarbe einfärben</string>
+    <string name="quickspace_accent_tint_summary">System-Akzentfarbe auf alle Quickspace-Elemente anwenden</string>
 </resources>

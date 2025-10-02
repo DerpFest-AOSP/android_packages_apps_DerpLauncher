@@ -29,6 +29,7 @@ import androidx.annotation.NonNull;
 
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
+import com.android.launcher3.util.Themes;
 
 import com.android.launcher3.quickspace.QuickspaceController.OnDataListener;
 import com.android.launcher3.quickspace.receivers.QuickSpaceActionReceiver;
@@ -91,6 +92,7 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
 
         if (!mIsQuickEvent) {
             mTitle.onVisibilityAggregated(true);
+            applyAccentTinting();
             return;
         }
 
@@ -102,9 +104,10 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
         mEventText.setText(mController.getEventController().getActionTitle());
         mEventText.setMarqueeRepeatLimit(-1);
         mEventText.setSelected(true);
-        mEventIcon.setImageTintList(ColorStateList.valueOf(Color.WHITE));
         mEventIcon.setImageResource(mController.getEventController().getActionIcon());
         Utilities.addShadowToImageView(mEventIcon, 5f, 64);
+        
+        applyAccentTinting();
     }
 
     private void loadWeather() {
@@ -116,6 +119,8 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
             mWeatherIcon.setImageIcon(mController.getWeatherIcon());
             Utilities.addShadowToImageView(mWeatherIcon, 5f, 64);
         }
+        
+        applyAccentTinting();
     }
 
     private void loadViews() {
@@ -213,5 +218,52 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
             }
         }
     };
+
+    private void applyAccentTinting() {
+        boolean accentTintEnabled = Utilities.isQuickspaceAccentTintEnabled(getContext());
+        
+        if (accentTintEnabled) {
+            int accentColor = Themes.getColorAccent(getContext());
+            
+            // Apply accent color to all text elements
+            if (mTitle != null) {
+                mTitle.setTextColor(accentColor);
+            }
+            if (mEventText != null) {
+                mEventText.setTextColor(accentColor);
+            }
+            if (mWeatherTemp != null) {
+                mWeatherTemp.setTextColor(accentColor);
+            }
+            
+            // Apply accent color to all icon elements
+            if (mEventIcon != null) {
+                mEventIcon.setImageTintList(ColorStateList.valueOf(accentColor));
+            }
+            if (mWeatherIcon != null) {
+                mWeatherIcon.setImageTintList(ColorStateList.valueOf(accentColor));
+            }
+        } else {
+            // Reset text colors to original workspace text color
+            int originalTextColor = Themes.getAttrColor(getContext(), R.attr.workspaceTextColor);
+            if (mTitle != null) {
+                mTitle.setTextColor(originalTextColor);
+            }
+            if (mEventText != null) {
+                mEventText.setTextColor(originalTextColor);
+            }
+            if (mWeatherTemp != null) {
+                mWeatherTemp.setTextColor(originalTextColor);
+            }
+            
+            // Reset icons to white when accent tint is disabled
+            if (mEventIcon != null) {
+                mEventIcon.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+            }
+            if (mWeatherIcon != null) {
+                mWeatherIcon.setImageTintList(null); // Remove tint for weather icon to show original colors
+            }
+        }
+    }
 
 }

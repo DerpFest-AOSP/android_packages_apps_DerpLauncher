@@ -381,4 +381,6 @@
     <string name="quickspace_memory_info_summary">Show QuickSpace memory usage in messages</string>
     <string name="quickspace_app_memory_info_title">Show app memory info</string>
     <string name="quickspace_app_memory_info_summary">Show memory usage of encouraged/discouraged apps in messages</string>
+    <string name="quickspace_accent_tint_title">Tint elements with system accent color</string>
+    <string name="quickspace_accent_tint_summary">Apply system accent color to all quickspace elements</string>
 </resources>
