@@ -3819,6 +3819,9 @@ public abstract class RecentsView<
             @Nullable RecentsDismissUtils.GridEndData gridEndData) {
         if (mPendingAnimation != null) {
             mPendingAnimation.createPlaybackController().dispatchOnCancel().dispatchOnEnd();
+            if (!mScroller.isFinished()) {
+                mScroller.abortAnimation();
+            }
         }
 
         int count = getPageCount();
