@@ -40,6 +40,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.launcher3.BubbleTextView;
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
 import com.android.launcher3.allapps.search.SearchAdapterProvider;
 import com.android.launcher3.folder.FolderIcon;
@@ -205,6 +206,8 @@ public abstract class BaseAllAppsAdapter
     protected final OnClickListener mOnIconClickListener;
     protected final OnLongClickListener mOnIconLongClickListener;
     protected final CustomActionsListener mIconCustomActionsListener;
+    protected final boolean mForceDarkText;
+    protected final int mTextColor;
     protected OnFocusChangeListener mIconFocusListener;
 
     public BaseAllAppsAdapter(ActivityContext activityContext, LayoutInflater inflater,
@@ -212,6 +215,11 @@ public abstract class BaseAllAppsAdapter
         mActivityContext = activityContext;
         mApps = apps;
         mLayoutInflater = inflater;
+
+        mForceDarkText = LauncherPrefs.ALL_APPS_DARK_TEXT.get(activityContext.asContext());
+        mTextColor = mForceDarkText
+                ? activityContext.asContext().getColor(R.color.all_apps_label_color_dark_forced)
+                : 0;
 
         mOnIconClickListener = mActivityContext.getItemOnClickListener();
         mOnIconLongClickListener = mActivityContext.getAllAppsItemLongClickListener();
@@ -304,6 +312,9 @@ public abstract class BaseAllAppsAdapter
                 AdapterItem adapterItem = mApps.getAdapterItems().get(position);
                 BubbleTextView icon = (BubbleTextView) holder.itemView;
                 icon.reset();
+                if (mForceDarkText) {
+                    icon.setTextColor(mTextColor);
+                }
                 icon.applyFromApplicationInfo(adapterItem.itemInfo);
                 icon.setOnFocusChangeListener(mIconFocusListener);
                 icon.configureMinimalPopup(

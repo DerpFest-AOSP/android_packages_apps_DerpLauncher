@@ -320,6 +320,7 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField
         val HOTSEAT_COUNT =
             backedUpItem(DeviceGridState.KEY_HOTSEAT_COUNT, -1, EncryptionType.ENCRYPTED)
+        @JvmField val ALL_APPS_DARK_TEXT = backedUpItem("pref_all_apps_dark_text", false)
         @JvmField
         val TASKBAR_PINNING =
             backedUpItem(TASKBAR_PINNING_KEY, false, EncryptionType.DEVICE_PROTECTED)
