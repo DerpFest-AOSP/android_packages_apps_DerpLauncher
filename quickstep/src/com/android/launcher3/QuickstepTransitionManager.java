@@ -1933,7 +1933,9 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
 
         boolean playWorkspaceReveal = true;
         boolean skipAllAppsScale = false;
-        if (!playFallBackAnimation) {
+        if (mLauncher.isInState(OVERVIEW)) {
+            playWorkspaceReveal = false;
+        } else if (!playFallBackAnimation) {
             rectFSpringAnim = getClosingWindowAnimators(
                     anim, appTargets, launcherView, new PointF(), startRect,
                     startWindowCornerRadius);
