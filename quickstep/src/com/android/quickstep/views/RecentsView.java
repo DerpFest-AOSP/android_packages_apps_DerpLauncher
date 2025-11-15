@@ -3548,6 +3548,9 @@ public abstract class RecentsView<
 
     @SuppressWarnings("unused")
     private void dismissAllTasks(View view) {
+        if (view != null) {
+            VibratorWrapper.INSTANCE.get(getContext()).vibrate(VibratorWrapper.EFFECT_CLICK);
+        }
         InteractionJankMonitorWrapper.begin(this, Cuj.CUJ_LAUNCHER_OVERVIEW_CLEAR_ALL);
         mDismissUtils.dismissAllTasks();
         mContainer.getStatsLogManager().logger().log(LAUNCHER_TASK_CLEAR_ALL);
