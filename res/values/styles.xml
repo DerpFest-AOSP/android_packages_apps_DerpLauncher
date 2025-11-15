@@ -196,7 +196,7 @@
         <item name="folderBackgroundColor">@color/customColorSurfaceEffect0Fallback</item>
     </style>
 
-    <style name="HomeSettings.Theme" parent="@style/Theme.SubSettingsBase">
+    <style name="HomeSettings.Theme" parent="@style/Theme.SubSettingsBase.Expressive">
         <item name="preferenceFragmentCompatStyle">@style/HomeSettings.FragmentCompatStyle</item>
     </style>
 
