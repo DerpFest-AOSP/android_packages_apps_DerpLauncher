@@ -108,6 +108,7 @@ import com.android.launcher3.model.data.WorkspaceItemInfo;
 import com.android.launcher3.pageindicators.PageIndicatorDots;
 import com.android.launcher3.pageindicators.PaginationArrow;
 import com.android.launcher3.util.LauncherBindableItemsContainer;
+import com.android.launcher3.util.Themes;
 import com.android.launcher3.util.Thunk;
 import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.views.BaseDragLayer;
@@ -318,7 +319,8 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
         mFooterHeight = dp.getFolderProfile().getFooterHeightPx();
         mFolderName = findViewById(R.id.folder_name);
         if (Flags.enableLauncherVisualRefresh()) {
-            mFolderName.setTypeface(Typeface.create("google-sans-flex", Typeface.NORMAL));
+            String fontFamily = Themes.getDefaultHeadlineFont(getContext());
+            mFolderName.setTypeface(Typeface.create(fontFamily, Typeface.NORMAL));
         }
         mFolderName.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 dp.getFolderProfile().getLabelTextSizePx());

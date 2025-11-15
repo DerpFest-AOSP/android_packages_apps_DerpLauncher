@@ -67,6 +67,16 @@ public class Themes {
         return value;
     }
 
+    public static String getDefaultHeadlineFont(Context context) {
+        TypedArray ta = context.obtainStyledAttributes(
+                android.R.style.TextAppearance_DeviceDefault_DialogWindowTitle,
+                new int[]{android.R.attr.fontFamily});
+        String value = ta.getString(0);
+        ta.recycle();
+        // Fallback to body font if headline font is not available
+        return value != null ? value : getDefaultBodyFont(context);
+    }
+
     public static float getDialogCornerRadius(Context context) {
         return getDimension(context, android.R.attr.dialogCornerRadius,
                 context.getResources().getDimension(R.dimen.default_dialog_corner_radius));
