@@ -21,6 +21,7 @@
     <string name="misc_category_summary">Andere Optionen</string>
     <string name="general_category_title">Allgemein</string>
     <string name="interface_category_title">Benutzeroberfläche</string>
+    <string name="search_bar_category_title">Suchleiste</string>
 
     <!-- Developer options -->
     <string name="dev_options_title">Entwickler-Optionen</string>
@@ -78,4 +79,6 @@
     <string name="label_search">Suche</string>
     <string name="label_lens">Google Lens</string>
     <string name="label_voice_search">Sprachsuche</string>
+    <string name="dock_search_title">Google-Suchleiste</string>
+    <string name="dock_search_summary">Suchleiste im unteren Dock</string>
 </resources>
