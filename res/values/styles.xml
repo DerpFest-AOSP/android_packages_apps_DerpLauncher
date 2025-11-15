@@ -228,7 +228,7 @@
     <!-- Theme overrides in All Apps when blur is available but currently disabled. -->
     <style name="AllAppsBlurFallbackStyle" />
 
-    <style name="HomeSettings.Theme" parent="@style/Theme.SubSettingsBase">
+    <style name="HomeSettings.Theme" parent="@style/Theme.SubSettingsBase.Expressive">
         <item name="preferenceFragmentCompatStyle">@style/HomeSettings.FragmentCompatStyle</item>
     </style>
 
