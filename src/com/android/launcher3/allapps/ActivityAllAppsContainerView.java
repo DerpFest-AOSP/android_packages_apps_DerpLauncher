@@ -181,7 +181,6 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     private boolean mHasPrivateApps;
     private float[] mBottomSheetCornerRadii;
     private ScrimView mScrimView;
-    private int mHeaderColor;
     private int mBottomSheetBackgroundColorBlurFallback;
     private int mBottomSheetBackgroundColorOverBlur;
     private int mBottomSheetBackgroundColorLegacy;
@@ -301,6 +300,11 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
         if (LauncherPrefs.DRAWER_SEARCH.get(getContext())) {
             mSearchContainer.setVisibility(View.VISIBLE);
+            if (!Themes.isThemedIconEnabled(getContext())) {
+                getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google);
+            } else {
+                getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google_themed);
+            }
         } else {
             mSearchContainer.setVisibility(View.GONE);
         }
@@ -816,18 +820,20 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     }
 
     protected void updateHeaderScroll(int scrolledOffset) {
-        float prog = Utilities.boundToRange((float) scrolledOffset / mHeaderThreshold, 0f, 1f);
-        int headerColor = getHeaderColor(prog);
+        float prog1 = Utilities.boundToRange((float) scrolledOffset / mHeaderThreshold, 0f, 1f);
         int tabsAlpha = mHeader.getPeripheralProtectionHeight(/* expectedHeight */ false) == 0 ? 0
                 : (int) (Utilities.boundToRange(
                         (scrolledOffset + mHeader.mSnappedScrolledY) / mHeaderThreshold, 0f, 1f)
                         * 255);
-        if (headerColor != mHeaderColor || mTabsProtectionAlpha != tabsAlpha) {
-            mHeaderColor = headerColor;
+        if (mTabsProtectionAlpha != tabsAlpha) {
             mTabsProtectionAlpha = tabsAlpha;
             invalidateHeader();
         }
-        getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox);
+        if (!Themes.isThemedIconEnabled(getContext())) {
+            getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google);
+        } else {
+            getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google_themed);
+        }
         if (mSearchUiManager.getEditText() == null) {
             return;
         }
@@ -839,17 +845,6 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             bgVisible = false;
         }
         mSearchUiManager.setBackgroundVisibility(bgVisible, 1 - prog);
-    }
-
-    protected int getHeaderColor(float blendRatio) {
-        if (!mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()) {
-            return ColorUtils.setAlphaComponent(
-                    ColorUtils.blendARGB(mScrimColor, mHeaderProtectionColor, blendRatio),
-                    (int) (mSearchContainer.getAlpha() * 255));
-        }
-        return isBackgroundBlurEnabled()
-                ? ColorUtils.setAlphaComponent(mHeaderProtectionColor, (int) (blendRatio * 255))
-                : ColorUtils.blendARGB(getBackgroundColor(), mHeaderProtectionColor, blendRatio);
     }
 
     private int getBackgroundColor() {
@@ -1513,81 +1508,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             }
         }
 
-        if (DEBUG_HEADER_PROTECTION) {
-            mHeaderPaint.setColor(Color.MAGENTA);
-            mHeaderPaint.setAlpha(255);
-        } else {
-            mHeaderPaint.setColor(mHeaderColor);
-            mHeaderPaint.setAlpha((int) (getAlpha() * Color.alpha(mHeaderColor)));
-        }
-
-        // If header is not visible or only differs from the background with alpha, don't draw it.
-        int headerWithoutAlpha = ColorUtils.setAlphaComponent(mHeaderPaint.getColor(), 0);
-        int backgroundWithoutAlpha = ColorUtils.setAlphaComponent(getBackgroundColor(), 0);
-        if (headerWithoutAlpha == backgroundWithoutAlpha || mHeaderPaint.getColor() == 0) {
-            return;
-        }
-
-        if (hasBottomSheet) {
-            mHeaderPaint.setAlpha((int) (mHeaderPaint.getAlpha() * bottomSheetBackgroundAlpha));
-        }
-
-        // Draw header on background panel
-        final float headerBottomNoScale =
-                getHeaderBottom() + getVisibleContainerView().getPaddingTop();
-        final float headerHeightNoScale = headerBottomNoScale - topNoScale;
-        final float headerBottomWithScaleOnTablet = topWithScale + headerHeightNoScale * scale;
-        final float headerBottomOffset = (getVisibleContainerView().getHeight() * (1 - scale) / 2);
-        final float headerBottomWithScaleOnPhone = headerBottomNoScale * scale + headerBottomOffset;
-        final FloatingHeaderView headerView = getFloatingHeaderView();
-        if (hasBottomSheet) {
-            // Start adding header protection if search bar or tabs will attach to the top.
-            if (!isSearchBarFloating() || mUsingTabs) {
-                mTmpRectF.set(
-                        leftWithScale,
-                        topWithScale,
-                        rightWithScale,
-                        headerBottomWithScaleOnTablet);
-                mTmpPath.reset();
-                mTmpPath.addRoundRect(mTmpRectF, mBottomSheetCornerRadii, Direction.CW);
-                canvas.drawPath(mTmpPath, mHeaderPaint);
-            }
-        } else {
-            canvas.drawRect(0, 0, canvas.getWidth(), headerBottomWithScaleOnPhone, mHeaderPaint);
-        }
-
-        // If tab exist (such as work profile), extend header with tab height
-        final int tabsHeight = headerView.getPeripheralProtectionHeight(/* expectedHeight */ false);
-        if (mTabsProtectionAlpha > 0 && tabsHeight != 0) {
-            if (DEBUG_HEADER_PROTECTION) {
-                mHeaderPaint.setColor(Color.BLUE);
-                mHeaderPaint.setAlpha(255);
-            } else {
-                float tabAlpha = getAlpha() * mTabsProtectionAlpha;
-                if (hasBottomSheet) {
-                    tabAlpha *= bottomSheetBackgroundAlpha;
-                }
-                mHeaderPaint.setAlpha((int) tabAlpha);
-            }
-            left = 0f;
-            right = canvas.getWidth();
-            if (hasBottomSheet) {
-                left = leftWithScale;
-                right = rightWithScale;
-            }
-
-            final float tabTopWithScale = hasBottomSheet
-                    ? headerBottomWithScaleOnTablet
-                    : headerBottomWithScaleOnPhone;
-            final float tabBottomWithScale = tabTopWithScale + tabsHeight * scale;
-
-            canvas.drawRect(
-                    left,
-                    tabTopWithScale,
-                    right,
-                    tabBottomWithScale,
-                    mHeaderPaint);
-        }
+        mHeaderPaint.setColor(mHeaderProtectionColor);
     }
 
     /**
