@@ -40,6 +40,7 @@ import android.view.ViewGroup
 import android.view.ViewStub
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.IntDef
 import androidx.annotation.VisibleForTesting
@@ -102,7 +103,9 @@ import com.android.quickstep.util.BorderAnimator.Companion.DEFAULT_APPEARANCE_AN
 import com.android.quickstep.util.BorderAnimator.Companion.DEFAULT_DISAPPEARANCE_ANIMATION_DURATION_MS
 import com.android.quickstep.util.BorderAnimator.Companion.DEFAULT_INTERPOLATOR
 import com.android.quickstep.util.BorderAnimator.Companion.createSimpleBorderAnimator
+import com.android.quickstep.TaskUtilLockState
 import com.android.quickstep.util.GroupTask
+import com.android.quickstep.util.RecentHelper
 import com.android.quickstep.util.RecentsOrientedState
 import com.android.quickstep.util.SingleTask
 import com.android.quickstep.util.TaskCornerRadius
@@ -317,6 +320,8 @@ constructor(
     /** Returns a list of all TaskContainers in the TaskView. */
     lateinit var taskContainers: List<TaskContainer>
         protected set
+
+    private var mLockedView: ImageView? = null
 
     lateinit var orientedState: RecentsOrientedState
 
@@ -873,6 +878,7 @@ constructor(
         super.onFinishInflate()
         inflateViewStubs()
         taskDismissButton = findViewById(R.id.task_dismiss_button)
+        mLockedView = findViewById(R.id.dis_lock)
     }
 
     fun onIntersectScreenEdgeChanged(intersectsScreenEdge: Boolean) {
@@ -1115,6 +1121,8 @@ constructor(
         this.groupTask = singleTask
         cancelPendingLoadTasks()
         this.orientedState = orientedState // Needed for dependencies
+        val task = singleTask.task
+        val isLocked = RecentHelper.getInstance().isAppLocked(task.key.getPackageName(), context)
         taskContainers =
             listOf(
                 createTaskContainer(
@@ -1128,6 +1136,7 @@ constructor(
                     taskOverlayFactory,
                 )
             )
+        updateLockedView(isLocked)
         onBind(orientedState)
     }
 
@@ -1412,6 +1421,8 @@ constructor(
             taskContainer.iconView.setText(taskContainer.task.title)
         }
         taskContainer.digitalWellBeingToast?.initialize()
+        val isLocked = RecentHelper.getInstance().isAppLocked(taskContainer.task.key.getPackageName(), context)
+        updateLockedView(isLocked)
     }
 
     protected open fun onIconUnloaded(taskContainer: TaskContainer) {
@@ -2054,6 +2065,11 @@ constructor(
                 icon.asView().visibility = if (fullscreenProgress < 1) VISIBLE else INVISIBLE
             }
         }
+        val task = taskContainers.firstOrNull()?.task
+        if (task != null && mLockedView != null) {
+            val taskLockState = TaskUtilLockState.getTaskLockState(context, task.key.baseIntent.getComponent(), task.key)
+            mLockedView?.visibility = if (taskLockState && fullscreenProgress < 1) VISIBLE else INVISIBLE
+        }
         taskContainers.forEach { it.overlay.setFullscreenProgress(fullscreenProgress) }
         updateSettledProgressFullscreen(fullscreenProgress)
         updateFullscreenParams()
@@ -2062,6 +2078,33 @@ constructor(
     protected fun updateSettledProgressFullscreen(fullscreenProgress: Float) {
         settledProgressFullscreen =
             SETTLED_PROGRESS_FAST_OUT_INTERPOLATOR.getInterpolation(1 - fullscreenProgress)
+    }
+
+    fun updateLockedView(isLock: Boolean, isState: Boolean = true) {
+        if (mLockedView == null) {
+            Log.d(TAG, "updateLockedView: mLockedView is null.")
+            return
+        }
+        if (!::taskContainers.isInitialized) {
+            mLockedView?.visibility = if (isLock) VISIBLE else INVISIBLE
+            return
+        }
+        val task = taskContainers.firstOrNull()?.task
+        if (task == null || task.key == null || !isState) {
+            mLockedView?.visibility = if (isLock) VISIBLE else INVISIBLE
+            return
+        }
+        if (isLock == (mLockedView?.visibility != VISIBLE)) {
+            val taskLockState = TaskUtilLockState.getTaskLockState(context, task.key.baseIntent.getComponent(), task.key)
+            Log.d(TAG, "updateLockedView: update task lockState: $isState -> $taskLockState , task.key.id: ${task.key.id}")
+            mLockedView?.visibility = if (taskLockState) VISIBLE else INVISIBLE
+        } else {
+            mLockedView?.visibility = if (isLock) VISIBLE else INVISIBLE
+        }
+    }
+
+    fun updateLockedView(isLock: Boolean) {
+        updateLockedView(isLock, true)
     }
 
     protected open fun updateFullscreenParams() {

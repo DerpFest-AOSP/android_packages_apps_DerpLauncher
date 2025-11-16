@@ -54,9 +54,12 @@ import com.android.launcher3.logging.StatsLogManager.LauncherEvent;
 import com.android.launcher3.model.WellbeingModel;
 import com.android.launcher3.popup.SystemShortcut;
 import com.android.launcher3.popup.SystemShortcut.AppInfo;
+import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.util.InstantAppResolver;
 import com.android.launcher3.util.SplitConfigurationOptions;
 import com.android.launcher3.util.SplitConfigurationOptions.SplitPositionOption;
+import com.android.quickstep.TaskUtilLockState;
+import com.android.quickstep.util.RecentHelper;
 import com.android.launcher3.views.ActivityContext;
 import com.android.quickstep.orientation.RecentsPagedOrientationHandler;
 import com.android.quickstep.views.GroupedTaskView;
@@ -591,6 +594,68 @@ public interface TaskShortcutFactory {
                 }
             }
             dismissTaskMenuView();
+        }
+    }
+
+    TaskShortcutFactory LOCKED = new TaskShortcutFactory() {
+        @Override
+        public List<SystemShortcut> getShortcuts(RecentsViewContainer container,
+                                                 TaskContainer taskContainer) {
+            TaskView taskView = taskContainer.getTaskView();
+            Task task = taskContainer.getTask();
+            boolean isLocked = RecentHelper.getInstance().isAppLocked(task.key.getPackageName(), taskView.getContext());
+
+            return Collections.singletonList(new LockedSystemShortcut(
+                    isLocked ? R.drawable.ic_protected_unlocked : R.drawable.ic_protected_locked,
+                    isLocked ? R.string.task_menu_item_unlock : R.string.task_menu_item_lock,
+                    container, taskContainer.getItemInfo(), taskContainer.getTaskView(), taskView));
+        }
+
+        public boolean showForSplitscreen() {
+            // TODO Add support when split
+            return false;
+        }
+    };
+
+    class LockedSystemShortcut extends SystemShortcut<RecentsViewContainer> {
+
+        final Task mTask;
+        final TaskView taskView;
+
+        public LockedSystemShortcut(int iconResId,
+                                    int labelResId,
+                                    RecentsViewContainer target,
+                                    ItemInfo itemInfo,
+                                    View originalView, TaskView taskView) {
+            super(iconResId, labelResId, target, itemInfo, originalView);
+            this.mTask = taskView.getFirstTask();
+            this.taskView = taskView;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Task task = taskView.getFirstTask();
+            if (task == null) {
+                return;
+            }
+            getLockTask(task, taskView);
+            dismissTaskMenuView();
+        }
+
+        static void getLockTask(Task task, TaskView tv){
+            boolean isLocked = !RecentHelper.getInstance().isAppLocked(task.key.getPackageName(), tv.getContext());
+            StringBuilder sb = new StringBuilder();
+            sb.append("Lock Click# id: ");
+            sb.append(task.key.id);
+            sb.append(" component: ");
+            sb.append(task.key.baseIntent.getComponent());
+            sb.append(" state: ");
+            sb.append(isLocked);
+            sb.append(" -> ");
+            sb.append(!isLocked);
+            Log.d(LockedSystemShortcut.class.getName(), "getLockTask: ");
+            TaskUtilLockState.setTaskLockState(tv.getContext(), task.key.baseIntent.getComponent(), isLocked, task.key);
+            tv.updateLockedView(isLocked, false);
         }
     }
 }

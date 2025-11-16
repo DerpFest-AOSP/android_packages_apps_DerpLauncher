@@ -231,6 +231,7 @@ import com.android.quickstep.util.DesktopTask;
 import com.android.quickstep.util.FontUtils;
 import com.android.quickstep.util.GroupTask;
 import com.android.quickstep.util.LayoutUtils;
+import com.android.quickstep.util.RecentHelper;
 import com.android.quickstep.util.RecentsAtomicAnimationFactory;
 import com.android.quickstep.util.RecentsOrientedState;
 import com.android.quickstep.util.SingleTask;
@@ -4536,8 +4537,7 @@ public abstract class RecentsView<
 
                 // Remove all the task views now
                 finishRecentsAnimation(true /* toHome */, false /* shouldPip */, () -> {
-                    UI_HELPER_EXECUTOR.getHandler().post(
-                            ActivityManagerWrapper.getInstance()::removeAllRecentTasks);
+                    RecentHelper.getInstance().clearAllTaskStacks(getContext());
                     removeAllTaskViews();
                     startHome();
                     InteractionJankMonitorWrapper.end(Cuj.CUJ_LAUNCHER_OVERVIEW_CLEAR_ALL);

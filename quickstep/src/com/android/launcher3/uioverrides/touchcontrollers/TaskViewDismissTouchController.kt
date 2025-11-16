@@ -46,8 +46,10 @@ import com.android.mechanics.spec.MotionSpec
 import com.android.mechanics.spring.SpringParameters
 import com.android.mechanics.view.DistanceGestureContext
 import com.android.mechanics.view.ViewMotionValue
+import com.android.quickstep.util.RecentHelper
 import com.android.quickstep.views.RecentsDismissUtils
 import com.android.quickstep.views.RecentsView
+import com.android.systemui.shared.recents.model.Task
 import com.android.quickstep.views.RecentsView.RECENTS_SCALE_PROPERTY
 import com.android.quickstep.views.RecentsViewContainer
 import com.android.quickstep.views.TaskView
@@ -321,14 +323,19 @@ CONTAINER : StatefulContainer<T> {
 
         val currentDisplacement =
             taskBeingDragged.secondaryDismissTranslationProperty.get(taskBeingDragged)
+        val task = taskBeingDragged.firstTask
+        val isAppLocked = task?.let {
+            RecentHelper.getInstance().isAppLocked(it.key.getPackageName(), recentsView.context)
+        } ?: false
         val isBeyondDismissThreshold =
             abs(currentDisplacement) > abs(DISMISS_THRESHOLD_FRACTION * dismissLength)
         val velocityIsGoingUp = recentsView.pagedOrientationHandler.isGoingUp(velocity, isRtl)
+                && !isAppLocked
         val isFlingingTowardsDismiss = detector.isFling(velocity) && velocityIsGoingUp
         val isFlingingTowardsRestState = detector.isFling(velocity) && !velocityIsGoingUp
         isDismissing =
-            allowDetach && isFlingingTowardsDismiss ||
-                (isBeyondDismissThreshold && !isFlingingTowardsRestState)
+            !isAppLocked && (allowDetach && isFlingingTowardsDismiss ||
+                (isBeyondDismissThreshold && !isFlingingTowardsRestState))
         val dismissThreshold = (DISMISS_THRESHOLD_FRACTION * dismissLength * verticalFactor).toInt()
         val finalPosition = if (isDismissing) (dismissLength * verticalFactor).toFloat() else 0f
         springAnimation =
