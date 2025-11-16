@@ -59,6 +59,7 @@ import com.android.launcher3.util.InstantAppResolver;
 import com.android.launcher3.util.SplitConfigurationOptions;
 import com.android.launcher3.util.SplitConfigurationOptions.SplitPositionOption;
 import com.android.quickstep.TaskUtilLockState;
+import com.android.quickstep.TaskUtils;
 import com.android.quickstep.util.RecentHelper;
 import com.android.launcher3.views.ActivityContext;
 import com.android.quickstep.orientation.RecentsPagedOrientationHandler;
@@ -652,9 +653,11 @@ public interface TaskShortcutFactory {
             IActivityManager iam = ActivityManagerNative.getDefault();
             try {
                 iam.forceStopPackage(packageName, UserHandle.USER_CURRENT);
-                Toast appKilled = Toast.makeText(mTarget.asContext(), R.string.recents_app_killed,
-                    Toast.LENGTH_SHORT);
-                appKilled.show();
+                String title = TaskUtils.getTitle(
+                        taskView.getContext(), mTaskContainer.getTask()).toString();
+                String text = String.format(
+                        mTarget.asContext().getString(R.string.recents_app_killed), title);
+                Toast.makeText(mTarget.asContext(), text, Toast.LENGTH_SHORT).show();
 
                 RecentsView<?, ?> recentsView = taskView.getRecentsView();
                 if (recentsView != null) {
