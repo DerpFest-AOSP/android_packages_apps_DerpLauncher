@@ -17,9 +17,17 @@ package com.android.launcher3.uioverrides.states;
 
 import static com.android.launcher3.logging.StatsLogManager.LAUNCHER_STATE_BACKGROUND;
 
+import android.graphics.Color;
+
+import androidx.core.graphics.ColorUtils;
+
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Launcher;
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.LauncherUiState;
+import com.android.launcher3.R;
+import com.android.launcher3.util.Themes;
+import com.android.launcher3.views.ScrimColors;
 
 /**
  * State to indicate we are about to launch a recent task. Note that this state is only used when
@@ -59,5 +67,20 @@ public class QuickSwitchState extends BackgroundAppState {
     @Override
     public boolean detachDesktopCarousel() {
         return true;
+    }
+
+    @Override
+    public ScrimColors getWorkspaceScrimColor(Launcher launcher) {
+        DeviceProfile dp = launcher.getDeviceProfile();
+        if (dp.isTaskbarPresentInApps) {
+            return new ScrimColors(
+                    /* backgroundColor */ launcher.getColor(R.color.taskbar_background),
+                    /* foregroundColor */ Color.TRANSPARENT);
+        }
+        return new ScrimColors(
+                /* backgroundColor */ ColorUtils.setAlphaComponent(
+                        Themes.getAttrColor(launcher, R.attr.overviewScrimColor),
+                        LauncherPrefs.RECENTS_OPACITY.get(launcher) * 255 / 100),
+                /* foregroundColor */ Color.TRANSPARENT);
     }
 }

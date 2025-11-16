@@ -20,8 +20,10 @@ import android.graphics.Color
 import android.graphics.Rect
 import androidx.annotation.FloatRange
 import com.android.app.animation.Interpolators
+import androidx.core.graphics.ColorUtils
 import com.android.launcher3.DeviceProfile
 import com.android.launcher3.Flags
+import com.android.launcher3.LauncherPrefs
 import com.android.launcher3.LauncherState
 import com.android.launcher3.LauncherState.FLAG_CLOSE_POPUPS
 import com.android.launcher3.R
@@ -92,7 +94,10 @@ open class RecentsState(@JvmField val ordinal: Int, private val mFlags: Int) :
     fun getScrimColor(context: Context) =
         ScrimColors(
             /* backgroundColor= */ if (hasFlag(FLAG_SCRIM))
-                Themes.getAttrColor(context, R.attr.overviewScrimColor)
+                ColorUtils.setAlphaComponent(
+                    Themes.getAttrColor(context, R.attr.overviewScrimColor),
+                    LauncherPrefs.RECENTS_OPACITY.get(context) * 255 / 100
+                )
             else Color.TRANSPARENT,
             /* foregroundColor= */ Color.TRANSPARENT,
         )
