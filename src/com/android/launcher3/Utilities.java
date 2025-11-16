@@ -183,6 +183,10 @@ public final class Utilities {
         }
     }
 
+    public static boolean showQSB(Context context) {
+        return isPackageEnabled(GSA_PACKAGE, context);
+    }
+
     public static boolean isGSAEnabled(Context context) {
         if (!isPackageEnabled(GSA_PACKAGE, context)) {
             return false;
