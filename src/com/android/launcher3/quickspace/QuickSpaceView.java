@@ -50,6 +50,7 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
     private ViewGroup mEventContainer;
     private ImageView mEventIcon;
     private TextView mEventText;
+    private TextView mSeparator;
     private ViewGroup mWeatherContainer;
     private ImageView mWeatherIcon;
     private TextView mWeatherTemp;
@@ -83,6 +84,7 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
                 mController.getEventController().isDeviceIntroCompleted();
         loadWeather();
         loadEvent();
+        updateSeparatorVisibility();
     }
 
     private void loadEvent() {
@@ -120,6 +122,7 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
             Utilities.addShadowToImageView(mWeatherIcon, 5f, 64);
         }
         
+        updateSeparatorVisibility();
         applyAccentTinting();
     }
 
@@ -129,6 +132,8 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
         mEventContainer = (ViewGroup) findViewById(R.id.quick_event_container);
         mEventIcon = (ImageView) findViewById(R.id.quick_event_icon);
         mEventText = (TextView) findViewById(R.id.quick_event_text);
+
+        mSeparator = (TextView) findViewById(R.id.quickspace_separator);
 
         mWeatherContainer = (ViewGroup) findViewById(R.id.quick_event_weather_container);
         mWeatherIcon = (ImageView) findViewById(R.id.quick_event_weather_icon);
@@ -219,6 +224,16 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
         }
     };
 
+    private void updateSeparatorVisibility() {
+        if (mSeparator == null) return;
+        
+        // Show separator only when weather is available AND there's preceding content (event container is visible)
+        // Don't show separator if only weather is displayed (when mIsQuickEvent is false)
+        boolean showSeparator = mWeatherAvailable && mIsQuickEvent;
+        
+        mSeparator.setVisibility(showSeparator ? View.VISIBLE : View.GONE);
+    }
+
     private void applyAccentTinting() {
         boolean accentTintEnabled = Utilities.isQuickspaceAccentTintEnabled(getContext());
         
@@ -234,6 +249,9 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
             }
             if (mWeatherTemp != null) {
                 mWeatherTemp.setTextColor(accentColor);
+            }
+            if (mSeparator != null) {
+                mSeparator.setTextColor(accentColor);
             }
             
             // Apply accent color to all icon elements
@@ -254,6 +272,9 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
             }
             if (mWeatherTemp != null) {
                 mWeatherTemp.setTextColor(originalTextColor);
+            }
+            if (mSeparator != null) {
+                mSeparator.setTextColor(originalTextColor);
             }
             
             // Reset icons to white when accent tint is disabled
