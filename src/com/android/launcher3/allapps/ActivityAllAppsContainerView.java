@@ -857,7 +857,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         } else if (scrolledOffset > mHeaderThreshold) {
             bgVisible = false;
         }
-        mSearchUiManager.setBackgroundVisibility(bgVisible, 1 - prog);
+        mSearchUiManager.setBackgroundVisibility(bgVisible, 1 - prog1);
     }
 
     private int getBackgroundColor() {
