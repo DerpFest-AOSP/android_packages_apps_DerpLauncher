@@ -56,6 +56,8 @@ import com.android.launcher3.util.DisplayController;
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
 
+import com.android.systemui.shared.system.BlurUtils;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -271,6 +273,9 @@ public class SettingsMisc extends CollapsingToolbarBaseActivity
                         return true;
                     });
                     return true;
+
+                case "pref_blur_depth":
+                    return BlurUtils.supportsBlursOnWindows();
             }
 
             return true;
