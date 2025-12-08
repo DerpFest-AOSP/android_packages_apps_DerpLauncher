@@ -263,7 +263,7 @@ constructor(
         get() =
             pagedOrientationHandler.getSecondaryValue(DISMISS_TRANSLATION_X, DISMISS_TRANSLATION_Y)
 
-    protected val primaryTaskOffsetTranslationProperty: FloatProperty<TaskView>
+    val primaryTaskOffsetTranslationProperty: FloatProperty<TaskView>
         get() =
             pagedOrientationHandler.getPrimaryValue(
                 TASK_OFFSET_TRANSLATION_X,

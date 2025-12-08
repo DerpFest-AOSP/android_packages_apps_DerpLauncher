@@ -148,6 +148,14 @@
     <string name="recents_meminfo_title">RAM-Info</string>
     <string name="recents_meminfo_summary">RAM-Auslastung unten anzeigen</string>
 
+    <!-- Recents style -->
+    <string name="recents_style_title">Stil des Anwendungsverlaufslayouts</string>
+    <string name="recents_style_default">Standard</string>
+    <string name="recents_style_stock">Skalierungseffekt</string>
+    <string name="recents_style_staple">Kami-Stil</string>
+    <string name="recents_style_ios">iOS-Stil</string>
+    <string name="recents_style_oxygen">OxygenOS-Stil</string>
+
     <!-- Background opacity -->
     <string name="background_opacity_title">Deckkraft des Hintergrunds</string>
 

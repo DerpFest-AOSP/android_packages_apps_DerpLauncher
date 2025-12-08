@@ -161,6 +161,13 @@
     <string name="recents_meminfo_title">Memory info</string>
     <string name="recents_meminfo_summary">Show RAM usage at the bottom</string>
 
+    <!-- Recents style -->
+    <string name="recents_style_title">Recents layout style</string>
+    <string name="recents_style_stock">Stock</string>
+    <string name="recents_style_staple">Kami Style</string>
+    <string name="recents_style_ios">iOS Style</string>
+    <string name="recents_style_oxygen">OxygenOS Style</string>
+
     <!-- Background opacity -->
     <string name="background_opacity_title">Background opacity</string>
 

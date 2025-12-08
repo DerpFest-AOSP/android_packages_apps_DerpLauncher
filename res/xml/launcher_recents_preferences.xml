@@ -38,6 +38,16 @@
             android:persistent="true"
             launcher:iconSpaceReserved="false" />
 
+        <ListPreference
+            android:key="pref_recents_style"
+            android:title="@string/recents_style_title"
+            android:entries="@array/recents_styles_entries"
+            android:entryValues="@array/recents_styles_values"
+            android:defaultValue="stock"
+            android:persistent="true"
+            android:summary="%s"
+            launcher:iconSpaceReserved="false" />
+
         <org.derpfest.support.preferences.ProperSeekBarPreference
             android:key="pref_recents_opacity"
             android:title="@string/background_opacity_title"
