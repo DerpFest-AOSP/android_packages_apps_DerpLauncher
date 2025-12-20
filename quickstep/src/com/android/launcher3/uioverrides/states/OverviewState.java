@@ -133,6 +133,7 @@ public class OverviewState extends LauncherState {
         if (showFloatingSearch) {
             elements |= FLOATING_SEARCH_BAR;
         }
+        elements |= CLEAR_ALL_BUTTON;
         elements |= MEMINFO;
         if (launcherUiState.getSplitScreenUiState().isSplitSelectActive()) {
             elements &= ~CLEAR_ALL_BUTTON & ~ADD_DESK_BUTTON;
