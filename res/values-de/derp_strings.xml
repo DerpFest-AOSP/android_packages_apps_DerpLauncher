@@ -18,6 +18,7 @@
     <string name="misc_category_summary">Andere Optionen</string>
     <string name="general_category_title">Allgemein</string>
     <string name="interface_category_title">Benutzeroberfläche</string>
+    <string name="actions_category_title">Schnellaktionen</string>
 
     <!-- Developer options -->
     <string name="dev_options_title">Entwickler-Optionen</string>
@@ -141,4 +142,9 @@
     <!-- Scroll Vibration -->
     <string name="pref_scroll_vibration_title">Scroll-Vibration</string>
     <string name="pref_scroll_vibration_summary">Haptisches Feedback beim Scrollen durch aktuelle Apps, sofern unterstützt</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Screenshot</string>
+    <string name="recents_clear_all_title">Alle Apps schließen</string>
+    <string name="recents_lens_title">Lens</string>
 </resources>
