@@ -214,7 +214,8 @@ public class AppsDividerView extends View implements FloatingHeaderRow {
     private Layout getAllAppsLabelLayout() {
         if (mAllAppsLabelLayout == null) {
             mPaint.setAntiAlias(true);
-            mPaint.setTypeface(Typeface.create("variable-title-small", Typeface.NORMAL));
+            String fontFamily = Themes.getDefaultBodyFont(getContext());
+            mPaint.setTypeface(Typeface.create(fontFamily, Typeface.NORMAL));
             mPaint.setTextSize(
                     getResources().getDimensionPixelSize(R.dimen.all_apps_label_text_size));
 
