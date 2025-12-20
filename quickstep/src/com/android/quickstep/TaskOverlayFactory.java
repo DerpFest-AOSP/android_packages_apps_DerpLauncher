@@ -125,6 +125,7 @@ public class TaskOverlayFactory {
             TaskShortcutFactory.APP_INFO,
             TaskShortcutFactory.KILL_APP,
             TaskShortcutFactory.SPLIT_SELECT,
+            TaskShortcutFactory.UNINSTALL,
             TaskShortcutFactory.PIN,
             TaskShortcutFactory.INSTALL,
             TaskShortcutFactory.FREE_FORM,
