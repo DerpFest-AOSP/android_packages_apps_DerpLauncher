@@ -26,6 +26,7 @@ import static com.android.launcher3.util.SplitConfigurationOptions.STAGE_POSITIO
 import android.app.ActivityManagerNative;
 import android.app.ActivityOptions;
 import android.app.IActivityManager;
+import android.content.ComponentName;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Handler;
@@ -45,6 +46,7 @@ import androidx.annotation.Nullable;
 
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.R;
+import com.android.launcher3.SecondaryDropTarget;
 import com.android.launcher3.logging.StatsLogManager.LauncherEvent;
 import com.android.launcher3.popup.SystemShortcut;
 import com.android.launcher3.popup.SystemShortcut.AppInfo;
@@ -453,6 +455,22 @@ public interface TaskShortcutFactory {
                     ? Collections.singletonList(new SystemShortcut.Install(container,
                     taskContainer.getItemInfo(), taskContainer.getTaskView()))
                     : null;
+        }
+    };
+
+    TaskShortcutFactory UNINSTALL = new TaskShortcutFactory() {
+        @Override
+        public List<SystemShortcut> getShortcuts(RecentsViewContainer container,
+                TaskContainer taskContainer) {
+            ComponentName cn = SecondaryDropTarget.getUninstallTarget(
+                    taskContainer.getTaskView().getContext(), taskContainer.getItemInfo());
+            if (cn == null) {
+                // If component name is null, don't show uninstall shortcut.
+                // System apps will have component name as null.
+                return null;
+            }
+            return Collections.singletonList(new SystemShortcut.UninstallApp(container,
+                    taskContainer.getItemInfo(), taskContainer.getTaskView(), cn));
         }
     };
 
