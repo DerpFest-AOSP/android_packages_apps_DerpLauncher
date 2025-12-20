@@ -150,6 +150,10 @@ public class DeviceProfile {
     // not enough space, the hotseat will adjust itself for the bubble bar.
     private final int mBubbleBarSpaceThresholdPx;
 
+    // Meminfo in overview
+    public int memInfoMarginGesturePx;
+    public int memInfoMarginThreeButtonPx;
+
     private AllAppsProfile mAllAppsProfile;
     public int allAppsShiftRange;
     public Rect allAppsPadding = new Rect();
@@ -239,6 +243,8 @@ public class DeviceProfile {
         hotseatQsbWidth = 0;
         hotseatBorderSpace = 0;
         mBubbleBarSpaceThresholdPx = 0;
+        memInfoMarginGesturePx = 0;
+        memInfoMarginThreeButtonPx = 0;
         numShownAllAppsColumns = 0;
         mViewScaleProvider = null;
         mDotRendererWorkSpace = null;
@@ -406,6 +412,11 @@ public class DeviceProfile {
 
         mBubbleBarSpaceThresholdPx =
                 res.getDimensionPixelSize(R.dimen.bubblebar_hotseat_adjustment_threshold);
+
+        memInfoMarginGesturePx = res.getDimensionPixelSize(
+                R.dimen.meminfo_bottom_margin_gesture);
+        memInfoMarginThreeButtonPx = res.getDimensionPixelSize(
+                R.dimen.meminfo_bottom_margin_three_button);
 
         int allAppsTopPadding = mInsets.top;
 
