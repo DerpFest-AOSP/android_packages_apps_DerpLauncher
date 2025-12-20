@@ -33,4 +33,8 @@
     <dimen name="wallpaper_carousel_horizontal_padding">12dp</dimen>
     <dimen name="wallpaper_carousel_vertical_padding">6dp</dimen>
     <dimen name="homescreen_options_popup_max_width">360dp</dimen>
+
+    <!-- Meminfo in overview -->
+    <dimen name="meminfo_bottom_margin_gesture">15dp</dimen>
+    <dimen name="meminfo_bottom_margin_three_button">15dp</dimen>
 </resources>
