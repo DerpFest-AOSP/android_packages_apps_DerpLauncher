@@ -48,6 +48,76 @@ class UserManagerState(private val userMap: Map<UserHandle, CachedUserInfo>) {
     val isAnyProfileQuietModeEnabled: Boolean
         get() = userMap.any { it.value.isQuietModeEnabled }
 
+    /**
+     * Returns true if all managed profiles have quiet mode enabled.
+     */
+    fun isAllProfilesQuietModeEnabled(): Boolean {
+        // Because the parent user is included, there will always be at least one user returned
+        // by getUserProfiles and tracked by userMap, even if there are no managed profiles.
+        val numProfilesIncludingParent = userMap.size
+        if (numProfilesIncludingParent <= 1) {
+            // There are no managed profiles, only the parent user, so we can return early.
+            return false
+        }
+        for ((user, cachedInfo) in userMap) {
+            if (Process.myUserHandle() == user) {
+                // Skip the parent user.
+                continue
+            }
+            if (!cachedInfo.isQuietModeEnabled) {
+                return false
+            }
+        }
+        // Quiet mode is on for all users.
+        return true
+    }
+
+    fun hasMultipleProfiles(): Boolean {
+        val numProfiles = userMap.size - 1 // not including the parent
+        return numProfiles > 1
+    }
+
+    /**
+     * Returns true if all managed work profiles have quiet mode enabled.
+     */
+    fun isAllWorkProfilesQuietModeEnabled(): Boolean {
+        // Because the parent user is included, there will always be at least one user returned
+        // by getUserProfiles and tracked by userMap, even if there are no managed profiles.
+        val numProfilesIncludingParent = userMap.size
+        if (numProfilesIncludingParent <= 1) {
+            // There are no managed profiles, only the parent user, so we can return early.
+            return false
+        }
+        for ((user, cachedInfo) in userMap) {
+            if (!cachedInfo.iconInfo.isWork) {
+                // Skip if it's not work profile
+                continue
+            }
+            if (!cachedInfo.isQuietModeEnabled) {
+                return false
+            }
+        }
+        // Quiet mode is on for all work profiles.
+        return true
+    }
+
+    fun hasMultipleWorkProfiles(): Boolean {
+        // Because the parent user is included, there will always be at least one user returned
+        // by getUserProfiles and tracked by userMap, even if there are no managed profiles.
+        val numProfilesIncludingParent = userMap.size
+        if (numProfilesIncludingParent <= 1) {
+            // There are no managed profiles, only the parent user, so we can return early.
+            return false
+        }
+        var workProfileCount = 0
+        for ((_, cachedInfo) in userMap) {
+            if (cachedInfo.iconInfo.isWork) {
+                workProfileCount++
+            }
+        }
+        return workProfileCount > 1
+    }
+
     /** Returns the user properties for the provided user or default values */
     fun getUserInfo(user: UserHandle): UserIconInfo = getCachedInfo(user).iconInfo
 
