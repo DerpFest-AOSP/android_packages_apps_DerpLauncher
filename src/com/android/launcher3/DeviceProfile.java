@@ -62,6 +62,7 @@ import com.android.launcher3.deviceprofile.OverviewProfile;
 import com.android.launcher3.deviceprofile.TaskbarProfile;
 import com.android.launcher3.deviceprofile.WorkspaceProfile;
 import com.android.launcher3.icons.DotRenderer;
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.responsive.CalculatedCellSpec;
 import com.android.launcher3.responsive.CalculatedHotseatSpec;
@@ -151,9 +152,7 @@ public class DeviceProfile {
     private final int mBubbleBarSpaceThresholdPx;
 
     // Meminfo in overview
-    public int memInfoMarginGesturePx;
-    public int memInfoMarginTransientTaskbarPx;
-    public int memInfoMarginThreeButtonPx;
+    public int memInfoHeight;
 
     private AllAppsProfile mAllAppsProfile;
     public int allAppsShiftRange;
@@ -244,8 +243,7 @@ public class DeviceProfile {
         hotseatQsbWidth = 0;
         hotseatBorderSpace = 0;
         mBubbleBarSpaceThresholdPx = 0;
-        memInfoMarginGesturePx = 0;
-        memInfoMarginThreeButtonPx = 0;
+        memInfoHeight = 0;
         numShownAllAppsColumns = 0;
         mViewScaleProvider = null;
         mDotRendererWorkSpace = null;
@@ -414,12 +412,8 @@ public class DeviceProfile {
         mBubbleBarSpaceThresholdPx =
                 res.getDimensionPixelSize(R.dimen.bubblebar_hotseat_adjustment_threshold);
 
-        memInfoMarginGesturePx = res.getDimensionPixelSize(
-                R.dimen.meminfo_bottom_margin_gesture);
-        memInfoMarginTransientTaskbarPx = res.getDimensionPixelSize(
-                R.dimen.meminfo_bottom_margin_transient_taskbar);
-        memInfoMarginThreeButtonPx = res.getDimensionPixelSize(
-                R.dimen.meminfo_bottom_margin_three_button);
+        memInfoHeight = LauncherPrefs.RECENTS_MEMINFO.get(context) ? res.getDimensionPixelSize(
+                R.dimen.meminfo_claimed_height) : 0;
 
         int allAppsTopPadding = mInsets.top;
 
@@ -1414,7 +1408,7 @@ public class DeviceProfile {
         int overviewActionsSpace = mDeviceProperties.isTablet() && enableGridOnlyOverview()
                 ? 0
                 : (overviewProfile.getActionsTopMarginPx() + overviewProfile.getActionsHeight());
-        return overviewActionsSpace + getOverviewActionsClaimedSpaceBelow();
+        return overviewActionsSpace + memInfoHeight + getOverviewActionsClaimedSpaceBelow();
     }
 
     /**

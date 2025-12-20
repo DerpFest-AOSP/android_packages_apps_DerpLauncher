@@ -99,7 +99,11 @@ public class SettingsRecents extends CollapsingToolbarBaseActivity
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) { }
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (LauncherPrefs.RECENTS_MEMINFO.getSharedPrefKey().equals(key)) {
+            LauncherAppState.INSTANCE.get(getApplicationContext()).setNeedsRestart();
+        }
+    }
 
     private boolean startPreference(String fragment, Bundle args, String key) {
         if (Utilities.ATLEAST_T && getSupportFragmentManager().isStateSaved()) {
