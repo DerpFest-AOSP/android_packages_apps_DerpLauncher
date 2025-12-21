@@ -992,11 +992,17 @@ constructor(
                 }
 
                 val dismissTaskViewOnClick: (View) -> Unit = {
-                    recentsView?.dismissTaskView(
-                        container.taskView,
-                        /* animateTaskView = */ true,
-                        /* removeTask= */ true,
-                    )
+                    val task = container.task
+                    val isAppLocked = task?.let {
+                        RecentHelper.getInstance().isAppLocked(it.key.getPackageName(), context)
+                    } ?: false
+                    if (!isAppLocked) {
+                        recentsView?.dismissTaskView(
+                            container.taskView,
+                            /* animateTaskView = */ true,
+                            /* removeTask= */ true,
+                        )
+                    }
                 }
                 setTaskDismissButtonState(
                     TaskUiStateMapper.toTaskDismissButtonState(
