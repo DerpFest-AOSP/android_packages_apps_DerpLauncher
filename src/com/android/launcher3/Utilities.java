@@ -107,6 +107,7 @@ import com.android.launcher3.shortcuts.ShortcutRequest;
 import com.android.launcher3.testing.shared.ResourceUtils;
 import com.android.launcher3.util.FlagOp;
 import com.android.launcher3.util.IntArray;
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.util.SplitConfigurationOptions.SplitPositionOption;
 import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.views.BaseDragLayer;
@@ -178,6 +179,10 @@ public final class Utilities {
     public static final String LENS_ACTIVITY = "com.google.android.apps.search.lens.LensExportedActivity";
     public static final String LENS_URI = "google://lens";
     public static final String LENS_SHARE_ACTIVITY = "com.google.android.apps.search.lens.LensShareEntryPointActivity";
+
+    public static final String KEY_STATUS_BAR = "pref_show_statusbar";
+    public static final String KEY_APP_DRAWER_OPACITY = "pref_app_drawer_opacity";
+    public static final String KEY_RECENTS_OPACITY = "pref_recents_opacity";
 
     /**
      * Returns true if theme is dark.

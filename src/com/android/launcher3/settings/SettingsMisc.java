@@ -224,7 +224,9 @@ public class SettingsMisc extends CollapsingToolbarBaseActivity
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            // Add preference keys here that require launcher restart
+            if ("pref_blur_depth".equals(key)) {
+                LauncherAppState.getInstance(getContext()).setNeedsRestart();
+            }
         }
 
         @Override

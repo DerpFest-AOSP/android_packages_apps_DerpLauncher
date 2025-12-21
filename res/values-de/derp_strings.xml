@@ -168,4 +168,8 @@
     <!-- Task lock -->
     <string name="task_menu_item_unlock">Entsperren</string>
     <string name="task_menu_item_lock">Sperren</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Tiefenschärfegrad des Hintergrunds</string>
+    <string name="background_blur_summary">Tiefenschärfegrad in App-Übersicht und -Verlauf anpassen</string>
 </resources>
