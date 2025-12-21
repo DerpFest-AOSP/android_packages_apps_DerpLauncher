@@ -55,9 +55,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 
 import com.android.launcher3.customization.IconDatabase;
-import com.android.launcher3.settings.preference.IconPackPrefSetter;
-import com.android.launcher3.settings.preference.ReloadingListPreference;
-import com.android.launcher3.util.AppReloader;
+import com.android.launcher3.icons.pack.IconPackSettingsActivity;
 
 /**
  * Settings activity for Launcher.
@@ -67,7 +65,6 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
         SharedPreferences.OnSharedPreferenceChangeListener{
 
     private static final String NOTIFICATION_DOTS_PREFERENCE_KEY = "pref_icon_badging";
-    private static final String KEY_ICON_PACK = "pref_icon_pack";
 
     public static final String EXTRA_FRAGMENT_ARG_KEY = ":settings:fragment_args_key";
     public static final String EXTRA_SHOW_FRAGMENT_ARGS = ":settings:show_fragment_args";
@@ -157,12 +154,11 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
     /**
      * This fragment shows the launcher preferences.
      */
-    public static class IconsSettingsFragment extends PreferenceFragmentCompat {
+    public static class IconsSettingsFragment extends PreferenceFragmentCompat implements
+            SharedPreferences.OnSharedPreferenceChangeListener {
 
         private String mHighLightKey;
         private boolean mPreferenceHighlighted = false;
-
-        private ReloadingListPreference mIconPackPref;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -179,6 +175,20 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
             getPreferenceManager().setSharedPreferencesName(LauncherFiles.SHARED_PREFERENCES_KEY);
             setPreferencesFromResource(R.xml.launcher_icons_preferences, rootKey);
 
+            updatePreferences();
+
+            LauncherPrefs.getPrefs(getContext())
+                    .registerOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onDestroyView () {
+            LauncherPrefs.getPrefs(getContext())
+                .unregisterOnSharedPreferenceChangeListener(this);
+            super.onDestroyView();
+        }
+
+        private void updatePreferences() {
             PreferenceScreen screen = getPreferenceScreen();
             for (int i = screen.getPreferenceCount() - 1; i >= 0; i--) {
                 Preference preference = screen.getPreference(i);
@@ -189,6 +199,15 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
 
             if (getActivity() != null && !TextUtils.isEmpty(getPreferenceScreen().getTitle())) {
                 getActivity().setTitle(getPreferenceScreen().getTitle());
+            }
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+            switch (key) {
+                case IconDatabase.KEY_ICON_PACK:
+                    updatePreferences();
+                    break;
             }
         }
 
@@ -226,18 +245,9 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
                 case NOTIFICATION_DOTS_PREFERENCE_KEY:
                     return BuildConfig.NOTIFICATION_DOTS_ENABLED;
 
-                case KEY_ICON_PACK:
-                    mIconPackPref = (ReloadingListPreference) preference;
-                    mIconPackPref.setValue(IconDatabase.getGlobal(getActivity()));
-                    mIconPackPref.setOnReloadListener(IconPackPrefSetter::new);
-                    mIconPackPref.setIcon(getPackageIcon(IconDatabase.getGlobal(getActivity())));
-                    mIconPackPref.setOnPreferenceChangeListener((pref, val) -> {
-                        IconDatabase.clearAll(getActivity());
-                        IconDatabase.setGlobal(getActivity(), (String) val);
-                        mIconPackPref.setIcon(getPackageIcon((String) val));
-                        AppReloader.get(getActivity()).reload();
-                        return true;
-                    });
+                case IconDatabase.KEY_ICON_PACK:
+                    setupIconPackPreference(preference);
+                    return true;
             }
 
             return true;
@@ -246,17 +256,6 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
         @Override
         public void onResume() {
             super.onResume();
-
-            // Call onResume for preferences that implement OnResumePreferenceCallback
-            PreferenceScreen screen = getPreferenceScreen();
-            if (screen != null) {
-                for (int i = 0; i < screen.getPreferenceCount(); i++) {
-                    Preference pref = screen.getPreference(i);
-                    if (pref instanceof OnResumePreferenceCallback) {
-                        ((OnResumePreferenceCallback) pref).onResume();
-                    }
-                }
-            }
 
             if (isAdded() && !mPreferenceHighlighted) {
                 PreferenceHighlighter highlighter = createHighlighter();
@@ -296,18 +295,13 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
             });
         }
 
-        private Drawable getPackageIcon(String pkgName) {
-            Drawable icon = getContext().getResources().
-                              getDrawable(com.android.internal.R.drawable.sym_def_app_icon);
-            try {
-                 icon = getContext().getPackageManager().
-                              getApplicationIcon(pkgName);
-            } catch (PackageManager.NameNotFoundException e) {  }
-            return icon;
+        private void setupIconPackPreference(Preference preference) {
+            final String pkgLabel = IconDatabase.getGlobalLabel(getActivity());
+            preference.setSummary(pkgLabel);
+            preference.setOnPreferenceClickListener(p -> {
+                startActivity(new Intent(getActivity(), IconPackSettingsActivity.class));
+                return true;
+            });
         }
-    }
-
-    public interface OnResumePreferenceCallback {
-        void onResume();
     }
 }
