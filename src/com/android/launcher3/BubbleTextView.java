@@ -86,6 +86,7 @@ import com.android.launcher3.dot.DotInfo;
 import com.android.launcher3.dragndrop.DragOptions.PreDragCondition;
 import com.android.launcher3.dragndrop.DraggableView;
 import com.android.launcher3.folder.FolderIcon;
+import com.android.launcher3.graphics.DrawableFactory;
 import com.android.launcher3.graphics.PreloadIconDelegate;
 import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.icons.BitmapInfo.DrawableCreationFlags;
@@ -1264,7 +1265,8 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
         if (pid != null) {
             pid.reapplyProgress(info);
         } else {
-            setIcon(newPendingIcon(info, getContext(), getIconCreationFlagsForInfo(info)));
+            setIcon(DrawableFactory.INSTANCE.get(getContext())
+                    .newPendingIcon(getContext(), info));
             pid = extractPreloadDelegate(mIcon);
         }
         return pid;

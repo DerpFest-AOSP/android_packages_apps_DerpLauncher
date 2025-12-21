@@ -51,6 +51,14 @@ import com.android.launcher3.model.WidgetsModel;
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
 
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
+
+import com.android.launcher3.customization.IconDatabase;
+import com.android.launcher3.settings.preference.IconPackPrefSetter;
+import com.android.launcher3.settings.preference.ReloadingListPreference;
+import com.android.launcher3.util.AppReloader;
+
 /**
  * Settings activity for Launcher.
  */
@@ -59,6 +67,7 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
         SharedPreferences.OnSharedPreferenceChangeListener{
 
     private static final String NOTIFICATION_DOTS_PREFERENCE_KEY = "pref_icon_badging";
+    private static final String KEY_ICON_PACK = "pref_icon_pack";
 
     public static final String EXTRA_FRAGMENT_ARG_KEY = ":settings:fragment_args_key";
     public static final String EXTRA_SHOW_FRAGMENT_ARGS = ":settings:show_fragment_args";
@@ -153,6 +162,8 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
         private String mHighLightKey;
         private boolean mPreferenceHighlighted = false;
 
+        private ReloadingListPreference mIconPackPref;
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             final Bundle args = getArguments();
@@ -214,6 +225,19 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
             switch (preference.getKey()) {
                 case NOTIFICATION_DOTS_PREFERENCE_KEY:
                     return BuildConfig.NOTIFICATION_DOTS_ENABLED;
+
+                case KEY_ICON_PACK:
+                    mIconPackPref = (ReloadingListPreference) preference;
+                    mIconPackPref.setValue(IconDatabase.getGlobal(getActivity()));
+                    mIconPackPref.setOnReloadListener(IconPackPrefSetter::new);
+                    mIconPackPref.setIcon(getPackageIcon(IconDatabase.getGlobal(getActivity())));
+                    mIconPackPref.setOnPreferenceChangeListener((pref, val) -> {
+                        IconDatabase.clearAll(getActivity());
+                        IconDatabase.setGlobal(getActivity(), (String) val);
+                        mIconPackPref.setIcon(getPackageIcon((String) val));
+                        AppReloader.get(getActivity()).reload();
+                        return true;
+                    });
             }
 
             return true;
@@ -222,6 +246,17 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
         @Override
         public void onResume() {
             super.onResume();
+
+            // Call onResume for preferences that implement OnResumePreferenceCallback
+            PreferenceScreen screen = getPreferenceScreen();
+            if (screen != null) {
+                for (int i = 0; i < screen.getPreferenceCount(); i++) {
+                    Preference pref = screen.getPreference(i);
+                    if (pref instanceof OnResumePreferenceCallback) {
+                        ((OnResumePreferenceCallback) pref).onResume();
+                    }
+                }
+            }
 
             if (isAdded() && !mPreferenceHighlighted) {
                 PreferenceHighlighter highlighter = createHighlighter();
@@ -260,5 +295,19 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
                 }
             });
         }
+
+        private Drawable getPackageIcon(String pkgName) {
+            Drawable icon = getContext().getResources().
+                              getDrawable(com.android.internal.R.drawable.sym_def_app_icon);
+            try {
+                 icon = getContext().getPackageManager().
+                              getApplicationIcon(pkgName);
+            } catch (PackageManager.NameNotFoundException e) {  }
+            return icon;
+        }
+    }
+
+    public interface OnResumePreferenceCallback {
+        void onResume();
     }
 }
