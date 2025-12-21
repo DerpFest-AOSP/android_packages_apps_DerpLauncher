@@ -1,29 +1,22 @@
 package com.android.launcher3.qsb;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import androidx.core.view.ViewCompat;
 import com.android.launcher3.R;
 import com.android.launcher3.Reorderable;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.qsb.QsbContainerView;
 import com.android.launcher3.util.MultiTranslateDelegate;
-import com.android.launcher3.util.Themes;
 import com.android.launcher3.graphics.ThemeManager;
-import com.android.launcher3.LauncherPrefs;
+import com.android.launcher3.graphics.ThemeManager.ThemeChangeListener;
 
-public class QsbLayout extends FrameLayout implements Reorderable,
-        SharedPreferences.OnSharedPreferenceChangeListener {
+public class QsbLayout extends FrameLayout implements Reorderable {
 
     ImageView mAssistantIcon;
     ImageView mGoogleIcon;
@@ -32,6 +25,7 @@ public class QsbLayout extends FrameLayout implements Reorderable,
 
     private final MultiTranslateDelegate mTranslateDelegate = new MultiTranslateDelegate(this);
     private float mScaleForReorderBounce = 1f;
+    private ThemeChangeListener mThemeChangeListener;
 
     public QsbLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -51,7 +45,8 @@ public class QsbLayout extends FrameLayout implements Reorderable,
         mLensIcon = findViewById(R.id.lens_icon);
         setIcons();
 
-        LauncherPrefs.getPrefs(mContext).registerOnSharedPreferenceChangeListener(this);
+        mThemeChangeListener = () -> setIcons();
+        ThemeManager.INSTANCE.get(mContext).addChangeListener(mThemeChangeListener);
 
         String searchPackage = QsbContainerView.getSearchWidgetPackageName(mContext);
         setOnClickListener(view -> {
@@ -80,9 +75,11 @@ public class QsbLayout extends FrameLayout implements Reorderable,
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-        if (key.equals(ThemeManager.KEY_THEMED_ICONS)) {
-            setIcons();
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mThemeChangeListener != null) {
+            ThemeManager.INSTANCE.get(mContext).removeChangeListener(mThemeChangeListener);
+            mThemeChangeListener = null;
         }
     }
 
