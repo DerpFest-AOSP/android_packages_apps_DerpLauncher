@@ -134,7 +134,6 @@ public class TaskOverlayFactory {
             TaskShortcutFactory.INSTALL,
             TaskShortcutFactory.SAVE_APP_PAIR,
             TaskShortcutFactory.SCREENSHOT,
-            TaskShortcutFactory.KILL_APP,
             TaskShortcutFactory.UNINSTALL,
             TaskShortcutFactory.MODAL,
     };
