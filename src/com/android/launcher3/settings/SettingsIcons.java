@@ -55,7 +55,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 
 import com.android.launcher3.customization.IconDatabase;
-import com.android.launcher3.icons.pack.IconPackSettingsActivity;
+import com.android.launcher3.settings.iconpack.IconPackSettingsActivity;
 
 /**
  * Settings activity for Launcher.
