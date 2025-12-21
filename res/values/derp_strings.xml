@@ -106,4 +106,7 @@
     <string name="about_thanks_cat">Special thanks to</string>
     <string name="about">About</string>
     <string name="about_summary">Info about the DerpLauncher</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Default</string>
 </resources>

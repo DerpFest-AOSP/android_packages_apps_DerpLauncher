@@ -18,7 +18,6 @@ package com.android.launcher3.icons;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
-import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
 
@@ -39,7 +38,7 @@ import javax.inject.Inject;
  * Extension of {@link IconProvider} with support for overriding theme icons
  */
 @LauncherAppSingleton
-public class LauncherIconProvider extends IconProvider {
+public class LauncherIconProvider extends ThirdPartyIconProvider {
 
     private static final String TAG_ICON = "icon";
     private static final String ATTR_PACKAGE = "package";
@@ -94,7 +93,7 @@ public class LauncherIconProvider extends IconProvider {
                 if (TAG_ICON.equals(parser.getName())) {
                     String pkg = parser.getAttributeValue(null, ATTR_PACKAGE);
                     int iconId = parser.getAttributeResourceValue(null, ATTR_DRAWABLE, 0);
-                    if (iconId != 0 && !TextUtils.isEmpty(pkg)) {
+                    if (iconId != 0 && pkg != null && !pkg.isEmpty()) {
                         map.put(pkg, new ThemeData(res, iconId));
                     }
                 }
