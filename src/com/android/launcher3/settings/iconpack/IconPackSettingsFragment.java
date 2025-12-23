@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 
 import androidx.preference.Preference;
 
+import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.R;
 
 import com.android.launcher3.customization.IconDatabase;
@@ -115,7 +116,24 @@ public final class IconPackSettingsFragment extends RadioSettingsFragment {
     @Override
     public void onSelected(String key) {
         IconDatabase.setGlobal(getActivity(), key);
-        AppReloader.get(getActivity()).reload();
+        
+        // Use rebindCallbacks instead of reloading all packages
+        // This is much lighter and prevents DeadObjectException when switching icon packs
+        // Icons will be reloaded on-demand as they're displayed
+        Context context = getActivity();
+        if (context != null) {
+            try {
+                LauncherAppState appState = LauncherAppState.getInstance(context);
+                // Rebind callbacks to refresh UI - this will trigger icon reloads as needed
+                // This is much lighter than AppReloader.reload() which reloads all packages
+                appState.getModel().rebindCallbacks();
+            } catch (Exception e) {
+                // Fallback to full reload if LauncherAppState is not available
+                // This should rarely happen, but provides a safety net
+                AppReloader.get(context).reload();
+            }
+        }
+        
         super.onSelected(key);
     }
 
