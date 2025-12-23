@@ -20,6 +20,7 @@ import static androidx.core.view.accessibility.AccessibilityNodeInfoCompat.ACTIO
 import static androidx.preference.PreferenceFragmentCompat.ARG_PREFERENCE_ROOT;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -30,7 +31,6 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.view.WindowCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -42,11 +42,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.R;
+import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
+import com.android.settingslib.widget.SettingsBasePreferenceFragment;
+import com.android.settingslib.widget.SettingsThemeHelper;
 
 /**
  * Base settings activity for a launcher settings category.
  */
-public abstract class SettingsCategoryActivity extends FragmentActivity
+public abstract class SettingsCategoryActivity extends CollapsingToolbarBaseActivity
         implements OnPreferenceStartFragmentCallback, OnPreferenceStartScreenCallback {
 
     private static final int DELAY_HIGHLIGHT_DURATION_MILLIS = 600;
@@ -63,9 +66,7 @@ public abstract class SettingsCategoryActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
-        setActionBar(findViewById(R.id.action_bar));
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         if (savedInstanceState == null) {
@@ -83,8 +84,21 @@ public abstract class SettingsCategoryActivity extends FragmentActivity
             final Fragment f = fm.getFragmentFactory().instantiate(
                     getClassLoader(), getSettingsFragmentName());
             f.setArguments(args);
-            fm.beginTransaction().replace(R.id.content_frame, f).commit();
+            fm.beginTransaction()
+                    .replace(com.android.settingslib.collapsingtoolbar.R.id.content_frame, f)
+                    .commit();
         }
+    }
+
+    @Override
+    public Resources.Theme getTheme() {
+        Resources.Theme theme = super.getTheme();
+        if (SettingsThemeHelper.isExpressiveTheme(this)) {
+            theme.applyStyle(
+                    com.android.settingslib.widget.theme.R.style.Theme_SubSettingsBase_Expressive,
+                    true);
+        }
+        return theme;
     }
 
     private boolean startPreference(String fragment, Bundle args, String key) {
@@ -129,7 +143,7 @@ public abstract class SettingsCategoryActivity extends FragmentActivity
     /**
      * Base fragment for category launcher preferences.
      */
-    public abstract static class CategorySettingsFragment extends PreferenceFragmentCompat {
+    public abstract static class CategorySettingsFragment extends SettingsBasePreferenceFragment {
 
         protected abstract int getPreferencesXmlResId();
 
