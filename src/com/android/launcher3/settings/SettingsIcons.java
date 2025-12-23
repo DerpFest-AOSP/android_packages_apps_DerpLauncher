@@ -20,6 +20,7 @@ import static androidx.core.view.accessibility.AccessibilityNodeInfoCompat.ACTIO
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -50,6 +51,8 @@ import com.android.launcher3.Utilities;
 import com.android.launcher3.model.WidgetsModel;
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
+import com.android.settingslib.widget.SettingsBasePreferenceFragment;
+import com.android.settingslib.widget.SettingsThemeHelper;
 
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -151,10 +154,21 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public Resources.Theme getTheme() {
+        Resources.Theme theme = super.getTheme();
+        if (SettingsThemeHelper.isExpressiveTheme(this)) {
+            theme.applyStyle(
+                    com.android.settingslib.widget.theme.R.style.Theme_SubSettingsBase_Expressive,
+                    true);
+        }
+        return theme;
+    }
+
     /**
      * This fragment shows the launcher preferences.
      */
-    public static class IconsSettingsFragment extends PreferenceFragmentCompat implements
+    public static class IconsSettingsFragment extends SettingsBasePreferenceFragment implements
             SharedPreferences.OnSharedPreferenceChangeListener {
 
         private String mHighLightKey;

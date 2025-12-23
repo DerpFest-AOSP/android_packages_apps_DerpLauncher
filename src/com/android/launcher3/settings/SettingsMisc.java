@@ -23,6 +23,7 @@ import static com.android.launcher3.states.RotationHelper.ALLOW_ROTATION_PREFERE
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -55,6 +56,8 @@ import com.android.launcher3.states.RotationHelper;
 import com.android.launcher3.util.DisplayController;
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
+import com.android.settingslib.widget.SettingsBasePreferenceFragment;
+import com.android.settingslib.widget.SettingsThemeHelper;
 
 import com.android.systemui.shared.system.BlurUtils;
 
@@ -160,10 +163,21 @@ public class SettingsMisc extends CollapsingToolbarBaseActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public Resources.Theme getTheme() {
+        Resources.Theme theme = super.getTheme();
+        if (SettingsThemeHelper.isExpressiveTheme(this)) {
+            theme.applyStyle(
+                    com.android.settingslib.widget.theme.R.style.Theme_SubSettingsBase_Expressive,
+                    true);
+        }
+        return theme;
+    }
+
     /**
      * This fragment shows the launcher preferences.
      */
-    public static class MiscSettingsFragment extends PreferenceFragmentCompat
+    public static class MiscSettingsFragment extends SettingsBasePreferenceFragment
             implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private String mHighLightKey;
