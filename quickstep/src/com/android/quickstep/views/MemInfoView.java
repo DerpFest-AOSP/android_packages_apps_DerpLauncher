@@ -23,6 +23,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.Debug;
 import android.os.Handler;
 import android.graphics.Rect;
@@ -83,6 +84,9 @@ public class MemInfoView extends TextView implements Insettable {
 
     String mTotalResult;
 
+    private int mOriginalPaddingLeft;
+    private int mOriginalPaddingRight;
+
     public MemInfoView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -96,6 +100,10 @@ public class MemInfoView extends TextView implements Insettable {
 
         mMemInfoText = context.getResources().getString(R.string.meminfo_text);
         setListener(context);
+
+        // Store original padding from XML (read after super() which applies XML attributes)
+        mOriginalPaddingLeft = getPaddingLeft();
+        mOriginalPaddingRight = getPaddingRight();
     }
 
     @Override
@@ -128,7 +136,13 @@ public class MemInfoView extends TextView implements Insettable {
     }
 
     private void updatePadding() {
-        setPadding(mInsets.left, 0, mInsets.right, 0);
+        // For a centered view, we don't need horizontal insets
+        // Preserve the original XML padding (8dp) to prevent text cutoff
+        // Only update if we have stored original values, otherwise keep current padding
+        if (mOriginalPaddingLeft > 0 || mOriginalPaddingRight > 0) {
+            setPadding(mOriginalPaddingLeft, getPaddingTop(), mOriginalPaddingRight, getPaddingBottom());
+        }
+        // If original padding not set yet, don't override (preserves XML padding)
     }
 
     public void setDp(DeviceProfile dp) {
