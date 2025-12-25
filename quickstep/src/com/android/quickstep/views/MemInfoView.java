@@ -165,7 +165,13 @@ public class MemInfoView extends TextView implements Insettable {
         if (lp == null) {
             return;
         }
-        int bottomMargin = mDp.getOverviewActionsClaimedSpaceBelow();
+
+        // Add spacing above nav bar to prevent meminfo from being too close to nav bar hint
+        // Convert 8dp to pixels for spacing
+        float density = getContext().getResources().getDisplayMetrics().density;
+        int spacingAboveNavBar = (int) (8 * density + 0.5f);
+
+        int bottomMargin = mDp.getOverviewActionsClaimedSpaceBelow() + spacingAboveNavBar;
 
         lp.setMargins(lp.leftMargin, lp.topMargin, lp.rightMargin, bottomMargin);
         lp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
