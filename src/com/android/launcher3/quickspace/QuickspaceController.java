@@ -23,20 +23,17 @@ import android.media.MediaMetadataRetriever;
 import android.media.RemoteControlClient;
 import android.media.RemoteController;
 import android.os.Handler;
-import android.service.notification.StatusBarNotification;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.android.launcher3.LauncherNotifications;
 import com.android.launcher3.R;
-
-import com.android.launcher3.notification.NotificationKeyData;
-import com.android.launcher3.notification.NotificationListener;
 import com.android.launcher3.util.PackageUserKey;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.function.Predicate;
 
-public class QuickspaceController implements NotificationListener.NotificationsChangedListener {
+public class QuickspaceController implements LauncherNotifications.NotificationUpdateListener {
 
     public final ArrayList<OnDataListener> mListeners = new ArrayList();
     private static final String SETTING_WEATHER_LOCKSCREEN_UNIT = "weather_lockscreen_unit";
@@ -132,23 +129,12 @@ public class QuickspaceController implements NotificationListener.NotificationsC
     }
 
     @Override
-    public void onNotificationPosted(PackageUserKey postedPackageUserKey,
-                                     NotificationKeyData notificationKey) {
-        updateMediaInfo();
-    }
-
-    @Override
-    public void onNotificationRemoved(PackageUserKey removedPackageUserKey,
-                                      NotificationKeyData notificationKey) {
-        updateMediaInfo();
-    }
-
-    @Override
-    public void onNotificationFullRefresh(List<StatusBarNotification> activeNotifications) {
+    public void onNotificationUpdate(Predicate<PackageUserKey> updatedDots) {
         updateMediaInfo();
     }
 
     public void onPause() {
+        LauncherNotifications.getInstance().removeListener(this);
         if (mEventsController != null) mEventsController.onPause();
     }
 
@@ -158,6 +144,7 @@ public class QuickspaceController implements NotificationListener.NotificationsC
             mEventsController.onResume();
             notifyListeners();
         }
+        LauncherNotifications.getInstance().addListener(this);
     }
 
     public void weatherUpdated() {
