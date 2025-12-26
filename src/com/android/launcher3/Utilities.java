@@ -765,7 +765,7 @@ public final class Utilities {
         }
 
         // Inject theme icon drawable
-        if (ATLEAST_T && useTheme) {
+        if (ATLEAST_T && useTheme && result != null) {
             IconThemeController themeController =
                     ThemeManager.INSTANCE.get(context).getThemeController();
             if (themeController != null) {
@@ -777,6 +777,10 @@ public final class Utilities {
                     return null;
                 }
             }
+        }
+
+        if (result == null) {
+            return null;
         }
 
         if (badge == null) {
