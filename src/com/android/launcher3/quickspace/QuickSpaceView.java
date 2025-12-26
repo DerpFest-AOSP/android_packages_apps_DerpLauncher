@@ -124,6 +124,8 @@ public class QuickSpaceView extends FrameLayout implements AnimatorUpdateListene
         if (title != null) {
             mEventTitle.setText(title);
             mEventTitle.setEllipsize(TruncateAt.END);
+            mEventTitle.setOnClickListener(Utilities.showDateInPlaceOfNowPlaying(getContext()) ?
+                mActionReceiver.getCalendarAction() : eventController.getAction());
         }
         if (actionTitle != null) {
             mEventTitleSub.setText(actionTitle);
