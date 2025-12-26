@@ -438,7 +438,7 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
     public static class PauseApps<T extends ActivityContext> extends SystemShortcut<T> {
 
         public PauseApps(T target, ItemInfo itemInfo, View originalView) {
-            super(R.drawable.ic_hourglass_top, R.string.paused_apps_drop_target_label, target,
+            super(R.drawable.ic_hourglass, R.string.paused_apps_drop_target_label, target,
                     itemInfo, originalView);
         }
 
@@ -452,7 +452,6 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
             final CharSequence appLabel = context.getPackageManager().getApplicationLabel(
                     applicationInfo);
             new AlertDialog.Builder(context)
-                    .setIcon(R.drawable.ic_hourglass_top)
                     .setTitle(context.getString(R.string.pause_apps_dialog_title, appLabel))
                     .setMessage(context.getString(R.string.pause_apps_dialog_message, appLabel))
                     .setNegativeButton(android.R.string.cancel, null)
