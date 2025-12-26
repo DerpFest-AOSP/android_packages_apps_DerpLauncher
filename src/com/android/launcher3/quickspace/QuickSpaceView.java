@@ -95,13 +95,13 @@ public class QuickSpaceView extends FrameLayout implements AnimatorUpdateListene
         mWeatherAvailable = mController.isWeatherAvailable();
         getQuickSpaceView();
         if (mIsQuickEvent) {
-            loadDoubleLine();
+            loadEventSpace();
         } else {
-            loadSingleLine();
+            loadPrimarySpace();
         }
     }
 
-    public final void loadDoubleLine() {
+    public final void loadEventSpace() {
         setBackgroundResource(mQuickspaceBackgroundRes);
         QuickEventsController eventController = mController.getEventController();
         if (eventController == null) return;
@@ -128,7 +128,7 @@ public class QuickSpaceView extends FrameLayout implements AnimatorUpdateListene
         bindWeather(mWeatherContentSub, mWeatherTempSub, mWeatherIconSub);
     }
 
-    public final void loadSingleLine() {
+    public final void loadPrimarySpace() {
         LayoutTransition transition = mQuickspaceContent.getLayoutTransition();
         mQuickspaceContent.setLayoutTransition(transition == null ? new LayoutTransition() : null);
         setBackgroundResource(0);
@@ -194,8 +194,8 @@ public class QuickSpaceView extends FrameLayout implements AnimatorUpdateListene
         int indexOfChild = indexOfChild(mQuickspaceContent);
         removeView(mQuickspaceContent);
         addView(LayoutInflater.from(getContext()).inflate(mIsQuickEvent ?
-                R.layout.quickspace_doubleline :
-                R.layout.quickspace_singleline, this, false), indexOfChild);
+                R.layout.quickspace_event :
+                R.layout.quickspace_primary, this, false), indexOfChild);
         loadViews();
     }
 
