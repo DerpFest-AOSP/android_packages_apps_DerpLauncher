@@ -574,6 +574,15 @@ public interface TaskShortcutFactory {
             if (packageName == null || task == null || taskView == null) {
                 return;
             }
+            
+            // Dismiss UI first for immediate feedback
+            RecentsView<?, ?> recentsView = taskView.getRecentsView();
+            if (recentsView != null) {
+                dismissTaskMenuView();
+                recentsView.dismissTaskView(taskView, true, true);
+            }
+            
+            // Force stop the package
             IActivityManager iam = ActivityManagerNative.getDefault();
             try {
                 iam.forceStopPackage(packageName, UserHandle.USER_CURRENT);
@@ -582,17 +591,7 @@ public interface TaskShortcutFactory {
                 String text = String.format(
                         mTarget.asContext().getString(R.string.recents_app_killed), title);
                 Toast.makeText(mTarget.asContext(), text, Toast.LENGTH_SHORT).show();
-
-                RecentsView<?, ?> recentsView = taskView.getRecentsView();
-                if (recentsView != null) {
-                    recentsView.dismissTaskView(taskView, true, true);
-                }
             } catch (RemoteException e) { }
-            RecentsView<?, ?> recentsView = taskView.getRecentsView();
-            if (recentsView != null) {
-                dismissTaskMenuView();
-                recentsView.dismissTaskView(taskView, true, true);
-            }
         }
     }
 
