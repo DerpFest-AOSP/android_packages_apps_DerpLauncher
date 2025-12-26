@@ -105,6 +105,8 @@ public class SettingsRecents extends CollapsingToolbarBaseActivity
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (LauncherPrefs.RECENTS_MEMINFO.getSharedPrefKey().equals(key)) {
             LauncherAppState.INSTANCE.get(getApplicationContext()).setNeedsRestart();
+        } else if (LauncherPrefs.RECENTS_CHIPS.getSharedPrefKey().equals(key)) {
+            LauncherAppState.INSTANCE.get(getApplicationContext()).setNeedsRestart();
         }
     }
 

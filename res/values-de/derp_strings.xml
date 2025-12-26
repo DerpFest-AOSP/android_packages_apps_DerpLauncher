@@ -161,6 +161,8 @@
     <string name="pref_scroll_vibration_summary">Haptisches Feedback beim Scrollen durch aktuelle Apps, sofern unterstützt</string>
 
     <!-- Recents icons -->
+    <string name="recents_chips_title">Kompaktes Aktionsdesign verwenden</string>
+    <string name="recents_chips_summary">Kann erforderlich sein, um große Anzahl von Aktionen anzuzeigen</string>
     <string name="recents_screenshot_title">Screenshot</string>
     <string name="recents_clear_all_title">Alle Apps schließen</string>
     <string name="recents_lens_title">Lens</string>
