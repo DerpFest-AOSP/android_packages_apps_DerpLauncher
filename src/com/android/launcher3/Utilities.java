@@ -44,6 +44,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.icu.text.DateFormat;
+import android.icu.text.DisplayContext;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
@@ -191,6 +193,7 @@ public final class Utilities {
 
     public static final String DESKTOP_SHOW_QUICKSPACE = "pref_show_quickspace";
     public static final String KEY_SHOW_QUICKSPACE_NOWPLAYING = "pref_quickspace_np";
+    public static final String KEY_SHOW_QUICKSPACE_NOWPLAYING_SHOWDATE = "pref_quickspace_np_showdate";
 
     /**
      * Returns true if theme is dark.
@@ -1187,6 +1190,11 @@ public final class Utilities {
     public static boolean isQuickspaceNowPlaying(Context context) {
         SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
         return prefs.getBoolean(KEY_SHOW_QUICKSPACE_NOWPLAYING, true);
+    }
+
+    public static boolean showDateInPlaceOfNowPlaying(Context context) {
+        SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
+        return prefs.getBoolean(KEY_SHOW_QUICKSPACE_NOWPLAYING_SHOWDATE, true);
     }
 
     public static int getSeraphixHolderId(Context context) {
