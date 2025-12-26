@@ -171,6 +171,11 @@
     <string name="task_menu_item_unlock">Entsperren</string>
     <string name="task_menu_item_lock">Sperren</string>
 
+    <!-- QuickSpace -->
+    <string name="show_quickspace_title">Auf einen Blick</string>
+    <string name="show_quickspace_summary">Oben auf dem Startbildschirm anzeigen</string>
+    <string name="abbrev_wday_month_day_no_year" translatable="false">EEEEMMMd</string>
+
     <!-- Background blur -->
     <string name="background_blur_title">Tiefenschärfegrad des Hintergrunds</string>
     <string name="background_blur_summary">Tiefenschärfegrad in App-Übersicht und -Verlauf anpassen</string>

@@ -416,6 +416,8 @@ public class Launcher extends StatefulActivity<LauncherState>
 
     protected long mLastTouchUpTime = -1;
     private boolean mTouchInProgress;
+    // QuickSpace
+    private com.android.launcher3.quickspace.QuickSpaceView mQuickSpace;
 
     // New InstanceId is assigned to mAllAppsSessionLogId for each AllApps sessions.
     // When Launcher is not in AllApps state mAllAppsSessionLogId will be null.
@@ -535,6 +537,7 @@ public class Launcher extends StatefulActivity<LauncherState>
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
         setContentView(getRootView());
+        mQuickSpace = findViewById(R.id.reserved_container_workspace);
 
         if (mOnInitialBindListener != null) {
             getRootView().getViewTreeObserver().addOnPreDrawListener(mOnInitialBindListener);
@@ -656,6 +659,13 @@ public class Launcher extends StatefulActivity<LauncherState>
     public void onSharedPreferenceChanged(SharedPreferences SharedPrefs, String key) {
         if (key.equals(KEY_DARK_STATUS_BAR)) {
             recreate();
+        }
+        switch (key) {
+            case Utilities.DESKTOP_SHOW_QUICKSPACE:
+                mAppState.setNeedsRestart();
+                break;
+            default:
+                break;
         }
     }
 
@@ -1256,6 +1266,10 @@ public class Launcher extends StatefulActivity<LauncherState>
     protected void onResume() {
         TraceHelper.INSTANCE.beginSection(ON_RESUME_EVT);
         super.onResume();
+
+        if (mQuickSpace != null) {
+            mQuickSpace.onResume();
+        }
 
         if (mDeferOverlayCallbacks) {
             scheduleDeferredCheck();

@@ -41,6 +41,12 @@ public final class FeatureFlags {
     public static final boolean IS_STUDIO_BUILD = BuildConfig.IS_STUDIO_BUILD;
 
     /**
+     * @deprecated Use {@link BuildConfig#QSB_ON_FIRST_SCREEN} directly
+     */
+    @Deprecated
+    public static final boolean USE_QUICKSPACE_VIEW = true;
+
+    /**
      * Feature flag to handle define config changes dynamically instead of killing the process.
      * <p>
      *

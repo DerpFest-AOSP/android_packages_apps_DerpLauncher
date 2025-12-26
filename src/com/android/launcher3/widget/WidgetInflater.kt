@@ -19,6 +19,8 @@ package com.android.launcher3.widget
 import android.content.Context
 import com.android.launcher3.BuildConfig
 import com.android.launcher3.Launcher
+import com.android.launcher3.LauncherSettings.Favorites.CONTAINER_DESKTOP
+import com.android.launcher3.Utilities
 import com.android.launcher3.backuprestore.LauncherRestoreEventLogger.RestoreError
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.logging.FileLog
@@ -39,6 +41,14 @@ constructor(
 
     fun inflateAppWidget(item: LauncherAppWidgetInfo): InflationResult {
         if (item.hasOptionFlag(LauncherAppWidgetInfo.OPTION_SEARCH_WIDGET)) {
+            // Delete search widgets on workspace when Quickspace is enabled (replaces QSB)
+            if (item.container == CONTAINER_DESKTOP && Utilities.showQuickspace(context)) {
+                return InflationResult(
+                    TYPE_DELETE,
+                    reason = "search widget removed because Quickspace is enabled",
+                    restoreErrorType = RestoreError.NO_SEARCH_WIDGET,
+                )
+            }
             item.providerName = QsbContainerView.getSearchComponentName(context)
             if (item.providerName == null) {
                 return InflationResult(

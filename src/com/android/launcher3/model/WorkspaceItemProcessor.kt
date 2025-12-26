@@ -31,7 +31,7 @@ import android.util.SparseArray
 import com.android.launcher3.Flags
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.LauncherSettings.Favorites
-import com.android.launcher3.Utilities.qsbOnFirstScreen
+import com.android.launcher3.Utilities.showQuickspace
 import com.android.launcher3.WorkspaceLayoutManager
 import com.android.launcher3.backuprestore.LauncherRestoreEventLogger.RestoreError
 import com.android.launcher3.folder.Folder
@@ -648,8 +648,8 @@ class WorkspaceItemProcessor(
             ArrayList(loadedItems.filter { it.container == Favorites.CONTAINER_DESKTOP })
         val excludedScreens = IntSet()
 
-        if (qsbOnFirstScreen()) {
-            // Reserve layout space for the search container. Note that this is not required when
+        if (showQuickspace(context)) {
+            // Reserve layout space for the quickspace container. Note that this is not required when
             // [Flags.FLAG_INJECTABLE_MODEL_ITEMS] is enabled as injected items will already be
             // accounted for in [knownDesktopContainerItems].
             knownDesktopContainerItems.add(

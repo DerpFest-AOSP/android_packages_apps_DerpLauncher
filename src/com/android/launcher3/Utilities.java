@@ -37,6 +37,7 @@ import android.app.KeyguardManager;
 import android.app.Person;
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
 import android.content.pm.PackageManager;
@@ -163,6 +164,10 @@ public final class Utilities {
     @Deprecated
     public static final boolean IS_DEBUG_DEVICE = BuildConfig.IS_DEBUG_DEVICE;
 
+    /**
+     * @deprecated Use {@link #showQuickspace(Context)} instead
+     */
+    @Deprecated
     public static boolean qsbOnFirstScreen() {
         return !injectableModelItems() && BuildConfig.QSB_ON_FIRST_SCREEN;
     }
@@ -183,6 +188,8 @@ public final class Utilities {
     public static final String KEY_STATUS_BAR = "pref_show_statusbar";
     public static final String KEY_APP_DRAWER_OPACITY = "pref_app_drawer_opacity";
     public static final String KEY_RECENTS_OPACITY = "pref_recents_opacity";
+
+    public static final String DESKTOP_SHOW_QUICKSPACE = "pref_show_quickspace";
 
     /**
      * Returns true if theme is dark.
@@ -1169,5 +1176,10 @@ public final class Utilities {
 
     private static boolean isQSBEnabled(Context context) {
         return LauncherPrefs.DOCK_SEARCH.get(context);
+    }
+
+    public static boolean showQuickspace(Context context) {
+        SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
+        return prefs.getBoolean(DESKTOP_SHOW_QUICKSPACE, true);
     }
 }
