@@ -262,6 +262,7 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField val RECENTS_MEMINFO = backedUpItem("pref_recents_meminfo", false)
         @JvmField val RECENTS_OPACITY = backedUpItem("pref_recents_opacity", 40)
         @JvmField val RECENTS_SCREENSHOT = backedUpItem("pref_recents_screenshot", true)
+        @JvmField val RECENTS_SPLIT_SCREEN = backedUpItem("pref_recents_split_screen", false)
         @JvmField val BLUR_DEPTH = backedUpItem("pref_blur_depth", 34)
         @JvmField val DRAWER_OPEN_KEYBOARD = backedUpItem("pref_drawer_open_keyboard", false)
         @JvmField val SHORT_PARALLAX = backedUpItem("pref_short_parallax", false)
