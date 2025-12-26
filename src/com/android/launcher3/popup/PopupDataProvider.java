@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.launcher3.BubbleTextView;
+import com.android.launcher3.LauncherNotifications;
 import com.android.launcher3.allapps.AllAppsStore;
 import com.android.launcher3.dagger.ActivityContextSingleton;
 import com.android.launcher3.dot.DotInfo;
@@ -32,13 +33,10 @@ import com.android.launcher3.model.data.FolderInfo;
 import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.notification.NotificationRepository;
 import com.android.launcher3.util.ComponentKey;
-import com.android.launcher3.util.Executors;
 import com.android.launcher3.util.LauncherBindableItemsContainer.ItemOperator;
 import com.android.launcher3.util.PackageUserKey;
 import com.android.launcher3.util.ShortcutUtil;
 import com.android.launcher3.views.ActivityContext;
-
-import kotlin.Unit;
 
 import java.util.Arrays;
 import java.util.function.Predicate;
@@ -49,7 +47,7 @@ import javax.inject.Inject;
  * Provides data for the popup menu that appears after long-clicking on apps.
  */
 @ActivityContextSingleton
-public class PopupDataProvider {
+public class PopupDataProvider implements LauncherNotifications.NotificationUpdateListener {
 
     private final NotificationRepository mNotificationRepo;
     private final ActivityContext mContext;
@@ -66,12 +64,14 @@ public class PopupDataProvider {
         mNotificationRepo = notificationRepository;
         mAppsStore = appsStore;
         mBgDataModel = dataModel;
-
-        mContext.closeOnDestroy(mNotificationRepo.getUpdateStream().forEach(
-                Executors.MAIN_EXECUTOR, this::updateNotificationDots));
     }
 
-    private Unit updateNotificationDots(Predicate<PackageUserKey> updatedDots) {
+    @Override
+    public void onNotificationUpdate(Predicate<PackageUserKey> updatedDots) {
+        updateNotificationDots(updatedDots);
+    }
+
+    private void updateNotificationDots(Predicate<PackageUserKey> updatedDots) {
         final PackageUserKey packageUserKey = new PackageUserKey(null, null);
         Predicate<ItemInfo> matcher = info -> !packageUserKey.updateFromItemInfo(info)
                 || updatedDots.test(packageUserKey);
@@ -94,7 +94,6 @@ public class PopupDataProvider {
             folder.mapOverItems(op);
         }
         mAppsStore.updateNotificationDots(updatedDots);
-        return null;
     }
 
     public int getShortcutCountForItem(ItemInfo info) {

@@ -503,6 +503,8 @@ public class Launcher extends StatefulActivity<LauncherState>
                 .createPopupController();
         mWidgetPickerDataProvider = new WidgetPickerDataProvider();
         PillColorProvider.getInstance(mWorkspace.getContext()).registerObserver();
+        LauncherNotifications.getInstance().initialize(this);
+        LauncherNotifications.getInstance().addListener(getActivityComponent().getPopupDataProvider());
 
         SystemDragController.INSTANCE.get(this).setLauncher(this);
 
