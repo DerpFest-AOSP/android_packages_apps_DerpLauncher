@@ -124,7 +124,7 @@
     <string name="about_app_title" translatable="false">DerpLauncher</string>
     <string name="about_app_subtitle">Based on AOSP Launcher3</string>
     <string name="about_app_version_text">Version</string>
-    <string name="about_app_version_value" translatable="false">BP3A.250905.014</string>
+    <string name="about_app_version_value" translatable="false">BP4A.251205.006</string>
     <string name="about_thanks_cat">Special thanks to</string>
     <string name="about">About</string>
     <string name="about_summary">Info about the DerpLauncher</string>
