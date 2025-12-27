@@ -60,7 +60,6 @@ public class QuickEventsController {
 
     private boolean mIsQuickEvent = false;
     private boolean mRunning = true;
-    private boolean mPSAListenerRegistered = false;
     private boolean mPackageChangeListenerRegistered = false;
     private String[] mPSAEncouragedAppsStr;
     private String[] mPSADiscouragedAppsStr;
@@ -91,13 +90,6 @@ public class QuickEventsController {
     private String[] mPSAEncouragedStr;
     private String[] mPSADiscouragedStr;
 
-    private final BroadcastReceiver mPSAListener = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            psonalityEvent();
-        }
-    };
-
     private final BroadcastReceiver mPackageChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -124,14 +116,12 @@ public class QuickEventsController {
 
     public QuickEventsController(Context context) {
         mContext = context;
-        initQuickEvents();
     }
 
     public void initQuickEvents() {
         mInitTimestamp = Utilities.getInitTimestamp(mContext);
         mIntroTimeout = mContext.getResources().getInteger(R.integer.config_quickSpaceIntroTimeout);
         mRandomDayQuotePercent = mContext.getResources().getInteger(R.integer.config_quickSpaceChanceOfQuoteDuringDayPercent);
-        registerPSAListener();
         registerPackageChangeReceiver();
 
         // memory stats
@@ -156,30 +146,6 @@ public class QuickEventsController {
     public void updateMemoryInfoSettings() {
         mQuickEventMemoryInfo = Utilities.isQuickspaceMemoryInfoEnabled(mContext);
         mQuickEventAppMemoryInfo = Utilities.isQuickspaceAppMemoryInfoEnabled(mContext);
-    }
-
-    private void registerPSAListener() {
-        if (mPSAListenerRegistered || mContext == null) return;
-        try {
-            IntentFilter psonalityIntent = new IntentFilter();
-            psonalityIntent.addAction(Intent.ACTION_TIME_TICK);
-            psonalityIntent.addAction(Intent.ACTION_TIME_CHANGED);
-            psonalityIntent.addAction(Intent.ACTION_TIMEZONE_CHANGED);
-            mContext.registerReceiver(mPSAListener, psonalityIntent);
-            mPSAListenerRegistered = true;
-        } catch (Exception e) {
-            Log.e("QuickEvents", "Error registering PSA listener", e);
-        }
-    }
-
-    private void unregisterPSAListener() {
-        if (!mPSAListenerRegistered || mContext == null) return;
-        try {
-            mContext.unregisterReceiver(mPSAListener);
-            mPSAListenerRegistered = false;
-        } catch (Exception e) {
-            Log.e("QuickEvents", "Error unregistering PSA listener", e);
-        }
     }
 
     private void registerPackageChangeReceiver() {
@@ -258,6 +224,10 @@ public class QuickEventsController {
         deviceIntroEvent();
         nowPlayingEvent();
         initNowPlayingEvent();
+        psonalityEvent();
+    }
+
+    public void updatePsonality() {
         psonalityEvent();
     }
 
@@ -468,25 +438,9 @@ public class QuickEventsController {
         mPlayingActive = activePlayback;
     }
 
-    public void onPause() {
-        mRunning = false;
-        unregisterPSAListener();
-        unregisterPackageChangeReceiver();
-    }
-
-    public void onResume() {
-        mRunning = true;
-        registerPSAListener();
-        registerPackageChangeReceiver();
-
-        //this might be useful in the future
-        //if (mQuickEventMemoryInfo) {
-        //    Log.d("QuickEvents", "Current RAM: " + getOwnMemoryFootprint());
-        //}
-    }
-
     public void onDestroy() {
-        onPause();
+        mRunning = false;
+        unregisterPackageChangeReceiver();
         
         // Clear cached data
         if (mCachedPSAMap != null) {
