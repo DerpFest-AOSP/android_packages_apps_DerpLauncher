@@ -69,7 +69,6 @@ import androidx.core.util.Consumer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.launcher3.DeviceProfile;
-import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.DeviceProfile.OnDeviceProfileChangeListener;
 import com.android.launcher3.DragSource;
 import com.android.launcher3.DropTarget.DragObject;
@@ -303,7 +302,6 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
         if (LauncherPrefs.DRAWER_SEARCH.get(getContext())) {
             mSearchContainer.setVisibility(View.VISIBLE);
-            updateSearchBoxBackground();
         } else {
             mSearchContainer.setVisibility(View.GONE);
         }
@@ -831,7 +829,6 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             mTabsProtectionAlpha = tabsAlpha;
             invalidateHeader();
         }
-        updateSearchBoxBackground();
         if (mSearchUiManager.getEditText() == null) {
             return;
         }
@@ -843,16 +840,6 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             bgVisible = false;
         }
         mSearchUiManager.setBackgroundVisibility(bgVisible, 1 - prog);
-    }
-
-    private void updateSearchBoxBackground() {
-        if (getSearchView() == null) {
-            return;
-        }
-        getSearchView().setBackgroundResource(
-                ThemeManager.INSTANCE.get(getContext()).isIconThemeEnabled()
-                        ? R.drawable.bg_all_apps_searchbox_google_themed
-                        : R.drawable.bg_all_apps_searchbox_google);
     }
 
     protected int getHeaderColor(float blendRatio) {
