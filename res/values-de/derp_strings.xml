@@ -82,6 +82,8 @@
     <string name="label_voice_search">Sprachsuche</string>
     <string name="label_ai_mode">KI-Modus</string>
     <string name="ai_mode_not_available">KI-Funktionalität nicht verfügbar</string>
+    <string name="dock_ai_music_search_title">Musiksuche</string>
+    <string name="dock_ai_music_search_summary">Musiksuche beim Drücken der KI-Modus-Taste starten</string>
     <string name="dock_search_title">Google-Suchleiste</string>
     <string name="dock_search_summary">Suchleiste im unteren Dock</string>
 

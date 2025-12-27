@@ -206,6 +206,7 @@ public final class Utilities {
     public static final String KEY_SHOW_QUICKSPACE_PSONALITY = "pref_quickspace_psonality";
     public static final String KEY_SHOW_QUICKSPACE_MEMORY_INFO = "pref_quickspace_memory_info";
     public static final String KEY_SHOW_QUICKSPACE_APP_MEMORY_INFO = "pref_quickspace_app_memory_info";
+    public static final String KEY_DOCK_AI_MUSIC_SEARCH = "pref_dock_ai_music_search";
 
     /**
      * Returns true if theme is dark.
@@ -1301,5 +1302,9 @@ public final class Utilities {
     public static void setSeraphixHolderId(Context context, int newId) {
         SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
         prefs.edit().putInt("seraphix_holder_id", newId).apply();
+    }
+
+    public static boolean isAiMusicSearchEnabled(Context context) {
+        return LauncherPrefs.DOCK_AI_MUSIC_SEARCH.get(context);
     }
 }

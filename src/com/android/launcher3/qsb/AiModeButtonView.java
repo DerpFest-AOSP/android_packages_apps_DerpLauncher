@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
+import com.android.launcher3.qsb.QsbContainerView;
 
 public class AiModeButtonView extends ImageView {
     private static final String TAG = "AiModeButtonView";
@@ -36,6 +37,12 @@ public class AiModeButtonView extends ImageView {
     }
 
     private void launchAiActivity(Context context) {
+        // Check if music search is enabled
+        if (Utilities.isAiMusicSearchEnabled(context)) {
+            launchMusicSearch(context);
+            return;
+        }
+
         // Try multiple AI-related activities in order of preference
         // Based on actual available activities from device dump
         String[] aiActivities = {
@@ -113,6 +120,36 @@ public class AiModeButtonView extends ImageView {
             Toast.makeText(context, R.string.ai_mode_not_available, Toast.LENGTH_SHORT).show();
         } catch (SecurityException e) {
             Log.e(TAG, "Security exception launching voice command: " + e.getMessage());
+            Toast.makeText(context, R.string.ai_mode_not_available, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void launchMusicSearch(Context context) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_MAIN)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    .setAction("com.google.android.googlequicksearchbox.MUSIC_SEARCH")
+                    .setPackage(QsbContainerView.getSearchWidgetPackageName(context));
+            context.startActivity(intent);
+            Log.d(TAG, "Successfully launched music search");
+        } catch (ActivityNotFoundException e) {
+            Log.d(TAG, "Music search activity not found");
+            // Fallback to voice command
+            try {
+                Intent intent = new Intent(Intent.ACTION_VOICE_COMMAND)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        .setPackage(QsbContainerView.getSearchWidgetPackageName(context));
+                context.startActivity(intent);
+                Log.d(TAG, "Falling back to voice command for music search");
+            } catch (ActivityNotFoundException e2) {
+                Log.e(TAG, "No music search or voice command activities found");
+                Toast.makeText(context, R.string.ai_mode_not_available, Toast.LENGTH_SHORT).show();
+            } catch (SecurityException e2) {
+                Log.e(TAG, "Security exception launching voice command: " + e2.getMessage());
+                Toast.makeText(context, R.string.ai_mode_not_available, Toast.LENGTH_SHORT).show();
+            }
+        } catch (SecurityException e) {
+            Log.w(TAG, "Security exception launching music search: " + e.getMessage());
             Toast.makeText(context, R.string.ai_mode_not_available, Toast.LENGTH_SHORT).show();
         }
     }

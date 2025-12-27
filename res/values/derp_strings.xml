@@ -89,6 +89,8 @@
     <string name="label_voice_search">Voice search</string>
     <string name="label_ai_mode">AI Mode</string>
     <string name="ai_mode_not_available">AI functionality not available</string>
+    <string name="dock_ai_music_search_title">Music search</string>
+    <string name="dock_ai_music_search_summary">Start music search on pressing AI mode button</string>
     <string name="dock_search_title">Google search bar</string>
     <string name="dock_search_summary">Search bar in the bottom dock</string>
 

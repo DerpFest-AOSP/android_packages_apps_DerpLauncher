@@ -206,6 +206,13 @@
             android:defaultValue="true"
             launcher:iconSpaceReserved="false" />
 
+        <SwitchPreferenceCompat
+            android:key="pref_dock_ai_music_search"
+            android:title="@string/dock_ai_music_search_title"
+            android:summary="@string/dock_ai_music_search_summary"
+            android:defaultValue="false"
+            launcher:iconSpaceReserved="false" />
+
     </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

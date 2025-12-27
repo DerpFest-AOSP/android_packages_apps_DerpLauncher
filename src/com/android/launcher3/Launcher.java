@@ -670,6 +670,7 @@ public class Launcher extends StatefulActivity<LauncherState>
             case Utilities.DESKTOP_SHOW_QUICKSPACE:
             case Utilities.KEY_SHOW_QUICKSPACE_NOWPLAYING:
             case Utilities.KEY_SHOW_QUICKSPACE_PSONALITY:
+            case Utilities.KEY_DOCK_AI_MUSIC_SEARCH:
                 mAppState.setNeedsRestart();
                 break;
             default:
