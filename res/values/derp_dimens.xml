@@ -36,4 +36,9 @@
 
     <!-- Meminfo in overview -->
     <dimen name="meminfo_claimed_height">16dp</dimen>
+
+    <!-- Search bar margins -->
+    <dimen name="all_apps_search_bar_margin_side">38dp</dimen>
+    <dimen name="all_apps_search_bar_margin_top">28dp</dimen>
+    <dimen name="all_apps_search_bar_height">48dp</dimen>
 </resources>
