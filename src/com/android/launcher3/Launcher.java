@@ -671,6 +671,7 @@ public class Launcher extends StatefulActivity<LauncherState>
             case Utilities.KEY_SHOW_QUICKSPACE_NOWPLAYING:
             case Utilities.KEY_SHOW_QUICKSPACE_PSONALITY:
             case Utilities.KEY_DOCK_AI_MUSIC_SEARCH:
+            case Utilities.KEY_QSB_OUTER_OPACITY:
                 mAppState.setNeedsRestart();
                 break;
             default:

@@ -93,6 +93,8 @@
     <string name="dock_ai_music_search_summary">Start music search on pressing AI mode button</string>
     <string name="dock_search_title">Google search bar</string>
     <string name="dock_search_summary">Search bar in the bottom dock</string>
+    <string name="qsb_outer_opacity_title">Search bar outer opacity</string>
+    <string name="qsb_outer_opacity_summary">Adjust the opacity of the search bar outer shape</string>
 
     <!-- Kill App recents action shortcut -->
     <string name="recent_task_option_kill_app">Force close</string>

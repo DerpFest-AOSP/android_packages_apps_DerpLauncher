@@ -207,6 +207,7 @@ public final class Utilities {
     public static final String KEY_SHOW_QUICKSPACE_MEMORY_INFO = "pref_quickspace_memory_info";
     public static final String KEY_SHOW_QUICKSPACE_APP_MEMORY_INFO = "pref_quickspace_app_memory_info";
     public static final String KEY_DOCK_AI_MUSIC_SEARCH = "pref_dock_ai_music_search";
+    public static final String KEY_QSB_OUTER_OPACITY = "pref_qsb_outer_opacity";
 
     /**
      * Returns true if theme is dark.
@@ -1306,5 +1307,10 @@ public final class Utilities {
 
     public static boolean isAiMusicSearchEnabled(Context context) {
         return LauncherPrefs.DOCK_AI_MUSIC_SEARCH.get(context);
+    }
+
+    public static int getQsbOuterOpacity(Context context) {
+        SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
+        return prefs.getInt(KEY_QSB_OUTER_OPACITY, 70);
     }
 }

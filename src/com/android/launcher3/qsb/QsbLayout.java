@@ -62,6 +62,15 @@ public class QsbLayout extends FrameLayout implements Reorderable, SharedPrefere
         if (Utilities.isGSAEnabled(mContext)) {
             enableLensIcon();
         }
+        
+        // Set the custom background drawable
+        post(() -> {
+            View parent = (View) getParent();
+            if (parent != null) {
+                QsbOuterDrawable customDrawable = new QsbOuterDrawable(mContext);
+                parent.setBackground(customDrawable);
+            }
+        });
     }
 
     @Override
@@ -93,6 +102,12 @@ public class QsbLayout extends FrameLayout implements Reorderable, SharedPrefere
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
         if (key.equals(LauncherPrefs.DOCK_AI_MUSIC_SEARCH.getSharedPrefKey())) {
             setIcons();
+        } else if (key.equals(LauncherPrefs.QSB_OUTER_OPACITY.getSharedPrefKey())) {
+            // Update the drawable if it's already set
+            View parent = (View) getParent();
+            if (parent != null && parent.getBackground() instanceof QsbOuterDrawable) {
+                ((QsbOuterDrawable) parent.getBackground()).updateOpacity();
+            }
         }
     }
 
