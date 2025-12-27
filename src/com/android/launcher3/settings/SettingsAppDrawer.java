@@ -222,6 +222,17 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
             if (LauncherPrefs.DRAWER_SEARCH.getSharedPrefKey().equals(key)) {
                 LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
             }
+            if (LauncherPrefs.DRAWER_LIST.getSharedPrefKey().equals(key)) {
+                // Trigger a refresh of the app list without requiring a restart
+                // This will cause onAppsUpdated() to be called, which will recategorize apps
+                try {
+                    LauncherAppState appState = LauncherAppState.getInstance(getContext());
+                    appState.getModel().rebindCallbacks();
+                } catch (Exception e) {
+                    // Fallback to restart if rebind fails
+                    LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
+                }
+            }
         }
 
         @Override
