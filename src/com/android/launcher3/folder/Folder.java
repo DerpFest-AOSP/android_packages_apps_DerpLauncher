@@ -460,6 +460,7 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
         if (dragObject.dragSource != this) {
             return;
         }
+        if (isInAppDrawer()) close(true);
         mIsDragInProgress = true;
         mContent.removeItem(mCurrentDragView);
         mItemsInvalidated = true;
@@ -604,7 +605,7 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
         reapplyItemInfo();
         // In case any children didn't come across during loading, clean up the folder accordingly
         mFolderIcon.post(() -> {
-            if (getItemCount() <= 1) {
+            if (getItemCount() <= 1 && !isInAppDrawer()) {
                 replaceFolderWithFinalItem();
             }
         });
@@ -1043,7 +1044,7 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
             mRearrangeOnClose = false;
         }
         if (getItemCount() <= 1) {
-            if (!mIsDragInProgress && !mSuppressFolderDeletion) {
+            if (!mIsDragInProgress && !mSuppressFolderDeletion && !isInAppDrawer()) {
                 replaceFolderWithFinalItem();
             } else if (mIsDragInProgress) {
                 mDeleteFolderOnDropCompleted = true;
@@ -1210,11 +1211,11 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
     public void onDropCompleted(final View target, final DragObject d,
             final boolean success) {
         if (success) {
-            if (getItemCount() <= 1) {
+            if (getItemCount() <= 1 && !isInAppDrawer()) {
                 mDeleteFolderOnDropCompleted = true;
             }
             if (mDeleteFolderOnDropCompleted && !mItemAddedBackToSelfViaIcon
-                    && target != this) {
+                    && target != this && !isInAppDrawer()) {
                 replaceFolderWithFinalItem();
             }
         } else {
@@ -1427,6 +1428,10 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
 
     void replaceFolderWithFinalItem() {
         mDestroyed = mLauncherDelegate.replaceFolderWithFinalItem(this);
+    }
+
+    public boolean isInAppDrawer() {
+        return mInfo != null && mInfo.container == ItemInfo.NO_ID;
     }
 
     public boolean isDestroyed() {
@@ -1645,7 +1650,7 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
             } else {
                 rearrangeChildren();
             }
-            if (getItemCount() <= 1) {
+            if (getItemCount() <= 1 && !isInAppDrawer()) {
                 if (mIsOpen) {
                     close(true);
                 } else {

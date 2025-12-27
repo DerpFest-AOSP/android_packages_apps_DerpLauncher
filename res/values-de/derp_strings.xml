@@ -158,4 +158,19 @@
     <!-- Background blur -->
     <string name="background_blur_title">Tiefenschärfegrad des Hintergrunds</string>
     <string name="background_blur_summary">Tiefenschärfegrad in App-Übersicht und -Verlauf anpassen</string>
+
+    <!-- App drawer categories -->
+    <string name="others_category_label">Sonstiges</string>
+    <string name="system_apps_category_label">System-Apps</string>
+    <string name="google_apps_category_label">Google-Apps</string>
+    <string name="productivity_category_label">Produktivität</string>
+    <string name="news_category_label">Nachrichten</string>
+    <string name="social_category_label">Sozial</string>
+    <string name="audio_category_label">Audio</string>
+    <string name="video_category_label">Video</string>
+    <string name="image_category_label">Bilder</string>
+
+    <!-- Drawer list preference -->
+    <string name="drawer_list_title">Standard-Listenansicht</string>
+    <string name="drawer_list_summary">Apps in Standard-Listenansicht statt in kategorisierten Ordnern anzeigen</string>
 </resources>

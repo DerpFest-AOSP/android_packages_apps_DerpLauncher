@@ -48,6 +48,7 @@ import com.android.launcher3.graphics.PathWrapper;
 import com.android.launcher3.keyboard.ViewGroupFocusHelper;
 import com.android.launcher3.model.data.AppPairInfo;
 import com.android.launcher3.model.data.ItemInfo;
+import com.android.launcher3.model.data.ItemInfoWithIcon;
 import com.android.launcher3.model.data.WorkspaceItemInfo;
 import com.android.launcher3.pageindicators.PageIndicatorDots;
 import com.android.launcher3.touch.CustomTouchDelegate;
@@ -197,7 +198,10 @@ public class FolderPagedView extends PagedView<PageIndicatorDots> implements Cli
                 View iconView = container.getChildAt(j);
                 iconView.setVisibility(View.VISIBLE);
                 if (iconView instanceof BubbleTextView) {
-                    mViewCache.recycleView(R.layout.folder_application, iconView);
+                    int layout = mFolder.isInAppDrawer()
+                            ? R.layout.all_apps_folder_application
+                            : R.layout.folder_application;
+                    mViewCache.recycleView(layout, iconView);
                 }
             }
             page.removeAllViews();
@@ -252,6 +256,9 @@ public class FolderPagedView extends PagedView<PageIndicatorDots> implements Cli
             // TODO (b/332607759): Make view cache work with app pair icons
             icon = AppPairIcon.inflateIcon(R.layout.folder_app_pair, ActivityContext.lookupContext(
                     getContext()), null , api, BubbleTextView.DISPLAY_FOLDER);
+        } else if (mFolder.isInAppDrawer()) {
+            icon = mViewCache.getView(R.layout.all_apps_folder_application, getContext(), null);
+            ((BubbleTextView) icon).applyFromItemInfoWithIcon((ItemInfoWithIcon) item);
         } else {
             icon = mViewCache.getView(R.layout.folder_application, getContext(), null);
             ((BubbleTextView) icon).applyFromWorkspaceItem((WorkspaceItemInfo) item);

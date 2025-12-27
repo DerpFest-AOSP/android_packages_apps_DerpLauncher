@@ -84,6 +84,14 @@ public class SettingsAppDrawer extends SettingsCategoryActivity {
                     LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
                 }
             }
+            if (LauncherPrefs.DRAWER_LIST.getSharedPrefKey().equals(key)) {
+                try {
+                    LauncherAppState appState = LauncherAppState.getInstance(getContext());
+                    appState.getModel().rebindCallbacks("drawer-list-changed");
+                } catch (Exception e) {
+                    LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
+                }
+            }
         }
 
         private void updateThemeAllAppsIconsPref() {

@@ -231,8 +231,14 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
         }
         icon.mFolderName.setCompoundDrawablePadding(0);
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) icon.mFolderName.getLayoutParams();
-        lp.topMargin = grid.getWorkspaceProfile().getIconSizePx()
-                + grid.getWorkspaceProfile().getIconDrawablePaddingPx();
+        if (folderInfo.container == ItemInfo.NO_ID) {
+            lp.topMargin = grid.getAllAppsProfile().getIconSizePx()
+                    + grid.getAllAppsProfile().getIconDrawablePaddingPx();
+            icon.mBackground = new PreviewBackground(activity.getDragLayer().getContext());
+        } else {
+            lp.topMargin = grid.getWorkspaceProfile().getIconSizePx()
+                    + grid.getWorkspaceProfile().getIconDrawablePaddingPx();
+        }
 
         icon.setTag(folderInfo);
         icon.setOnClickListener(activity.getItemOnClickListener());
@@ -754,15 +760,21 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
     }
 
     public void clearLeaveBehindIfExists() {
+        if (isInAppDrawer()) return;
         if (getParent() instanceof FolderIconParent) {
             ((FolderIconParent) getParent()).clearFolderLeaveBehind(this);
         }
     }
 
     public void drawLeaveBehindIfExists() {
+        if (isInAppDrawer()) return;
         if (getParent() instanceof FolderIconParent) {
             ((FolderIconParent) getParent()).drawFolderLeaveBehindForIcon(this);
         }
+    }
+
+    public boolean isInAppDrawer() {
+        return mInfo != null && mInfo.container == ItemInfo.NO_ID;
     }
 
     public void onFolderClose(int currentPage) {
