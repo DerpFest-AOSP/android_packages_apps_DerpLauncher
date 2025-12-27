@@ -16,7 +16,7 @@
         android:top="8dp"
         android:bottom="8dp"
         android:left="8dp"
-        android:right="54dp">
+        android:right="@dimen/qsb_inner_inset_end">
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/qsb_widget_height" />
             <solid android:color="@color/materialColorSurfaceBright" />

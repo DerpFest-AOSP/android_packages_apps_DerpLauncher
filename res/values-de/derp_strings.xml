@@ -77,6 +77,8 @@
     <string name="pref_show_search_bar_summary">Google-Suchleiste in der Dockleiste anzeigen</string>
     <string name="dock_ai_music_search_title">Musiksuche</string>
     <string name="dock_ai_music_search_summary">Musiksuche beim Drücken der KI-Modus-Taste starten</string>
+    <string name="qsb_outer_opacity_title">Suchleiste äußere Transparenz</string>
+    <string name="qsb_outer_opacity_summary">Transparenz der äußeren Suchleisten-Form anpassen</string>
 
     <!-- Hotseat Background -->
     <string name="hotseat_bg_title">Hintergrund im Dock</string>

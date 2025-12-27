@@ -46,7 +46,10 @@ public class QsbLayout extends FrameLayout implements Reorderable,
     private static final String LENS_URI = "google://lens";
 
     private final MultiTranslateDelegate mTranslateDelegate = new MultiTranslateDelegate(this);
-    private final ThemeManager.ThemeChangeListener mThemeChangeListener = this::updateIcons;
+    private final ThemeManager.ThemeChangeListener mThemeChangeListener = () -> {
+        updateIcons();
+        refreshOuterBackground();
+    };
     private float mScaleForReorderBounce = 1f;
     private ThemeManager mThemeManager;
 
@@ -88,6 +91,7 @@ public class QsbLayout extends FrameLayout implements Reorderable,
                 mLensIcon.setOnClickListener(v -> launchSafely(lensIntent));
             }
         }
+        setBackground(new QsbOuterDrawable(getContext()));
         updateIcons();
     }
 
@@ -114,6 +118,14 @@ public class QsbLayout extends FrameLayout implements Reorderable,
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
         if (LauncherPrefs.DOCK_AI_MUSIC_SEARCH.getSharedPrefKey().equals(key)) {
             updateIcons();
+        } else if (LauncherPrefs.QSB_OUTER_OPACITY.getSharedPrefKey().equals(key)) {
+            refreshOuterBackground();
+        }
+    }
+
+    private void refreshOuterBackground() {
+        if (getBackground() instanceof QsbOuterDrawable outer) {
+            outer.updateOpacity();
         }
     }
 
