@@ -297,4 +297,8 @@
     <!-- Drawer list preference -->
     <string name="drawer_list_title">Standard-Listenansicht</string>
     <string name="drawer_list_summary">Apps in Standard-Listenansicht statt in kategorisierten Ordnern anzeigen</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Seitenzahlpunkte automatisch ausblenden</string>
+    <string name="auto_hide_dots_summary">Blendet die unten angezeigten Seitenpunkte automatisch aus</string>
 </resources>

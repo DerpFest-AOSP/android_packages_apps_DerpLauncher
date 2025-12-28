@@ -230,7 +230,8 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
                     LauncherPrefs.SHOW_HOTSEAT_BG.getSharedPrefKey().equals(key) ||
                     LauncherPrefs.SHOW_STATUS_BAR.getSharedPrefKey().equals(key) ||
                     LauncherPrefs.SHORT_PARALLAX.getSharedPrefKey().equals(key) ||
-                    LauncherPrefs.SINGLE_PAGE_CENTER.getSharedPrefKey().equals(key)) {
+                    LauncherPrefs.SINGLE_PAGE_CENTER.getSharedPrefKey().equals(key) ||
+                    LauncherPrefs.AUTO_HIDE_DOTS.getSharedPrefKey().equals(key)) {
                 LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
             }
         }

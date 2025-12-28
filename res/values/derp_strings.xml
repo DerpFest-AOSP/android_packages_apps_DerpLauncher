@@ -398,4 +398,8 @@
     <!-- Drawer list preference -->
     <string name="drawer_list_title">Default list view</string>
     <string name="drawer_list_summary">Show apps in default list view instead of categorized folders</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Auto-hide page indicator</string>
+    <string name="auto_hide_dots_summary">Hide the page indicator dots automatically</string>
 </resources>
