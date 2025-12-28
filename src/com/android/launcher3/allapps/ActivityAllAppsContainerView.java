@@ -363,6 +363,12 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         if (key.equals("pref_app_drawer_opacity")) {
             mScrimColor = ColorUtils.setAlphaComponent(Themes.getAttrColor(getContext(),
                     R.attr.allAppsScrimColor), LauncherPrefs.APP_DRAWER_OPACITY.get(getContext()) * 255 / 100);
+        } else if (LauncherPrefs.DRAWER_SEARCH.getSharedPrefKey().equals(key)) {
+            if (LauncherPrefs.DRAWER_SEARCH.get(getContext())) {
+                mSearchContainer.setVisibility(View.VISIBLE);
+            } else {
+                mSearchContainer.setVisibility(View.GONE);
+            }
         }
     }
 
