@@ -77,7 +77,12 @@ public class SettingsAppDrawer extends SettingsCategoryActivity {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (LauncherPrefs.DRAWER_SEARCH.getSharedPrefKey().equals(key)) {
-                LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
+                try {
+                    LauncherAppState appState = LauncherAppState.getInstance(getContext());
+                    appState.getModel().rebindCallbacks("drawer-search-changed");
+                } catch (Exception e) {
+                    LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
+                }
             }
         }
 

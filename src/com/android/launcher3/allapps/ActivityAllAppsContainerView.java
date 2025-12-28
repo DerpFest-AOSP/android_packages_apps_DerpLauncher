@@ -358,6 +358,12 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             updateAllAppsBackgroundColors();
             invalidateHeader();
             invalidate();
+        } else if (LauncherPrefs.DRAWER_SEARCH.getSharedPrefKey().equals(key)) {
+            if (LauncherPrefs.DRAWER_SEARCH.get(getContext())) {
+                mSearchContainer.setVisibility(View.VISIBLE);
+            } else {
+                mSearchContainer.setVisibility(View.GONE);
+            }
         }
     }
 
