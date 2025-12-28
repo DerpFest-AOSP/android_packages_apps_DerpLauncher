@@ -177,6 +177,14 @@
             launcher:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
+            android:key="pref_auto_hide_dots"
+            android:title="@string/auto_hide_dots"
+            android:summary="@string/auto_hide_dots_summary"
+            android:defaultValue="true"
+            android:persistent="true"
+            launcher:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
             android:key="pref_show_hotseat_bg"
             android:title="@string/hotseat_bg_title"
             android:summary="@string/hotseat_bg_summary"
