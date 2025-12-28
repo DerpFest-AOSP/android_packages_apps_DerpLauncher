@@ -19,6 +19,18 @@
     xmlns:launcher="http://schemas.android.com/apk/res-auto"
     xmlns:settings="http://schemas.android.com/apk/res-auto">
 
+    <PreferenceCategory
+        android:title="@string/drawer_list_title">
+
+        <com.android.launcher3.settings.CaddyCardSelectorPreference
+            android:key="pref_drawer_list"
+            android:summary="@string/drawer_list_summary"
+            android:defaultValue="true"
+            android:persistent="true"
+            launcher:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
     <SwitchPreferenceCompat
         android:key="pref_drawer_open_keyboard"
         android:title="@string/drawer_open_keyboard_title"
@@ -33,14 +45,6 @@
         android:title="@string/drawer_search_title"
         android:summary="@string/drawer_search_summary"
         android:defaultValue="true"
-        launcher:iconSpaceReserved="false" />
-
-    <SwitchPreferenceCompat
-        android:key="pref_drawer_list"
-        android:title="@string/drawer_list_title"
-        android:summary="@string/drawer_list_summary"
-        android:defaultValue="true"
-        android:persistent="true"
         launcher:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat

@@ -171,8 +171,10 @@
     <string name="image_category_label">Bilder</string>
 
     <!-- Drawer list preference -->
-    <string name="drawer_list_title">Standard-Listenansicht</string>
-    <string name="drawer_list_summary">Apps in Standard-Listenansicht statt in kategorisierten Ordnern anzeigen</string>
+    <string name="drawer_list_title">Layout</string>
+    <string name="drawer_list_summary">Wählen Sie zwischen Standard-Listenansicht oder kategorisierten Ordnern (Caddy)</string>
+    <string name="feed_default">Standard</string>
+    <string name="caddy_beta">Caddy (Beta)</string>
 
     <!-- Auto-hide page indicator dots -->
     <string name="auto_hide_dots">Seitenzahlpunkte automatisch ausblenden</string>
