@@ -31,55 +31,65 @@
 
     </PreferenceCategory>
 
-    <SwitchPreferenceCompat
-        android:key="pref_drawer_open_keyboard"
-        android:title="@string/drawer_open_keyboard_title"
-        android:summary="@string/drawer_open_keyboard_summary"
-        android:defaultValue="false"
-        android:persistent="true"
-        android:dependency="pref_drawer_search"
-        launcher:iconSpaceReserved="false" />
+    <PreferenceCategory
+        android:title="@string/search_bar_category_title">
 
-    <SwitchPreferenceCompat
-        android:key="pref_drawer_search"
-        android:title="@string/drawer_search_title"
-        android:summary="@string/drawer_search_summary"
-        android:defaultValue="true"
-        launcher:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:key="pref_drawer_search"
+            android:title="@string/drawer_search_title"
+            android:summary="@string/drawer_search_summary"
+            android:defaultValue="true"
+            launcher:iconSpaceReserved="false" />
 
-    <SwitchPreferenceCompat
-        android:key="pref_drawer_show_labels"
-        android:title="@string/title_drawer_labels"
-        android:summary="@string/summary_drawer_labels"
-        android:defaultValue="true"
-        android:persistent="true"
-        launcher:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:key="pref_drawer_open_keyboard"
+            android:title="@string/drawer_open_keyboard_title"
+            android:summary="@string/drawer_open_keyboard_summary"
+            android:defaultValue="false"
+            android:persistent="true"
+            android:dependency="pref_drawer_search"
+            launcher:iconSpaceReserved="false" />
 
-    <SwitchPreferenceCompat
-        android:key="pref_enable_two_line_toggle"
-        android:title="@string/two_line_labels_title"
-        android:summary="@string/two_line_labels_summary"
-        android:defaultValue="false"
-        android:persistent="true"
-        android:dependency="pref_drawer_show_labels"
-        launcher:iconSpaceReserved="false" />
+    </PreferenceCategory>
 
-    <SwitchPreferenceCompat
-        android:key="pref_allapps_themed_icons"
-        android:title="@string/pref_themed_icons_title"
-        android:summary="@string/pref_themed_icons_summary"
-        android:defaultValue="false"
-        android:persistent="true"
-        launcher:iconSpaceReserved="false" />
+    <PreferenceCategory
+        android:title="@string/general_category_title">
 
-    <org.derpfest.support.preferences.ProperSeekBarPreference
-        android:key="pref_app_drawer_opacity"
-        android:title="@string/background_opacity_title"
-        android:persistent="true"
-        android:max="100"
-        android:min="0"
-        settings:units="%"
-        android:defaultValue="80"
-        launcher:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:key="pref_drawer_show_labels"
+            android:title="@string/title_drawer_labels"
+            android:summary="@string/summary_drawer_labels"
+            android:defaultValue="true"
+            android:persistent="true"
+            launcher:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:key="pref_enable_two_line_toggle"
+            android:title="@string/two_line_labels_title"
+            android:summary="@string/two_line_labels_summary"
+            android:defaultValue="false"
+            android:persistent="true"
+            android:dependency="pref_drawer_show_labels"
+            launcher:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:key="pref_allapps_themed_icons"
+            android:title="@string/pref_themed_icons_title"
+            android:summary="@string/pref_themed_icons_summary"
+            android:defaultValue="false"
+            android:persistent="true"
+            launcher:iconSpaceReserved="false" />
+
+        <org.derpfest.support.preferences.ProperSeekBarPreference
+            android:key="pref_app_drawer_opacity"
+            android:title="@string/background_opacity_title"
+            android:persistent="true"
+            android:max="100"
+            android:min="0"
+            settings:units="%"
+            android:defaultValue="80"
+            launcher:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

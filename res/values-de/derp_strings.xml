@@ -18,6 +18,7 @@
     <string name="misc_category_summary">Andere Optionen</string>
     <string name="general_category_title">Allgemein</string>
     <string name="interface_category_title">Benutzeroberfläche</string>
+    <string name="search_bar_category_title">Suchleiste</string>
     <string name="actions_category_title">Schnellaktionen</string>
 
     <!-- Developer options -->
