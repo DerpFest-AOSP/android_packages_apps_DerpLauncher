@@ -161,9 +161,9 @@ public class MemInfoView extends TextView implements Insettable {
         LayoutParams lp = (LayoutParams) getLayoutParams();
         
         // Add spacing above nav bar to prevent meminfo from being too close to nav bar hint
-        // Convert 8dp to pixels for spacing
+        // Convert 16dp to pixels for spacing
         float density = getContext().getResources().getDisplayMetrics().density;
-        int spacingAboveNavBar = (int) (8 * density + 0.5f);
+        int spacingAboveNavBar = (int) (16 * density + 0.5f);
         
         int bottomMargin = mDp.getOverviewActionsClaimedSpaceBelow() + spacingAboveNavBar;
 
