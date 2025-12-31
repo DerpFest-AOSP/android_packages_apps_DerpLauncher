@@ -21,6 +21,7 @@
     <string name="misc_category_summary">Andere Optionen</string>
     <string name="general_category_title">Allgemein</string>
     <string name="interface_category_title">Benutzeroberfläche</string>
+    <string name="quickspace_category_title">Quickspace</string>
     <string name="search_bar_category_title">Suchleiste</string>
     <string name="actions_category_title">Schnellaktionen</string>
 
@@ -76,6 +77,12 @@
     <!-- Font size -->
     <string name="font_size_title">Schriftgröße</string>
 
+    <!-- Icon pack -->
+    <string name="icon_pack_title">Symbolpaket</string>
+    <string name="icon_pack_default_label">Standard</string>
+    <string name="icon_pack_add">Weitere installieren</string>
+    <string name="icon_pack_no_market">Es ist kein App-Store verfügbar</string>
+
     <!-- Hotseat searchbar -->
     <string name="label_search">Suche</string>
     <string name="label_lens">Google Lens</string>
@@ -115,6 +122,7 @@
 
     <!-- About info -->
     <string name="about_app_subtitle">Basierend auf AOSP Launcher3</string>
+    <string name="about_app_version_text">Version</string>
     <string name="about_thanks_cat">Besonderen Dank an</string>
     <string name="about">Über</string>
     <string name="about_summary">Info über den DerpLauncher</string>
@@ -172,10 +180,23 @@
     <string name="recents_screenshot_title">Screenshot</string>
     <string name="recents_clear_all_title">Alle Apps schließen</string>
     <string name="recents_lens_title">Lens</string>
+    <string name="recents_split_screen_title">Geteilter Bildschirm</string>
 
     <!-- Task lock -->
     <string name="task_menu_item_unlock">Entsperren</string>
     <string name="task_menu_item_lock">Sperren</string>
+
+    <!-- A widget category label for grouping widgets related to battery. [CHAR_LIMIT=30] -->
+    <string name="widget_category_battery">Batterie</string>
+
+    <!-- A widget category label for grouping widgets related to bubbles. [CHAR_LIMIT=30] -->
+    <string name="widget_category_bubbles">Bubbles</string>
+
+    <!-- A widget category label for grouping widgets related to snapshot. [CHAR_LIMIT=30] -->
+    <string name="widget_category_snapshot">Schnappschuss</string>
+
+    <!-- A widget category label for grouping widgets related to weather. [CHAR_LIMIT=30] -->
+    <string name="widget_category_weather">Wetter</string>
 
     <!-- QuickSpace -->
     <string name="show_quickspace_title">Auf einen Blick</string>
@@ -273,6 +294,37 @@
         <item>Hab immer Wasser dabei, um hydriert zu bleiben.</item>
         <item>Der Weltraum riecht nach gebratenem Steak..</item>
         <item>Genieße deinen Tag!</item>
+    </string-array>
+    <string-array name="quickspace_psa_blaze_it">
+        <item>420</item>
+        <item>#420 blaze it</item>
+        <item>Lass uns einen drehen...</item>
+        <item>Genießt du die Kräuter?</item>
+        <item>Warst du schon mal in Amsterdam?</item>
+    </string-array>
+    <string-array name="quickspace_psa_encouraged_apps_messages">
+        <item>Genießt du §...?</item>
+        <item>Großartige Wahl bei §!</item>
+        <item>§... Liebe es zu sehen!</item>
+        <item>§? Cool.</item>
+        <item>Verwendest du §? Nice!</item>
+        <item>§ ist wirklich großartig.</item>
+    </string-array>
+    <string-array name="quickspace_psa_discouraged_apps_messages">
+        <item>Bist du dir sicher bei §...?</item>
+        <item>Nicht so sicher bei §...</item>
+        <item>Ähm... verwendest du §?</item>
+        <item>§? Du kannst es besser.</item>
+        <item>Bist du dir sicher bei §?</item>
+        <item>Du verwendest also immer noch §...</item>
+    </string-array>
+    <string-array name="quickspace_psa_encouraged_apps_keywords">
+        <item>viper</item>
+        <item>wavelet</item>
+        <item>telegram</item>
+    </string-array>
+    <string-array name="quickspace_psa_discouraged_apps_keywords">
+        <item>discord</item>
     </string-array>
 
     <!-- Quickspace Memory Info -->
