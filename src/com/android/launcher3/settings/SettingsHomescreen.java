@@ -234,6 +234,20 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
                     LauncherPrefs.AUTO_HIDE_DOTS.getSharedPrefKey().equals(key)) {
                 LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
             }
+            if (Utilities.DESKTOP_SHOW_QUICKSPACE.equals(key) ||
+                    Utilities.KEY_SHOW_QUICKSPACE_NOWPLAYING.equals(key) ||
+                    Utilities.KEY_SHOW_QUICKSPACE_NOWPLAYING_SHOWDATE.equals(key) ||
+                    Utilities.KEY_SHOW_QUICKSPACE_PSONALITY.equals(key) ||
+                    Utilities.KEY_SHOW_QUICKSPACE_MEMORY_INFO.equals(key) ||
+                    Utilities.KEY_SHOW_QUICKSPACE_APP_MEMORY_INFO.equals(key) ||
+                    Utilities.KEY_QUICKSPACE_ACCENT_TINT.equals(key)) {
+                try {
+                    LauncherAppState appState = LauncherAppState.getInstance(getContext());
+                    appState.getModel().rebindCallbacks();
+                } catch (Exception e) {
+                    LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
+                }
+            }
         }
 
         @Override
