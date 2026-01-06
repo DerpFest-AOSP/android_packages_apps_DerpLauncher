@@ -164,6 +164,8 @@
         <display-option
             launcher:allAppsBorderSpace="16.0"
             launcher:allAppsCellHeight="104.0"
+            launcher:startAlignTaskbar="true"
+            launcher:startAlignTaskbarLandscape="true"
             launcher:borderSpace="16.0"
             launcher:canBeDefault="true"
             launcher:horizontalMargin="22.0"
@@ -195,6 +197,8 @@
         <display-option
             launcher:allAppsBorderSpace="16.0"
             launcher:allAppsCellHeight="104.0"
+            launcher:startAlignTaskbar="true"
+            launcher:startAlignTaskbarLandscape="true"
             launcher:borderSpace="16.0"
             launcher:canBeDefault="true"
             launcher:horizontalMargin="22.0"
@@ -225,6 +229,8 @@
         <display-option
             launcher:allAppsBorderSpace="16.0"
             launcher:allAppsCellHeight="104.0"
+            launcher:startAlignTaskbar="true"
+            launcher:startAlignTaskbarLandscape="true"
             launcher:borderSpace="16.0"
             launcher:canBeDefault="true"
             launcher:horizontalMargin="22.0"
@@ -467,6 +473,8 @@
             launcher:iconTextSize="12"
             launcher:allAppsBorderSpace="16"
             launcher:allAppsCellHeight="104"
+            launcher:startAlignTaskbar="true"
+            launcher:startAlignTaskbarLandscape="true"
             launcher:canBeDefault="true" />
 
     </grid-option>
