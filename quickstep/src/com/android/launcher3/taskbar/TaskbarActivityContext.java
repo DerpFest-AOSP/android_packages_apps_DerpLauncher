@@ -61,6 +61,7 @@ import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.app.ActivityOptions;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo.Config;
@@ -105,6 +106,7 @@ import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.allapps.ActivityAllAppsContainerView;
+import com.android.launcher3.lineage.trust.db.TrustDatabaseHelper;
 import com.android.launcher3.anim.AnimatorListeners;
 import com.android.launcher3.anim.AnimatorPlaybackController;
 import com.android.launcher3.apppairs.AppPairIcon;
@@ -2014,6 +2016,26 @@ public class TaskbarActivityContext extends BaseTaskbarContext {
             }
             // TODO(b/216683257): Use startActivityForResult for search results that require it.
             if (taskInRecents != null) {
+                // Check if app is protected before launching from recents
+                TrustDatabaseHelper db = TrustDatabaseHelper.getInstance(this);
+                ComponentName cn = info.getTargetComponent();
+                boolean isProtected = cn != null && db.isPackageProtected(cn.getPackageName());
+                
+                if (isProtected) {
+                    // Show authentication screen for protected apps
+                    Utilities.showLockScreen(this, getString(R.string.trust_apps_manager_name), () -> {
+                        // Re launch instance from recents after authentication
+                        ActivityOptionsWrapper authOpts = getActivityLaunchOptions(null, info);
+                        authOpts.options.setLaunchDisplayId(displayId);
+                        if (ActivityManagerWrapper.getInstance()
+                                .startActivityFromRecents(taskInRecents.key, authOpts.options)) {
+                            mControllers.uiController.getRecentsView()
+                                    .addSideTaskLaunchCallback(authOpts.onEndCallback);
+                        }
+                    });
+                    return;
+                }
+                
                 // Re launch instance from recents
                 if (ActivityManagerWrapper.getInstance()
                         .startActivityFromRecents(taskInRecents.key, opts.options)) {

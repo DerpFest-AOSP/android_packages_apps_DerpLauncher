@@ -29,6 +29,8 @@ import android.app.ActivityManagerNative;
 import android.app.ActivityOptions;
 import android.app.IActivityManager;
 import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -50,8 +52,11 @@ import androidx.annotation.Nullable;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.R;
 import com.android.launcher3.SecondaryDropTarget;
+import com.android.launcher3.Utilities;
+import com.android.launcher3.lineage.trust.db.TrustDatabaseHelper;
 import com.android.launcher3.logging.StatsLogManager.LauncherEvent;
 import com.android.launcher3.model.WellbeingModel;
+import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.popup.SystemShortcut;
 import com.android.launcher3.popup.SystemShortcut.AppInfo;
 import com.android.launcher3.model.data.ItemInfo;
@@ -226,8 +231,30 @@ public interface TaskShortcutFactory {
             final Task.TaskKey taskKey = mTaskContainer.getTask().key;
             final int taskId = taskKey.id;
             options.setSplashScreenStyle(SplashScreen.SPLASH_SCREEN_STYLE_ICON);
-            if (ActivityManagerWrapper.getInstance().startActivityFromRecents(taskId,
-                    options)) {
+            
+            // Check if app is protected before launching from recents
+            final Intent taskIntent = taskKey.baseIntent;
+            final String packageName = taskIntent != null && taskIntent.getComponent() != null 
+                    ? taskIntent.getComponent().getPackageName() : null;
+            final Context context = ((ActivityContext) mTarget).asContext();
+            final TrustDatabaseHelper db = TrustDatabaseHelper.getInstance(context);
+            final boolean isProtected = packageName != null && db.isPackageProtected(packageName);
+            
+            if (isProtected) {
+                // Show authentication screen for protected apps
+                Utilities.showLockScreen(context, context.getString(R.string.trust_apps_manager_name), () -> {
+                    if (ActivityManagerWrapper.getInstance().startActivityFromRecents(taskId, options)) {
+                        handleSuccessfulLaunch(taskId, taskKey);
+                    }
+                });
+            } else {
+                if (ActivityManagerWrapper.getInstance().startActivityFromRecents(taskId, options)) {
+                    handleSuccessfulLaunch(taskId, taskKey);
+                }
+            }
+        }
+        
+        private void handleSuccessfulLaunch(int taskId, Task.TaskKey taskKey) {
                 final Runnable animStartedListener = () -> {
                     // Hide the task view and wait for the window to be resized
                     // TODO: Consider animating in launcher and do an in-place start activity
@@ -270,7 +297,6 @@ public interface TaskShortcutFactory {
                         taskKey.displayId);
                 mTarget.getStatsLogManager().logger().withItemInfo(mTaskContainer.getItemInfo())
                             .log(mLauncherEvent);
-            }
         }
 
         /**
