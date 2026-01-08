@@ -57,6 +57,7 @@ import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCH
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_TASK_CLEAR_ALL;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_TASK_DISMISS_SWIPE_UP;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_TASK_LAUNCH_SWIPE_DOWN;
+import static com.android.launcher3.util.SplitConfigurationOptions.STAGE_POSITION_TOP_OR_LEFT;
 import static com.android.launcher3.statehandlers.DesktopVisibilityController.INACTIVE_DESK_ID;
 import static com.android.launcher3.testing.shared.TestProtocol.DISMISS_ANIMATION_ENDS_MESSAGE;
 import static com.android.launcher3.touch.PagedOrientationHandler.CANVAS_TRANSLATE;
@@ -183,6 +184,7 @@ import com.android.launcher3.util.DynamicResource;
 import com.android.launcher3.util.IntArray;
 import com.android.launcher3.util.IntSet;
 import com.android.launcher3.util.RunnableList;
+import com.android.launcher3.util.SplitConfigurationOptions.SplitPositionOption;
 import com.android.launcher3.util.SplitConfigurationOptions.SplitSelectSource;
 import com.android.launcher3.util.SplitConfigurationOptions.StagePosition;
 import com.android.launcher3.util.TraceHelper;
@@ -5336,8 +5338,22 @@ public abstract class RecentsView<
      * of split invocation as such.
      */
     public void initiateSplitSelect(TaskContainer taskContainer) {
-        int defaultSplitPosition = getPagedOrientationHandler()
-                .getDefaultSplitPosition(mContainer.getDeviceProfile());
+        DeviceProfile deviceProfile = mContainer.getDeviceProfile();
+        int defaultSplitPosition;
+        if (deviceProfile.getDeviceProperties().isTablet()) {
+            defaultSplitPosition = getPagedOrientationHandler()
+                    .getDefaultSplitPosition(deviceProfile);
+        } else {
+            // For non-tablet devices, use the first option from getSplitPositionOptions
+            List<SplitPositionOption> options = getPagedOrientationHandler()
+                    .getSplitPositionOptions(deviceProfile);
+            if (options.isEmpty()) {
+                // Fallback to top/left if no options available
+                defaultSplitPosition = STAGE_POSITION_TOP_OR_LEFT;
+            } else {
+                defaultSplitPosition = options.get(0).stagePosition;
+            }
+        }
         initiateSplitSelect(taskContainer, defaultSplitPosition, LAUNCHER_OVERVIEW_ACTIONS_SPLIT);
     }
 
