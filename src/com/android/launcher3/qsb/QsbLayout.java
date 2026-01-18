@@ -54,10 +54,12 @@ public class QsbLayout extends FrameLayout implements Reorderable, SharedPrefere
         LauncherPrefs.getPrefs(mContext).registerOnSharedPreferenceChangeListener(this);
 
         String searchPackage = QsbContainerView.getSearchWidgetPackageName(mContext);
-        setOnClickListener(view -> {
-            mContext.startActivity(new Intent("android.search.action.GLOBAL_SEARCH").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                Intent.FLAG_ACTIVITY_CLEAR_TASK).setPackage(searchPackage));
-        });
+        if (searchPackage != null) {
+            setOnClickListener(view -> {
+                mContext.startActivity(new Intent("android.search.action.GLOBAL_SEARCH").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK).setPackage(searchPackage));
+            });
+        }
 
         if (Utilities.isGSAEnabled(mContext)) {
             enableLensIcon();

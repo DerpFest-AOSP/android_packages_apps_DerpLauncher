@@ -74,9 +74,14 @@ public class QsbContainerView extends FrameLayout {
                 SEARCH_ENGINE_SETTINGS_KEY);
         if (providerPkg == null) {
             SearchManager searchManager = context.getSystemService(SearchManager.class);
-            ComponentName componentName = searchManager.getGlobalSearchActivity();
-            if (componentName != null) {
-                providerPkg = searchManager.getGlobalSearchActivity().getPackageName();
+            try {
+                ComponentName componentName = searchManager.getGlobalSearchActivity();
+                if (componentName != null) {
+                    providerPkg = componentName.getPackageName();
+                }
+            } catch (IllegalStateException e) {
+                // User isn't unlocked yet, search manager is not available
+                // Fall through to use GSA as fallback if enabled
             }
             if (providerPkg == null && Utilities.isGSAEnabled(context)) {
                 providerPkg = Utilities.GSA_PACKAGE;

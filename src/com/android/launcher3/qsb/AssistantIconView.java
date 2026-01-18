@@ -14,8 +14,11 @@ public class AssistantIconView extends ImageView {
         super(context, attrs);
         setScaleType(ScaleType.CENTER);
         setOnClickListener(view -> {
-            Intent intent = new Intent(Intent.ACTION_VOICE_COMMAND).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK).setPackage(QsbContainerView.getSearchWidgetPackageName(context));
-            context.startActivity(intent);
+            String searchPackage = QsbContainerView.getSearchWidgetPackageName(context);
+            if (searchPackage != null) {
+                Intent intent = new Intent(Intent.ACTION_VOICE_COMMAND).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK).setPackage(searchPackage);
+                context.startActivity(intent);
+            }
         });
     }
 
@@ -23,8 +26,11 @@ public class AssistantIconView extends ImageView {
         super(context, attrs, defStyle);
         setScaleType(ScaleType.CENTER);
         setOnClickListener(view -> {
-            Intent intent = new Intent(Intent.ACTION_VOICE_COMMAND).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK).setPackage(QsbContainerView.getSearchWidgetPackageName(context));
-            context.startActivity(intent);
+            String searchPackage = QsbContainerView.getSearchWidgetPackageName(context);
+            if (searchPackage != null) {
+                Intent intent = new Intent(Intent.ACTION_VOICE_COMMAND).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK).setPackage(searchPackage);
+                context.startActivity(intent);
+            }
         });
     }
 

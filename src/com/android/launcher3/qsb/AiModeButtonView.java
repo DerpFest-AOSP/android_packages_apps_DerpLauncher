@@ -109,27 +109,40 @@ public class AiModeButtonView extends ImageView {
         }
 
         // Final fallback: use the original voice command behavior
-        try {
-            Intent intent = new Intent(Intent.ACTION_VOICE_COMMAND)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    .setPackage(QsbContainerView.getSearchWidgetPackageName(context));
-            context.startActivity(intent);
-            Log.d(TAG, "Falling back to voice command");
-        } catch (ActivityNotFoundException e) {
-            Log.e(TAG, "No AI or voice command activities found");
-            Toast.makeText(context, R.string.ai_mode_not_available, Toast.LENGTH_SHORT).show();
-        } catch (SecurityException e) {
-            Log.e(TAG, "Security exception launching voice command: " + e.getMessage());
+        String searchPackage = QsbContainerView.getSearchWidgetPackageName(context);
+        if (searchPackage != null) {
+            try {
+                Intent intent = new Intent(Intent.ACTION_VOICE_COMMAND)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        .setPackage(searchPackage);
+                context.startActivity(intent);
+                Log.d(TAG, "Falling back to voice command");
+            } catch (ActivityNotFoundException e) {
+                Log.e(TAG, "No AI or voice command activities found");
+                Toast.makeText(context, R.string.ai_mode_not_available, Toast.LENGTH_SHORT).show();
+            } catch (SecurityException e) {
+                Log.e(TAG, "Security exception launching voice command: " + e.getMessage());
+                Toast.makeText(context, R.string.ai_mode_not_available, Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Log.e(TAG, "Search package not available (user may not be unlocked)");
             Toast.makeText(context, R.string.ai_mode_not_available, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void launchMusicSearch(Context context) {
+        String searchPackage = QsbContainerView.getSearchWidgetPackageName(context);
+        if (searchPackage == null) {
+            Log.e(TAG, "Search package not available (user may not be unlocked)");
+            Toast.makeText(context, R.string.ai_mode_not_available, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
         try {
             Intent intent = new Intent(Intent.ACTION_MAIN)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     .setAction("com.google.android.googlequicksearchbox.MUSIC_SEARCH")
-                    .setPackage(QsbContainerView.getSearchWidgetPackageName(context));
+                    .setPackage(searchPackage);
             context.startActivity(intent);
             Log.d(TAG, "Successfully launched music search");
         } catch (ActivityNotFoundException e) {
@@ -138,7 +151,7 @@ public class AiModeButtonView extends ImageView {
             try {
                 Intent intent = new Intent(Intent.ACTION_VOICE_COMMAND)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        .setPackage(QsbContainerView.getSearchWidgetPackageName(context));
+                        .setPackage(searchPackage);
                 context.startActivity(intent);
                 Log.d(TAG, "Falling back to voice command for music search");
             } catch (ActivityNotFoundException e2) {
