@@ -1,14 +1,17 @@
 package com.android.launcher3.qsb;
 
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
 import com.android.launcher3.Reorderable;
@@ -56,8 +59,7 @@ public class QsbLayout extends FrameLayout implements Reorderable, SharedPrefere
         String searchPackage = QsbContainerView.getSearchWidgetPackageName(mContext);
         if (searchPackage != null) {
             setOnClickListener(view -> {
-                mContext.startActivity(new Intent("android.search.action.GLOBAL_SEARCH").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK).setPackage(searchPackage));
+                launchSearchActivity(searchPackage);
             });
         }
 
@@ -128,6 +130,47 @@ public class QsbLayout extends FrameLayout implements Reorderable, SharedPrefere
             mLensIcon.setImageResource(R.drawable.ic_lens_color);
             mAiModeButton.setImageResource(isMusicSearch ? R.drawable.ic_music_color : R.drawable.ic_ai_mode_color);
         }
+    }
+
+    private void launchSearchActivity(String searchPackage) {
+        // Try GLOBAL_SEARCH first (standard Android search intent)
+        try {
+            Intent intent = new Intent("android.search.action.GLOBAL_SEARCH")
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    .setPackage(searchPackage);
+            mContext.startActivity(intent);
+            return;
+        } catch (ActivityNotFoundException e) {
+            // GLOBAL_SEARCH not supported, try fallback approaches
+            Log.d("QsbLayout", "GLOBAL_SEARCH not supported by " + searchPackage);
+        }
+
+        // Fallback 1: Try launching the app's main launcher activity
+        try {
+            Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(searchPackage);
+            if (intent != null) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                mContext.startActivity(intent);
+                return;
+            }
+        } catch (ActivityNotFoundException e) {
+            Log.d("QsbLayout", "Launch intent not found for " + searchPackage);
+        }
+
+        // Fallback 2: Try ACTION_VIEW with the package
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    .setPackage(searchPackage);
+            mContext.startActivity(intent);
+            return;
+        } catch (ActivityNotFoundException e) {
+            Log.d("QsbLayout", "ACTION_VIEW not found for " + searchPackage);
+        }
+
+        // If all fallbacks fail, show a toast message
+        Toast.makeText(mContext, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        Log.e("QsbLayout", "No search activity found for package: " + searchPackage);
     }
 
     private void enableLensIcon() {
