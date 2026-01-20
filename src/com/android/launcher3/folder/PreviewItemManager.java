@@ -86,7 +86,7 @@ public class PreviewItemManager {
     private final FolderIcon mIcon;
     @VisibleForTesting
     public final int mIconSize;
-    private final DrawableFactory mDrawableFactory;
+    private DrawableFactory mDrawableFactory;
 
     // These variables are all associated with the drawing of the preview; they are stored
     // as member variables for shared usage and to avoid computation on each frame
@@ -119,10 +119,19 @@ public class PreviewItemManager {
     public PreviewItemManager(FolderIcon icon) {
         mContext = icon.getContext();
         mIcon = icon;
-        mDrawableFactory = DrawableFactory.INSTANCE.get(mContext);
+        // Lazy initialization of DrawableFactory to avoid deadlock when constructing
+        // FolderIcon from background thread. It will be initialized on first use.
+        mDrawableFactory = null;
         mIconSize = ActivityContext.lookupContext(
                 mContext).getDeviceProfile().getFolderProfile().getChildIconSizePx();
         mClipThreshold = dpToPx(1f);
+    }
+
+    private DrawableFactory getDrawableFactory() {
+        if (mDrawableFactory == null) {
+            mDrawableFactory = DrawableFactory.INSTANCE.get(mContext);
+        }
+        return mDrawableFactory;
     }
 
     /**
@@ -458,7 +467,7 @@ public class PreviewItemManager {
             PreviewItemDrawingParams p, ItemInfo item, boolean loadHighResIcon) {
         if (item instanceof WorkspaceItemInfo wii) {
             if (wii.shouldShowPendingIcon()) {
-                p.drawable = mDrawableFactory.newPendingIcon(mContext, wii);
+                p.drawable = getDrawableFactory().newPendingIcon(mContext, wii);
             } else {
                 p.drawable = wii.newIcon(mContext, FLAG_THEMED);
             }
