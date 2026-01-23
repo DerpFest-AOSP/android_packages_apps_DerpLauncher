@@ -75,6 +75,7 @@ public class QuickSpaceView extends FrameLayout implements OnDataListener {
 
     @Override
     public void onDataUpdated() {
+        mController.getEventController().initQuickEvents();
         if (mIsQuickEvent != mController.isQuickEvent()) {
             mIsQuickEvent = mController.isQuickEvent();
             loadViews();

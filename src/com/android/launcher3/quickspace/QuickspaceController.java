@@ -15,8 +15,6 @@
  */
 package com.android.launcher3.quickspace;
 
-import static com.android.launcher3.util.Executors.MAIN_EXECUTOR;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
@@ -30,7 +28,6 @@ import android.util.Log;
 
 import com.android.launcher3.LauncherNotifications;
 import com.android.launcher3.R;
-import com.android.launcher3.Utilities;
 import com.android.launcher3.util.PackageUserKey;
 
 import java.util.ArrayList;
@@ -47,10 +44,6 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
     private Context mContext;
     private final Handler mHandler;
     private QuickEventsController mEventsController;
-
-    private static final long PSA_UPDATE_DELAY_MS = 3 * 60 * 1000;
-
-    private final Runnable mPsaRunnable;
 
     private boolean mUseImperialUnit;
 
@@ -70,22 +63,11 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
 
     public QuickspaceController(Context context) {
         mContext = context;
-        mHandler = MAIN_EXECUTOR.getHandler();
+        mHandler = new Handler();
         mEventsController = new QuickEventsController(context);
         mRemoteController = new RemoteController(context, mRCClientUpdateListener);
         mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.registerRemoteController(mRemoteController);
-
-        mPsaRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (mEventsController != null) {
-                    mEventsController.updatePsonality();
-                    notifyListeners();
-                }
-                mHandler.postDelayed(this, PSA_UPDATE_DELAY_MS);
-            }
-        };
     }
 
     private void addWeatherProvider() {
@@ -100,8 +82,6 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
             }
         }
         addWeatherProvider();
-        mEventsController.initQuickEvents();
-        mHandler.post(mPsaRunnable);
         listener.onDataUpdated();
     }
 
@@ -168,16 +148,6 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
         }
     }
 
-    private void updateMediaController() {
-        if (mEventsController == null) return;
-        if (!Utilities.isQuickspaceNowPlaying(mContext)) {
-            return;
-        }
-        // Force update events controller with current media state on resume
-        mEventsController.setMediaInfo(mMetadata.trackTitle, mMetadata.trackArtist, mClientLost, mMediaActive);
-        mEventsController.updateQuickEvents();
-    }
-
     @Override
     public void onNotificationUpdate(Predicate<PackageUserKey> updatedDots) {
         updateMediaInfo();
@@ -185,11 +155,15 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
 
     public void onPause() {
         LauncherNotifications.getInstance().removeListener(this);
+        if (mEventsController != null) mEventsController.onPause();
     }
 
     public void onResume() {
-        updateMediaController();
-        notifyListeners();
+        if (mEventsController != null) {
+            updateMediaInfo();
+            mEventsController.onResume();
+            notifyListeners();
+        }
         LauncherNotifications.getInstance().addListener(this);
     }
 
@@ -292,6 +266,9 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
     };
 
     private void cancelListeners() {
+        if (mEventsController != null) {
+            mEventsController.onPause();
+        }
         if (mRemoteController != null) {
             mAudioManager.unregisterRemoteController(mRemoteController);
             mRemoteController = null;
@@ -304,7 +281,6 @@ public class QuickspaceController implements LauncherNotifications.NotificationU
 
     public void onDestroy() {
         cancelListeners();
-        mHandler.removeCallbacks(mPsaRunnable);
         mMetadata.clear();
         
         // Properly cleanup RemoteController
