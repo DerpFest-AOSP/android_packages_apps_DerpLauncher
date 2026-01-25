@@ -196,6 +196,7 @@ public class SettingsGestures extends CollapsingToolbarBaseActivity
                         LauncherPrefs.get(getActivity()).devicePrefs.edit().putString(KEY_HOMESCREEN_DT_GESTURES, dtGestureValue).commit();
                         doubletabAction.setValue(dtGestureValue);
                         doubletabAction.setSummary(doubletabAction.getEntry());
+                        updateDoubleTapDependentPreferences(dtGestureValue);
                         Toast.makeText(getActivity(), R.string.restarting_launcher_changes, Toast.LENGTH_SHORT).show();
                         Utilities.restartLauncher(getActivity());
                         return true;
@@ -213,6 +214,7 @@ public class SettingsGestures extends CollapsingToolbarBaseActivity
                         LauncherPrefs.get(getActivity()).devicePrefs.edit().putString(KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, swipeDownGestureValue).commit();
                         swipeDownAction.setValue(swipeDownGestureValue);
                         swipeDownAction.setSummary(swipeDownAction.getEntry());
+                        updateSwipeDownDependentPreferences(swipeDownGestureValue);
                         Toast.makeText(getActivity(), R.string.restarting_launcher_changes, Toast.LENGTH_SHORT).show();
                         Utilities.restartLauncher(getActivity());
                         return true;
@@ -240,6 +242,12 @@ public class SettingsGestures extends CollapsingToolbarBaseActivity
             if (getActivity() != null && !TextUtils.isEmpty(getPreferenceScreen().getTitle())) {
                 getActivity().setTitle(getPreferenceScreen().getTitle());
             }
+            
+            // Initialize enabled state of dependent preferences
+            String dtGestureValue = LauncherPrefs.get(getActivity()).devicePrefs.getString(KEY_HOMESCREEN_DT_GESTURES, "1");
+            String swipeDownGestureValue = LauncherPrefs.get(getActivity()).devicePrefs.getString(KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, "0");
+            updateDoubleTapDependentPreferences(dtGestureValue);
+            updateSwipeDownDependentPreferences(swipeDownGestureValue);
         }
 
         @Override
@@ -332,6 +340,34 @@ public class SettingsGestures extends CollapsingToolbarBaseActivity
                             .performAccessibilityAction(ACTION_ACCESSIBILITY_FOCUS, null);
                 }
             });
+        }
+
+        /**
+         * Updates enabled state of double tap gesture dependent preferences
+         */
+        private void updateDoubleTapDependentPreferences(String gestureValue) {
+            Preference hapticsPref = findPreference("pref_haptics_on_dt_gestures");
+            if (hapticsPref != null) {
+                boolean isGestureEnabled = !"0".equals(gestureValue);
+                hapticsPref.setEnabled(isGestureEnabled);
+            }
+        }
+
+        /**
+         * Updates enabled state of swipe down gesture dependent preferences
+         */
+        private void updateSwipeDownDependentPreferences(String gestureValue) {
+            Preference hapticsPref = findPreference("pref_haptics_on_swipe_down_gestures");
+            Preference sidePref = findPreference("pref_swipe_down_side");
+            
+            boolean isGestureEnabled = !"0".equals(gestureValue);
+            
+            if (hapticsPref != null) {
+                hapticsPref.setEnabled(isGestureEnabled);
+            }
+            if (sidePref != null) {
+                sidePref.setEnabled(isGestureEnabled);
+            }
         }
     }
 }
