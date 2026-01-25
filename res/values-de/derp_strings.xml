@@ -189,6 +189,7 @@
     <string name="recents_clear_all_title">Alle Apps schließen</string>
     <string name="recents_lens_title">Lens</string>
     <string name="recents_split_screen_title">Geteilter Bildschirm</string>
+    <string name="recents_shake_clear_all_title">Telefon schütteln zum Schließen aller Apps</string>
 
     <!-- Task lock -->
     <string name="task_menu_item_unlock">Entsperren</string>

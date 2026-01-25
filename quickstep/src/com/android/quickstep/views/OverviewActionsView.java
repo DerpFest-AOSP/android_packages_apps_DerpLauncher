@@ -185,6 +185,9 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
     private boolean mClearAll;
     private boolean mLens;
     private boolean mSplitScreenEnabled;
+    private boolean mShakeClearAll;
+
+    private static final String KEY_RECENTS_SHAKE_CLEAR_ALL = "pref_recents_shake_clear_all";
 
     private SharedPreferences mPrefs;
     private boolean mPrefsRegistered;
@@ -205,6 +208,8 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
         mClearAll = LauncherPrefs.RECENTS_CLEAR_ALL.get(context);
         mLens = LauncherPrefs.RECENTS_LENS.get(context);
         mSplitScreenEnabled = LauncherPrefs.RECENTS_SPLIT_SCREEN.get(context);
+        mShakeUtils = new ShakeUtils(context);
+        mShakeClearAll = mPrefs.getBoolean(KEY_RECENTS_SHAKE_CLEAR_ALL, true);
     }
 
     @Override
@@ -227,25 +232,13 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
         super.onDetachedFromWindow();
     }
 
-    private void bindShake() {
-        if (mShakeUtils != null) {
-            mShakeUtils.bindShakeListener(this);
-        }
-    }
-
-    private void unBindShake() {
-        if (mShakeUtils != null) {
-            mShakeUtils.unBindShakeListener(this);
-        }
-    }
-
     @Override
     public void onVisibilityAggregated(boolean isVisible) {
         super.onVisibilityAggregated(isVisible);
         if (isVisible) {
-            bindShake();
+            mShakeUtils.bindShakeListener(this);
         } else {
-            unBindShake();
+            mShakeUtils.unBindShakeListener(this);
         }
     }
 
@@ -287,7 +280,6 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
                 }
             }, 1f /* initialValue */);
         }
-        mShakeUtils = new ShakeUtils(getContext());
         updateVisibilities();
     }
 
@@ -324,10 +316,8 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
 
     @Override
     public void onShake(double speed) {
-        View clearAllView = findViewById(mUseChips ? R.id.action2_clear_all : R.id.action_clear_all);
-        if (mCallbacks != null && clearAllView != null && clearAllView.getVisibility() == VISIBLE) {
+        if (mCallbacks != null && mShakeClearAll) {
             mCallbacks.onClearAllTasksRequested();
-            setCallbacks(null); // Clear the listener after shake
         }
     }
 
@@ -387,6 +377,8 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
             mLens = LauncherPrefs.RECENTS_LENS.get(getContext());
         } else if (LauncherPrefs.RECENTS_SPLIT_SCREEN.getSharedPrefKey().equals(key)) {
             mSplitScreenEnabled = LauncherPrefs.RECENTS_SPLIT_SCREEN.get(getContext());
+        } else if (key.equals(KEY_RECENTS_SHAKE_CLEAR_ALL)) {
+            mShakeClearAll = mPrefs.getBoolean(KEY_RECENTS_SHAKE_CLEAR_ALL, true);
         }
         updateVisibilities();
     }
