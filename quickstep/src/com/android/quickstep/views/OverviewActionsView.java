@@ -47,6 +47,7 @@ import com.android.launcher3.anim.AnimatedFloat;
 import com.android.launcher3.util.DisplayController;
 import com.android.launcher3.util.MultiValueAlpha;
 import com.android.launcher3.util.NavigationMode;
+import com.android.launcher3.util.ShakeUtils;
 import com.android.launcher3.util.VibratorWrapper;
 import com.android.quickstep.TaskOverlayFactory.OverlayUICallbacks;
 import com.android.quickstep.util.LayoutUtils;
@@ -61,7 +62,7 @@ import java.util.Arrays;
  * View for showing action buttons in Overview
  */
 public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayout
-        implements OnClickListener, Insettable, SharedPreferences.OnSharedPreferenceChangeListener {
+        implements OnClickListener, Insettable, SharedPreferences.OnSharedPreferenceChangeListener, ShakeUtils.OnShakeListener {
     public static final String TAG = "OverviewActionsView";
     private final Rect mInsets = new Rect();
 
@@ -159,6 +160,7 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
      * mActionButtons, since it is the sole button that appears for a grouped task.
      */
     private Button mSaveAppPairButton;
+    private ShakeUtils mShakeUtils;
 
     @ActionsHiddenFlags
     private int mHiddenFlags;
@@ -225,6 +227,28 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
         super.onDetachedFromWindow();
     }
 
+    private void bindShake() {
+        if (mShakeUtils != null) {
+            mShakeUtils.bindShakeListener(this);
+        }
+    }
+
+    private void unBindShake() {
+        if (mShakeUtils != null) {
+            mShakeUtils.unBindShakeListener(this);
+        }
+    }
+
+    @Override
+    public void onVisibilityAggregated(boolean isVisible) {
+        super.onVisibilityAggregated(isVisible);
+        if (isVisible) {
+            bindShake();
+        } else {
+            unBindShake();
+        }
+    }
+
     private void clearChildClickListeners() {
         View v;
         if ((v = findViewById(R.id.action_screenshot)) != null) v.setOnClickListener(null);
@@ -263,6 +287,7 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
                 }
             }, 1f /* initialValue */);
         }
+        mShakeUtils = new ShakeUtils(getContext());
         updateVisibilities();
     }
 
@@ -295,6 +320,15 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
         boolean actualLensVisibility = mLens && Utilities.isGSAEnabled(getContext())
                 && (mUseChips || !mScreenshot || !mClearAll || (mDp != null && mDp.getDeviceProperties().isTablet()) || (!mUseChips && mScreenshot && mClearAll));
         lens.setVisibility(actualLensVisibility ? VISIBLE : GONE);
+    }
+
+    @Override
+    public void onShake(double speed) {
+        View clearAllView = findViewById(mUseChips ? R.id.action2_clear_all : R.id.action_clear_all);
+        if (mCallbacks != null && clearAllView != null && clearAllView.getVisibility() == VISIBLE) {
+            mCallbacks.onClearAllTasksRequested();
+            setCallbacks(null); // Clear the listener after shake
+        }
     }
 
     /**
