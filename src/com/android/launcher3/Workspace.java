@@ -68,6 +68,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.DragAndDropPermissions;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.InputDevice;
 import android.view.LayoutInflater;
@@ -85,6 +86,10 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.view.ViewCompat;
 
 import com.android.app.animation.Interpolators;
+
+import com.android.internal.util.derp.derpUtils;
+
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.accessibility.AccessibleDragListenerAdapter;
 import com.android.launcher3.accessibility.WorkspaceAccessibilityHelper;
 import com.android.launcher3.anim.PendingAnimation;
@@ -139,6 +144,7 @@ import com.android.launcher3.util.MSDLPlayerWrapper;
 import com.android.launcher3.util.OverlayEdgeEffect;
 import com.android.launcher3.util.RunnableList;
 import com.android.launcher3.util.Thunk;
+import com.android.launcher3.util.VibratorWrapper;
 import com.android.launcher3.util.WallpaperOffsetInterpolator;
 import com.android.launcher3.widget.LauncherAppWidgetHostView;
 import com.android.launcher3.widget.NavigableAppWidgetHostView;
@@ -333,6 +339,9 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
     @Nullable
     private DragController.DragListener mAccessibilityDragListener;
 
+    private GestureDetector mGestureListener;
+    private int mDoubleGestureMode;
+
     /**
      * Used to inflate the Workspace from XML.
      *
@@ -364,9 +373,72 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
 
         // Disable multitouch across the workspace/all apps/customize tray
         setMotionEventSplittingEnabled(true);
+
+        context.enforceCallingOrSelfPermission(
+                    android.Manifest.permission.DEVICE_POWER, null);
+        mDoubleGestureMode = Integer.valueOf(
+                LauncherPrefs.get(context).devicePrefs.getString("pref_homescreen_dt_gestures", "1"));
+        mGestureListener =
+                new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent event) {
+                // Double tap gestures
+                Gestures(event, mDoubleGestureMode);
+                return true;
+            }
+        });
+
         setOnTouchListener(new WorkspaceTouchListener(mLauncher, this));
         mStatsLogManager = StatsLogManager.newInstance(context);
         mMSDLPlayerWrapper = MSDLPlayerWrapper.INSTANCE.get(context);
+    }
+
+    // Gestures
+    private void Gestures(MotionEvent event, int gestureType) {
+        // Check if haptic feedback is enabled for the appropriate gesture type
+        if (gestureType != 0 && LauncherPrefs.get(getContext()).devicePrefs.getBoolean("pref_haptics_on_dt_gestures", true)) {
+            VibratorWrapper.INSTANCE.get(getContext()).vibrate(VibratorWrapper.EFFECT_CLICK);
+        }
+        
+        switch(gestureType) {
+            // Stock behavior
+            case 0:
+                break;
+            // Sleep
+            case 1:
+                derpUtils.switchScreenOff(getContext());
+                break;
+            // Flashlight
+            case 2:
+                derpUtils.toggleCameraFlash();
+                break;
+            case 3: // Volume panel
+                derpUtils.toggleVolumePanel(getContext());
+                break;
+            case 4: // Clear notifications
+                derpUtils.clearAllNotifications();
+                break;
+            case 5: // Screenshot
+                derpUtils.takeScreenshot(true);
+                break;
+            case 6: // Notifications
+                derpUtils.toggleNotifications();
+                break;
+            case 7: // QS panel
+                derpUtils.toggleQsPanel();
+                break;
+            case 8: // Powermenu
+                derpUtils.showPowerMenu();
+                break;
+        }
+    }
+
+    public void setDoubleTapGestures(int mode) {
+        mDoubleGestureMode = mode;
+    }
+
+    public boolean checkDoubleTap(MotionEvent ev) {
+        return mGestureListener.onTouchEvent(ev);
     }
 
     @Override
