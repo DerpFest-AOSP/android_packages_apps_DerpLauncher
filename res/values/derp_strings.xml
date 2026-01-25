@@ -404,6 +404,9 @@
     <string name="auto_hide_dots">Auto-hide page indicator</string>
     <string name="auto_hide_dots_summary">Hide the page indicator dots automatically</string>
 
+    <!-- Restart launcher -->
+    <string name="restarting_launcher_changes">Restarting launcher to apply changes…</string>
+
     <!-- Gestures -->
     <string name="pref_homescreen_dt_gestures_title">Double tap</string>
     <string name="pref_homescreen_dt_gestures_summary">Select the action of the double tap gesture on the home screen</string>
