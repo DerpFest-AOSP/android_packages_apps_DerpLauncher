@@ -36,8 +36,11 @@ import android.app.ActivityOptions;
 import android.app.KeyguardManager;
 import android.app.Person;
 import android.app.WallpaperManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
 import android.content.pm.PackageManager;
@@ -75,6 +78,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.TransactionTooLargeException;
+import android.os.UserHandle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -210,6 +214,9 @@ public final class Utilities {
     public static final String KEY_DOCK_AI_MUSIC_SEARCH = "pref_dock_ai_music_search";
     public static final String KEY_QSB_OUTER_OPACITY = "pref_qsb_outer_opacity";
     public static final String KEY_QUICKSPACE_ACCENT_TINT = "pref_quickspace_accent_tint";
+
+    private static final String FREEFORM_PACKAGE = "com.libremobileos.freeform";
+    private static final String FREEFORM_INTENT = "com.libremobileos.freeform.START_FREEFORM";
 
     /**
      * Returns true if theme is dark.
@@ -1325,5 +1332,36 @@ public final class Utilities {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return stream.toByteArray();
+    }
+
+    public static boolean isResizeableActivity(Context context, ComponentName activity) {
+        if (activity == null) return false;
+        final ActivityInfo info;
+        try {
+            info = context.getPackageManager().getActivityInfo(activity, /* flags */ 0);
+        } catch (Exception e) {
+            Log.e(TAG, "failed to check isResizeableActivity:", e);
+            return false;
+        }
+        return info.resizeMode != ActivityInfo.RESIZE_MODE_UNRESIZEABLE;
+    }
+
+    public static void startLmoFreeform(Context context, ComponentName activity,
+            int userId, int taskId) {
+        final Intent intent = new Intent(FREEFORM_INTENT)
+                .setPackage(FREEFORM_PACKAGE)
+                .putExtra("packageName", activity.getPackageName())
+                .putExtra("activityName", activity.getClassName())
+                .putExtra("userId", userId)
+                .putExtra("taskId", taskId);
+        context.sendBroadcast(intent);
+    }
+
+    public static void startLmoFreeform(Context context, ComponentName activity, int userId) {
+        startLmoFreeform(context, activity, userId, -1);
+    }
+
+    public static void startLmoFreeform(Context context, ComponentName activity) {
+        startLmoFreeform(context, activity, UserHandle.myUserId());
     }
 }
