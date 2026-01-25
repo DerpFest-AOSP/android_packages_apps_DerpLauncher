@@ -32,7 +32,6 @@ import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCH
 import android.content.Context;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.os.PowerManager;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.InputDevice;
@@ -46,14 +45,12 @@ import com.android.launcher3.BoxSelectionHelper;
 import com.android.launcher3.CellLayout;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Launcher;
-import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.Workspace;
 import com.android.launcher3.dragndrop.DragLayer;
 import com.android.launcher3.logger.LauncherAtom;
 import com.android.launcher3.testing.TestLogging;
 import com.android.launcher3.testing.shared.TestProtocol;
 import com.android.launcher3.util.TouchUtil;
-import com.android.launcher3.util.VibratorWrapper;
 
 /**
  * Helper class to handle touch on empty space in workspace and show options popup on long press
@@ -72,9 +69,6 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
     private static final int STATE_PENDING_PARENT_INFORM = 2;
     private static final int STATE_COMPLETED = 3;
 
-    private static final String SLEEP_GESTURE = "pref_sleep_gesture";
-    private static final String HAPTICS_ON_DT2S = "pref_haptics_on_dt2s";
-
     private final Rect mTempRect = new Rect();
     private final Launcher mLauncher;
     private final Workspace<?> mWorkspace;
@@ -82,8 +76,6 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
     private final float mTouchSlop;
 
     private int mLongPressState = STATE_CANCELLED;
-
-    private final PowerManager mPm;
 
     private final GestureDetector mGestureDetector;
     private final BoxSelectionHelper mBoxSelectionHelper;
@@ -97,7 +89,6 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
         // Use twice the touch slop as we are looking for long press which is more
         // likely to cause movement.
         mTouchSlop = 2 * ViewConfiguration.get(launcher).getScaledTouchSlop();
-        mPm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         mGestureDetector = new GestureDetector(mContext, this);
         mBoxSelectionHelper = enableWorkspaceSelection()
                 ? new BoxSelectionHelper(launcher, workspace)
@@ -112,6 +103,7 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
         }
 
         mGestureDetector.onTouchEvent(ev);
+        mWorkspace.checkDoubleTap(ev);
 
         int action = ev.getActionMasked();
         if (action == ACTION_DOWN) {
@@ -246,14 +238,4 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
         }
     }
 
-    @Override
-    public boolean onDoubleTap(MotionEvent event) {
-        if (LauncherPrefs.getPrefs(mContext).getBoolean(SLEEP_GESTURE, true)) {
-            if (LauncherPrefs.getPrefs(mContext).getBoolean(HAPTICS_ON_DT2S, true)) {
-                VibratorWrapper.INSTANCE.get(mContext).vibrate(VibratorWrapper.EFFECT_CLICK);
-            }
-            mPm.goToSleep(event.getEventTime());
-        }
-        return true;
-    }
 }

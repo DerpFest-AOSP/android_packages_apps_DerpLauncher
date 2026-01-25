@@ -77,6 +77,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.DragAndDropPermissions;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -145,6 +146,7 @@ import com.android.launcher3.statemanager.StateManager.StateListener;
 import com.android.launcher3.states.StateAnimationConfig;
 import com.android.launcher3.testing.shared.ResourceUtils;
 import com.android.launcher3.touch.WorkspaceTouchListener;
+import com.android.launcher3.util.GestureActions;
 import com.android.launcher3.util.EdgeEffectCompat;
 import com.android.launcher3.util.Executors;
 import com.android.launcher3.util.IntArray;
@@ -337,6 +339,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
     private final StatsLogManager mStatsLogManager;
 
     private final MSDLPlayerWrapper mMSDLPlayerWrapper;
+    private GestureDetector mGestureListener;
 
     /**
      * State tracking accessibility focus for items being moved.
@@ -427,6 +430,21 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
         setOnTouchListener(new WorkspaceTouchListener(mLauncher, this));
         mStatsLogManager = StatsLogManager.newInstance(context);
         mMSDLPlayerWrapper = MSDLPlayerWrapper.INSTANCE.get(context);
+        mGestureListener = new GestureDetector(context,
+                new GestureDetector.SimpleOnGestureListener() {
+                    @Override
+                    public boolean onDoubleTap(MotionEvent event) {
+                        GestureActions.execute(getContext(), mLauncher,
+                                GestureActions.getDoubleTapMode(getContext()),
+                                /* isSwipeDown= */ false);
+                        return true;
+                    }
+                });
+    }
+
+    /** Forwards workspace double-tap events to the configured home-screen gesture. */
+    public boolean checkDoubleTap(MotionEvent ev) {
+        return mGestureListener.onTouchEvent(ev);
     }
 
     @Override

@@ -14,6 +14,9 @@
     <!-- String representing the fragment class for home screen settings activity.-->
     <string name="home_screen_settings_fragment_name" translatable="false">com.android.launcher3.settings.SettingsHomescreen$HomescreenSettingsFragment</string>
 
+    <!-- String representing the fragment class for gesture settings activity.-->
+    <string name="gesture_settings_fragment_name" translatable="false">com.android.launcher3.settings.SettingsGestures$GestureSettingsFragment</string>
+
     <!-- String representing the fragment class for icons settings activity.-->
     <string name="icons_settings_fragment_name" translatable="false">com.android.launcher3.settings.SettingsIcons$IconsSettingsFragment</string>
 

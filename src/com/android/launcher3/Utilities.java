@@ -988,6 +988,17 @@ public final class Utilities {
         MAIN_EXECUTOR.getHandler().postDelayed(() -> System.exit(0), 500);
     }
 
+    /** Restarts the launcher activity via a home intent. */
+    public static void restartLauncher(Context context) {
+        MAIN_EXECUTOR.getHandler().postDelayed(() -> {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setPackage(context.getPackageName());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(intent);
+        }, 500);
+    }
+
     public static boolean isWorkspaceEditAllowed(Context context) {
         return !LauncherPrefs.WORKSPACE_LOCK.get(context);
     }

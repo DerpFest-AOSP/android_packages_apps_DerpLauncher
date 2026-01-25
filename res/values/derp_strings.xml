@@ -133,13 +133,34 @@
     <!-- LMOFreeform -->
     <string name="floating_window">Floating window</string>
 
-    <!-- DT2S -->
-    <string name="pref_sleep_gesture_title">Double tap to sleep</string>
-    <string name="pref_sleep_gesture_summary">Double tap on empty space for screen off</string>
-
-    <!-- Haptics on DT2S -->
-    <string name="pref_haptics_on_dt2s_title">Haptics on double tap to sleep</string>
-    <string name="pref_haptics_on_dt2s_summary">Whether to perform haptics when doing double tap to sleep gesture or not</string>
+    <!-- Gestures -->
+    <string name="gestures_category_title">Gestures</string>
+    <string name="pref_homescreen_dt_gestures_title">Double tap</string>
+    <string name="pref_homescreen_dt_gestures_summary">Select the action of the double tap gesture on the home screen</string>
+    <string name="pref_homescreen_swipe_down_gestures_title">Swipe down</string>
+    <string name="pref_homescreen_swipe_down_gestures_summary">Configure swipe down gesture on home screen</string>
+    <string name="pref_haptics_on_dt_gestures_title">Haptics on double tap gestures</string>
+    <string name="pref_haptics_on_dt_gestures_summary">Whether to perform haptics when doing any double tap gesture or not</string>
+    <string name="pref_haptics_on_swipe_down_gestures_title">Haptics on swipe down gestures</string>
+    <string name="pref_haptics_on_swipe_down_gestures_summary">Whether to perform haptics when doing any swipe down gesture or not</string>
+    <string name="pref_swipe_down_side_title">Swipe down side</string>
+    <string name="pref_swipe_down_side_summary">Choose which side(s) of the screen respond to swipe down gestures</string>
+    <string name="pref_swipe_down_side_both">Both sides</string>
+    <string name="pref_swipe_down_side_left">Left side only</string>
+    <string name="pref_swipe_down_side_right">Right side only</string>
+    <string name="pref_swipe_down_side_disabled">Disabled</string>
+    <string name="pref_homescreen_gestures_none">None</string>
+    <string name="pref_homescreen_gestures_sleep">Screen off</string>
+    <string name="pref_homescreen_gestures_torch">Flashlight</string>
+    <string name="pref_homescreen_gestures_volume_panel">Volume panel</string>
+    <string name="pref_homescreen_gestures_clear_notifications">Clear notifications</string>
+    <string name="pref_homescreen_gestures_screenshot">Screenshot</string>
+    <string name="pref_homescreen_gestures_notifications">Notifications</string>
+    <string name="pref_homescreen_gestures_qs_panel">QS panel</string>
+    <string name="pref_homescreen_gestures_powermenu">Power menu</string>
+    <string name="pref_homescreen_gestures_clear_all_apps">Clear all apps</string>
+    <string name="recents_shake_clear_all_title">Shake phone to clear all tasks</string>
+    <string name="restarting_launcher_changes">Restarting launcher to apply changes…</string>
 
     <!-- Recents icons -->
     <string name="recents_chips_title">Use compact action design</string>

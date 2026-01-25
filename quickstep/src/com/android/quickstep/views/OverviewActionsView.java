@@ -43,6 +43,7 @@ import com.android.launcher3.anim.AnimatedFloat;
 import com.android.launcher3.display.DisplayController;
 import com.android.launcher3.util.MultiValueAlpha;
 import com.android.launcher3.util.NavigationMode;
+import com.android.launcher3.util.ShakeUtils;
 import com.android.launcher3.util.VibratorWrapper;
 import com.android.quickstep.TaskOverlayFactory.OverlayUICallbacks;
 import com.android.quickstep.util.LayoutUtils;
@@ -57,7 +58,8 @@ import java.util.Arrays;
  * View for showing action buttons in Overview
  */
 public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayout
-        implements OnClickListener, Insettable, SharedPreferences.OnSharedPreferenceChangeListener {
+        implements OnClickListener, Insettable, SharedPreferences.OnSharedPreferenceChangeListener,
+        ShakeUtils.OnShakeListener {
     public static final String TAG = "OverviewActionsView";
     private final Rect mInsets = new Rect();
 
@@ -179,6 +181,8 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
     private boolean mClearAll;
     private boolean mLens;
     private boolean mSplitScreenEnabled;
+    private boolean mShakeClearAll;
+    private final ShakeUtils mShakeUtils;
 
     private SharedPreferences mPrefs;
     private boolean mPrefsRegistered;
@@ -199,6 +203,25 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
         mClearAll = LauncherPrefs.RECENTS_CLEAR_ALL.get(context);
         mLens = LauncherPrefs.RECENTS_LENS.get(context);
         mSplitScreenEnabled = LauncherPrefs.RECENTS_SPLIT_SCREEN.get(context);
+        mShakeClearAll = LauncherPrefs.RECENTS_SHAKE_CLEAR_ALL.get(context);
+        mShakeUtils = new ShakeUtils(context);
+    }
+
+    @Override
+    public void onVisibilityAggregated(boolean isVisible) {
+        super.onVisibilityAggregated(isVisible);
+        if (isVisible && mShakeClearAll) {
+            mShakeUtils.registerShakeListener(this);
+        } else {
+            mShakeUtils.unregisterShakeListener(this);
+        }
+    }
+
+    @Override
+    public void onShake(double speed) {
+        if (mCallbacks != null) {
+            mCallbacks.onClearAllTasksRequested();
+        }
     }
 
     @Override
@@ -362,6 +385,13 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
             mLens = prefs.getBoolean(key, false);
         } else if (LauncherPrefs.RECENTS_SPLIT_SCREEN.getSharedPrefKey().equals(key)) {
             mSplitScreenEnabled = LauncherPrefs.RECENTS_SPLIT_SCREEN.get(getContext());
+        } else if (LauncherPrefs.RECENTS_SHAKE_CLEAR_ALL.getSharedPrefKey().equals(key)) {
+            mShakeClearAll = LauncherPrefs.RECENTS_SHAKE_CLEAR_ALL.get(getContext());
+            if (isShown() && mShakeClearAll) {
+                mShakeUtils.registerShakeListener(this);
+            } else {
+                mShakeUtils.unregisterShakeListener(this);
+            }
         } else {
             return;
         }

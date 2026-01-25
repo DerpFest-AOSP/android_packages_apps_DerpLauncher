@@ -290,6 +290,15 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField val RECENTS_MEMINFO = backedUpItem("pref_recents_meminfo", false)
         @JvmField val RECENTS_SCREENSHOT = backedUpItem("pref_recents_screenshot", true)
         @JvmField val RECENTS_SPLIT_SCREEN = backedUpItem("pref_recents_split_screen", false)
+        @JvmField val HOMESCREEN_DT_GESTURES = backedUpItem("pref_homescreen_dt_gestures", "1")
+        @JvmField
+        val HOMESCREEN_SWIPE_DOWN_GESTURES = backedUpItem("pref_homescreen_swipe_down_gestures", "0")
+        @JvmField val SWIPE_DOWN_SIDE = backedUpItem("pref_swipe_down_side", "0")
+        @JvmField val HAPTICS_ON_DT_GESTURES = backedUpItem("pref_haptics_on_dt_gestures", true)
+        @JvmField
+        val HAPTICS_ON_SWIPE_DOWN_GESTURES =
+            backedUpItem("pref_haptics_on_swipe_down_gestures", true)
+        @JvmField val RECENTS_SHAKE_CLEAR_ALL = backedUpItem("pref_recents_shake_clear_all", false)
         @JvmField val SHORT_PARALLAX = backedUpItem("pref_short_parallax", false)
         @JvmField val SHOW_DESKTOP_LABELS = backedUpItem("pref_desktop_show_labels", true)
         @JvmField val SHOW_DRAWER_LABELS = backedUpItem("pref_drawer_show_labels", true)

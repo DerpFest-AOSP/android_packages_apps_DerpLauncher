@@ -32,6 +32,8 @@ import android.view.ViewConfiguration;
 import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.BaseActivity;
 import com.android.launcher3.DeviceProfile;
+import com.android.launcher3.Launcher;
+import com.android.launcher3.util.GestureActions;
 import com.android.launcher3.util.TouchController;
 import com.android.quickstep.SystemUiProxy;
 import com.android.quickstep.util.CachedEventDispatcher;
@@ -65,6 +67,8 @@ public class StatusBarTouchController implements TouchController {
 
     /* If {@code false}, this controller should not handle the input {@link MotionEvent}.*/
     private boolean mCanIntercept;
+    private boolean mCustomGestureActive;
+    private int mSwipeDownGestureMode;
 
     public StatusBarTouchController(BaseActivity l, Supplier<Boolean> isEnabledCheck) {
         mLauncher = l;
@@ -94,6 +98,8 @@ public class StatusBarTouchController implements TouchController {
                 return false;
             }
             mDownEvent.set(ev.getX(), ev.getY());
+            mCustomGestureActive = false;
+            mSwipeDownGestureMode = GestureActions.getSwipeDownMode(mLauncher.asContext());
         }
         if (!mCanIntercept) {
             cleanupAfterGesture();
@@ -106,6 +112,11 @@ public class StatusBarTouchController implements TouchController {
             float dy = ev.getY() - mDownEvent.y;
             float dx = ev.getX() - mDownEvent.x;
             if (dy > mTouchSlop && dy > Math.abs(dx)) {
+                if (mSwipeDownGestureMode != 0 && GestureActions.isSwipeDownAllowedOnSide(
+                        mLauncher.asContext(), ev.getX())) {
+                    mCustomGestureActive = true;
+                    return true;
+                }
                 if (!mEventDispatcher.hasConsumer()) {
                     mEventDispatcher.setConsumer(this::dispatchTouchEvent);
                 }
@@ -123,6 +134,20 @@ public class StatusBarTouchController implements TouchController {
     @Override
     public final boolean onControllerTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
+        if (mCustomGestureActive) {
+            if (action == ACTION_UP) {
+                GestureActions.execute(
+                        mLauncher.asContext(),
+                        mLauncher instanceof Launcher launcher ? launcher : null,
+                        mSwipeDownGestureMode,
+                        /* isSwipeDown= */ true);
+            }
+            if (action == ACTION_UP || action == ACTION_CANCEL) {
+                mCustomGestureActive = false;
+                cleanupAfterGesture();
+            }
+            return true;
+        }
         mEventDispatcher.dispatchEvent(ev);
         if (action == ACTION_UP || action == ACTION_CANCEL) {
             mLauncher.getStatsLogManager().logger()
