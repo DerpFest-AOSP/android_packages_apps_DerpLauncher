@@ -380,8 +380,9 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
 
         context.enforceCallingOrSelfPermission(
                     android.Manifest.permission.DEVICE_POWER, null);
+        SharedPreferences devicePrefs = context.getSharedPreferences(LauncherFiles.DEVICE_PREFERENCES_KEY, Context.MODE_PRIVATE);
         mDoubleGestureMode = Integer.valueOf(
-                LauncherPrefs.get(context).devicePrefs.getString("pref_homescreen_dt_gestures", "1"));
+                devicePrefs.getString("pref_homescreen_dt_gestures", "1"));
         mGestureListener =
                 new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -3777,7 +3778,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
         post(() -> {
             RecentsView recentsView = mLauncher.getOverviewPanel();
             if (recentsView != null) {
-                recentsView.dismissAllTasks(null);
+                recentsView.dismissAllTasks();
             }
         });
     }

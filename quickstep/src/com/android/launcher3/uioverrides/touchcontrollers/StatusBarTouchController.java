@@ -44,6 +44,7 @@ import com.android.launcher3.util.VibratorWrapper;
 import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.BaseActivity;
 import com.android.launcher3.DeviceProfile;
+import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherState;
 import com.android.launcher3.util.TouchController;
 import com.android.quickstep.SystemUiProxy;
@@ -92,13 +93,15 @@ public class StatusBarTouchController implements TouchController {
     }
 
     private void updateSwipeDownGestureMode() {
+        SharedPreferences devicePrefs = mLauncher.asContext().getSharedPreferences(LauncherFiles.DEVICE_PREFERENCES_KEY, Context.MODE_PRIVATE);
         mSwipeDownGestureMode = Integer.valueOf(
-            LauncherPrefs.get(mLauncher.asContext()).devicePrefs.getString("pref_homescreen_swipe_down_gestures", "0"));
+            devicePrefs.getString("pref_homescreen_swipe_down_gestures", "0"));
     }
 
     private void updateSwipeDownSideMode() {
+        SharedPreferences devicePrefs = mLauncher.asContext().getSharedPreferences(LauncherFiles.DEVICE_PREFERENCES_KEY, Context.MODE_PRIVATE);
         mSwipeDownSideMode = Integer.valueOf(
-            LauncherPrefs.get(mLauncher.asContext()).devicePrefs.getString("pref_swipe_down_side", "0"));
+            devicePrefs.getString("pref_swipe_down_side", "0"));
     }
 
     private void executeSwipeDownGesture() {
@@ -294,14 +297,19 @@ public class StatusBarTouchController implements TouchController {
      * Clear all recent apps by going to overview and dismissing all tasks
      */
     private void clearAllApps() {
+        if (!(mLauncher instanceof Launcher)) {
+            return;
+        }
+        Launcher launcher = (Launcher) mLauncher;
+        
         // Go to overview state first
-        mLauncher.getStateManager().goToState(LauncherState.OVERVIEW, true);
+        launcher.getStateManager().goToState(LauncherState.OVERVIEW, true);
         
         // Post the dismiss all tasks action to ensure we're in overview state
-        mLauncher.getDragLayer().post(() -> {
-            RecentsView recentsView = mLauncher.getOverviewPanel();
+        launcher.getDragLayer().post(() -> {
+            RecentsView recentsView = launcher.getOverviewPanel();
             if (recentsView != null) {
-                recentsView.dismissAllTasks(null);
+                recentsView.dismissAllTasks();
             }
         });
     }

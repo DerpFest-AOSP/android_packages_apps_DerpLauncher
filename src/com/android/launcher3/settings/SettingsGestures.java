@@ -18,6 +18,7 @@ package com.android.launcher3.settings;
 
 import static androidx.core.view.accessibility.AccessibilityNodeInfoCompat.ACTION_ACCESSIBILITY_FOCUS;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -188,12 +189,14 @@ public class SettingsGestures extends CollapsingToolbarBaseActivity
 
             final ListPreference doubletabAction = (ListPreference) findPreference(KEY_HOMESCREEN_DT_GESTURES);
             if (doubletabAction != null) {
-                doubletabAction.setValue(LauncherPrefs.get(getActivity()).devicePrefs.getString(KEY_HOMESCREEN_DT_GESTURES, "1"));
+                SharedPreferences devicePrefs = getActivity().getSharedPreferences(LauncherFiles.DEVICE_PREFERENCES_KEY, Context.MODE_PRIVATE);
+                doubletabAction.setValue(devicePrefs.getString(KEY_HOMESCREEN_DT_GESTURES, "1"));
                 doubletabAction.setSummary(doubletabAction.getEntry());
                 doubletabAction.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         String dtGestureValue = (String) newValue;
-                        LauncherPrefs.get(getActivity()).devicePrefs.edit().putString(KEY_HOMESCREEN_DT_GESTURES, dtGestureValue).commit();
+                        SharedPreferences devicePrefs = getActivity().getSharedPreferences(LauncherFiles.DEVICE_PREFERENCES_KEY, Context.MODE_PRIVATE);
+                        devicePrefs.edit().putString(KEY_HOMESCREEN_DT_GESTURES, dtGestureValue).commit();
                         doubletabAction.setValue(dtGestureValue);
                         doubletabAction.setSummary(doubletabAction.getEntry());
                         updateDoubleTapDependentPreferences(dtGestureValue);
@@ -206,12 +209,14 @@ public class SettingsGestures extends CollapsingToolbarBaseActivity
 
             final ListPreference swipeDownAction = (ListPreference) findPreference(KEY_HOMESCREEN_SWIPE_DOWN_GESTURES);
             if (swipeDownAction != null) {
-                swipeDownAction.setValue(LauncherPrefs.get(getActivity()).devicePrefs.getString(KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, "0"));
+                SharedPreferences devicePrefs = getActivity().getSharedPreferences(LauncherFiles.DEVICE_PREFERENCES_KEY, Context.MODE_PRIVATE);
+                swipeDownAction.setValue(devicePrefs.getString(KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, "0"));
                 swipeDownAction.setSummary(swipeDownAction.getEntry());
                 swipeDownAction.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         String swipeDownGestureValue = (String) newValue;
-                        LauncherPrefs.get(getActivity()).devicePrefs.edit().putString(KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, swipeDownGestureValue).commit();
+                        SharedPreferences devicePrefs = getActivity().getSharedPreferences(LauncherFiles.DEVICE_PREFERENCES_KEY, Context.MODE_PRIVATE);
+                        devicePrefs.edit().putString(KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, swipeDownGestureValue).commit();
                         swipeDownAction.setValue(swipeDownGestureValue);
                         swipeDownAction.setSummary(swipeDownAction.getEntry());
                         updateSwipeDownDependentPreferences(swipeDownGestureValue);
@@ -224,12 +229,14 @@ public class SettingsGestures extends CollapsingToolbarBaseActivity
 
             final ListPreference swipeDownSide = (ListPreference) findPreference(KEY_SWIPE_DOWN_SIDE);
             if (swipeDownSide != null) {
-                swipeDownSide.setValue(LauncherPrefs.get(getActivity()).devicePrefs.getString(KEY_SWIPE_DOWN_SIDE, "0"));
+                SharedPreferences devicePrefs = getActivity().getSharedPreferences(LauncherFiles.DEVICE_PREFERENCES_KEY, Context.MODE_PRIVATE);
+                swipeDownSide.setValue(devicePrefs.getString(KEY_SWIPE_DOWN_SIDE, "0"));
                 swipeDownSide.setSummary(swipeDownSide.getEntry());
                 swipeDownSide.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         String swipeDownSideValue = (String) newValue;
-                        LauncherPrefs.get(getActivity()).devicePrefs.edit().putString(KEY_SWIPE_DOWN_SIDE, swipeDownSideValue).commit();
+                        SharedPreferences devicePrefs = getActivity().getSharedPreferences(LauncherFiles.DEVICE_PREFERENCES_KEY, Context.MODE_PRIVATE);
+                        devicePrefs.edit().putString(KEY_SWIPE_DOWN_SIDE, swipeDownSideValue).commit();
                         swipeDownSide.setValue(swipeDownSideValue);
                         swipeDownSide.setSummary(swipeDownSide.getEntry());
                         Toast.makeText(getActivity(), R.string.restarting_launcher_changes, Toast.LENGTH_SHORT).show();
@@ -244,8 +251,9 @@ public class SettingsGestures extends CollapsingToolbarBaseActivity
             }
             
             // Initialize enabled state of dependent preferences
-            String dtGestureValue = LauncherPrefs.get(getActivity()).devicePrefs.getString(KEY_HOMESCREEN_DT_GESTURES, "1");
-            String swipeDownGestureValue = LauncherPrefs.get(getActivity()).devicePrefs.getString(KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, "0");
+            SharedPreferences devicePrefs = getActivity().getSharedPreferences(LauncherFiles.DEVICE_PREFERENCES_KEY, Context.MODE_PRIVATE);
+            String dtGestureValue = devicePrefs.getString(KEY_HOMESCREEN_DT_GESTURES, "1");
+            String swipeDownGestureValue = devicePrefs.getString(KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, "0");
             updateDoubleTapDependentPreferences(dtGestureValue);
             updateSwipeDownDependentPreferences(swipeDownGestureValue);
         }
