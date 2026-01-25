@@ -384,6 +384,7 @@
     <string name="pref_homescreen_gestures_notifications">Benachrichtigungen</string>
     <string name="pref_homescreen_gestures_qs_panel">Schnelleinstellungen</string>
     <string name="pref_homescreen_gestures_powermenu">Ein-/Aus-Menü</string>
+    <string name="pref_homescreen_gestures_clear_all_apps">Alle Apps schließen</string>
 
     <!-- LMOFreeform -->
     <string name="floating_window">Schwebendes Fenster</string>

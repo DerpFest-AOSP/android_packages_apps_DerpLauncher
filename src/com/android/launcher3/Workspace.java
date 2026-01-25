@@ -33,6 +33,7 @@ import static com.android.launcher3.LauncherState.FLAG_WORKSPACE_ICONS_CAN_BE_DR
 import static com.android.launcher3.LauncherState.FLAG_WORKSPACE_INACCESSIBLE;
 import static com.android.launcher3.LauncherState.HINT_STATE;
 import static com.android.launcher3.LauncherState.NORMAL;
+import static com.android.launcher3.LauncherState.OVERVIEW;
 import static com.android.launcher3.LauncherState.SPRING_LOADED;
 import static com.android.launcher3.MotionEventsUtils.isTrackpadMotionEvent;
 import static com.android.launcher3.MotionEventsUtils.isTrackpadMultiFingerSwipe;
@@ -155,6 +156,7 @@ import com.android.launcher3.widget.PendingAddWidgetInfo;
 import com.android.launcher3.widget.util.WidgetSizeHandler;
 import com.android.systemui.plugins.shared.LauncherOverlayManager.LauncherOverlayCallbacks;
 import com.android.systemui.plugins.shared.LauncherOverlayManager.LauncherOverlayTouchProxy;
+import com.android.quickstep.views.RecentsView;
 
 import com.google.android.msdl.data.model.MSDLToken;
 
@@ -436,6 +438,9 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
                 break;
             case 8: // Powermenu
                 derpUtils.showPowerMenu();
+                break;
+            case 9: // Clear all apps
+                clearAllApps();
                 break;
         }
     }
@@ -3759,5 +3764,21 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
     private Void runOnUiThread(Runnable runnable) {
         mLauncher.runOnUiThread(runnable);
         return null;
+    }
+
+    /**
+     * Clear all recent apps by going to overview and dismissing all tasks
+     */
+    private void clearAllApps() {
+        // Go to overview state first
+        mLauncher.getStateManager().goToState(LauncherState.OVERVIEW, true);
+        
+        // Post the dismiss all tasks action to ensure we're in overview state
+        post(() -> {
+            RecentsView recentsView = mLauncher.getOverviewPanel();
+            if (recentsView != null) {
+                recentsView.dismissAllTasks(null);
+            }
+        });
     }
 }

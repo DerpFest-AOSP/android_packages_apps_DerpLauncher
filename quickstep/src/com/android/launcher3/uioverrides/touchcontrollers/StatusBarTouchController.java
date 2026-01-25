@@ -21,6 +21,7 @@ import static android.view.MotionEvent.ACTION_MOVE;
 import static android.view.MotionEvent.ACTION_UP;
 import static android.view.WindowManager.LayoutParams.FLAG_SLIPPERY;
 
+import static com.android.launcher3.LauncherState.OVERVIEW;
 import static com.android.launcher3.MotionEventsUtils.isTrackpadScroll;
 import static com.android.launcher3.Utilities.shouldEnableMouseInteractionChanges;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_SWIPE_DOWN_WORKSPACE_NOTISHADE_OPEN;
@@ -43,8 +44,10 @@ import com.android.launcher3.util.VibratorWrapper;
 import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.BaseActivity;
 import com.android.launcher3.DeviceProfile;
+import com.android.launcher3.LauncherState;
 import com.android.launcher3.util.TouchController;
 import com.android.quickstep.SystemUiProxy;
+import com.android.quickstep.views.RecentsView;
 
 import java.util.function.Supplier;
 
@@ -139,6 +142,9 @@ public class StatusBarTouchController implements TouchController {
                 break;
             case 8: // Powermenu
                 derpUtils.showPowerMenu();
+                break;
+            case 9: // Clear all apps
+                clearAllApps();
                 break;
         }
     }
@@ -282,5 +288,21 @@ public class StatusBarTouchController implements TouchController {
             }
         }
         return SystemUiProxy.INSTANCE.get(mLauncher).isActive();
+    }
+
+    /**
+     * Clear all recent apps by going to overview and dismissing all tasks
+     */
+    private void clearAllApps() {
+        // Go to overview state first
+        mLauncher.getStateManager().goToState(LauncherState.OVERVIEW, true);
+        
+        // Post the dismiss all tasks action to ensure we're in overview state
+        mLauncher.getDragLayer().post(() -> {
+            RecentsView recentsView = mLauncher.getOverviewPanel();
+            if (recentsView != null) {
+                recentsView.dismissAllTasks(null);
+            }
+        });
     }
 }
