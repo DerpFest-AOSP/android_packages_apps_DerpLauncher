@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -32,7 +33,9 @@ import androidx.core.view.WindowCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
+import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceFragmentCompat.OnPreferenceStartFragmentCallback;
 import androidx.preference.PreferenceFragmentCompat.OnPreferenceStartScreenCallback;
@@ -40,30 +43,28 @@ import androidx.preference.PreferenceGroup.PreferencePositionCallback;
 import androidx.preference.PreferenceScreen;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.launcher3.DeviceProfile;
-import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.Launcher;
-import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
-import com.android.launcher3.model.WidgetsModel;
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
 import com.android.settingslib.widget.SettingsBasePreferenceFragment;
 import com.android.settingslib.widget.SettingsThemeHelper;
 
 /**
- * Settings activity for Launcher.
+ * Settings activity for Launcher Gestures.
  */
-public class SettingsHomescreen extends CollapsingToolbarBaseActivity
+public class SettingsGestures extends CollapsingToolbarBaseActivity
         implements OnPreferenceStartFragmentCallback, OnPreferenceStartScreenCallback {
 
     public static final String EXTRA_FRAGMENT_ARG_KEY = ":settings:fragment_args_key";
     public static final String EXTRA_SHOW_FRAGMENT_ARGS = ":settings:show_fragment_args";
     private static final int DELAY_HIGHLIGHT_DURATION_MILLIS = 600;
     public static final String SAVE_HIGHLIGHTED_KEY = "android:preference_highlighted";
+    public static final String KEY_HOMESCREEN_DT_GESTURES = "pref_homescreen_dt_gestures";
+    public static final String KEY_HOMESCREEN_SWIPE_DOWN_GESTURES = "pref_homescreen_swipe_down_gestures";
 
     @VisibleForTesting
     static final String EXTRA_FRAGMENT = ":settings:fragment";
@@ -91,7 +92,7 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
 
             final FragmentManager fm = getSupportFragmentManager();
             final Fragment f = fm.getFragmentFactory().instantiate(getClassLoader(),
-                    getString(R.string.home_screen_settings_fragment_name));
+                    getString(R.string.gesture_settings_fragment_name));
             f.setArguments(args);
             // Display the fragment as the main content.
             fm.beginTransaction()
@@ -112,7 +113,7 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
             f.setArguments(args);
             ((DialogFragment) f).show(fm, key);
         } else {
-            startActivity(new Intent(this, SettingsHomescreen.class)
+            startActivity(new Intent(this, SettingsGestures.class)
                     .putExtra(EXTRA_FRAGMENT, fragment)
                     .putExtra(EXTRA_FRAGMENT_ARGS, args));
         }
@@ -153,18 +154,13 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
     }
 
     /**
-     * This fragment shows the launcher preferences.
+     * This fragment shows the gesture preferences.
      */
-    public static class HomescreenSettingsFragment extends SettingsBasePreferenceFragment
+    public static class GestureSettingsFragment extends SettingsBasePreferenceFragment
             implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private String mHighLightKey;
         private boolean mPreferenceHighlighted = false;
-
-        private static final String KEY_MINUS_ONE = "pref_enable_minus_one";
-
-        private Preference mShowGoogleAppPref;
-        private Preference mShowGoogleBarPref;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -179,7 +175,7 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
             }
 
             getPreferenceManager().setSharedPreferencesName(LauncherFiles.SHARED_PREFERENCES_KEY);
-            setPreferencesFromResource(R.xml.launcher_home_screen_preferences, rootKey);
+            setPreferencesFromResource(R.xml.launcher_gesture_preferences, rootKey);
 
             PreferenceScreen screen = getPreferenceScreen();
             for (int i = screen.getPreferenceCount() - 1; i >= 0; i--) {
@@ -189,9 +185,39 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
                 }
             }
 
-            mShowGoogleAppPref = screen.findPreference(KEY_MINUS_ONE);
-            mShowGoogleBarPref = screen.findPreference(LauncherPrefs.DOCK_SEARCH.getSharedPrefKey());
-            updateIsGoogleAppEnabled();
+            final ListPreference doubletabAction = (ListPreference) findPreference(KEY_HOMESCREEN_DT_GESTURES);
+            if (doubletabAction != null) {
+                doubletabAction.setValue(LauncherPrefs.get(getActivity()).devicePrefs.getString(KEY_HOMESCREEN_DT_GESTURES, "1"));
+                doubletabAction.setSummary(doubletabAction.getEntry());
+                doubletabAction.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        String dtGestureValue = (String) newValue;
+                        LauncherPrefs.get(getActivity()).devicePrefs.edit().putString(KEY_HOMESCREEN_DT_GESTURES, dtGestureValue).commit();
+                        doubletabAction.setValue(dtGestureValue);
+                        doubletabAction.setSummary(doubletabAction.getEntry());
+                        Toast.makeText(getActivity(), R.string.restarting_launcher_changes, Toast.LENGTH_SHORT).show();
+                        Utilities.restartLauncher(getActivity());
+                        return true;
+                    }
+                });
+            }
+
+            final ListPreference swipeDownAction = (ListPreference) findPreference(KEY_HOMESCREEN_SWIPE_DOWN_GESTURES);
+            if (swipeDownAction != null) {
+                swipeDownAction.setValue(LauncherPrefs.get(getActivity()).devicePrefs.getString(KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, "0"));
+                swipeDownAction.setSummary(swipeDownAction.getEntry());
+                swipeDownAction.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        String swipeDownGestureValue = (String) newValue;
+                        LauncherPrefs.get(getActivity()).devicePrefs.edit().putString(KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, swipeDownGestureValue).commit();
+                        swipeDownAction.setValue(swipeDownGestureValue);
+                        swipeDownAction.setSummary(swipeDownAction.getEntry());
+                        Toast.makeText(getActivity(), R.string.restarting_launcher_changes, Toast.LENGTH_SHORT).show();
+                        Utilities.restartLauncher(getActivity());
+                        return true;
+                    }
+                });
+            }
 
             if (getActivity() != null && !TextUtils.isEmpty(getPreferenceScreen().getTitle())) {
                 getActivity().setTitle(getPreferenceScreen().getTitle());
@@ -227,28 +253,7 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (LauncherPrefs.DOCK_SEARCH.getSharedPrefKey().equals(key) ||
-                    LauncherPrefs.SHOW_HOTSEAT_BG.getSharedPrefKey().equals(key) ||
-                    LauncherPrefs.SHOW_STATUS_BAR.getSharedPrefKey().equals(key) ||
-                    LauncherPrefs.SHORT_PARALLAX.getSharedPrefKey().equals(key) ||
-                    LauncherPrefs.SINGLE_PAGE_CENTER.getSharedPrefKey().equals(key) ||
-                    LauncherPrefs.AUTO_HIDE_DOTS.getSharedPrefKey().equals(key)) {
-                LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
-            }
-            if (Utilities.DESKTOP_SHOW_QUICKSPACE.equals(key) ||
-                    Utilities.KEY_SHOW_QUICKSPACE_NOWPLAYING.equals(key) ||
-                    Utilities.KEY_SHOW_QUICKSPACE_NOWPLAYING_SHOWDATE.equals(key) ||
-                    Utilities.KEY_SHOW_QUICKSPACE_PSONALITY.equals(key) ||
-                    Utilities.KEY_SHOW_QUICKSPACE_MEMORY_INFO.equals(key) ||
-                    Utilities.KEY_SHOW_QUICKSPACE_APP_MEMORY_INFO.equals(key) ||
-                    Utilities.KEY_QUICKSPACE_ACCENT_TINT.equals(key)) {
-                try {
-                    LauncherAppState appState = LauncherAppState.getInstance(getContext());
-                    appState.getModel().rebindCallbacks();
-                } catch (Exception e) {
-                    LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
-                }
-            }
+            // Restart is now handled by Launcher activity
         }
 
         @Override
@@ -259,15 +264,6 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
 
         protected String getParentKeyForPref(String key) {
             return null;
-        }
-
-        private void updateIsGoogleAppEnabled() {
-            if (mShowGoogleAppPref != null) {
-                mShowGoogleAppPref.setEnabled(Utilities.isGSAEnabled(getContext()));
-            }
-            if (mShowGoogleBarPref != null) {
-                mShowGoogleBarPref.setEnabled(Utilities.isGSAEnabled(getContext()));
-            }
         }
 
         /**
@@ -291,7 +287,6 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
                     requestAccessibilityFocus(getListView());
                 }
             }
-            updateIsGoogleAppEnabled();
         }
 
         private PreferenceHighlighter createHighlighter() {
