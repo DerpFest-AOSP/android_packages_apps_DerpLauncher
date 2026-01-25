@@ -64,6 +64,7 @@ public class StatusBarTouchController implements TouchController {
     private final SparseArray<PointF> mDownEvents;
     private final Supplier<Boolean> mIsEnabledCheck;
     private int mSwipeDownGestureMode;
+    private int mSwipeDownSideMode;
     private boolean mCustomGestureActive;
 
     /* If {@code false}, this controller should not handle the input {@link MotionEvent}.*/
@@ -77,6 +78,7 @@ public class StatusBarTouchController implements TouchController {
         mDownEvents = new SparseArray<>();
         mIsEnabledCheck = isEnabledCheck;
         updateSwipeDownGestureMode();
+        updateSwipeDownSideMode();
     }
 
     @Override
@@ -89,6 +91,11 @@ public class StatusBarTouchController implements TouchController {
     private void updateSwipeDownGestureMode() {
         mSwipeDownGestureMode = Integer.valueOf(
             LauncherPrefs.get(mLauncher.asContext()).devicePrefs.getString("pref_homescreen_swipe_down_gestures", "0"));
+    }
+
+    private void updateSwipeDownSideMode() {
+        mSwipeDownSideMode = Integer.valueOf(
+            LauncherPrefs.get(mLauncher.asContext()).devicePrefs.getString("pref_swipe_down_side", "0"));
     }
 
     private void executeSwipeDownGesture() {
@@ -136,6 +143,26 @@ public class StatusBarTouchController implements TouchController {
         }
     }
 
+    private boolean isSwipeDownAllowedOnSide(float x) {
+        if (mSwipeDownSideMode == 3) { // Disabled
+            return false;
+        }
+        
+        float screenWidth = mLauncher.getResources().getDisplayMetrics().widthPixels;
+        boolean isRtl = mLauncher.getResources().getConfiguration().getLayoutDirection() == android.view.View.LAYOUT_DIRECTION_RTL;
+        
+        switch (mSwipeDownSideMode) {
+            case 0: // Both sides
+                return true;
+            case 1: // Left side only
+                return isRtl ? (x > screenWidth / 2) : (x < screenWidth / 2);
+            case 2: // Right side only
+                return isRtl ? (x < screenWidth / 2) : (x > screenWidth / 2);
+            default:
+                return true;
+        }
+    }
+
     private void dispatchTouchEvent(MotionEvent ev) {
         if (mSystemUiProxy.isActive()) {
             mLastAction = ev.getActionMasked();
@@ -157,6 +184,7 @@ public class StatusBarTouchController implements TouchController {
             mDownEvents.put(pid, new PointF(ev.getX(), ev.getY()));
             mCustomGestureActive = false;
             updateSwipeDownGestureMode();
+            updateSwipeDownSideMode();
         } else if (ev.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
             // Check!! should only set it only when threshold is not entered.
             mDownEvents.put(pid, new PointF(ev.getX(idx), ev.getY(idx)));
@@ -170,8 +198,11 @@ public class StatusBarTouchController implements TouchController {
             
             // Check if custom swipe down gesture is enabled
             if (dy > mTouchSlop && dy > Math.abs(dx) && ev.getPointerCount() == 1 && mSwipeDownGestureMode != 0) {
-                mCustomGestureActive = true;
-                return true; // Intercept for custom gesture
+                // Check if the gesture is allowed on this side of the screen
+                if (isSwipeDownAllowedOnSide(ev.getX())) {
+                    mCustomGestureActive = true;
+                    return true; // Intercept for custom gesture
+                }
             }
             
             // Currently input dispatcher will not do touch transfer if there are more than
