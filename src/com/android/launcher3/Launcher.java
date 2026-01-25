@@ -324,6 +324,7 @@ public class Launcher extends StatefulActivity<LauncherState>
 
     private static final String KEY_DARK_STATUS_BAR = "pref_dark_status_bar";
     public static final String KEY_HOMESCREEN_DT_GESTURES = "pref_homescreen_dt_gestures";
+    public static final String KEY_HOMESCREEN_SWIPE_DOWN_GESTURES = "pref_homescreen_swipe_down_gestures";
 
     // How long to wait before the new-shortcut animation automatically pans the workspace
     @VisibleForTesting public static final int NEW_APPS_PAGE_MOVE_DELAY = 500;
@@ -670,6 +671,10 @@ public class Launcher extends StatefulActivity<LauncherState>
         if (KEY_HOMESCREEN_DT_GESTURES.equals(key)) {
             mWorkspace.setDoubleTapGestures(Integer.valueOf(SharedPrefs.getString(
                 KEY_HOMESCREEN_DT_GESTURES, "1")));
+        }
+        if (KEY_HOMESCREEN_SWIPE_DOWN_GESTURES.equals(key)) {
+            mWorkspace.setSwipeDownGestures(Integer.valueOf(SharedPrefs.getString(
+                KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, "0")));
         }
         switch (key) {
             case Utilities.DESKTOP_SHOW_QUICKSPACE:

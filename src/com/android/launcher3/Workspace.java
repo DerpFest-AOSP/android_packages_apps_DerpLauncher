@@ -341,6 +341,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
 
     private GestureDetector mGestureListener;
     private int mDoubleGestureMode;
+    private int mSwipeDownGestureMode;
 
     /**
      * Used to inflate the Workspace from XML.
@@ -378,12 +379,34 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
                     android.Manifest.permission.DEVICE_POWER, null);
         mDoubleGestureMode = Integer.valueOf(
                 LauncherPrefs.get(context).devicePrefs.getString("pref_homescreen_dt_gestures", "1"));
+        mSwipeDownGestureMode = Integer.valueOf(
+                LauncherPrefs.get(context).devicePrefs.getString("pref_homescreen_swipe_down_gestures", "0"));
         mGestureListener =
                 new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent event) {
                 // Double tap gestures
                 Gestures(event, mDoubleGestureMode);
+                return true;
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                try {
+                    // skip horizontal unwanted swipes
+                    if (Math.abs(e1.getX() - e2.getX()) > 250) {
+                        return true;
+                    }
+                    if (e2.getY() - e1.getY() > 160/*min distance*/
+                            && Math.abs(velocityY) > 250/*min speed*/) {
+                        // Swipe down gestures
+                        if (mSwipeDownGestureMode != 0) {
+                            Gestures(e1, mSwipeDownGestureMode);
+                        }
+                    }
+                } catch (Exception e) {
+                    // Ignore exceptions
+                }
                 return true;
             }
         });
@@ -435,6 +458,10 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
 
     public void setDoubleTapGestures(int mode) {
         mDoubleGestureMode = mode;
+    }
+
+    public void setSwipeDownGestures(int mode) {
+        mSwipeDownGestureMode = mode;
     }
 
     public boolean checkDoubleTap(MotionEvent ev) {

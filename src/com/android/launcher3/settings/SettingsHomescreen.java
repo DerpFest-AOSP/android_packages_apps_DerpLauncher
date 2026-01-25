@@ -213,6 +213,23 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
                 });
             }
 
+            final ListPreference swipeDownAction = (ListPreference) findPreference(Launcher.KEY_HOMESCREEN_SWIPE_DOWN_GESTURES);
+            if (swipeDownAction != null) {
+                swipeDownAction.setValue(LauncherPrefs.get(getActivity()).devicePrefs.getString(Launcher.KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, "0"));
+                swipeDownAction.setSummary(swipeDownAction.getEntry());
+                swipeDownAction.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        String swipeDownGestureValue = (String) newValue;
+                        LauncherPrefs.get(getActivity()).devicePrefs.edit().putString(Launcher.KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, swipeDownGestureValue).commit();
+                        swipeDownAction.setValue(swipeDownGestureValue);
+                        swipeDownAction.setSummary(swipeDownAction.getEntry());
+                        Toast.makeText(getActivity(), R.string.restarting_launcher_changes, Toast.LENGTH_SHORT).show();
+                        Utilities.restartLauncher(getActivity());
+                        return true;
+                    }
+                });
+            }
+
             if (getActivity() != null && !TextUtils.isEmpty(getPreferenceScreen().getTitle())) {
                 getActivity().setTitle(getPreferenceScreen().getTitle());
             }
