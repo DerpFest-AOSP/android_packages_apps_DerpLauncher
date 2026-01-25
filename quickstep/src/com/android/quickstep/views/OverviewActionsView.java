@@ -209,7 +209,7 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
         mLens = LauncherPrefs.RECENTS_LENS.get(context);
         mSplitScreenEnabled = LauncherPrefs.RECENTS_SPLIT_SCREEN.get(context);
         mShakeUtils = new ShakeUtils(context);
-        mShakeClearAll = mPrefs.getBoolean(KEY_RECENTS_SHAKE_CLEAR_ALL, true);
+        mShakeClearAll = mPrefs.getBoolean(KEY_RECENTS_SHAKE_CLEAR_ALL, false);
     }
 
     @Override
@@ -378,7 +378,7 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
         } else if (LauncherPrefs.RECENTS_SPLIT_SCREEN.getSharedPrefKey().equals(key)) {
             mSplitScreenEnabled = LauncherPrefs.RECENTS_SPLIT_SCREEN.get(getContext());
         } else if (key.equals(KEY_RECENTS_SHAKE_CLEAR_ALL)) {
-            mShakeClearAll = mPrefs.getBoolean(KEY_RECENTS_SHAKE_CLEAR_ALL, true);
+            mShakeClearAll = mPrefs.getBoolean(KEY_RECENTS_SHAKE_CLEAR_ALL, false);
         }
         updateVisibilities();
     }
