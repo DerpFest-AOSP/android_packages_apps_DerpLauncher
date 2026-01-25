@@ -672,10 +672,6 @@ public class Launcher extends StatefulActivity<LauncherState>
             mWorkspace.setDoubleTapGestures(Integer.valueOf(SharedPrefs.getString(
                 KEY_HOMESCREEN_DT_GESTURES, "1")));
         }
-        if (KEY_HOMESCREEN_SWIPE_DOWN_GESTURES.equals(key)) {
-            mWorkspace.setSwipeDownGestures(Integer.valueOf(SharedPrefs.getString(
-                KEY_HOMESCREEN_SWIPE_DOWN_GESTURES, "0")));
-        }
         switch (key) {
             case Utilities.DESKTOP_SHOW_QUICKSPACE:
             case Utilities.KEY_SHOW_QUICKSPACE_NOWPLAYING:
