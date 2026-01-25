@@ -100,6 +100,9 @@
     <string name="recent_task_option_kill_app">Force close</string>
     <string name="recents_app_killed" formatted="false">%s closed</string>
 
+    <!-- LMOFreeform floating window -->
+    <string name="floating_window">Floating</string>
+
     <!-- Hotseat Background -->
     <string name="hotseat_bg_title">Hotseat background</string>
     <string name="hotseat_bg_summary">Add translucent background to the app dock</string>
@@ -404,4 +407,7 @@
     <!-- Auto-hide page indicator dots -->
     <string name="auto_hide_dots">Auto-hide page indicator</string>
     <string name="auto_hide_dots_summary">Hide the page indicator dots automatically</string>
+
+    <!-- LMOFreeform floating window -->
+    <string name="floating_window">Floating</string>
 </resources>

@@ -125,6 +125,7 @@ public class TaskOverlayFactory {
             TaskShortcutFactory.APP_INFO,
             TaskShortcutFactory.LOCKED,
             TaskShortcutFactory.SPLIT_SELECT,
+            TaskShortcutFactory.FLOATING,
             TaskShortcutFactory.FREE_FORM,
             DesktopSystemShortcut.Companion.createFactory(),
             ExternalDisplaySystemShortcut.Companion.createFactory(),

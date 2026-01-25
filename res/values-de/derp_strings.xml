@@ -355,4 +355,7 @@
     <!-- Auto-hide page indicator dots -->
     <string name="auto_hide_dots">Seitenzahlpunkte automatisch ausblenden</string>
     <string name="auto_hide_dots_summary">Blendet die unten angezeigten Seitenpunkte automatisch aus</string>
+
+    <!-- LMOFreeform -->
+    <string name="floating_window">Schwebendes Fenster</string>
 </resources>
