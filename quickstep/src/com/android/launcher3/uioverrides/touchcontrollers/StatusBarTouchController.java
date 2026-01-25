@@ -25,6 +25,8 @@ import static com.android.launcher3.MotionEventsUtils.isTrackpadScroll;
 import static com.android.launcher3.Utilities.shouldEnableMouseInteractionChanges;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_SWIPE_DOWN_WORKSPACE_NOTISHADE_OPEN;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.PointF;
 import android.util.SparseArray;
 import android.view.InputDevice;
@@ -34,6 +36,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.android.internal.util.derp.derpUtils;
+import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.util.VibratorWrapper;
 
@@ -94,7 +97,9 @@ public class StatusBarTouchController implements TouchController {
         }
 
         // Check if haptic feedback is enabled
-        if (LauncherPrefs.get(mLauncher.asContext()).devicePrefs.getBoolean("pref_haptics_on_swipe_down_gestures", true)) {
+        SharedPreferences prefs = mLauncher.asContext().getSharedPreferences(
+                LauncherFiles.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        if (prefs.getBoolean("pref_haptics_on_swipe_down_gestures", true)) {
             VibratorWrapper.INSTANCE.get(mLauncher.asContext()).vibrate(VibratorWrapper.EFFECT_CLICK);
         }
 

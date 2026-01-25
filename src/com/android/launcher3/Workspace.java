@@ -55,6 +55,7 @@ import android.app.WallpaperManager;
 import android.appwidget.AppWidgetHostView;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -89,6 +90,7 @@ import com.android.app.animation.Interpolators;
 
 import com.android.internal.util.derp.derpUtils;
 
+import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.accessibility.AccessibleDragListenerAdapter;
 import com.android.launcher3.accessibility.WorkspaceAccessibilityHelper;
@@ -398,7 +400,9 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
         // Check if haptic feedback is enabled for the appropriate gesture type
         if (gestureType != 0) {
             String prefKey = isSwipeDown ? "pref_haptics_on_swipe_down_gestures" : "pref_haptics_on_dt_gestures";
-            if (LauncherPrefs.get(getContext()).devicePrefs.getBoolean(prefKey, true)) {
+            SharedPreferences prefs = getContext().getSharedPreferences(
+                    LauncherFiles.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+            if (prefs.getBoolean(prefKey, true)) {
                 VibratorWrapper.INSTANCE.get(getContext()).vibrate(VibratorWrapper.EFFECT_CLICK);
             }
         }
