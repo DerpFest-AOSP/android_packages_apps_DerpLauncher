@@ -187,8 +187,12 @@ public class AllAppsTransitionController
         boolean hasNavScrim = progress < NAV_BAR_COLOR_FORCE_UPDATE_THRESHOLD
                 && mLauncher.getAppsView().getNavBarScrimHeight() > 0;
         boolean hasStatusScrim = progress < STATUS_BAR_COLOR_FORCE_UPDATE_THRESHOLD;
+        // When using the phone bottom sheet, the status bar is over the dimmed/blurred scrim which
+        // appears dark regardless of theme, so use light status bar icons for visibility.
+        int statusScrimFlag = mLauncher.getDeviceProfile().getDeviceProperties().isPhone()
+                ? FLAG_DARK_STATUS : mStatusScrimFlag;
         mLauncher.getSystemUiController().updateUiState(UI_STATE_ALL_APPS,
-                (hasNavScrim ? mNavScrimFlag : 0) | (hasStatusScrim ? mStatusScrimFlag : 0));
+                (hasNavScrim ? mNavScrimFlag : 0) | (hasStatusScrim ? statusScrimFlag : 0));
     }
 
     public float getProgress() {
