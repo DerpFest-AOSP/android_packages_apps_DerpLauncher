@@ -562,10 +562,17 @@
             launcher:name="Large Phone"
             launcher:minWidthDps="406"
             launcher:minHeightDps="694"
+            launcher:minCellHeight="67"
+            launcher:minCellWidth="61"
+            launcher:borderSpace="16"
+            launcher:horizontalMargin="22"
+            launcher:hotseatQsbSpace="36"
             launcher:iconImageSize="48"
             launcher:iconTextSize="12.0"
             launcher:allAppsBorderSpace="14"
             launcher:allAppsCellHeight="104"
+            launcher:startAlignTaskbar="true"
+            launcher:startAlignTaskbarLandscape="true"
             launcher:canBeDefault="true" />
 
     </grid-option>
@@ -585,12 +592,17 @@
             launcher:name="Large Phone"
             launcher:minWidthDps="406"
             launcher:minHeightDps="694"
-            launcher:iconImageSize="28"
-            launcher:iconTextSize="9.0"
-            launcher:allAppsIconSize="48"
-            launcher:allAppsIconTextSize="12.0"
+            launcher:minCellHeight="54"
+            launcher:minCellWidth="61"
+            launcher:borderSpace="16"
+            launcher:horizontalMargin="22"
+            launcher:hotseatQsbSpace="36"
+            launcher:iconImageSize="42"
+            launcher:iconTextSize="11.0"
             launcher:allAppsBorderSpace="14"
             launcher:allAppsCellHeight="104"
+            launcher:startAlignTaskbar="true"
+            launcher:startAlignTaskbarLandscape="true"
             launcher:canBeDefault="true" />
 
     </grid-option>
