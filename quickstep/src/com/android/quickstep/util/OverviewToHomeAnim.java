@@ -66,6 +66,19 @@ public class OverviewToHomeAnim {
         LauncherState startState = stateManager.getState();
         if (startState != OVERVIEW) {
             Log.e(TAG, "animateFromOverviewToHome: unexpected start state " + startState);
+            if (startState == NORMAL) {
+                Log.d(TAG, "Already at NORMAL state, completing animation immediately");
+                mIsHomeStaggeredAnimFinished = true;
+                mIsOverviewHidden = true;
+                maybeOverviewToHomeAnimComplete();
+                return;
+            }
+            Log.w(TAG, "Force transitioning from " + startState + " to NORMAL");
+            stateManager.goToState(NORMAL, false);
+            mIsHomeStaggeredAnimFinished = true;
+            mIsOverviewHidden = true;
+            maybeOverviewToHomeAnimComplete();
+            return;
         }
         AnimatorSet anim = new AnimatorSet();
 
@@ -96,6 +109,13 @@ public class OverviewToHomeAnim {
         stateAnim.addListener(new AnimationSuccessListener() {
             @Override
             public void onAnimationSuccess(Animator animator) {
+                mIsOverviewHidden = true;
+                maybeOverviewToHomeAnimComplete();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                Log.w(TAG, "State animation cancelled, forcing completion");
                 mIsOverviewHidden = true;
                 maybeOverviewToHomeAnimComplete();
             }
