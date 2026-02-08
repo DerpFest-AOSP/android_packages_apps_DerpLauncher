@@ -297,6 +297,8 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField val SHOW_HOTSEAT_BG = backedUpItem("pref_show_hotseat_bg", false)
         @JvmField val SHOW_STATUS_BAR = backedUpItem("pref_show_statusbar", true)
         @JvmField val SINGLE_PAGE_CENTER = backedUpItem("pref_single_page_center", false)
+        @JvmField val WALLPAPER_CAROUSEL = backedUpItem("pref_wallpaper_carousel", true)
+        @JvmField val WALLPAPER_CAROUSEL_LOCKSCREEN = backedUpItem("pref_wallpaper_carousel_lockscreen", true)
         @JvmField val WALLPAPER_SCROLLING = backedUpItem("pref_allow_wallpaper_scrolling", true)
         @JvmField
         val PROMISE_ICON_IDS = nonRestorableItem(InstallSessionHelper.PROMISE_ICON_IDS, "")
