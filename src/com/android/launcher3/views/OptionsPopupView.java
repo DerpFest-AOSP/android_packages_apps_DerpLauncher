@@ -33,6 +33,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,13 +48,13 @@ import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherSettings;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
+import com.android.launcher3.data.wallpaper.service.WallpaperService;
 import com.android.launcher3.logging.StatsLogManager.EventEnum;
 import com.android.launcher3.model.data.WorkspaceItemInfo;
 import com.android.launcher3.popup.ArrowPopup;
 import com.android.launcher3.shortcuts.DeepShortcutView;
 import com.android.launcher3.testing.TestLogging;
 import com.android.launcher3.testing.shared.TestProtocol;
-import com.android.launcher3.wallpaper.WallpaperService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -186,10 +187,10 @@ public class OptionsPopupView<T extends Context & ActivityContext> extends Arrow
         }
 
         final Context context = (Context) activityContext;
-        final List<com.android.launcher3.wallpaper.Wallpaper> wallpapers = 
-                WallpaperService.INSTANCE.get(context).getTopWallpapers();
+        final List<com.android.launcher3.data.wallpaper.Wallpaper> wallpapers = 
+                WallpaperService.INSTANCE.get(context).getTopWallpapersBlocking();
         final boolean isEmpty = wallpapers.isEmpty();
-        android.util.Log.d("OptionsPopupView", "Wallpapers in DB: " + wallpapers.size() + ", isEmpty: " + isEmpty);
+        Log.d("OptionsPopupView", "Wallpapers in DB: " + wallpapers.size() + ", isEmpty: " + isEmpty);
         var layout = isEmpty ? R.layout.longpress_options_menu : R.layout.wallpaper_options_popup;
 
         OptionsPopupView<T> popup = (OptionsPopupView<T>) activityContext.getLayoutInflater()
