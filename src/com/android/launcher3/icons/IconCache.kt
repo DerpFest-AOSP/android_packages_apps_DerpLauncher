@@ -35,6 +35,7 @@ import androidx.annotation.AnyThread
 import androidx.annotation.VisibleForTesting
 import com.android.launcher3.Flags
 import com.android.launcher3.InvariantDeviceProfile
+import com.android.launcher3.LauncherPrefs
 import com.android.launcher3.LauncherSettings.Favorites
 import com.android.launcher3.LauncherSettings.Favorites.ITEM_TYPE_DEEP_SHORTCUT
 import com.android.launcher3.Utilities
@@ -223,6 +224,16 @@ constructor(
             )
         applyCacheEntry(entry, application)
     }
+
+    /**
+     * Returns the lookup flag to use when loading icons for the app drawer, respecting the themed
+     * icons user preference. Preloading with this flag ensures icons display correctly when the app
+     * drawer opens, avoiding a visible load of themed icons over non-themed ones.
+     */
+    fun getAllAppsIconLookupFlag(): CacheLookupFlag =
+        CacheLookupFlag.DEFAULT_LOOKUP_FLAG.withThemeIcon(
+            LauncherPrefs.get(context).get(LauncherPrefs.ALLAPPS_THEMED_ICONS)
+        )
 
     /** Fill in `info` with the icon and label for `activityInfo` */
     @Synchronized

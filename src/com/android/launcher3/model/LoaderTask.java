@@ -18,7 +18,6 @@ package com.android.launcher3.model;
 
 import static com.android.launcher3.LauncherPrefs.IS_FIRST_LOAD_AFTER_RESTORE;
 import static com.android.launcher3.icons.CacheableShortcutInfo.convertShortcutsToCacheableShortcuts;
-import static com.android.launcher3.icons.cache.CacheLookupFlag.DEFAULT_LOOKUP_FLAG;
 import static com.android.launcher3.model.FirstScreenBroadcastHelper.DISABLE_INSTALLED_APPS_BROADCAST;
 import static com.android.launcher3.model.ModelUtils.WIDGET_FILTER;
 import static com.android.launcher3.model.ModelUtils.currentScreenContentFilter;
@@ -758,14 +757,14 @@ public class LoaderTask implements Runnable {
                         activityInfo,
                         workspaceIconRequest.get().iconBlob,
                         workspaceIconRequest.get().isBlobFullBleed,
-                        DEFAULT_LOOKUP_FLAG.withUseLowRes(false)
+                        mIconCache.getAllAppsIconLookupFlag().withUseLowRes(false)
                 );
                 if (!iconRequestInfo.loadIconFromDbBlob(mContext)) {
                     Log.d(TAG, "AppInfo Icon failed to load from blob, using cache.");
                     mIconCache.getTitleAndIcon(
                             appInfo,
                             iconRequestInfo.launcherActivityInfo,
-                            DEFAULT_LOOKUP_FLAG
+                            mIconCache.getAllAppsIconLookupFlag()
                     );
                 }
                 return iconRequestInfo;
@@ -777,7 +776,7 @@ public class LoaderTask implements Runnable {
             }
         }
         return new IconRequestInfo<>(appInfo, activityInfo,
-                DEFAULT_LOOKUP_FLAG.withUseLowRes(false));
+                mIconCache.getAllAppsIconLookupFlag().withUseLowRes(false));
     }
 
     private List<ShortcutInfo> loadDeepShortcuts() {

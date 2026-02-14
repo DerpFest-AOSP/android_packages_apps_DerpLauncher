@@ -16,7 +16,6 @@
 
 package com.android.launcher3.model;
 
-import static com.android.launcher3.icons.cache.CacheLookupFlag.DEFAULT_LOOKUP_FLAG;
 import static com.android.launcher3.model.data.AppInfo.COMPONENT_KEY_COMPARATOR;
 import static com.android.launcher3.model.data.AppInfo.EMPTY_ARRAY;
 
@@ -163,7 +162,7 @@ public class AllAppsList {
             return;
         }
         if (loadIcon) {
-            mIconCache.getTitleAndIcon(info, activityInfo, DEFAULT_LOOKUP_FLAG);
+            mIconCache.getTitleAndIcon(info, activityInfo, mIconCache.getAllAppsIconLookupFlag());
             info.sectionName = mIndex.computeSectionName(info.title);
         } else {
             info.title = "";
@@ -283,7 +282,7 @@ public class AllAppsList {
                     }
                 } else {
                     appInfo.intent = AppInfo.makeLaunchIntent(lai);
-                    mIconCache.getTitleAndIcon(appInfo, lai, DEFAULT_LOOKUP_FLAG);
+                    mIconCache.getTitleAndIcon(appInfo, lai, mIconCache.getAllAppsIconLookupFlag());
                     appInfo.sectionName = mIndex.computeSectionName(appInfo.title);
                     AppInfo.updateRuntimeFlagsForActivityTarget(appInfo, lai,
                             userCache.getUserInfo(user), apiWrapper, pmHelper, automationRepo);
