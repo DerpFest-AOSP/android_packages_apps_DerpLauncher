@@ -50,6 +50,7 @@ import androidx.core.util.Pair;
 
 import com.android.launcher3.Flags;
 import com.android.launcher3.InvariantDeviceProfile;
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.dagger.LauncherAppSingleton;
@@ -247,6 +248,17 @@ public class IconCache extends BaseIconCache {
         if (entry.bitmap != null || !isDefaultIcon(entry.bitmap, application.user)) {
             applyCacheEntry(entry, application);
         }
+    }
+
+    /**
+     * Returns the lookup flag to use when loading icons for the app drawer, respecting the
+     * themed icons user preference. Preloading with this flag ensures icons display correctly
+     * when the app drawer opens, avoiding a visible load of themed icons over non-themed ones.
+     */
+    @NonNull
+    public CacheLookupFlag getAllAppsIconLookupFlag() {
+        return DEFAULT_LOOKUP_FLAG.withThemeIcon(
+                LauncherPrefs.get(context).get(LauncherPrefs.ALLAPPS_THEMED_ICONS));
     }
 
     /**
