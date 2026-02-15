@@ -492,6 +492,8 @@ public class DisplayController {
 
         private final boolean mIsNightModeActive;
 
+        private final boolean mIsRotationAllowed;
+
         public Info(Context displayInfoContext, WindowManagerProxy wmProxy) {
             this(displayInfoContext, enableScalabilityForDesktopExperience()
                             && displayInfoContext.getResources().getBoolean(
@@ -523,6 +525,8 @@ public class DisplayController {
             mScreenSizeDp = new PortraitSize(config.screenHeightDp, config.screenWidthDp);
             navigationMode = wmProxy.getNavigationMode(displayInfoContext);
             mIsNightModeActive = config.isNightModeActive();
+            mIsRotationAllowed = displayInfoContext.getResources().getBoolean(
+                    R.bool.config_allowRotation);
 
             mPerDisplayBounds.putAll(perDisplayBoundsCache);
             List<WindowBounds> cachedValue = getCurrentBounds();
@@ -573,6 +577,13 @@ public class DisplayController {
          */
         public boolean isInDesktopFirstMode() {
             return mIsInDesktopFirstMode;
+        }
+
+        /**
+         * Returns {@code true} if rotation is allowed by config.
+         */
+        public boolean isRotationAllowed() {
+            return mIsRotationAllowed;
         }
 
         /**
