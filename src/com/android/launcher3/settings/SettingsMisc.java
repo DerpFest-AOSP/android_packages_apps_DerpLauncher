@@ -264,6 +264,9 @@ public class SettingsMisc extends CollapsingToolbarBaseActivity
                 case ALLOW_ROTATION_PREFERENCE_KEY:
                     DisplayController.Info info =
                             DisplayController.INSTANCE.get(getContext()).getInfo();
+                    if (com.android.launcher3.Flags.oneGridSpecs() && !info.isRotationAllowed()) {
+                        return false;
+                    }
                     if (info.isTablet(info.realBounds)) {
                         // Launcher supports rotation by default. No need to show this setting.
                         return false;
