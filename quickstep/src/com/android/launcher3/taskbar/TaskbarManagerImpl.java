@@ -148,6 +148,7 @@ public class TaskbarManagerImpl implements DisplayDecorationListener {
     private static final String TAG = "TaskbarManager";
     private static final boolean DEBUG = false;
     private static final int TASKBAR_DESTROY_DURATION = 100;
+    private static final int TASKBAR_RECREATE_AFTER_CONFIG_DELAY_MS = 150;
 
     // TODO: b/397738606  - Remove all logs with this tag after the growth framework is integrated.
     public static final String GROWTH_FRAMEWORK_TAG = "Growth Framework";
@@ -1593,8 +1594,9 @@ public class TaskbarManagerImpl implements DisplayDecorationListener {
                 TaskbarActivityContext taskbar = getTaskbarForDisplay(displayId);
                 if (configDiff != 0 || taskbar == null) {
                     debugTaskbarManager("onConfigurationChanged: call recreateTaskbars", displayId);
-                    MAIN_EXECUTOR.post(
-                            () -> recreateTaskbarForDisplay(displayId, /* duration= */ 0));
+                    MAIN_EXECUTOR.getHandler().postDelayed(
+                            () -> recreateTaskbarForDisplay(displayId, /* duration= */ 0),
+                            TASKBAR_RECREATE_AFTER_CONFIG_DELAY_MS);
                 } else if (dp != null) {
                     // Config change might be handled without re-creating the taskbar
                     if (!isTaskbarEnabled(displayId, dp)) {
@@ -1608,8 +1610,9 @@ public class TaskbarManagerImpl implements DisplayDecorationListener {
                         // by looking at screen-size change flag in configDiff in the
                         // block above?
                         debugPrimaryTaskbar("onConfigurationChanged: call recreateTaskbars");
-                        MAIN_EXECUTOR.post(
-                                () -> recreateTaskbarForDisplay(displayId, /* duration= */ 0));
+                        MAIN_EXECUTOR.getHandler().postDelayed(
+                                () -> recreateTaskbarForDisplay(displayId, /* duration= */ 0),
+                                TASKBAR_RECREATE_AFTER_CONFIG_DELAY_MS);
                     }
                 } else {
                     taskbar.onConfigurationChanged(configDiff);
