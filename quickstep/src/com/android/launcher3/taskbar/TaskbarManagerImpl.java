@@ -1593,8 +1593,7 @@ public class TaskbarManagerImpl implements DisplayDecorationListener {
                 TaskbarActivityContext taskbar = getTaskbarForDisplay(displayId);
                 if (configDiff != 0 || taskbar == null) {
                     debugTaskbarManager("onConfigurationChanged: call recreateTaskbars", displayId);
-                    MAIN_EXECUTOR.post(
-                            () -> recreateTaskbarForDisplay(displayId, /* duration= */ 0));
+                    recreateTaskbarForDisplay(displayId, /* duration= */ 0);
                 } else if (dp != null) {
                     // Config change might be handled without re-creating the taskbar
                     if (!isTaskbarEnabled(displayId, dp)) {
@@ -1608,8 +1607,7 @@ public class TaskbarManagerImpl implements DisplayDecorationListener {
                         // by looking at screen-size change flag in configDiff in the
                         // block above?
                         debugPrimaryTaskbar("onConfigurationChanged: call recreateTaskbars");
-                        MAIN_EXECUTOR.post(
-                                () -> recreateTaskbarForDisplay(displayId, /* duration= */ 0));
+                        recreateTaskbarForDisplay(displayId, /* duration= */ 0);
                     }
                 } else {
                     taskbar.onConfigurationChanged(configDiff);
