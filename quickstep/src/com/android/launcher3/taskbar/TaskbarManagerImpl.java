@@ -590,7 +590,10 @@ public class TaskbarManagerImpl implements DisplayDecorationListener {
         // remove all defaults that we store
         removeTaskbarFromMap(displayId);
 
-        removeTaskbarRootViewFromWindow(displayId);
+        DeviceProfile dp = getDeviceProfile(displayId);
+        if (dp == null || !isTaskbarEnabled(displayId, dp)) {
+            removeTaskbarRootViewFromWindow(displayId);
+        }
     }
 
     /**
@@ -893,9 +896,6 @@ public class TaskbarManagerImpl implements DisplayDecorationListener {
                                 mPrimaryDisplayId));
             }
 
-            if (getTaskbarRootLayoutForDisplay(displayId) == null) {
-                createTaskbarRootLayout(displayId);
-            }
             debugTaskbarManager("recreateTaskbarForDisplay: adding rootView", displayId);
             addTaskbarRootViewToWindow(taskbar);
             FrameLayout taskbarRootLayout = getTaskbarRootLayoutForDisplay(displayId);
