@@ -1338,11 +1338,8 @@ public class TaskbarManagerImpl implements DisplayDecorationListener {
         }
 
         WindowManager windowManager = getWindowManager(displayId);
-        if (windowManager != null && rootLayout.isAttachedToWindow()) {
+        if (isTaskbarRootLayoutAddedForDisplay(displayId) && windowManager != null) {
             windowManager.removeViewImmediate(rootLayout);
-            mAddedRootLayouts.put(displayId, false);
-            removeTaskbarRootLayoutFromMap(displayId);
-        } else if (windowManager != null) {
             mAddedRootLayouts.put(displayId, false);
             removeTaskbarRootLayoutFromMap(displayId);
         } else {
