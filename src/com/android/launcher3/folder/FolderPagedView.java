@@ -41,6 +41,7 @@ import com.android.launcher3.CellLayout;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.PagedView;
 import com.android.launcher3.R;
+import com.android.launcher3.graphics.PathWrapper;
 import com.android.launcher3.ShortcutAndWidgetContainer;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.apppairs.AppPairIcon;
@@ -97,7 +98,7 @@ public class FolderPagedView extends PagedView<PageIndicatorDots> implements Cli
 
     private Folder mFolder;
 
-    private Path mClipPath;
+    private PathWrapper mClipPath;
 
     // If the views are attached to the folder or not. A folder should be bound when its
     // animating or is open.
@@ -154,7 +155,7 @@ public class FolderPagedView extends PagedView<PageIndicatorDots> implements Cli
     protected void dispatchDraw(Canvas canvas) {
         if (mClipPath != null) {
             int count = canvas.save();
-            canvas.clipPath(mClipPath);
+            canvas.clipPath(mClipPath.getPath());
             mFocusIndicatorHelper.draw(canvas);
             super.dispatchDraw(canvas);
             canvas.restoreToCount(count);
@@ -713,7 +714,7 @@ public class FolderPagedView extends PagedView<PageIndicatorDots> implements Cli
     }
 
     @Override
-    public void setClipPath(Path clipPath) {
+    public void setClipPath(PathWrapper clipPath) {
         mClipPath = clipPath;
         invalidate();
     }
