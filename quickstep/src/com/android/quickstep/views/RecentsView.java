@@ -631,7 +631,6 @@ public abstract class RecentsView<
     private boolean mShowAsGridLastOnLayout = false;
     private boolean mEnableOverlap = false;
     private String mRecentsStyle = "stock";
-    private float mScrollScale = 0.85f;
     protected final IntSet mTopRowIdSet = new IntSet();
     private int mClearAllShortTotalWidthTranslation = 0;
 
@@ -6998,7 +6997,9 @@ public abstract class RecentsView<
     }
 
     private void doScrollScale() {
-        if (showAsGrid() || mContainer.getDeviceProfile().isTablet) return;
+        if (showAsGrid() || mContainer.getDeviceProfile().getDeviceProperties().isTablet()) {
+            return;
+        }
         if (!isPageScrollsInitialized()) return;
 
         int childCount = Math.min(mPageScrolls.length, getChildCount());
@@ -7009,7 +7010,7 @@ public abstract class RecentsView<
         final boolean isIOS = mRecentsStyle.equals("ios");
         final boolean isOxygen = mRecentsStyle.equals("oxygen");
 
-        mScrollScale = isOxygen ? 0.92f : 0.85f;
+        float scrollScale = isOxygen ? 0.92f : 0.85f;
 
         float overlapFactor = 0f;
         if (!isStock && mFullscreenProgress <= 0.01f) {
@@ -7046,9 +7047,9 @@ public abstract class RecentsView<
             int childPosition = mPageScrolls[i];
             int scrollDelta = Math.abs(curScroll - childPosition);
 
-            float baseScale = mScrollScale;
+            float baseScale = scrollScale;
             if (scrollDelta <= scaleArea) {
-                baseScale = Utilities.mapToRange(scrollDelta, 0, scaleArea, 1f, mScrollScale,
+                baseScale = Utilities.mapToRange(scrollDelta, 0, scaleArea, 1f, scrollScale,
                         LINEAR);
             }
 
@@ -7234,7 +7235,10 @@ public abstract class RecentsView<
     }
 
     public float getScrollScale(RemoteTargetHandle rth) {
-        if (rth == null || showAsGrid() || mContainer.getDeviceProfile().isTablet) return 1f;
+        if (rth == null || showAsGrid()
+                || mContainer.getDeviceProfile().getDeviceProperties().isTablet()) {
+            return 1f;
+        }
         if (!isPageScrollsInitialized()) return 1f;
         int childCount = Math.min(mPageScrolls.length, getChildCount());
         for (int i = 0; i < childCount; i++) {
