@@ -40,6 +40,21 @@
         <item>3</item>
     </string-array>
 
+    <!-- App drawer styles -->
+    <string-array name="app_drawer_style_entries">
+        <item>@string/drawer_style_normal</item>
+        <item>@string/drawer_style_legacy</item>
+        <item>@string/drawer_style_list</item>
+        <item>@string/drawer_style_oneui</item>
+    </string-array>
+
+    <string-array name="app_drawer_style_values" translatable="false">
+        <item>normal</item>
+        <item>fullscreen</item>
+        <item>horizontal_list</item>
+        <item>vertical</item>
+    </string-array>
+
     <string-array name="pref_swipe_down_side_names">
         <item>@string/pref_swipe_down_side_both</item>
         <item>@string/pref_swipe_down_side_left</item>

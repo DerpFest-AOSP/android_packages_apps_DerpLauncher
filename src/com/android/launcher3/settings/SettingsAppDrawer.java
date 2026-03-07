@@ -84,7 +84,8 @@ public class SettingsAppDrawer extends SettingsCategoryActivity {
                     LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
                 }
             }
-            if (LauncherPrefs.ALL_APPS_DARK_TEXT.getSharedPrefKey().equals(key)) {
+            if (LauncherPrefs.ALL_APPS_DARK_TEXT.getSharedPrefKey().equals(key)
+                    || LauncherPrefs.APP_DRAWER_STYLE.getSharedPrefKey().equals(key)) {
                 LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
             }
             if (LauncherPrefs.DRAWER_LIST.getSharedPrefKey().equals(key)) {

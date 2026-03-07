@@ -46,6 +46,7 @@ import com.android.launcher3.CellLayout;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.Workspace;
+import com.android.launcher3.allapps.AppDrawerStyle;
 import com.android.launcher3.dragndrop.DragLayer;
 import com.android.launcher3.logger.LauncherAtom;
 import com.android.launcher3.testing.TestLogging;
@@ -147,7 +148,10 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
             mLongPressState = STATE_COMPLETED;
         }
 
-        boolean isInAllAppsBottomSheet = mLauncher.isInState(ALL_APPS);
+        // In fullscreen drawer styles there is no "outside" area of a sheet to tap, so a touch
+        // that falls through to the workspace must not close all apps.
+        boolean isInAllAppsBottomSheet = mLauncher.isInState(ALL_APPS)
+                && !AppDrawerStyle.isFullscreen(mLauncher);
 
         final boolean result;
         if (mLongPressState == STATE_COMPLETED) {

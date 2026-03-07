@@ -75,6 +75,7 @@ import com.android.launcher3.DragSource;
 import com.android.launcher3.DropTarget.DragObject;
 import com.android.launcher3.Flags;
 import com.android.launcher3.Insettable;
+import com.android.launcher3.Launcher;
 import com.android.launcher3.InsettableFrameLayout;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
@@ -86,6 +87,7 @@ import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.keyboard.FocusedItemDecorator;
 import com.android.launcher3.keyboard.ViewGroupFocusHelper;
 import com.android.launcher3.model.StringCache;
+import com.android.launcher3.model.data.AppInfo;
 import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.model.repository.StringCacheRepository;
 import com.android.launcher3.pm.UserCache;
@@ -94,6 +96,7 @@ import com.android.launcher3.util.ItemInfoMatcher;
 import com.android.launcher3.util.Preconditions;
 import com.android.launcher3.util.Themes;
 import com.android.launcher3.util.ViewEx;
+import com.android.launcher3.pageindicators.PageIndicatorDots;
 import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.views.BaseDragLayer;
 import com.android.launcher3.views.RecyclerViewFastScroller;
@@ -174,6 +177,12 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
     /** {@code true} when rendered view is in search state instead of the scroll state. */
     private boolean mIsSearching;
+    private boolean mShowFastScroller;
+    /** One of {@link AppDrawerStyle}; always NORMAL outside of the Launcher activity. */
+    private String mAppDrawerStyle = AppDrawerStyle.NORMAL;
+    @Nullable private PageIndicatorDots mOneUiPageIndicator;
+    @Nullable private OneUiPagedAllAppsView mOneUiPagedView;
+    private final Runnable mRefreshOneUiAppsRunnable = this::refreshOneUiApps;
     private boolean mRebindAdaptersAfterSearchAnimation;
     private int mNavBarScrimHeight = 0;
     private SearchRecyclerView mSearchRecyclerView;
@@ -182,6 +191,8 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     private boolean mHasWorkApps;
     private boolean mHasPrivateApps;
     private float[] mBottomSheetCornerRadii;
+    @Nullable private float[] mFullCornerRadii;
+    @Nullable private RecyclerView.RecycledViewPool mListStyleViewPool;
     private ScrimView mScrimView;
     private int mHeaderColor;
     private int mBottomSheetBackgroundColorBlurFallback;
@@ -234,6 +245,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             }
         });
         mSearchUiDelegate = createSearchUiDelegate();
+        updateAppDrawerStyle();
         initContent();
 
         mSearchTransitionController = new SearchTransitionController(this);
@@ -257,6 +269,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
      *   onFinishInflate -> onPostCreate
      */
     protected void initContent() {
+        mShowFastScroller = shouldShowFastScroller();
         mMainAdapterProvider = mSearchUiDelegate.createMainAdapterProvider();
 
         mAH.set(AdapterHolder.MAIN, new AdapterHolder(AdapterHolder.MAIN,
@@ -279,6 +292,12 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         mFastScroller = findViewById(R.id.fast_scroller);
         mFastScroller.setPopupView(findViewById(R.id.fast_scroller_popup));
         mFastScrollLetterLayout = findViewById(R.id.scroll_letter_layout);
+        mOneUiPageIndicator = findViewById(R.id.all_apps_page_indicator);
+        if (mOneUiPageIndicator != null) {
+            mOneUiPageIndicator.setVisibility(GONE);
+        }
+        mFastScroller.setVisibility(mShowFastScroller ? VISIBLE : INVISIBLE);
+        mFastScrollLetterLayout.setVisibility(mShowFastScroller ? VISIBLE : INVISIBLE);
         setClipChildren(false);
 
         mSearchContainer = inflateSearchBar();
@@ -421,7 +440,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         if (!mSearchTransitionController.isRunning() && goingToSearch == isSearching()) {
             return;
         }
-        mFastScroller.setVisibility(goingToSearch ? INVISIBLE : VISIBLE);
+        mFastScroller.setVisibility(goingToSearch || !mShowFastScroller ? INVISIBLE : VISIBLE);
         if (goingToSearch) {
             // Fade out the button to pause work apps.
             mWorkManager.onActivePageChanged(SEARCH);
@@ -460,8 +479,12 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
                 || dragLayer.isEventOverView(mBottomSheetHandleArea, ev)) {
             return true;
         }
+        if (mOneUiPagedView != null && !isSearching()) {
+            // Pages never scroll vertically; vertical drags always move the container.
+            return true;
+        }
         AllAppsRecyclerView rv = getActiveRecyclerView();
-        if (rv == null) {
+        if (rv == null || rv.getParent() == null || rv.getWindowId() == null) {
             return true;
         }
         if (rv.getScrollbar() != null
@@ -470,7 +493,9 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             return false;
         }
         // Scroll if not within the container view (e.g. over large-screen scrim).
-        if (!dragLayer.isEventOverView(getVisibleContainerView(), ev)) {
+        View visibleContainer = getVisibleContainerView();
+        if (visibleContainer == null || visibleContainer.getWindowId() == null
+                || !dragLayer.isEventOverView(visibleContainer, ev)) {
             return true;
         }
         return rv.shouldContainerScroll(ev, dragLayer);
@@ -501,6 +526,9 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             if (i != SEARCH && mAH.get(i).mRecyclerView != null) {
                 mAH.get(i).mRecyclerView.scrollToTop();
             }
+        }
+        if (mOneUiPagedView != null) {
+            mOneUiPagedView.resetToFirstPage();
         }
         if (mTouchHandler != null) {
             mTouchHandler.endFastScrolling();
@@ -608,6 +636,11 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
     protected void rebindAdapters(boolean force) {
         Log.d(TAG, "rebindAdapters: force: " + force);
+        String previousStyle = mAppDrawerStyle;
+        updateAppDrawerStyle();
+        if (!previousStyle.equals(mAppDrawerStyle)) {
+            force = true;
+        }
         if (mSearchTransitionController.isRunning()) {
             mRebindAdaptersAfterSearchAnimation = true;
             return;
@@ -616,6 +649,11 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
         boolean showTabs = shouldShowTabs();
         if (showTabs == mUsingTabs && !force) {
+            if (mOneUiPagedView != null) {
+                // The app list changed; repaginate once the A-Z list has been refreshed.
+                removeCallbacks(mRefreshOneUiAppsRunnable);
+                post(mRefreshOneUiAppsRunnable);
+            }
             Log.d(TAG, "rebindAdapters: Not needed.");
             return;
         }
@@ -626,7 +664,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         replaceAppsRVContainer(showTabs);
         mUsingTabs = showTabs;
 
-        mAllAppsStore.unregisterIconContainer(mAH.get(AdapterHolder.MAIN).mRecyclerView);
+        unregisterMainIconContainers();
         mAllAppsStore.unregisterIconContainer(mAH.get(AdapterHolder.WORK).mRecyclerView);
         mAllAppsStore.unregisterIconContainer(mAH.get(AdapterHolder.SEARCH).mRecyclerView);
 
@@ -664,16 +702,45 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             if (mHeader.isSetUp()) {
                 onActivePageChanged(mViewPager.getNextPage());
             }
+        } else if (mOneUiPagedView != null) {
+            mainRecyclerView = null;
+            workRecyclerView = null;
+            mAH.get(AdapterHolder.WORK).mRecyclerView = null;
+            // No tabs in the paged style: show personal and work apps together.
+            mAH.get(AdapterHolder.MAIN).mAppsList.updateItemFilter(
+                    mPersonalMatcher.or(mWorkManager.getItemInfoMatcher()));
+            bindOneUiPagedView();
         } else {
             mainRecyclerView = findViewById(R.id.apps_list_view);
             workRecyclerView = null;
             mAH.get(AdapterHolder.MAIN).setup(mainRecyclerView, mPersonalMatcher);
             mAH.get(AdapterHolder.WORK).mRecyclerView = null;
         }
-        setUpCustomRecyclerViewPool(
-                mainRecyclerView,
-                workRecyclerView,
-                mActivityContext.getActivityComponent().getSharedAppsPool());
+        if (mainRecyclerView != null) {
+            if (AppDrawerStyle.isHorizontalList(mAppDrawerStyle)) {
+                // The shared pool is pre-inflated with stock grid icons (icon above label).
+                // Recycling those into the list would show a centered single-column grid, so
+                // the list style gets its own pool.
+                if (mListStyleViewPool == null) {
+                    mListStyleViewPool = new RecyclerView.RecycledViewPool();
+                }
+                mainRecyclerView.setRecycledViewPool(mListStyleViewPool);
+                if (workRecyclerView != null) {
+                    workRecyclerView.setRecycledViewPool(mListStyleViewPool);
+                }
+                mainRecyclerView.updatePoolSize();
+            } else {
+                setUpCustomRecyclerViewPool(
+                        mainRecyclerView,
+                        workRecyclerView,
+                        mActivityContext.getActivityComponent().getSharedAppsPool());
+            }
+        }
+        mShowFastScroller = shouldShowFastScroller();
+        if (!isSearching()) {
+            mFastScroller.setVisibility(mShowFastScroller ? VISIBLE : INVISIBLE);
+            mFastScrollLetterLayout.setVisibility(mShowFastScroller ? VISIBLE : INVISIBLE);
+        }
         setupHeader();
 
         if (isSearchBarFloating()) {
@@ -685,7 +752,10 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
                             R.dimen.fastscroll_bottom_margin_floating_search);
         }
 
-        mAllAppsStore.registerIconContainer(mAH.get(AdapterHolder.MAIN).mRecyclerView);
+        if (mOneUiPagedView == null) {
+            // Paged recycler views are registered as pages get (re)built.
+            mAllAppsStore.registerIconContainer(mAH.get(AdapterHolder.MAIN).mRecyclerView);
+        }
         mAllAppsStore.registerIconContainer(mAH.get(AdapterHolder.WORK).mRecyclerView);
         mAllAppsStore.registerIconContainer(mAH.get(AdapterHolder.SEARCH).mRecyclerView);
     }
@@ -719,9 +789,21 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             }
         }
         View oldView = getAppsRecyclerViewContainer();
+        if (mOneUiPagedView != null) {
+            for (AllAppsRecyclerView rv : mOneUiPagedView.getRecyclerViews()) {
+                mAllAppsStore.unregisterIconContainer(rv);
+            }
+            removeCallbacks(mRefreshOneUiAppsRunnable);
+            mOneUiPagedView.setOnActivePageChangedListener(null);
+            mOneUiPagedView.setOnRecyclerViewsChangedListener(null);
+            mOneUiPagedView = null;
+        }
         int index = indexOfChild(oldView);
         removeView(oldView);
-        int layout = showTabs ? R.layout.all_apps_tabs : R.layout.all_apps_rv_layout;
+        final boolean paged = !showTabs && AppDrawerStyle.isVerticalPaged(mAppDrawerStyle);
+        int layout = showTabs ? R.layout.all_apps_tabs
+                : paged ? R.layout.all_apps_oneui_paged_layout
+                : R.layout.all_apps_rv_layout;
         final View rvContainer = getLayoutInflater().inflate(layout, this, false);
         addView(rvContainer, index);
         if (showTabs) {
@@ -747,6 +829,9 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         } else {
             mWorkManager.detachWorkUtilityViews();
             mViewPager = null;
+            if (paged) {
+                mOneUiPagedView = (OneUiPagedAllAppsView) rvContainer;
+            }
         }
 
         removeCustomRules(rvContainer);
@@ -758,6 +843,15 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             layoutBelowSearchContainer(rvContainer, showTabs);
             layoutBelowSearchContainer(getSearchRecyclerView(), /* tabs= */ false);
         }
+
+        if (mOneUiPagedView != null
+                && rvContainer.getLayoutParams() instanceof RelativeLayout.LayoutParams rvLp) {
+            // Keep the pages above the page indicator.
+            rvLp.addRule(RelativeLayout.ABOVE, R.id.all_apps_page_indicator);
+            rvLp.bottomMargin = 0;
+            rvContainer.setLayoutParams(rvLp);
+        }
+        updateOneUiPageIndicatorLayout();
 
         updateSearchResultsVisibility();
     }
@@ -799,6 +893,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         } else {
             layoutBelowSearchContainer(mHeader, false /* includeTabsMargin */);
         }
+        applyOneUiPagePadding();
     }
 
     /**
@@ -1059,13 +1154,17 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         for (AdapterHolder holder : mAH) {
             holder.mAdapter.setAppsPerRow(dp.getAllAppsProfile().getNumShownAllAppsColumns());
             holder.mAppsList.setNumAppsPerRowAllApps(
-                    dp.getAllAppsProfile().getNumShownAllAppsColumns());
+                    getEffectiveAppsPerRow(holder, dp.getAllAppsProfile().getNumShownAllAppsColumns()));
             if (holder.mRecyclerView != null) {
                 // Remove all views and clear the pool, while keeping the data same. After this
                 // call, all the viewHolders will be recreated.
                 holder.mRecyclerView.swapAdapter(holder.mRecyclerView.getAdapter(), true);
                 holder.mRecyclerView.getRecycledViewPool().clear();
             }
+        }
+        if (mOneUiPagedView != null) {
+            refreshOneUiApps();
+            applyOneUiPagePadding();
         }
 
         int navBarScrimColor = Themes.getNavBarScrimColor(mActivityContext);
@@ -1082,7 +1181,8 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         if (!isSearching()) {
             rebindAdapters();
         }
-        if (mHasWorkApps) {
+        // The paged style has no work tab / work utility views to reset.
+        if (mHasWorkApps && !AppDrawerStyle.isVerticalPaged(mAppDrawerStyle)) {
             mWorkManager.reset();
         }
         if (mHasPrivateApps) {
@@ -1172,7 +1272,11 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     /** The current apps recycler view in the container. */
     private AllAppsRecyclerView getActiveAppsRecyclerView() {
         if (!mUsingTabs || isPersonalTab()) {
-            return mAH.get(AdapterHolder.MAIN).mRecyclerView;
+            AllAppsRecyclerView rv = mAH.get(AdapterHolder.MAIN).mRecyclerView;
+            if (rv == null && mOneUiPagedView != null) {
+                rv = mOneUiPagedView.getCurrentRecyclerView();
+            }
+            return rv;
         } else {
             return mAH.get(AdapterHolder.WORK).mRecyclerView;
         }
@@ -1190,7 +1294,13 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
      * hidden while searching.
      */
     public ViewGroup getAppsRecyclerViewContainer() {
-        return mViewPager != null ? mViewPager : findViewById(R.id.apps_list_view);
+        if (mViewPager != null) {
+            return mViewPager;
+        }
+        if (mOneUiPagedView != null) {
+            return mOneUiPagedView;
+        }
+        return findViewById(R.id.apps_list_view);
     }
 
     /** The RV for search results, which is hidden while A-Z apps are visible. */
@@ -1237,10 +1347,14 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         setLayoutParams(mlp);
 
         if (!grid.isVerticalBarLayout() || FeatureFlags.enableResponsiveWorkspace()) {
-            int topPadding = grid.getAllAppsProfile().getPadding().top;
+            // Fullscreen styles start right below the status bar instead of the sheet offset.
+            int topPadding = isFullscreenStyle()
+                    ? insets.top
+                    : grid.getAllAppsProfile().getPadding().top;
             setPadding(grid.getAllAppsProfile().getLeftRightMargin(), topPadding,
                     grid.getAllAppsProfile().getLeftRightMargin(), 0);
         }
+        updateOneUiPageIndicatorLayout();
         InsettableFrameLayout.dispatchInsets(this, insets);
     }
 
@@ -1297,16 +1411,175 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         if (mHeader.isSetUp()) {
             mHeader.setActiveRV(getCurrentPage());
         }
+        updateOneUiPageIndicatorState();
     }
 
     private void applyAdapterSideAndBottomPaddings(DeviceProfile grid) {
-        int bottomPadding = Math.max(mInsets.bottom, mNavBarScrimHeight);
+        // In the paged style the page indicator (laid out above the nav bar) takes the insets.
+        int bottomPadding = mOneUiPagedView != null
+                ? 0 : Math.max(mInsets.bottom, mNavBarScrimHeight);
         mAH.forEach(adapterHolder -> {
             adapterHolder.mPadding.bottom = bottomPadding;
             adapterHolder.mPadding.left = grid.getAllAppsProfile().getPadding().left;
             adapterHolder.mPadding.right = grid.getAllAppsProfile().getPadding().right;
             adapterHolder.applyPadding();
         });
+        applyOneUiPagePadding();
+    }
+
+    private void drawFullscreenBackgroundOnScrim(Canvas canvas, float scale,
+            @Px int bottomOffsetPx) {
+        final float translationY = getTranslationY();
+        final float width = canvas.getWidth();
+        final float height = getHeight();
+        final float horizontalScaleOffset = (1 - scale) * width / 2;
+        final float verticalScaleOffset = (1 - scale) * height / 2;
+        final boolean scaled = scale < 1f;
+
+        final float top = getTop() + translationY + verticalScaleOffset;
+        final float bottom = (scaled
+                ? getTop() + translationY + height - verticalScaleOffset
+                : Math.max(canvas.getHeight(), getBottom() + translationY)) + bottomOffsetPx;
+
+        int backgroundColor = getBackgroundColor();
+        mHeaderPaint.setColor(backgroundColor);
+        mHeaderPaint.setAlpha(Color.alpha(backgroundColor));
+        mTmpRectF.set(horizontalScaleOffset, top, width - horizontalScaleOffset, bottom);
+        if (scaled) {
+            // Show a rounded card while the predictive back gesture shrinks the drawer.
+            if (mFullCornerRadii == null) {
+                float r = Themes.getDialogCornerRadius(getContext());
+                mFullCornerRadii = new float[]{r, r, r, r, r, r, r, r};
+            }
+            mTmpPath.reset();
+            mTmpPath.addRoundRect(mTmpRectF, mFullCornerRadii, Direction.CW);
+            canvas.drawPath(mTmpPath, mHeaderPaint);
+        } else {
+            canvas.drawRect(mTmpRectF, mHeaderPaint);
+        }
+    }
+
+    private void updateAppDrawerStyle() {
+        // Styles only apply to the home screen drawer; taskbar All Apps keeps the stock sheet.
+        mAppDrawerStyle = mActivityContext instanceof Launcher
+                ? AppDrawerStyle.get(getContext())
+                : AppDrawerStyle.NORMAL;
+    }
+
+    /** Returns the {@link AppDrawerStyle} in use by this container. */
+    public String getAppDrawerStyle() {
+        return mAppDrawerStyle;
+    }
+
+    protected boolean isFullscreenStyle() {
+        return AppDrawerStyle.isFullscreen(mAppDrawerStyle);
+    }
+
+    private boolean shouldShowFastScroller() {
+        return !AppDrawerStyle.isVerticalPaged(mAppDrawerStyle);
+    }
+
+    private int getEffectiveAppsPerRow(AdapterHolder holder, int appsPerRow) {
+        return holder.mType != SEARCH && AppDrawerStyle.isHorizontalList(mAppDrawerStyle)
+                ? 1 : appsPerRow;
+    }
+
+    private void bindOneUiPagedView() {
+        if (mOneUiPagedView == null) {
+            return;
+        }
+        mOneUiPagedView.setPageIndicator(mOneUiPageIndicator);
+        mOneUiPagedView.setOnRecyclerViewsChangedListener((removed, added) -> {
+            for (AllAppsRecyclerView rv : removed) {
+                mAllAppsStore.unregisterIconContainer(rv);
+            }
+            for (AllAppsRecyclerView rv : added) {
+                mAllAppsStore.registerIconContainer(rv);
+            }
+        });
+        mOneUiPagedView.setOnActivePageChangedListener((recyclerView, page) -> {
+            mAH.get(AdapterHolder.MAIN).mRecyclerView = recyclerView;
+            if (mHeader != null && mHeader.isSetUp()) {
+                mHeader.updateMainRV(recyclerView);
+            }
+            updateOneUiPageIndicatorState();
+        });
+        applyOneUiPagePadding();
+        mOneUiPagedView.setApps(getOneUiApps());
+        mAH.get(AdapterHolder.MAIN).mRecyclerView = mOneUiPagedView.getCurrentRecyclerView();
+    }
+
+    private void refreshOneUiApps() {
+        if (mOneUiPagedView != null) {
+            mOneUiPagedView.setApps(getOneUiApps());
+        }
+    }
+
+    private void applyOneUiPagePadding() {
+        if (mOneUiPagedView != null) {
+            mOneUiPagedView.setPagePadding(mAH.get(AdapterHolder.MAIN).mPadding);
+        }
+    }
+
+    /**
+     * Regular (personal + work) apps in A-Z order. Private space apps are left out: they stay
+     * reachable through search ("Private space"), which keeps the locked/unlocked flow intact.
+     */
+    private List<AppInfo> getOneUiApps() {
+        List<AppInfo> apps = new ArrayList<>();
+        for (AdapterItem item : mAH.get(AdapterHolder.MAIN).mAppsList.getAdapterItems()) {
+            if (item.viewType == BaseAllAppsAdapter.VIEW_TYPE_ICON && item.itemInfo != null) {
+                apps.add(item.itemInfo);
+            }
+        }
+        return apps;
+    }
+
+    private void unregisterMainIconContainers() {
+        if (mOneUiPagedView != null) {
+            for (AllAppsRecyclerView rv : mOneUiPagedView.getRecyclerViews()) {
+                mAllAppsStore.unregisterIconContainer(rv);
+            }
+        }
+        mAllAppsStore.unregisterIconContainer(mAH.get(AdapterHolder.MAIN).mRecyclerView);
+    }
+
+    private void updateOneUiPageIndicatorLayout() {
+        if (mOneUiPageIndicator == null
+                || !(mOneUiPageIndicator.getLayoutParams() instanceof RelativeLayout.LayoutParams)) {
+            return;
+        }
+        RelativeLayout.LayoutParams lp =
+                (RelativeLayout.LayoutParams) mOneUiPageIndicator.getLayoutParams();
+        lp.removeRule(RelativeLayout.ABOVE);
+        lp.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        int bottomMargin = Math.max(mInsets.bottom, mNavBarScrimHeight)
+                + getResources().getDimensionPixelSize(
+                        R.dimen.all_apps_page_indicator_bottom_margin);
+        if (isSearchBarFloating() && mSearchContainer != null) {
+            bottomMargin += mSearchContainer.getHeight();
+        }
+        lp.bottomMargin = bottomMargin;
+        mOneUiPageIndicator.setLayoutParams(lp);
+        updateOneUiPageIndicatorState();
+    }
+
+    private void updateOneUiPageIndicatorState() {
+        if (mOneUiPageIndicator == null) {
+            return;
+        }
+        if (mOneUiPagedView == null) {
+            mOneUiPageIndicator.setVisibility(GONE);
+            return;
+        }
+        // Stay INVISIBLE (not GONE) so the pages keep a stable height with one page or in search.
+        boolean visible = !isSearching() && mOneUiPagedView.getPageCount() > 1;
+        mOneUiPageIndicator.setVisibility(visible ? VISIBLE : INVISIBLE);
+        if (visible) {
+            mOneUiPageIndicator.setMarkersCount(mOneUiPagedView.getPageCount());
+            mOneUiPageIndicator.setActiveMarker(mOneUiPagedView.getNextPage());
+        }
     }
 
     private void setDeviceManagementResources() {
@@ -1324,7 +1597,8 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
      * Returns true if the container has work apps.
      */
     public boolean shouldShowTabs() {
-        return mHasWorkApps;
+        // The paged style shows personal and work apps on the same pages.
+        return mHasWorkApps && !AppDrawerStyle.isVerticalPaged(mAppDrawerStyle);
     }
 
     // Used by tests only
@@ -1478,6 +1752,10 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     @Override
     public void drawOnScrimWithScaleAndBottomOffset(
             Canvas canvas, float scale, @Px int bottomOffsetPx) {
+        if (isFullscreenStyle()) {
+            drawFullscreenBackgroundOnScrim(canvas, scale, bottomOffsetPx);
+            return;
+        }
         final MarginLayoutParams mlp = (MarginLayoutParams) getLayoutParams();
         final View panel = mBottomSheetBackground;
         final float translationY = ((View) panel.getParent()).getTranslationY();
@@ -1645,6 +1923,14 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             mType = type;
             mAppsList = appsList;
             mAdapter = createAdapter(mAppsList);
+            if (type != SEARCH) {
+                if (mAdapter instanceof AllAppsGridAdapter gridAdapter) {
+                    gridAdapter.setDrawerStyle(mAppDrawerStyle);
+                }
+                if (AppDrawerStyle.isHorizontalList(mAppDrawerStyle)) {
+                    mAppsList.setNumAppsPerRowAllApps(1);
+                }
+            }
             mAppsList.setAdapter(mAdapter);
             mLayoutManager = mAdapter.getLayoutManager();
         }
