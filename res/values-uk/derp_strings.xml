@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="abbrev_wday_month_day_no_year">EEE, MMM d</string>
+    <string name="about">Інфа</string>
+    <string name="about_app_subtitle">Базовано на AOSP Launcher3</string>
+    <!-- About info -->
+    <string name="about_app_title">DerpLauncher</string>
+    <string name="about_app_version_text">Версія</string>
+    <string name="about_app_version_value">BP4A.251205.006</string>
+    <string name="about_summary">Інформація про DerpLauncher</string>
+    <string name="about_thanks_cat">Особлива подяка</string>
+    <string name="actions_category_title">Швидкі дії</string>
+    <string name="ai_mode_not_available">Функціональність ШІ недоступна</string>
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Прокручування шпалер</string>
+    <string name="allow_wallpaper_scrolling_summary">Ефект прокручування шпалер для кількох екранів</string>
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Масштабування шпалер</string>
+    <string name="allow_wallpaper_zooming_summary">Збільшення або зменшення масштабу шпалер під час використання панелі програм або нещодавніх програм</string>
+    <string name="app_drawer_category_summary">Налаштувати панель програм</string>
+    <string name="app_drawer_category_title">Панель програм</string>
+    <string name="audio_category_label">Аудіо</string>
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Автоматичне приховування індикатора сторінки</string>
+    <string name="auto_hide_dots_summary">Автоматично приховує індикатор сторінки (крапочки)</string>
+    <string name="background_blur_summary">Встановлення рівня розмиття для нещодавніх і панелі програм</string>
+    <!-- Background blur -->
+    <string name="background_blur_title">Рівень розмиття шпалер</string>
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Непрозорість фону</string>
+    <string name="caddy_beta">Caddy (бета-версія)</string>
+    <!-- Application name -->
+    <string name="derp_app_name">DerpLauncher</string>
+    <string name="dev_options_summary">Увімкнення деяких прихованих функцій здійснюється на ваш страх і ризик</string>
+    <!-- Developer options -->
+    <string name="dev_options_title">Налаштування розробника</string>
+    <string name="dock_ai_music_search_summary">Розпочинає пошук музики натисканням кнопки режиму ШІ</string>
+    <string name="dock_ai_music_search_title">Пошук музики</string>
+    <string name="dock_search_summary">Рядок пошуку в нижній доці</string>
+    <string name="dock_search_title">Рядок пошуку Google</string>
+    <string name="drawer_list_summary">Вибір між списком за замовчуванням або папками за категоріями (Caddy)</string>
+    <!-- Drawer list preference -->
+    <string name="drawer_list_title">Макет</string>
+    <string name="drawer_open_keyboard_summary">Відкривати клавіатуру щоразу, коли панель програм стає видимою</string>
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Свайпніть, щоб розпочати пошук</string>
+    <string name="drawer_search_summary">Панель пошуку у верхній частині панелі програм</string>
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">Панель пошуку програм</string>
+    <string name="feed_default">За замовчуванням</string>
+    <!-- LMOFreeform floating window -->
+    <string name="floating_window">Плаваюче вікно</string>
+    <!-- Font size -->
+    <string name="font_size_title">Розмір шрифту</string>
+    <string name="general_category_title">Загальне</string>
+    <!-- Gestures -->
+    <string name="gestures_category_title">Жести</string>
+    <string name="google_apps_category_label">Додатки Google</string>
+    <!-- Folder titles -->
+    <string name="google_folder_title">Google</string>
+    <string name="home_category_summary">Налаштування панелі Google Now та інше</string>
+    <!-- Categories -->
+    <string name="home_category_title">Головний екран</string>
+    <string name="hotseat_bg_summary">Додати напівпрозорий фон до панелі програм</string>
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Фон Hotseat</string>
+    <string name="icon_pack_add">Встановити більше</string>
+    <string name="icon_pack_default_label">За замовчуванням</string>
+    <string name="icon_pack_no_market">Немає доступного магазину додатків</string>
+    <!-- Icon pack -->
+    <string name="icon_pack_title">Пакет іконок</string>
+    <string name="icons_category_summary">Налаштування розміру іконок та інше</string>
+    <string name="icons_category_title">Іконки</string>
+    <!-- Icon size -->
+    <string name="icon_size_title">Розмір іконок</string>
+    <string name="image_category_label">Зображення</string>
+    <string name="interface_category_title">Інтерфейс</string>
+    <string name="label_ai_mode">Режим ШІ</string>
+    <string name="label_lens">Google Об\'єктив</string>
+    <!-- Hotseat searchbar -->
+    <string name="label_search">Пошук</string>
+    <string name="label_voice_search">Голосовий пошук</string>
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s доступно | %2$s</string>
+    <string name="misc_category_summary">Інші варіанти</string>
+    <string name="misc_category_title">Різне</string>
+    <!-- Settings message explaining when the -1 screen is available on an LTR device. [CHAR LIMIT=100] -->
+    <string name="msg_minus_one_on_left">Коли ви свайпаєте вправо з головного екрана</string>
+    <!-- Settings message explaining when the -1 screen is available on an RTL device. [CHAR LIMIT=100] -->
+    <string name="msg_minus_one_on_right">Коли ви свайпаєте вліво з головного екрана</string>
+    <string name="news_category_label">Новини</string>
+    <!-- App drawer categories -->
+    <string name="others_category_label">Інші</string>
+    <!-- Pause apps shortcut -->
+    <string name="pause">Пауза</string>
+    <string name="pause_apps_dialog_message">Сповіщення для %1$s будуть призупинені</string>
+    <string name="pause_apps_dialog_title">Пауза %1$s?</string>
+    <string name="paused_apps_dialog_message">%1$s було призупинено безпосередньо з панелі запуску</string>
+    <string name="paused_apps_dialog_title">Додаток призупинено</string>
+    <string name="paused_apps_drop_target_label">Призупинити програму</string>
+    <string name="perf_dark_status_bar_summary">Використання темного рядка стану на головному екрані</string>
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">Темний рядок стану</string>
+    <string name="pref_haptics_on_dt_gestures_summary">Чи виконувати тактильну реакцію під час виконання будь-якого жесту подвійного дотику</string>
+    <!-- Haptics on DT2S -->
+    <string name="pref_haptics_on_dt_gestures_title">Тактильна чутливість при жестах подвійного дотику</string>
+    <string name="pref_haptics_on_swipe_down_gestures_summary">Чи виконувати тактильну реакцію під час виконання будь-якого жесту пальцем униз?</string>
+    <!-- Haptics on swipe down gestures -->
+    <string name="pref_haptics_on_swipe_down_gestures_title">Тактильна реакція на жести свайпу вниз</string>
+    <string name="pref_homescreen_dt_gestures_summary">Обрати дію жесту подвійного дотику на головному екрані</string>
+    <string name="pref_homescreen_dt_gestures_title">Подвійний дотик</string>
+    <string name="pref_homescreen_gestures_clear_all_apps">Очистити всі програми</string>
+    <string name="pref_homescreen_gestures_clear_notifications">Очистити сповіщення</string>
+    <!-- Gesture actions -->
+    <string name="pref_homescreen_gestures_none">Жодних</string>
+    <string name="pref_homescreen_gestures_notifications">Сповіщення</string>
+    <string name="pref_homescreen_gestures_powermenu">Меню живлення</string>
+    <string name="pref_homescreen_gestures_qs_panel">Швидкі налаштування</string>
+    <string name="pref_homescreen_gestures_screenshot">Скріншот</string>
+    <string name="pref_homescreen_gestures_sleep">Вимкнути екран</string>
+    <string name="pref_homescreen_gestures_torch">Ліхтарик</string>
+    <string name="pref_homescreen_gestures_volume_panel">Панель гучності</string>
+    <string name="pref_homescreen_swipe_down_gestures_summary">Налаштування жесту свайпу вниз на головному екрані</string>
+    <!-- Swipe down gestures -->
+    <string name="pref_homescreen_swipe_down_gestures_title">Свайп вниз</string>
+    <string name="pref_scroll_vibration_summary">Тактильний зворотний зв\'язок під час прокручування нещодавно використаних програм, якщо підтримується</string>
+    <!-- Scroll Vibration -->
+    <string name="pref_scroll_vibration_title">Вібрація прокручування</string>
+    <string name="pref_swipe_down_side_both">З обох сторін</string>
+    <string name="pref_swipe_down_side_disabled">Вимкнено</string>
+    <string name="pref_swipe_down_side_left">Тільки зліва</string>
+    <string name="pref_swipe_down_side_right">Тільки справа</string>
+    <string name="pref_swipe_down_side_summary">Виберіть, яка сторона (сторони) екрана реагуватиме на жести свайпу вниз</string>
+    <!-- Swipe down side control -->
+    <string name="pref_swipe_down_side_title">Сторона свайпу вниз</string>
+    <string name="pref_themed_icons_summary">Слідувати тематичним іконкам, що використовуються на головному екрані</string>
+    <!-- All apps themed icons -->
+    <string name="pref_themed_icons_title">Іконки з темою</string>
+    <string name="productivity_category_label">Продуктивність</string>
+    <string name="qsb_outer_opacity_summary">Налаштувати непрозорість зовнішньої форми рядка пошуку</string>
+    <string name="qsb_outer_opacity_title">Зовнішня непрозорість рядка пошуку</string>
+    <!-- QuickSpace: QuickEvent: Ambient Play -->
+    <string name="quick_event_ambient_now_playing">Зараз грає</string>
+    <string name="quick_event_ambient_song_artist">%1$s від %2$s</string>
+    <string name="quick_event_rom_intro_learn">Натисніть тут, щоб повеселитись!</string>
+    <!-- QuickSpace: QuickEvent: Device Intro Event -->
+    <string name="quick_event_rom_intro_welcome">Ласкаво просимо в DerpFest!</string>
+    <string name="quickspace_accent_tint_summary">Застосувати системний акцентний колір до всіх елементів quickspace</string>
+    <string name="quickspace_accent_tint_title">Тонування елементів системним акцентним кольором</string>
+    <string name="quickspace_app_memory_info_summary">Показувати використання пам\'яті рекомендованими/нерекомендованими програмами в повідомленнях</string>
+    <string name="quickspace_app_memory_info_title">Показати інформацію про пам\'ять програм</string>
+    <string name="quickspace_category_title">Quickspace</string>
+    <string name="quickspace_memory_info_summary">Показувати використання пам\'яті QuickSpace у повідомленнях</string>
+    <!-- Quickspace Memory Info -->
+    <string name="quickspace_memory_info_title">Показати інформацію про пам\'ять</string>
+    <string name="quickspace_now_playing_showdate_summary">Відображає дату в першому рядку замість \"Зараз грає\"</string>
+    <string name="quickspace_now_playing_showdate_title">...замість цього показувати дату </string>
+    <string name="quickspace_now_playing_summary">Показує пісню, яку ви відтворюєте, на екрані «At a Glance». ПОПЕРЕДЖЕННЯ: Не повністю сумісний з усіма медіаплеєрами!</string>
+    <!-- Quickspace Now Playing -->
+    <string name="quickspace_now_playing_title">Показати Зараз грає</string>
+    <string-array name="quickspace_psa_blaze_it">
+        <item>420</item>
+        <item>#420 запалюй</item>
+        <item>Закрутим одну...</item>
+        <item>Насолоджуєшся спеціями, чи не так?</item>
+        <item>Ви коли-небудь були в Амстердамі?</item>
+    </string-array>
+    <string-array name="quickspace_psa_discouraged_apps_keywords">
+        <item>discord</item>
+    </string-array>
+    <string-array name="quickspace_psa_discouraged_apps_messages">
+        <item>Впевнений в §...?</item>
+        <item>Не впевнений щодо §...</item>
+        <item>Ммм... юзаєш §?</item>
+        <item>§? Слабенько.</item>
+        <item>Ви впевнені щодо §?</item>
+        <item>Отже, ви все ще використовуєте §...</item>
+    </string-array>
+    <string-array name="quickspace_psa_encouraged_apps_keywords">
+        <item>viper</item>
+        <item>wavelet</item>
+        <item>telegram</item>
+    </string-array>
+    <string-array name="quickspace_psa_encouraged_apps_messages">
+        <item>Насолоджуєтеся §...?</item>
+        <item>§? Чудовий вибір!</item>
+        <item>§... Клас!</item>
+        <item>§? Круто.</item>
+        <item>Використовуєш §? Чудово!</item>
+        <item>§ це справді дивовижно.</item>
+    </string-array>
+    <string-array name="quickspace_psa_evening">
+        <item>На добраніч!</item>
+        <item>Спи добре!</item>
+        <item>До зустрічі завтра!</item>
+        <item>Солодких снів!</item>
+        <item>Не затримуйся надовго</item>
+        <item>Спостерігай захід сонця...</item>
+        <item>Гарного сну</item>
+        <item>Поспи трохи</item>
+        <item>Час розслабитися</item>
+        <item>Насолоджуйся ніччю!</item>
+        <item>Час заряджати батарейки!</item>
+        <item>Завтра може бути чудовий день</item>
+        <item>Підготуй свої кістки до завтрашнього дня</item>
+        <item>Вже відчуваєш деяку сонливість?</item>
+        <item>Довгий день, га?</item>
+    </string-array>
+    <string-array name="quickspace_psa_midnight">
+        <item>мм... на добраніч?</item>
+        <item>Вже чуть пізно</item>
+        <item>Тобі слід налагодити свій графік сну</item>
+        <item>Ви більш продуктивні в цей час?</item>
+    </string-array>
+    <string-array name="quickspace_psa_morning">
+        <item>Доброго ранку!</item>
+        <item>Доброго ранку, геймер!</item>
+        <item>Який чудовий день!</item>
+        <item>Гарного дня!</item>
+        <item>Ще 5 хвилиночок?</item>
+        <item>Це один зі способів прокинутися.</item>
+        <item>Поміняй звук будильника.</item>
+        <item>Здається, сьогодні чудовий день, чи не так?</item>
+        <item>Час робити гроші.</item>
+        <item>Перевір погоду про всяк випадок</item>
+        <item>Все ще відчуваєш сонливість?</item>
+        <item>Ви вже дивились на вулицю?</item>
+        <item>Давай з цим розберемось.</item>
+    </string-array>
+    <string-array name="quickspace_psa_random">
+        <item>Буває так іноді</item>
+        <item>Вже час ставити іншу прошивку?</item>
+        <item>Подобається Android 16?</item>
+        <item>Вже хочеш Android 16 QPR3?</item>
+        <item>Ой, як ся маєш?</item>
+        <item>Час похвалитися своїм #setup</item>
+        <item>Зосередьтеся на своїх тасках</item>
+        <item>Ви чекнули всі твіки?</item>
+        <item>Скільки скріншотів ви робите?</item>
+        <item>Поширюйте любов, а не хаос (гра слів з havoc, висміюванням Havoc-OS)</item>
+        <item>Ваш пристрій derpнутий?</item>
+        <item>От би VoLTE працював</item>
+        <item>Повеселись!</item>
+        <item>Давай гріндити!</item>
+        <item>\u003C\u003C\u003C\u003C\u003C\u003C\u003C HEAD</item>
+        <item>Щоб це побачити, вам потрібен DerpLauncher Premium.</item>
+        <item>Щоб це побачити, вам потрібен DerpFest Premium</item>
+        <item>Обвуглена статуя сови</item>
+        <item>...бо 404 - відстій!</item>
+        <item>Їжте овочі та надсилайте логи</item>
+        <item>О ні, знову апдог. (уж вибачте, ця гра слів (updog) не перекладається українською)</item>
+        <item>Я прийшов зробити оголошення</item>
+        <item>Багато налаштувань!</item>
+        <item>Я не твоя кнопка F1</item>
+        <item>Не ігноруй мене!</item>
+        <item>Зробив домашнє завдання? ツ</item>
+        <item>Сиди вдома, будь в безпеці</item>
+        <item>Зроби шось гарне сьогодні</item>
+        <item>Це найкращий досвід прошивки, чи не так?</item>
+        <item>Як ся маєш?</item>
+        <item>Жодних ілюзій, ласкаво просимо до реальності!</item>
+        <item>Чудово! Ви заробили бонусну фічу</item>
+        <item>Харе мене тапати!</item>
+        <item>Тільки для про юзерів</item>
+        <item>Ти те, що ти ставиш, не будь картоплею. (гра слів з POSP)</item>
+        <item>Дякую за вашу підтримку</item>
+        <item>Один з найкращих виборів білдбота</item>
+        <item>Якщо вам подобається додаток, будь ласка, підтримайте його, придбавши його</item>
+        <item>Який чудовий досвід, чи не так?</item>
+        <item>найс</item>
+        <item>ツ</item>
+        <item>#StayDerped m/</item>
+        <item>DerpFest FTW м/</item>
+        <item>Шо в тебе на думці?</item>
+        <item>Виникла проблема? Не забудьте логи</item>
+        <item>Стати Derpнутим</item>
+        <item>#StayDerped</item>
+        <item>Чарлі Воттс мертвий, а ти живий</item>
+        <item>rm -rf /</item>
+    </string-array>
+    <string name="quickspace_psa_summary">Інколи показувати прикольні повідомлення в At a Glance</string>
+    <!-- Quickspace PSA - Custom messages for the glance -->
+    <string name="quickspace_psa_title">Показувати рандомні повідомлення</string>
+    <string name="recents_app_killed">%1$s закрито</string>
+    <string name="recents_category_summary">Оновити Overview</string>
+    <string name="recents_category_title">Нещодавні</string>
+    <string name="recents_chips_summary">Може знадобитися для відображення великої кількості дій</string>
+    <!-- Recents icons -->
+    <string name="recents_chips_title">Використовуйте компактний дизайн дій</string>
+    <string name="recents_clear_all_title">Очистити все</string>
+    <string name="recents_lens_title">Lens</string>
+    <string name="recents_meminfo_summary">Показувати використання ОЗП внизу</string>
+    <string name="recents_meminfo_title">Інформація про пам\'ять</string>
+    <string name="recents_screenshot_title">Скріншот</string>
+    <!-- Shake Clear Recents -->
+    <string name="recents_shake_clear_all_title">Струсіть телефон, щоб все закрити</string>
+    <string name="recents_split_screen_title">Розділений екран</string>
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Примусово закрити</string>
+    <!-- Restart launcher -->
+    <string name="restarting_launcher_changes">Перезапуск лаунчера для застосування змін…</string>
+    <string name="search_bar_category_title">Рядок пошуку</string>
+    <string name="settings_edit_widgets_error">Немає можливості додавати віджети на головний екран</string>
+    <string name="settings_lock_layout_summary_off">Іконки та віджети можна додавати, видаляти та переміщувати на головному екрані</string>
+    <string name="settings_lock_layout_summary_on">Іконки та віджети не можна додавати, видаляти та переміщувати на головному екрані</string>
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Заблокувати макет</string>
+    <!-- General -->
+    <string name="settings_title">Налаштування головної сторінки</string>
+    <string name="short_parallax_summary">Увімкнути повний ефект прокручування шпалер на меншій кількості сторінок замість обрізання шпалер</string>
+    <!-- Parallax -->
+    <string name="short_parallax_title">Дозволити короткий паралакс</string>
+    <string name="show_quickspace_summary">Показувати у верхній частині головного екрана</string>
+    <!-- QuickSpace -->
+    <string name="show_quickspace_title">At a Glance</string>
+    <string name="show_statusbar_summary">Показувати рядок стану на головному екрані</string>
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Показувати рядок стану</string>
+    <string name="show_top_shadow_summary">Додати тінь під рядком стану</string>
+    <!-- Top shadow -->
+    <string name="show_top_shadow_title">Показувати тінь зверху</string>
+    <string name="single_page_center_summary">Розташувати шпалери по центру, якщо використовується лише одна сторінка</string>
+    <string name="single_page_center_title">Центрування при одній сторінці</string>
+    <string name="social_category_label">Соцмережі</string>
+    <string name="suggestion_pref_screen_desc">Пропозиції для панелі програм та головного екрана</string>
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Пропозиції</string>
+    <string name="summary_desktop_labels">Показувати підписи значків на робочому столі</string>
+    <string name="summary_drawer_labels">Показувати підписи значків в панелі програм </string>
+    <string name="system_apps_category_label">Системні програми</string>
+    <string name="task_menu_item_lock">Заблокувати</string>
+    <!-- Task lock -->
+    <string name="task_menu_item_unlock">Розблокувати</string>
+    <string name="themed_icons_disabled_summary">Тематичні значки вимкнено в розділі \"Шпалери та стиль\"</string>
+    <!-- Hide labels -->
+    <string name="title_desktop_labels">Лейбли робочого столу</string>
+    <string name="title_drawer_labels">Лейбли в панелі програм</string>
+    <!-- Settings title to show Google Now at -1 screen on launcher. [CHAR LIMIT=50] -->
+    <string name="title_show_google_app">Свайпніть, щоб отримати доступ до програми Google</string>
+    <string name="trust_apps_auth_manager">Розблокуйте, щоб керувати прихованими та захищеними програмами</string>
+    <string name="trust_apps_auth_open_app">Автентифікуйте, щоб відкрити %1$s</string>
+    <string name="trust_apps_help">Допомога</string>
+    <string name="trust_apps_info_hidden">Приховані програми та їхні віджети приховані від панелі програм</string>
+    <string name="trust_apps_info_protected">Для відкриття захищених програм із лаунчера потрібна автентифікація</string>
+    <string name="trust_apps_loading">Завантаження\u2026</string>
+    <!-- Trust apps -->
+    <string name="trust_apps_manager_name">Приховані та захищені програми</string>
+    <string name="trust_apps_no_lock_error">Будь ласка, налаштуйте безпечний екран блокування, щоб обмежувати доступ до програм</string>
+    <string name="video_category_label">Відео</string>
+    <string-array name="welcome_message_variants">
+        <item>Дякуємо, що обрали DerpFest</item>
+        <item>Найкраща прошивка за всю історію</item>
+        <item>DerpFest FTW!</item>
+        <item>Гарного дня!</item>
+        <item>Привітайтеся з нами в Telegram</item>
+        <item>#StayDerped</item>
+        <item>Ми любимо тебе 3000</item>
+    </string-array>
+    <!-- A widget category label for grouping widgets related to battery. [CHAR_LIMIT=30] -->
+    <string name="widget_category_battery">Батарея</string>
+    <!-- A widget category label for grouping widgets related to bubbles. [CHAR_LIMIT=30] -->
+    <string name="widget_category_bubbles">Бульбашки</string>
+    <!-- A widget category label for grouping widgets related to snapshot. [CHAR_LIMIT=30] -->
+    <string name="widget_category_snapshot">Snapshot</string>
+    <!-- A widget category label for grouping widgets related to weather. [CHAR_LIMIT=30] -->
+    <string name="widget_category_weather">Погода</string>
+    <string name="work_apps_enable_btn_text_custom">Увімкнути робочі додатки</string>
+    <string name="work_apps_pause_btn_text_custom">Вимкнути робочі додатки</string>
+    <string name="work_apps_paused_info_body_custom">Ваші робочі додатки не можуть надсилати вам сповіщення, використовувати заряд акумулятора або отримувати доступ до вашого місцезнаходження.</string>
+    <string name="work_apps_paused_telephony_unavailable_body_custom">Ваші робочі додатки не можуть приймати телефонні дзвінки чи текстові повідомлення, надсилати вам сповіщення, використовувати заряд акумулятора або отримувати доступ до вашого місцезнаходження.</string>
+    <string name="work_apps_paused_title_custom">Робочі додатки вимкнено</string>
+</resources>
