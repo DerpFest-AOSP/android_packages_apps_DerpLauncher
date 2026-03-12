@@ -215,7 +215,7 @@ public class QsbLayout extends FrameLayout implements Reorderable,
     }
 
     @Nullable
-    static String getSearchPackage(Context context) {
+    public static String getSearchPackage(Context context) {
         if (Utilities.isGSAEnabled(context)) {
             return Utilities.GSA_PACKAGE;
         }
