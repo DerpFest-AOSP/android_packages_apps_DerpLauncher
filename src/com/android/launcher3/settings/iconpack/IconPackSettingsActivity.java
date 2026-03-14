@@ -15,6 +15,8 @@
  */
 package com.android.launcher3.settings.iconpack;
 
+import static androidx.preference.PreferenceFragmentCompat.ARG_PREFERENCE_ROOT;
+
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,19 +47,38 @@ import java.util.Map;
 public final class IconPackSettingsActivity extends CollapsingToolbarBaseActivity implements
         OnPreferenceStartFragmentCallback, OnPreferenceStartScreenCallback {
 
+    public static final String EXTRA_FRAGMENT_ARGS = ":settings:fragment_args";
+    public static final String EXTRA_FRAGMENT_HIGHLIGHT_KEY = ":settings:fragment_args_key";
+    public static final String EXTRA_FRAGMENT_ROOT_KEY = ARG_PREFERENCE_ROOT;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.settings_activity);
+
         final ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         if (savedInstanceState == null) {
+            Bundle args = getIntent().getBundleExtra(EXTRA_FRAGMENT_ARGS);
+            if (args == null) {
+                args = new Bundle();
+            }
+            if (!TextUtils.isEmpty(getIntent().getStringExtra(EXTRA_FRAGMENT_HIGHLIGHT_KEY))) {
+                args.putString(EXTRA_FRAGMENT_HIGHLIGHT_KEY,
+                        getIntent().getStringExtra(EXTRA_FRAGMENT_HIGHLIGHT_KEY));
+            }
+            if (!TextUtils.isEmpty(getIntent().getStringExtra(EXTRA_FRAGMENT_ROOT_KEY))) {
+                args.putString(EXTRA_FRAGMENT_ROOT_KEY,
+                        getIntent().getStringExtra(EXTRA_FRAGMENT_ROOT_KEY));
+            }
+
             final FragmentManager fm = getSupportFragmentManager();
             final Fragment f = fm.getFragmentFactory().instantiate(getClassLoader(),
                     getString(R.string.icon_pack_settings_class));
-            f.setArguments(null);
+            f.setArguments(args);
             // Display the fragment as the main content.
             fm.beginTransaction()
                     .replace(com.android.settingslib.collapsingtoolbar.R.id.content_frame, f)
@@ -91,9 +112,8 @@ public final class IconPackSettingsActivity extends CollapsingToolbarBaseActivit
     @Override
     public boolean onPreferenceStartScreen(PreferenceFragmentCompat caller, PreferenceScreen pref) {
         Bundle args = new Bundle();
-        args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, pref.getKey());
-        return startFragment(getString(R.string.icon_pack_settings_class),
-                args, pref.getKey());
+        args.putString(ARG_PREFERENCE_ROOT, pref.getKey());
+        return startFragment(getString(R.string.icon_pack_settings_class), args, pref.getKey());
     }
 
     @Override
