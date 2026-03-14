@@ -186,6 +186,11 @@
     <string name="drawer_style_unavailable_with_caddy">Only normal style is available while Caddy layout is enabled.</string>
     <string name="drawer_list_unavailable_with_special_drawer">Caddy is only available when app drawer style is normal.</string>
 
+    <!-- Notification badge counts -->
+    <string name="notification_badge_counts_title">Notification count</string>
+    <string name="notification_badge_counts_summary">Show unread count on app icons instead of dots</string>
+    <string name="notification_badge_counts_disabled_summary">Enable notification dots first</string>
+
     <!-- App drawer sorting -->
     <string name="app_drawer_sort_alphabetical">Sort alphabetically</string>
     <string name="app_drawer_sort_install_date">Sort by install date</string>

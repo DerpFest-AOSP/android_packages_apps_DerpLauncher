@@ -59,6 +59,7 @@ import android.graphics.drawable.Drawable;
 
 import com.android.launcher3.customization.IconDatabase;
 import com.android.launcher3.settings.iconpack.IconPackSettingsActivity;
+import com.android.launcher3.util.SettingsCache;
 
 /**
  * Settings activity for Launcher.
@@ -68,6 +69,7 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
         SharedPreferences.OnSharedPreferenceChangeListener{
 
     private static final String NOTIFICATION_DOTS_PREFERENCE_KEY = "pref_icon_badging";
+    private static final String KEY_NOTIFICATION_BADGE_COUNTS = "pref_notification_badge_counts";
 
     public static final String EXTRA_FRAGMENT_ARG_KEY = ":settings:fragment_args_key";
     public static final String EXTRA_SHOW_FRAGMENT_ARGS = ":settings:show_fragment_args";
@@ -257,6 +259,16 @@ public class SettingsIcons extends CollapsingToolbarBaseActivity
         protected boolean initPreference(Preference preference) {
             switch (preference.getKey()) {
                 case NOTIFICATION_DOTS_PREFERENCE_KEY:
+                    return BuildConfig.NOTIFICATION_DOTS_ENABLED;
+
+                case KEY_NOTIFICATION_BADGE_COUNTS:
+                    boolean dotsEnabled = SettingsCache.INSTANCE.get(getContext())
+                            .getValue(SettingsCache.NOTIFICATION_BADGING_URI);
+                    preference.setEnabled(dotsEnabled);
+                    if (!dotsEnabled) {
+                        preference.setSummary(
+                                R.string.notification_badge_counts_disabled_summary);
+                    }
                     return BuildConfig.NOTIFICATION_DOTS_ENABLED;
 
                 case IconDatabase.KEY_ICON_PACK:

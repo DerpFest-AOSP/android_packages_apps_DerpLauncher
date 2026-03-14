@@ -173,6 +173,11 @@
     <string name="drawer_style_unavailable_with_caddy">Bei aktivem Caddy-Layout ist nur der normale Stil verfügbar.</string>
     <string name="drawer_list_unavailable_with_special_drawer">Caddy ist nur verfügbar, wenn der Stil der App-Übersicht auf „Normal“ steht.</string>
 
+    <!-- Notification badge counts -->
+    <string name="notification_badge_counts_title">Benachrichtigungsanzahl</string>
+    <string name="notification_badge_counts_summary">Ungelesene Anzahl auf App-Symbolen anstelle von Punkten anzeigen</string>
+    <string name="notification_badge_counts_disabled_summary">Benachrichtigungspunkte zuerst aktivieren</string>
+
     <!-- App drawer sorting -->
     <string name="app_drawer_sort_alphabetical">Alphabetisch sortieren</string>
     <string name="app_drawer_sort_install_date">Nach Installationsdatum sortieren</string>

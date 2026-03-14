@@ -38,7 +38,8 @@ public class FolderDotInfo extends DotInfo {
         if (dotToAdd == null) {
             return;
         }
-        mNumNotifications += dotToAdd.getNotificationKeys().size();
+        // Sum actual unread counts from all folder contents so badge counts match expectations.
+        mNumNotifications += dotToAdd.getNotificationCount();
         mNumNotifications = Utilities.boundToRange(
                 mNumNotifications, MIN_COUNT, DotInfo.MAX_COUNT);
     }

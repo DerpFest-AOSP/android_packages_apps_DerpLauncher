@@ -300,6 +300,8 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField
         val PROMISE_ICON_IDS = nonRestorableItem(InstallSessionHelper.PROMISE_ICON_IDS, "")
         @JvmField val WORK_EDU_STEP = backedUpItem("showed_work_profile_edu", 0)
+        @JvmField val NOTIFICATION_BADGE_COUNTS =
+            backedUpItem("pref_notification_badge_counts", true)
         @JvmField
         val WORKSPACE_SIZE =
             backedUpItem(DeviceGridState.KEY_WORKSPACE_SIZE, "", EncryptionType.ENCRYPTED)

@@ -54,6 +54,7 @@ import com.android.launcher3.CheckLongPressHelper;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.DropTarget.DragObject;
 import com.android.launcher3.Launcher;
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.LauncherSettings;
 import com.android.launcher3.OnAlarmListener;
 import com.android.launcher3.R;
@@ -61,6 +62,7 @@ import com.android.launcher3.Reorderable;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.Workspace;
 import com.android.launcher3.allapps.ActivityAllAppsContainerView;
+import com.android.launcher3.badge.BadgeRenderer;
 import com.android.launcher3.celllayout.CellLayoutLayoutParams;
 import com.android.launcher3.dot.FolderDotInfo;
 import com.android.launcher3.dragndrop.BaseItemDragListener;
@@ -135,6 +137,9 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
     private DotRenderer mDotRenderer;
     @ViewDebug.ExportedProperty(category = "launcher", deepExport = true)
     private final DotRenderer.DrawParams mDotParams;
+    private BadgeRenderer mBadgeRenderer;
+    private int mBadgeColor;
+    private int mBadgeCount;
     private float mDotScale;
     private Animator mDotScaleAnim;
 
@@ -169,8 +174,10 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
         mPreviewLayoutRule = new ClippedFolderIconLayoutRule();
         mPreviewItemManager = new PreviewItemManager(this);
         mDotParams = new DotRenderer.DrawParams();
-        mDotParams.setDotColor(Themes.getAttrColor(context, R.attr.notificationDotColor));
+        mBadgeColor = Themes.getAttrColor(context, R.attr.notificationDotColor);
+        mDotParams.setDotColor(mBadgeColor);
         mDotParams.shapeInfo = ThemeManager.INSTANCE.get(context).getIconState().getIconShapeInfo();
+        mBadgeCount = 0;
     }
 
     public static <T extends Context & ActivityContext> FolderIcon inflateFolderAndIcon(int resId,
@@ -227,6 +234,8 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
         icon.mInfo = folderInfo;
         icon.mActivity = activity;
         icon.mDotRenderer = grid.mDotRendererWorkSpace;
+        icon.mBadgeRenderer = new BadgeRenderer(
+                grid.getWorkspaceIconProfile().getIconSizePx());
 
         icon.updateDotInfo();
         icon.setContentDescription(icon.getAccessiblityTitle(folderInfo.title));
@@ -500,6 +509,9 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
             mDotInfo.addDotInfo(mActivity.getDotInfoForItem(si));
         }
         boolean isDotted = mDotInfo.hasDot();
+        if (isDotted) {
+            mBadgeCount = mDotInfo.getNotificationCount();
+        }
         float newDotScale = isDotted ? 1f : 0f;
         // Animate when a dot is first added or when it is removed.
         if ((hadDot ^ isDotted) && isShown()) {
@@ -628,7 +640,13 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
 
             // If we are animating to the accepting state, animate the dot out.
             mDotParams.scale = Math.max(0, mDotScale - mBackground.getAcceptScaleProgress());
-            mDotRenderer.draw(canvas, mDotParams);
+            if (LauncherPrefs.get(getContext()).get(LauncherPrefs.NOTIFICATION_BADGE_COUNTS)
+                    && mBadgeRenderer != null && mBadgeCount > 0) {
+                mBadgeRenderer.draw(canvas, iconBounds, mBadgeCount, mBadgeColor,
+                        mDotParams.scale);
+            } else {
+                mDotRenderer.draw(canvas, mDotParams);
+            }
         }
     }
 

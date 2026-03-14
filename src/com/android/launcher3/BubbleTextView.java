@@ -83,6 +83,8 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 
 import com.android.launcher3.accessibility.BaseAccessibilityDelegate;
+import com.android.launcher3.LauncherPrefs;
+import com.android.launcher3.badge.BadgeRenderer;
 import com.android.launcher3.dot.DotInfo;
 import com.android.launcher3.dragndrop.DragOptions.PreDragCondition;
 import com.android.launcher3.dragndrop.DraggableView;
@@ -213,6 +215,9 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
     private final DotRenderer mDotRenderer;
     @ViewDebug.ExportedProperty(category = "launcher", deepExport = true)
     protected final DotRenderer.DrawParams mDotParams;
+    private BadgeRenderer mBadgeRenderer;
+    private int mBadgeColor;
+    private int mBadgeCount;
     private Animator mDotScaleAnim;
     private boolean mForceHideDot;
     private boolean mIsShowingMinimalPopup;
@@ -339,15 +344,20 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
         mLongPressHelper = new CheckLongPressHelper(this);
 
         mDotParams = new DotRenderer.DrawParams();
-        mDotParams.setDotColor(Themes.getAttrColor(context, R.attr.notificationDotColor));
+        mBadgeColor = Themes.getAttrColor(context, R.attr.notificationDotColor);
+        mDotParams.setDotColor(mBadgeColor);
 
         if (mDisplay == DISPLAY_ALL_APPS) {
             mDotRenderer = mActivity.getDeviceProfile().mDotRendererAllApps;
+            mBadgeRenderer = new BadgeRenderer(
+                    mActivity.getDeviceProfile().getAllAppsProfile().getIconSizePx());
 
             mDotParams.shapeInfo = ThemeManager.INSTANCE.get(context)
                     .getIconState().getIconShapeInfo();
         } else {
             mDotRenderer = mActivity.getDeviceProfile().mDotRendererWorkSpace;
+            mBadgeRenderer = new BadgeRenderer(
+                    mActivity.getDeviceProfile().getWorkspaceIconProfile().getIconSizePx());
             mDotParams.shapeInfo = ThemeManager.INSTANCE.get(context)
                     .getIconState().getIconShapeInfo();
         }
@@ -384,6 +394,7 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
      */
     public void reset() {
         mDotInfo = null;
+        mBadgeCount = 0;
         cancelDotScaleAnim();
         mDotParams.scale = 0f;
         mForceHideDot = false;
@@ -862,7 +873,7 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
     }
 
     /**
-     * Draws the notification dot in the top right corner of the icon bounds.
+     * Draws the notification dot or a badge count in the top right corner of the icon bounds.
      *
      * @param canvas The canvas to draw to.
      */
@@ -873,7 +884,13 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
             final int scrollX = getScrollX();
             final int scrollY = getScrollY();
             canvas.translate(scrollX, scrollY);
-            mDotRenderer.draw(canvas, mDotParams);
+            if (LauncherPrefs.get(getContext()).get(LauncherPrefs.NOTIFICATION_BADGE_COUNTS)
+                    && mBadgeRenderer != null && mBadgeCount > 0) {
+                mBadgeRenderer.draw(canvas, mDotParams.iconBounds, mBadgeCount, mBadgeColor,
+                        mDotParams.scale);
+            } else {
+                mDotRenderer.draw(canvas, mDotParams);
+            }
             canvas.translate(-scrollX, -scrollY);
         }
     }
@@ -1282,6 +1299,10 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
             boolean wasDotted = mDotInfo != null;
             mDotInfo = mActivity.getDotInfoForItem(itemInfo);
             boolean isDotted = mDotInfo != null;
+            if (isDotted) {
+                // Cache last unread count so the badge can animate out smoothly.
+                mBadgeCount = mDotInfo.getNotificationCount();
+            }
             float newDotScale = isDotted ? 1f : 0;
             if (wasDotted || isDotted) {
                 // Animate when a dot is first added or when it is removed.

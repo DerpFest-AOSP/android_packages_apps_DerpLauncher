@@ -55,6 +55,7 @@ import static com.android.launcher3.LauncherConstants.TraceEvents.ON_START_EVT;
 import static com.android.launcher3.LauncherConstants.TraceEvents.SINGLE_TRACE_COOKIE;
 import static com.android.launcher3.LauncherPrefs.DRAWER_OPEN_KEYBOARD;
 import static com.android.launcher3.LauncherPrefs.FIXED_LANDSCAPE_MODE;
+import static com.android.launcher3.LauncherPrefs.NOTIFICATION_BADGE_COUNTS;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_ALL_APPS;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_ALL_APPS_PREDICTION;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_DESKTOP;
@@ -672,6 +673,16 @@ public class Launcher extends StatefulActivity<LauncherState>
         if (KEY_HOMESCREEN_DT_GESTURES.equals(key)) {
             mWorkspace.setDoubleTapGestures(Integer.valueOf(SharedPrefs.getString(
                 KEY_HOMESCREEN_DT_GESTURES, "1")));
+        }
+        if (NOTIFICATION_BADGE_COUNTS.getSharedPrefKey().equals(key)) {
+            getWorkspace().mapOverItems((info, view) -> {
+                view.invalidate();
+                return false;
+            });
+            mHotseat.mapOverItems((info, view) -> {
+                view.invalidate();
+                return false;
+            });
         }
         switch (key) {
             case Utilities.DESKTOP_SHOW_QUICKSPACE:
