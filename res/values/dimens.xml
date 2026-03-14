@@ -122,7 +122,7 @@
     <dimen name="all_apps_starting_vertical_translate">300dp</dimen>
     <dimen name="all_apps_search_bar_field_height">52dp</dimen>
     <!-- all_apps_search_bar_field_height / 2 -->
-    <dimen name="all_apps_search_bar_content_overlap">26dp</dimen>
+    <dimen name="all_apps_search_bar_content_overlap">16dp</dimen>
     <!-- affects padding above apps lists when tabs and floating header rows are not visible -->
     <!-- (always affects padding above search results) -->
     <dimen name="all_apps_search_bar_bottom_padding">30dp</dimen>
