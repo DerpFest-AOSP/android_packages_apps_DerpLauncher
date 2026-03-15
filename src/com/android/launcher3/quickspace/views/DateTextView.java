@@ -33,6 +33,7 @@ public class DateTextView extends DoubleShadowTextView {
     private final BroadcastReceiver mTimeChangeReceiver;
     private boolean mIsVisible = false;
     private boolean mIsEventMode = false;
+    private boolean mReceiverRegistered = false;
 
     public DateTextView(final Context context) {
         this(context, null);
@@ -60,15 +61,29 @@ public class DateTextView extends DoubleShadowTextView {
     }
 
     private void registerReceiver() {
+        if (mReceiverRegistered) return;
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_TIME_TICK);
         intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
         intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
         getContext().registerReceiver(mTimeChangeReceiver, intentFilter);
+        mReceiverRegistered = true;
     }
 
     private void unregisterReceiver() {
-        getContext().unregisterReceiver(mTimeChangeReceiver);
+        if (!mReceiverRegistered) return;
+        try {
+            getContext().unregisterReceiver(mTimeChangeReceiver);
+        } finally {
+            mReceiverRegistered = false;
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        unregisterReceiver();
+        mIsVisible = false;
     }
 
     public void onVisibilityAggregated(boolean isVisible) {
