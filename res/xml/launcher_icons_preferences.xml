@@ -25,6 +25,13 @@
         android:persistent="false"
         android:widgetLayout="@layout/notification_pref_warning" />
 
+    <SwitchPreferenceCompat
+        android:key="pref_notification_badge_counts"
+        android:title="@string/notification_badge_counts_title"
+        android:summary="@string/notification_badge_counts_summary"
+        android:defaultValue="true"
+        android:persistent="true" />
+
     <org.derpfest.support.preferences.ProperSeekBarPreference
         android:key="pref_custom_icon_size"
         android:title="@string/icon_size_title"

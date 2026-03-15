@@ -41,6 +41,11 @@
     <string name="two_line_labels_title">Zweizeilige Beschriftungen</string>
     <string name="two_line_labels_summary">Lange App-Namen in der App-Übersicht auf zwei Zeilen umbrechen</string>
 
+    <!-- Notification badge counts -->
+    <string name="notification_badge_counts_title">Benachrichtigungsanzahl</string>
+    <string name="notification_badge_counts_summary">Ungelesene Anzahl auf App-Symbolen anstelle von Punkten anzeigen</string>
+    <string name="notification_badge_counts_disabled_summary">Benachrichtigungspunkte zuerst aktivieren</string>
+
     <!-- All apps themed icons -->
     <string name="pref_themed_icons_title">Themen-Symbole in der App-Übersicht</string>
     <string name="pref_themed_icons_summary">Themen-Symbole vom Startbildschirm übernehmen</string>

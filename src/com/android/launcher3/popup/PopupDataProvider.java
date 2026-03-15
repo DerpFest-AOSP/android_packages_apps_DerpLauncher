@@ -22,6 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.launcher3.BubbleTextView;
+import com.android.launcher3.LauncherPrefChangeListener;
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.allapps.AllAppsStore;
 import com.android.launcher3.dagger.ActivityContextSingleton;
 import com.android.launcher3.dot.DotInfo;
@@ -68,6 +70,17 @@ public class PopupDataProvider {
 
         mContext.closeOnDestroy(mNotificationRepo.getUpdateStream().forEach(
                 mContext.getUiExecutor(), this::updateNotificationDots));
+
+        LauncherPrefChangeListener badgeCountListener = key -> {
+            if (LauncherPrefs.NOTIFICATION_BADGE_COUNTS.getSharedPrefKey().equals(key)) {
+                mContext.getUiExecutor().execute(
+                        () -> updateNotificationDots(packageUserKey -> true));
+            }
+        };
+        LauncherPrefs prefs = LauncherPrefs.get(mContext.asContext());
+        prefs.addListener(badgeCountListener, LauncherPrefs.NOTIFICATION_BADGE_COUNTS);
+        mContext.closeOnDestroy(() ->
+                prefs.removeListener(badgeCountListener, LauncherPrefs.NOTIFICATION_BADGE_COUNTS));
     }
 
     private Unit updateNotificationDots(Predicate<PackageUserKey> updatedDots) {

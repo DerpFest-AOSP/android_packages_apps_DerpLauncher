@@ -278,6 +278,8 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField val ENABLE_MINUS_ONE = backedUpItem("pref_enable_minus_one", true)
         @JvmField val ALLOW_WALLPAPER_ZOOMING = backedUpItem("pref_allow_wallpaper_zooming", true)
         @JvmField val AUTO_HIDE_DOTS = backedUpItem("pref_auto_hide_dots", true)
+        @JvmField val NOTIFICATION_BADGE_COUNTS =
+            backedUpItem("pref_notification_badge_counts", true)
         @JvmField val DOCK_AI_MUSIC_SEARCH = backedUpItem("pref_dock_ai_music_search", false)
         @JvmField val QSB_OUTER_OPACITY = backedUpItem("pref_qsb_outer_opacity", 70)
         @JvmField val DRAWER_SEARCH = backedUpItem("pref_drawer_search", true)

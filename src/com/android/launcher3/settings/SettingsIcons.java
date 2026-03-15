@@ -16,10 +16,17 @@
 
 package com.android.launcher3.settings;
 
+import static com.android.launcher3.util.Executors.MAIN_EXECUTOR;
+import static com.android.launcher3.util.SettingsCache.NOTIFICATION_BADGING_URI;
+
 import com.android.launcher3.BuildConfig;
 import com.android.launcher3.R;
+import com.android.launcher3.util.SafeCloseable;
+import com.android.launcher3.util.SettingsCache;
 
 import androidx.preference.Preference;
+
+import kotlin.Unit;
 
 /**
  * Settings activity for icon preferences.
@@ -27,6 +34,7 @@ import androidx.preference.Preference;
 public class SettingsIcons extends SettingsCategoryActivity {
 
     private static final String NOTIFICATION_DOTS_PREFERENCE_KEY = "pref_icon_badging";
+    private static final String KEY_NOTIFICATION_BADGE_COUNTS = "pref_notification_badge_counts";
 
     @Override
     protected String getSettingsFragmentName() {
@@ -34,6 +42,9 @@ public class SettingsIcons extends SettingsCategoryActivity {
     }
 
     public static class IconsSettingsFragment extends CategorySettingsFragment {
+
+        private Preference mBadgeCountsPref;
+        private SafeCloseable mDotsListener;
 
         @Override
         protected int getPreferencesXmlResId() {
@@ -45,7 +56,43 @@ public class SettingsIcons extends SettingsCategoryActivity {
             if (NOTIFICATION_DOTS_PREFERENCE_KEY.equals(preference.getKey())) {
                 return BuildConfig.NOTIFICATION_DOTS_ENABLED;
             }
+            if (KEY_NOTIFICATION_BADGE_COUNTS.equals(preference.getKey())) {
+                mBadgeCountsPref = preference;
+                updateBadgeCountsPref(SettingsCache.INSTANCE.get(getContext())
+                        .getValue(NOTIFICATION_BADGING_URI));
+                return BuildConfig.NOTIFICATION_DOTS_ENABLED;
+            }
             return true;
+        }
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            if (mBadgeCountsPref != null) {
+                mDotsListener = SettingsCache.INSTANCE.get(requireContext())
+                        .getListenableRef(NOTIFICATION_BADGING_URI)
+                        .forEach(MAIN_EXECUTOR, this::updateBadgeCountsPref);
+            }
+        }
+
+        @Override
+        public void onStop() {
+            if (mDotsListener != null) {
+                mDotsListener.close();
+                mDotsListener = null;
+            }
+            super.onStop();
+        }
+
+        private Unit updateBadgeCountsPref(boolean dotsEnabled) {
+            if (mBadgeCountsPref == null) {
+                return null;
+            }
+            mBadgeCountsPref.setEnabled(dotsEnabled);
+            mBadgeCountsPref.setSummary(dotsEnabled
+                    ? R.string.notification_badge_counts_summary
+                    : R.string.notification_badge_counts_disabled_summary);
+            return null;
         }
     }
 }

@@ -87,6 +87,7 @@ import com.android.launcher3.accessibility.BaseAccessibilityDelegate;
 import com.android.launcher3.anim.AnimatedFloat;
 import com.android.launcher3.apppairs.AppPairIcon;
 import com.android.launcher3.dot.DotInfo;
+import com.android.launcher3.dot.NotificationBadgeCounter;
 import com.android.launcher3.dragndrop.DragOptions.PreDragCondition;
 import com.android.launcher3.dragndrop.DraggableView;
 import com.android.launcher3.folder.FolderIcon;
@@ -209,6 +210,9 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
     @ViewDebug.ExportedProperty(category = "launcher")
     private DotInfo mDotInfo;
     private final DotRenderer mDotRenderer;
+    private final NotificationBadgeCounter mNotificationBadgeCounter;
+    private final int mDotColor;
+    private int mBadgeCount;
     @ViewDebug.ExportedProperty(category = "launcher", deepExport = true)
     protected final DotRenderer.DrawParams mDotParams;
     private Animator mDotScaleAnim;
@@ -413,7 +417,9 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
         }, this::shouldIgnoreTouchDown);
 
         mDotParams = new DotRenderer.DrawParams();
-        mDotParams.setDotColor(Themes.getAttrColor(context, R.attr.notificationDotColor));
+        mDotColor = Themes.getAttrColor(context, R.attr.notificationDotColor);
+        mDotParams.setDotColor(mDotColor);
+        mNotificationBadgeCounter = new NotificationBadgeCounter();
 
         if (mDisplay == DISPLAY_ALL_APPS) {
             mDotRenderer = new DotRenderer(
@@ -463,6 +469,7 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
      */
     public void reset() {
         mDotInfo = null;
+        mBadgeCount = 0;
         cancelDotScaleAnim();
         mDotParams.scale = 0f;
         mForceHideDot = false;
@@ -964,7 +971,7 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
     }
 
     /**
-     * Draws the notification dot in the top right corner of the icon bounds.
+     * Draws the notification dot or a badge count in the top right corner of the icon bounds.
      *
      * @param canvas The canvas to draw to.
      */
@@ -975,9 +982,17 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
             final int scrollX = getScrollX();
             final int scrollY = getScrollY();
             canvas.translate(scrollX, scrollY);
-            mDotRenderer.draw(canvas, mDotParams);
+            if (shouldShowNotificationCount()) {
+                mNotificationBadgeCounter.draw(canvas, mDotParams, mDotColor, mBadgeCount);
+            } else {
+                mDotRenderer.draw(canvas, mDotParams);
+            }
             canvas.translate(-scrollX, -scrollY);
         }
+    }
+
+    private boolean shouldShowNotificationCount() {
+        return mBadgeCount > 0 && LauncherPrefs.NOTIFICATION_BADGE_COUNTS.get(getContext());
     }
 
     /** Draws a background behind the App Title label when required. **/
@@ -1370,6 +1385,10 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
             boolean wasDotted = mDotInfo != null;
             mDotInfo = mActivity.getDotInfoForItem(itemInfo);
             boolean isDotted = mDotInfo != null;
+            if (isDotted) {
+                // Cache last unread count so the badge can animate out smoothly.
+                mBadgeCount = mDotInfo.getNotificationCount();
+            }
             float newDotScale = isDotted ? 1f : 0;
             if (wasDotted || isDotted) {
                 // Animate when a dot is first added or when it is removed.
