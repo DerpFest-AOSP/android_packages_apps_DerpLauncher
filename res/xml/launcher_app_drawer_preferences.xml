@@ -109,6 +109,31 @@
             android:defaultValue="80"
             launcher:iconSpaceReserved="false" />
 
+        <SwitchPreferenceCompat
+            android:key="pref_app_drawer_custom_color_enabled"
+            android:title="@string/pref_app_drawer_custom_color_title"
+            android:summary="@string/pref_app_drawer_custom_color_summary"
+            android:defaultValue="false"
+            android:persistent="true"
+            launcher:iconSpaceReserved="false" />
+
+        <!-- Opaque colors only: translucency comes from the background opacity setting above. -->
+        <org.derpfest.support.colorpicker.HsvColorPickerPreference
+            android:key="pref_app_drawer_custom_color_light"
+            android:title="@string/pref_app_drawer_custom_color_light_title"
+            android:defaultValue="-1"
+            android:dependency="pref_app_drawer_custom_color_enabled"
+            android:persistent="true"
+            launcher:iconSpaceReserved="false" />
+
+        <org.derpfest.support.colorpicker.HsvColorPickerPreference
+            android:key="pref_app_drawer_custom_color_dark"
+            android:title="@string/pref_app_drawer_custom_color_dark_title"
+            android:defaultValue="-16777216"
+            android:dependency="pref_app_drawer_custom_color_enabled"
+            android:persistent="true"
+            launcher:iconSpaceReserved="false" />
+
     </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

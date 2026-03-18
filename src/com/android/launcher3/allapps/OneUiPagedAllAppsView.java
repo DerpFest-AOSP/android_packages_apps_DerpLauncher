@@ -455,7 +455,7 @@ public class OneUiPagedAllAppsView extends PagedView<PageIndicatorDots> {
     private class PageAdapter extends RecyclerView.Adapter<PageAdapter.IconHolder> {
         private final List<AppInfo> mPageApps;
         private final int mCellHeight;
-        private final boolean mForceDarkText;
+        private final boolean mOverrideTextColor;
         private final int mTextColor;
         private final int mLayoutRes;
         private final View.OnClickListener mClickListener;
@@ -466,10 +466,8 @@ public class OneUiPagedAllAppsView extends PagedView<PageIndicatorDots> {
             mPageApps = pageApps;
             mCellHeight = cellHeight;
             Context ctx = mActivityContext.asContext();
-            mForceDarkText = LauncherPrefs.ALL_APPS_DARK_TEXT.get(ctx);
-            mTextColor = mForceDarkText
-                    ? ctx.getColor(R.color.all_apps_label_color_dark_forced)
-                    : 0;
+            mOverrideTextColor = AppDrawerStyle.overridesContentColor(ctx);
+            mTextColor = mOverrideTextColor ? AppDrawerStyle.getContentColor(ctx) : 0;
             mLayoutRes = LauncherPrefs.ENABLE_TWOLINE_ALLAPPS_TOGGLE.get(ctx)
                     ? R.layout.all_apps_icon_twoline : R.layout.all_apps_icon;
             mClickListener = mActivityContext.getItemOnClickListener();
@@ -506,7 +504,7 @@ public class OneUiPagedAllAppsView extends PagedView<PageIndicatorDots> {
                 icon.setLayoutParams(lp);
             }
             icon.reset();
-            if (mForceDarkText) {
+            if (mOverrideTextColor) {
                 icon.setTextColor(mTextColor);
             }
             icon.applyFromApplicationInfo(mPageApps.get(position));

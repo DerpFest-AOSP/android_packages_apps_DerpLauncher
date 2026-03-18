@@ -310,6 +310,12 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField val DRAWER_OPEN_KEYBOARD = backedUpItem("pref_drawer_open_keyboard", false)
         @JvmField val BLUR_DEPTH = backedUpItem("pref_blur_depth", 34)
         @JvmField val APP_DRAWER_OPACITY = backedUpItem("pref_app_drawer_opacity", 80)
+        @JvmField val APP_DRAWER_CUSTOM_COLOR_ENABLED =
+            backedUpItem("pref_app_drawer_custom_color_enabled", false)
+        @JvmField val APP_DRAWER_CUSTOM_COLOR_LIGHT =
+            backedUpItem("pref_app_drawer_custom_color_light", -1) // #FFFFFFFF
+        @JvmField val APP_DRAWER_CUSTOM_COLOR_DARK =
+            backedUpItem("pref_app_drawer_custom_color_dark", -16777216) // #FF000000
         @JvmField val RECENTS_OPACITY = backedUpItem("pref_recents_opacity", 40)
         @JvmField
         val PROMISE_ICON_IDS = nonRestorableItem(InstallSessionHelper.PROMISE_ICON_IDS, "")

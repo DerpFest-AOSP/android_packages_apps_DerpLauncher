@@ -26,6 +26,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PaintDrawable;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.text.Selection;
@@ -38,6 +39,8 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.MarginLayoutParams;
 
+import androidx.core.graphics.ColorUtils;
+
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.ExtendedEditText;
 import com.android.launcher3.Insettable;
@@ -45,6 +48,7 @@ import com.android.launcher3.R;
 import com.android.launcher3.qsb.QsbLayout;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.allapps.ActivityAllAppsContainerView;
+import com.android.launcher3.allapps.AppDrawerStyle;
 import com.android.launcher3.allapps.AllAppsStore;
 import com.android.launcher3.allapps.BaseAllAppsAdapter.AdapterItem;
 import com.android.launcher3.allapps.PrivateProfileManager;
@@ -91,6 +95,26 @@ public class AppsSearchContainerLayout extends ExtendedEditText
 
         mContentOverlap =
                 getResources().getDimensionPixelSize(R.dimen.all_apps_search_bar_content_overlap);
+        if (AppDrawerStyle.isCustomColorEnabled(context)) {
+            float radius = getResources().getDimension(R.dimen.rounded_button_radius);
+            PaintDrawable background = new PaintDrawable(
+                    AppDrawerStyle.getSearchBackgroundColor(context));
+            background.setCornerRadius(radius);
+            setClipToOutline(radius > 0);
+            setBackground(background);
+            int contentColor = AppDrawerStyle.getSearchContentColor(context, getCurrentTextColor());
+            setTextColor(contentColor);
+            setHintTextColor(ColorUtils.setAlphaComponent(contentColor, AppDrawerStyle.HINT_ALPHA));
+        }
+    }
+
+    private Drawable tintMonochromeIcon(Drawable drawable) {
+        if (drawable == null || !AppDrawerStyle.isCustomColorEnabled(getContext())) {
+            return drawable;
+        }
+        Drawable copy = drawable.mutate();
+        copy.setTint(AppDrawerStyle.getSearchContentColor(getContext(), getCurrentTextColor()));
+        return copy;
     }
 
     @Override
@@ -174,11 +198,13 @@ public class AppsSearchContainerLayout extends ExtendedEditText
             if (!isDockThemed) {
                 setCompoundDrawablesRelativeWithIntrinsicBounds(gIcon, null, actions, null);
             } else {
-                setCompoundDrawablesRelativeWithIntrinsicBounds(gIconThemed, null, actionsThemed,
+                setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        tintMonochromeIcon(gIconThemed), null, tintMonochromeIcon(actionsThemed),
                         null);
             }
         } else {
-            setCompoundDrawablesRelativeWithIntrinsicBounds(sIcon, null, actions, null);
+            setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    tintMonochromeIcon(sIcon), null, actions, null);
         }
 
         int leftSlotWidth = getResources().getDimensionPixelSize(R.dimen.qsb_icon_tap_size);

@@ -52,10 +52,14 @@ public class LetterListTextView extends TextView {
 
     public LetterListTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mLetterBackground = context.getDrawable(R.drawable.bg_letter_list_text);
+        mLetterBackground = context.getDrawable(R.drawable.bg_letter_list_text).mutate();
+        if (AppDrawerStyle.isCustomColorEnabled(context)) {
+            mLetterBackground.setTint(AppDrawerStyle.getSearchBackgroundColor(context));
+        }
         mLetterListTextWidthAndHeight = context.getResources().getDimensionPixelSize(
                 R.dimen.fastscroll_list_letter_size);
-        mTextColor = context.getColor(R.color.materialColorOnSurface);
+        mTextColor = AppDrawerStyle.getSearchContentColor(context,
+                context.getColor(R.color.materialColorOnSurface));
     }
 
     @Override
