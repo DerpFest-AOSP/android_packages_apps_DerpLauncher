@@ -179,6 +179,7 @@
     <string name="notification_badge_counts_disabled_summary">Benachrichtigungspunkte zuerst aktivieren</string>
 
     <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">App-Drawer-Sortierung</string>
     <string name="app_drawer_sort_alphabetical">Alphabetisch sortieren</string>
     <string name="app_drawer_sort_install_date">Nach Installationsdatum sortieren</string>
     <string name="app_drawer_sort_usage">Nach Nutzung sortieren</string>

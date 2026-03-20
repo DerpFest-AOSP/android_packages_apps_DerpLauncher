@@ -76,14 +76,14 @@ public class AppInfoComparator implements Comparator<AppInfo> {
 
     @Override
     public int compare(AppInfo a, AppInfo b) {
-        int sortMode = LauncherPrefs.INSTANCE.get(mContext).get(LauncherPrefs.APP_DRAWER_SORT_MODE);
+        String sortMode = LauncherPrefs.INSTANCE.get(mContext).get(LauncherPrefs.APP_DRAWER_SORT_MODE);
 
-        if (sortMode == 1) {
+        if ("install_date".equals(sortMode)) {
             int result = Long.compare(b.firstInstallTime, a.firstInstallTime);
             if (result != 0) {
                 return result;
             }
-        } else if (sortMode == 2) {
+        } else if ("usage".equals(sortMode)) {
             Map<String, Long> stats = getUsageStats();
             long usageA = 0L;
             long usageB = 0L;
