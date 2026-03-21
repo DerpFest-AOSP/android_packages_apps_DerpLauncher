@@ -27,6 +27,8 @@ public final class AppDrawerStyle {
     public static final String HORIZONTAL_LIST = "horizontal_list";
     public static final String VERTICAL_PAGED = "vertical";
     public static final String FULLSCREEN = "fullscreen";
+    /** Homescreen-only: no app drawer; apps are placed on workspace pages (iOS-like). */
+    public static final String IOS = "ios";
 
     private AppDrawerStyle() { }
 
@@ -34,6 +36,10 @@ public final class AppDrawerStyle {
         String style = LauncherPrefs.APP_DRAWER_STYLE.get(context);
         if (!isSupported(style)) {
             return NORMAL;
+        }
+        // iOS style is independent of Caddy (drawer list) — there is no drawer to combine.
+        if (IOS.equals(style)) {
+            return style;
         }
         // Caddy (categorized folders) is only combined with the normal drawer in settings.
         if (!LauncherPrefs.INSTANCE.get(context).get(LauncherPrefs.DRAWER_LIST)) {
@@ -46,7 +52,8 @@ public final class AppDrawerStyle {
         return NORMAL.equals(style)
                 || HORIZONTAL_LIST.equals(style)
                 || VERTICAL_PAGED.equals(style)
-                || FULLSCREEN.equals(style);
+                || FULLSCREEN.equals(style)
+                || IOS.equals(style);
     }
 
     public static boolean isNormal(String style) {
@@ -71,6 +78,10 @@ public final class AppDrawerStyle {
      */
     public static boolean isLegacyFullscreen(String style) {
         return FULLSCREEN.equals(style);
+    }
+
+    public static boolean isIos(String style) {
+        return IOS.equals(style);
     }
 
     public static boolean isFullscreen(Context context) {

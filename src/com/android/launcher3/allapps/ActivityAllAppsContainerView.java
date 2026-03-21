@@ -1589,7 +1589,8 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         if (!LauncherPrefs.DRAWER_SCROLLBAR.get(getContext())) {
             return false;
         }
-        return !AppDrawerStyle.isVerticalPaged(mAppDrawerStyle);
+        return !AppDrawerStyle.isVerticalPaged(mAppDrawerStyle)
+                && !AppDrawerStyle.isIos(mAppDrawerStyle);
     }
 
     private void updateAppsPerRowState(@NonNull DeviceProfile dp, boolean refreshAdapterItems) {

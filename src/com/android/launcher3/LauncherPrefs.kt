@@ -270,6 +270,9 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField val APP_DRAWER_OPACITY = backedUpItem("pref_app_drawer_opacity", 80)
         @JvmField val APP_DRAWER_SORT_MODE = backedUpItem("pref_app_drawer_sort_mode", 0)
         @JvmField val APP_DRAWER_STYLE = backedUpItem("pref_app_drawer_style", "normal")
+        @JvmField
+        val IOS_STYLE_WORKSPACE_MIGRATED =
+            nonRestorableItem("pref_ios_style_workspace_migrated", false)
         @JvmField val DRAWER_SCROLLBAR = backedUpItem("pref_drawer_scrollbar", true)
         @JvmField val DOCK_SEARCH = backedUpItem("pref_dock_search", true)
         @JvmField

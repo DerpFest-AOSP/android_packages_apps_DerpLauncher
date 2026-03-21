@@ -43,6 +43,7 @@ import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.Flags;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherState;
+import com.android.launcher3.allapps.AppDrawerStyle;
 import com.android.launcher3.states.StateAnimationConfig;
 
 /**
@@ -145,6 +146,9 @@ public class AllAppsSwipeController extends AbstractStateChangeTouchController {
 
     @Override
     protected boolean canInterceptTouch(MotionEvent ev) {
+        if (AppDrawerStyle.isIos(AppDrawerStyle.get(mLauncher))) {
+            return false;
+        }
         if (mCurrentAnimation != null) {
             // If we are already animating from a previous state, we can intercept.
             return true;
@@ -165,7 +169,7 @@ public class AllAppsSwipeController extends AbstractStateChangeTouchController {
     @Override
     protected LauncherState getTargetState(LauncherState fromState, boolean isDragTowardPositive) {
         if (fromState == NORMAL && shouldOpenAllApps(isDragTowardPositive)) {
-            return ALL_APPS;
+            return mLauncher.canOpenAllApps() ? ALL_APPS : NORMAL;
         } else if (fromState == ALL_APPS && !isDragTowardPositive) {
             return NORMAL;
         }

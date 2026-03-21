@@ -230,10 +230,13 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
                 mDrawerListPref.setOnPreferenceChangeListener((preference, newValue) -> {
                     boolean defaultList = (Boolean) newValue;
                     if (!defaultList) {
-                        LauncherPrefs.INSTANCE.get(requireContext()).put(
-                                LauncherPrefs.APP_DRAWER_STYLE, AppDrawerStyle.NORMAL);
-                        if (mDrawerStylePref != null) {
-                            mDrawerStylePref.setValue(AppDrawerStyle.NORMAL);
+                        if (!AppDrawerStyle.isIos(LauncherPrefs.INSTANCE.get(requireContext())
+                                .get(LauncherPrefs.APP_DRAWER_STYLE))) {
+                            LauncherPrefs.INSTANCE.get(requireContext()).put(
+                                    LauncherPrefs.APP_DRAWER_STYLE, AppDrawerStyle.NORMAL);
+                            if (mDrawerStylePref != null) {
+                                mDrawerStylePref.setValue(AppDrawerStyle.NORMAL);
+                            }
                         }
                     }
                     return true;
@@ -362,7 +365,10 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
 
         private void updateOpenKeyboardEnabled() {
             if (mOpenKeyboardPref == null || mSearchPlacementPref == null) return;
-            mOpenKeyboardPref.setEnabled(!"hidden".equals(mSearchPlacementPref.getValue()));
+            boolean searchVisible = !"hidden".equals(mSearchPlacementPref.getValue());
+            String style = mDrawerStylePref == null
+                    ? AppDrawerStyle.NORMAL : mDrawerStylePref.getValue();
+            mOpenKeyboardPref.setEnabled(searchVisible && !AppDrawerStyle.isIos(style));
         }
 
         /** Aligns stored drawer style with Caddy rules and refreshes enabled state / summaries. */
@@ -373,7 +379,8 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
             }
             boolean defaultList = LauncherPrefs.INSTANCE.get(ctx).get(LauncherPrefs.DRAWER_LIST);
             String storedStyle = LauncherPrefs.INSTANCE.get(ctx).get(LauncherPrefs.APP_DRAWER_STYLE);
-            if (!defaultList && !AppDrawerStyle.NORMAL.equals(storedStyle)) {
+            if (!defaultList && !AppDrawerStyle.NORMAL.equals(storedStyle)
+                    && !AppDrawerStyle.isIos(storedStyle)) {
                 LauncherPrefs.INSTANCE.get(ctx).put(LauncherPrefs.APP_DRAWER_STYLE, AppDrawerStyle.NORMAL);
                 if (mDrawerStylePref != null) {
                     mDrawerStylePref.setValue(AppDrawerStyle.NORMAL);
@@ -391,8 +398,11 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
             boolean nonNormal = !AppDrawerStyle.NORMAL.equals(storedStyle);
 
             if (mDrawerStylePref != null) {
-                mDrawerStylePref.setEnabled(defaultList);
-                if (!defaultList) {
+                final boolean ios = AppDrawerStyle.isIos(storedStyle);
+                mDrawerStylePref.setEnabled(defaultList || ios);
+                if (ios) {
+                    mDrawerStylePref.setSummary(ctx.getString(R.string.drawer_style_summary_ios_forced));
+                } else if (!defaultList) {
                     mDrawerStylePref.setSummary(ctx.getString(R.string.drawer_style_unavailable_with_caddy));
                 } else {
                     mDrawerStylePref.setSummary(mDrawerStylePref.getEntry());

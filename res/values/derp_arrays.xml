@@ -66,6 +66,7 @@
         <item>@string/drawer_style_legacy</item>
         <item>@string/drawer_style_list</item>
         <item>@string/drawer_style_oneui</item>
+        <item>@string/drawer_style_ios</item>
     </string-array>
 
     <string-array name="app_drawer_style_values" translatable="false">
@@ -73,5 +74,6 @@
         <item>fullscreen</item>
         <item>horizontal_list</item>
         <item>vertical</item>
+        <item>ios</item>
     </string-array>
 </resources>

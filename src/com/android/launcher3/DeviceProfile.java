@@ -963,7 +963,7 @@ public class DeviceProfile {
     public boolean shouldShowAllAppsOnSheet(@Nullable Context context) {
         if (context != null) {
             String style = AppDrawerStyle.get(context);
-            if (AppDrawerStyle.isFullscreen(style)) {
+            if (AppDrawerStyle.isIos(style) || AppDrawerStyle.isFullscreen(style)) {
                 return false;
             }
         }

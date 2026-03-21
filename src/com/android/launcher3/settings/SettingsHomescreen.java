@@ -34,6 +34,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreferenceCompat;
 import androidx.preference.PreferenceFragmentCompat.OnPreferenceStartFragmentCallback;
 import androidx.preference.PreferenceFragmentCompat.OnPreferenceStartScreenCallback;
 import androidx.preference.PreferenceGroup.PreferencePositionCallback;
@@ -47,7 +48,9 @@ import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
+import com.android.launcher3.SessionCommitReceiver;
 import com.android.launcher3.Utilities;
+import com.android.launcher3.allapps.AppDrawerStyle;
 import com.android.launcher3.model.WidgetsModel;
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
@@ -165,6 +168,7 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
 
         private Preference mShowGoogleAppPref;
         private Preference mShowGoogleBarPref;
+        private SwitchPreferenceCompat mAddIconPref;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -191,7 +195,10 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
 
             mShowGoogleAppPref = screen.findPreference(KEY_MINUS_ONE);
             mShowGoogleBarPref = screen.findPreference(LauncherPrefs.DOCK_SEARCH.getSharedPrefKey());
+            mAddIconPref = (SwitchPreferenceCompat) screen.findPreference(
+                    SessionCommitReceiver.ADD_ICON_PREFERENCE_KEY);
             updateIsGoogleAppEnabled();
+            updateAddIconToHomeForDrawerStyle();
 
             if (getActivity() != null && !TextUtils.isEmpty(getPreferenceScreen().getTitle())) {
                 getActivity().setTitle(getPreferenceScreen().getTitle());
@@ -235,6 +242,9 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
                     LauncherPrefs.AUTO_HIDE_DOTS.getSharedPrefKey().equals(key)) {
                 LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
             }
+            if (LauncherPrefs.APP_DRAWER_STYLE.getSharedPrefKey().equals(key)) {
+                updateAddIconToHomeForDrawerStyle();
+            }
             if (Utilities.DESKTOP_SHOW_QUICKSPACE.equals(key) ||
                     Utilities.KEY_SHOW_QUICKSPACE_NOWPLAYING.equals(key) ||
                     Utilities.KEY_SHOW_QUICKSPACE_NOWPLAYING_SHOWDATE.equals(key) ||
@@ -270,6 +280,22 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
             }
         }
 
+        private void updateAddIconToHomeForDrawerStyle() {
+            if (mAddIconPref == null || getContext() == null) {
+                return;
+            }
+            boolean ios = AppDrawerStyle.isIos(
+                    LauncherPrefs.INSTANCE.get(getContext()).get(LauncherPrefs.APP_DRAWER_STYLE));
+            if (ios) {
+                mAddIconPref.setChecked(true);
+                mAddIconPref.setEnabled(false);
+                mAddIconPref.setSummary(R.string.auto_add_shortcuts_forced_ios_summary);
+            } else {
+                mAddIconPref.setEnabled(true);
+                mAddIconPref.setSummary(R.string.auto_add_shortcuts_description);
+            }
+        }
+
         /**
          * Initializes a preference. This is called for every preference. Returning false here
          * will remove that preference from the list.
@@ -292,6 +318,7 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
                 }
             }
             updateIsGoogleAppEnabled();
+            updateAddIconToHomeForDrawerStyle();
         }
 
         private PreferenceHighlighter createHighlighter() {

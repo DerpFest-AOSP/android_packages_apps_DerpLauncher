@@ -167,6 +167,9 @@
     <string name="drawer_style_legacy">Vollbild (alt)</string>
     <string name="drawer_style_list">Listenstil</string>
     <string name="drawer_style_oneui">OneUI-Stil (Seiten)</string>
+    <string name="drawer_style_ios">iOS-Stil (nur Startbildschirm)</string>
+    <string name="drawer_style_summary_ios_forced">Die App-Übersicht ist deaktiviert; Apps vom Startbildschirm aus hinzufügen</string>
+    <string name="auto_add_shortcuts_forced_ios_summary">Wird automatisch aktiviert, solange der iOS-Stil aktiv ist</string>
     <string name="drawer_style_unavailable_with_caddy">Bei aktivem Caddy-Layout ist nur der normale Stil verfügbar.</string>
     <string name="drawer_list_unavailable_with_special_drawer">Caddy ist nur verfügbar, wenn der Stil der App-Übersicht auf „Normal“ steht.</string>
 
