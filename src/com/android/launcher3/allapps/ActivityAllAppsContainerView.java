@@ -1287,6 +1287,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     }
 
     protected void updateBackgroundVisibility(DeviceProfile deviceProfile) {
+        updateAppDrawerStyle();
         boolean showOnSheet = deviceProfile.shouldShowAllAppsOnSheet(getContext());
         mBottomSheetBackground.setVisibility(showOnSheet ? View.VISIBLE : View.GONE);
         if (AppDrawerStyle.isVerticalPaged(mAppDrawerStyle)) {
@@ -1513,7 +1514,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        if (AppDrawerStyle.isFullscreen(mAppDrawerStyle)
+        if (AppDrawerStyle.isLegacyFullscreen(mAppDrawerStyle)
                 && child == getAppsRecyclerViewContainer()
                 && mSearchContainer != null
                 && mSearchContainer.getVisibility() == VISIBLE) {

@@ -65,6 +65,14 @@ public final class AppDrawerStyle {
         return FULLSCREEN.equals(style) || VERTICAL_PAGED.equals(style);
     }
 
+    /**
+     * Legacy fullscreen drawer only (not OneUI vertical paged). Used where behavior must match the
+     * old fullscreen layout, not the paged UI.
+     */
+    public static boolean isLegacyFullscreen(String style) {
+        return FULLSCREEN.equals(style);
+    }
+
     public static boolean isFullscreen(Context context) {
         return isFullscreen(get(context));
     }
