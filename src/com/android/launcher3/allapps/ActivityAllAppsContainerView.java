@@ -916,6 +916,13 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     }
 
     protected void updateHeaderScroll(int scrolledOffset) {
+        if (AppDrawerStyle.isVerticalPaged(mAppDrawerStyle)) {
+            if (mTabsProtectionAlpha != 0) {
+                mTabsProtectionAlpha = 0;
+                invalidateHeader();
+            }
+            return;
+        }
         float prog1 = Utilities.boundToRange((float) scrolledOffset / mHeaderThreshold, 0f, 1f);
         int tabsAlpha = mHeader.getPeripheralProtectionHeight(/* expectedHeight */ false) == 0 ? 0
                 : (int) (Utilities.boundToRange(
@@ -1280,8 +1287,13 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     }
 
     protected void updateBackgroundVisibility(DeviceProfile deviceProfile) {
-        mBottomSheetBackground.setVisibility(
-                deviceProfile.shouldShowAllAppsOnSheet(getContext()) ? View.VISIBLE : View.GONE);
+        boolean showOnSheet = deviceProfile.shouldShowAllAppsOnSheet(getContext());
+        mBottomSheetBackground.setVisibility(showOnSheet ? View.VISIBLE : View.GONE);
+        if (AppDrawerStyle.isVerticalPaged(mAppDrawerStyle)) {
+            setBackgroundColor(mScrimColor);
+        } else {
+            setBackground(null);
+        }
         // Note: The opaque sheet background and header protection are added in drawOnScrim.
         // For the taskbar entrypoint, the scrim is drawn by its abstract slide in view container,
         // so its header protection is derived from this scrim instead.

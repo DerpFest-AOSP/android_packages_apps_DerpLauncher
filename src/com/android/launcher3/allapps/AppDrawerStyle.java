@@ -62,7 +62,7 @@ public final class AppDrawerStyle {
     }
 
     public static boolean isFullscreen(String style) {
-        return FULLSCREEN.equals(style);
+        return FULLSCREEN.equals(style) || VERTICAL_PAGED.equals(style);
     }
 
     public static boolean isFullscreen(Context context) {
