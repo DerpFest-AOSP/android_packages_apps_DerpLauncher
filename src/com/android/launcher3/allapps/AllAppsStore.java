@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
 
 import com.android.launcher3.BubbleTextView;
 import com.android.launcher3.dagger.ActivityContextSingleton;
+import com.android.launcher3.folder.FolderIcon;
 import com.android.launcher3.icons.FastBitmapDrawable;
 import com.android.launcher3.model.data.AppInfo;
 import com.android.launcher3.model.data.ItemInfo;
@@ -229,6 +230,27 @@ public class AllAppsStore {
                 if (child instanceof BubbleTextView) {
                     action.accept((BubbleTextView) child);
                 }
+            }
+        }
+    }
+
+    /** Invalidates every app icon view in registered containers (including nested folder rows). */
+    public void invalidateAllIcons() {
+        for (int i = mIconContainers.size() - 1; i >= 0; i--) {
+            invalidateIconsRecursive(mIconContainers.get(i));
+        }
+    }
+
+    private void invalidateIconsRecursive(ViewGroup parent) {
+        int childCount = parent.getChildCount();
+        for (int j = 0; j < childCount; j++) {
+            View child = parent.getChildAt(j);
+            if (child instanceof BubbleTextView) {
+                child.invalidate();
+            } else if (child instanceof FolderIcon) {
+                child.invalidate();
+            } else if (child instanceof ViewGroup) {
+                invalidateIconsRecursive((ViewGroup) child);
             }
         }
     }

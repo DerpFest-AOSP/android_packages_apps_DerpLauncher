@@ -683,6 +683,9 @@ public class Launcher extends StatefulActivity<LauncherState>
                 view.invalidate();
                 return false;
             });
+            if (mAppsView != null) {
+                mAppsView.getAppsStore().invalidateAllIcons();
+            }
         }
         switch (key) {
             case Utilities.DESKTOP_SHOW_QUICKSPACE:
