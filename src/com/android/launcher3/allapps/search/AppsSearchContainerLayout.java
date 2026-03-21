@@ -29,8 +29,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Process;
@@ -49,8 +47,6 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.PopupMenu;
 
-import androidx.core.graphics.ColorUtils;
-
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.ExtendedEditText;
 import com.android.launcher3.Insettable;
@@ -65,7 +61,6 @@ import com.android.launcher3.allapps.PrivateProfileManager;
 import com.android.launcher3.allapps.SearchUiManager;
 import com.android.launcher3.search.SearchCallback;
 import com.android.launcher3.util.ApiWrapper;
-import com.android.launcher3.util.Themes;
 import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.views.ActivityContext;
 
@@ -106,12 +101,17 @@ public class AppsSearchContainerLayout extends ExtendedEditText
 
         mContentOverlap =
                 getResources().getDimensionPixelSize(R.dimen.all_apps_search_bar_content_overlap);
+
+        // Drawer sort menu (overflow icon was removed with the search bar visual redesign revert).
+        setOnLongClickListener(v -> {
+            showSortingOptions();
+            return true;
+        });
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        applySearchBarVisualStyle();
         if (mAppsView != null) {
             mAppsView.getAppsStore().addUpdateListener(this);
         }
@@ -163,10 +163,6 @@ public class AppsSearchContainerLayout extends ExtendedEditText
         Drawable sIcon = getContext().getDrawable(R.drawable.ic_allapps_search);
         Drawable actions = getContext().getDrawable(R.drawable.ic_allapps_actions_color);
         Drawable actionsThemed = getContext().getDrawable(R.drawable.ic_allapps_actions_themed);
-        Drawable optionsIcon = getContext().getDrawable(R.drawable.ic_more_vert_dots);
-        if (optionsIcon != null) {
-            optionsIcon.setTint(Themes.getAttrColor(getContext(), android.R.attr.textColorPrimary));
-        }
 
         // Shift the widget horizontally so that its centered in the parent (b/63428078)
         View parent = (View) getParent();
@@ -182,36 +178,19 @@ public class AppsSearchContainerLayout extends ExtendedEditText
         boolean isDockThemed = ThemeManager.INSTANCE.get(getContext()).isMonoThemeEnabled();
         boolean hasGoogleApp = Utilities.isGSAEnabled(getContext());
 
-        Drawable leftStart;
-        Drawable endDrawable;
         if (showQSB) {
-            leftStart = isDockThemed ? gIconThemed : gIcon;
-            endDrawable = mergeActionsAndSortDrawable(
-                    isDockThemed ? actionsThemed : actions, optionsIcon);
+            if (!isDockThemed) {
+                setCompoundDrawablesRelativeWithIntrinsicBounds(gIcon, null, actions, null);
+            } else {
+                setCompoundDrawablesRelativeWithIntrinsicBounds(gIconThemed, null, actionsThemed, null);
+            }
         } else {
-            leftStart = sIcon;
-            endDrawable = mergeActionsAndSortDrawable(actions, optionsIcon);
+            setCompoundDrawablesRelativeWithIntrinsicBounds(sIcon, null, actions, null);
         }
-        if (leftStart != null) {
-            int lw = leftStart.getIntrinsicWidth();
-            int lh = leftStart.getIntrinsicHeight();
-            if (lw <= 0) {
-                lw = (int) (24 * getResources().getDisplayMetrics().density);
-            }
-            if (lh <= 0) {
-                lh = (int) (24 * getResources().getDisplayMetrics().density);
-            }
-            leftStart.setBounds(0, 0, lw, lh);
-        }
-        if (endDrawable != null) {
-            Rect eb = endDrawable.getBounds();
-            endDrawable.setBounds(0, 0, eb.width(), eb.height());
-        }
-        setCompoundDrawablesRelative(leftStart, null, endDrawable, null);
 
         int leftSlotWidth = getResources().getDimensionPixelSize(R.dimen.qsb_icon_tap_size);
         int actionSlotWidth = getResources().getDimensionPixelSize(R.dimen.qsb_icon_tap_size);
-        int rightGroupWidth = actionSlotWidth * 3;
+        int rightGroupWidth = actionSlotWidth * 2;
         int rightGroupStart = getWidth() - getPaddingEnd() - rightGroupWidth;
 
         setOnTouchListener(new OnTouchListener() {
@@ -219,7 +198,7 @@ public class AppsSearchContainerLayout extends ExtendedEditText
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     float touchX = event.getX();
-                    Drawable rightCompound = getCompoundDrawablesRelative()[2];
+                    Drawable rightDrawable = getCompoundDrawablesRelative()[2];
                     Drawable leftDrawable = getCompoundDrawablesRelative()[0];
 
                     // Left slot (G icon when showQSB)
@@ -236,8 +215,8 @@ public class AppsSearchContainerLayout extends ExtendedEditText
                         return false;
                     }
 
-                    // Right: mic | lens | sort menu
-                    if (rightCompound != null && touchX >= rightGroupStart) {
+                    // Right two slots: mic then lens
+                    if (rightDrawable != null && touchX >= rightGroupStart) {
                         if (touchX < (rightGroupStart + actionSlotWidth)) {
                             String searchPackage = QsbContainerView.getSearchWidgetPackageName(getContext());
                             if (searchPackage != null) {
@@ -246,7 +225,7 @@ public class AppsSearchContainerLayout extends ExtendedEditText
                                         .setPackage(searchPackage);
                                 getContext().startActivity(voiceIntent);
                             }
-                        } else if (touchX < (rightGroupStart + 2 * actionSlotWidth)) {
+                        } else {
                             if (hasGoogleApp) {
                                 Intent lensIntent = new Intent();
                                 lensIntent.setAction(Intent.ACTION_VIEW)
@@ -256,8 +235,6 @@ public class AppsSearchContainerLayout extends ExtendedEditText
                                         .putExtra("LensHomescreenShortcut", true);
                                 getContext().startActivity(lensIntent);
                             }
-                        } else {
-                            showSortingOptions();
                         }
                         return true;
                     }
@@ -279,47 +256,6 @@ public class AppsSearchContainerLayout extends ExtendedEditText
         });
 
         offsetTopAndBottom(mContentOverlap);
-    }
-
-    private void applySearchBarVisualStyle() {
-        Context ctx = getContext();
-        int color = Themes.getAttrColor(ctx, R.attr.qsbFillColor);
-        if (ThemeManager.INSTANCE.get(ctx).isMonoThemeEnabled()) {
-            color = Themes.getAttrColor(ctx, R.attr.qsbFillColorThemed);
-        }
-        color = ColorUtils.setAlphaComponent(color, 80);
-        float cornerRadius = getResources().getDimension(R.dimen.rounded_button_radius);
-        GradientDrawable gd = new GradientDrawable();
-        gd.setColor(color);
-        gd.setCornerRadius(cornerRadius);
-        setBackground(gd);
-        setTextColor(Themes.getAttrColor(ctx, android.R.attr.textColorPrimary));
-        setHintTextColor(Themes.getAttrColor(ctx, android.R.attr.textColorSecondary));
-    }
-
-    private Drawable mergeActionsAndSortDrawable(Drawable actionsDr, Drawable sortDr) {
-        if (sortDr == null) {
-            return actionsDr;
-        }
-        Drawable sort = sortDr.mutate();
-        sort.setTint(Themes.getAttrColor(getContext(), android.R.attr.textColorPrimary));
-        if (actionsDr == null) {
-            return sort;
-        }
-        Drawable actions = actionsDr.mutate();
-        float density = getResources().getDisplayMetrics().density;
-        int gap = (int) (4 * density);
-        int aw = actions.getIntrinsicWidth() > 0 ? actions.getIntrinsicWidth() : (int) (48 * density);
-        int sw = sort.getIntrinsicWidth() > 0 ? sort.getIntrinsicWidth() : (int) (24 * density);
-        int ah = actions.getIntrinsicHeight() > 0 ? actions.getIntrinsicHeight() : (int) (48 * density);
-        int sh = sort.getIntrinsicHeight() > 0 ? sort.getIntrinsicHeight() : (int) (24 * density);
-        int height = Math.max(ah, sh);
-        int width = aw + gap + sw;
-        LayerDrawable ld = new LayerDrawable(new Drawable[]{actions, sort});
-        ld.setLayerInset(0, 0, 0, width - aw, 0);
-        ld.setLayerInset(1, aw + gap, 0, 0, 0);
-        ld.setBounds(0, 0, width, height);
-        return ld;
     }
 
     private void showSortingOptions() {
