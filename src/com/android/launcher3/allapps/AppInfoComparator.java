@@ -15,16 +15,22 @@
  */
 package com.android.launcher3.allapps;
 
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.os.Process;
 import android.os.UserHandle;
 import android.text.TextUtils;
 
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.model.data.AppInfo;
 import com.android.launcher3.pm.UserCache;
 import com.android.launcher3.util.LabelComparator;
 
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A comparator to arrange items based on user profiles.
@@ -35,14 +41,66 @@ public class AppInfoComparator implements Comparator<AppInfo> {
     private final UserHandle mMyUser;
     private final LabelComparator mLabelComparator;
 
+    private final Context mContext;
+    private Map<String, Long> mUsageStats = null;
+    private long mLastUsageUpdateTime = 0;
+
     public AppInfoComparator(Context context) {
+        mContext = context;
         mUserManager = UserCache.INSTANCE.get(context);
         mMyUser = Process.myUserHandle();
         mLabelComparator = new LabelComparator();
     }
 
+    private Map<String, Long> getUsageStats() {
+        long now = System.currentTimeMillis();
+        if (mUsageStats == null || now - mLastUsageUpdateTime > 60000) {
+            mUsageStats = new HashMap<>();
+            UsageStatsManager usm =
+                    (UsageStatsManager) mContext.getSystemService(Context.USAGE_STATS_SERVICE);
+            if (usm != null) {
+                long endtime = now;
+                long starttime = endtime - 1000L * 60 * 60 * 24 * 30; // 30 days
+                List<UsageStats> stats =
+                        usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, starttime, endtime);
+                if (stats != null) {
+                    for (UsageStats stat : stats) {
+                        mUsageStats.put(stat.getPackageName(), stat.getTotalTimeInForeground());
+                    }
+                }
+            }
+            mLastUsageUpdateTime = now;
+        }
+        return mUsageStats;
+    }
+
     @Override
     public int compare(AppInfo a, AppInfo b) {
+        int sortMode = LauncherPrefs.INSTANCE.get(mContext).get(LauncherPrefs.APP_DRAWER_SORT_MODE);
+
+        if (sortMode == 1) {
+            int result = Long.compare(b.firstInstallTime, a.firstInstallTime);
+            if (result != 0) {
+                return result;
+            }
+        } else if (sortMode == 2) {
+            Map<String, Long> stats = getUsageStats();
+            long usageA = 0L;
+            long usageB = 0L;
+            if (a.componentName != null) {
+                Long ua = stats.get(a.componentName.getPackageName());
+                usageA = ua != null ? ua : 0L;
+            }
+            if (b.componentName != null) {
+                Long ub = stats.get(b.componentName.getPackageName());
+                usageB = ub != null ? ub : 0L;
+            }
+            int result = Long.compare(usageB, usageA);
+            if (result != 0) {
+                return result;
+            }
+        }
+
         // Order by the title in the current locale
         int result = mLabelComparator.compare(getSortingTitle(a), getSortingTitle(b));
         if (result != 0) {
@@ -50,7 +108,15 @@ public class AppInfoComparator implements Comparator<AppInfo> {
         }
 
         // If labels are same, compare component names
-        result = a.componentName.compareTo(b.componentName);
+        if (a.componentName == null && b.componentName == null) {
+            result = 0;
+        } else if (a.componentName == null) {
+            return 1;
+        } else if (b.componentName == null) {
+            return -1;
+        } else {
+            result = a.componentName.compareTo(b.componentName);
+        }
         if (result != 0) {
             return result;
         }

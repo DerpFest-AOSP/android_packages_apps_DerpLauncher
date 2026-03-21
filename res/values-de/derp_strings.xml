@@ -170,6 +170,11 @@
     <string name="drawer_style_unavailable_with_caddy">Bei aktivem Caddy-Layout ist nur der normale Stil verfügbar.</string>
     <string name="drawer_list_unavailable_with_special_drawer">Caddy ist nur verfügbar, wenn der Stil der App-Übersicht auf „Normal“ steht.</string>
 
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_alphabetical">Alphabetisch sortieren</string>
+    <string name="app_drawer_sort_install_date">Nach Installationsdatum sortieren</string>
+    <string name="app_drawer_sort_usage">Nach Nutzung sortieren</string>
+
     <!-- Parallax -->
     <string name="short_parallax_title">Kurzes Parallax Scrollen erlauben</string>
     <string name="short_parallax_summary">Beschränkt den Scroll-Effekt auf eine kleinere Seitenanzahl, anstatt das Hintergrundbild zu beschneiden</string>

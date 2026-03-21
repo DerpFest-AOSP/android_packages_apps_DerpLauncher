@@ -183,6 +183,11 @@
     <string name="drawer_style_unavailable_with_caddy">Only normal style is available while Caddy layout is enabled.</string>
     <string name="drawer_list_unavailable_with_special_drawer">Caddy is only available when app drawer style is normal.</string>
 
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_alphabetical">Sort alphabetically</string>
+    <string name="app_drawer_sort_install_date">Sort by install date</string>
+    <string name="app_drawer_sort_usage">Sort by usage</string>
+
     <!-- Parallax -->
     <string name="short_parallax_title">Allow short parallax</string>
     <string name="short_parallax_summary">Enable full wallpaper scroll effect on smaller numbers of pages instead of cropping the wallpaper</string>
