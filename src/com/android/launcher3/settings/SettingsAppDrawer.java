@@ -259,6 +259,9 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
                     LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
                 }
             }
+            if (LauncherPrefs.ALL_APPS_DARK_TEXT.getSharedPrefKey().equals(key)) {
+                LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
+            }
         }
 
         @Override

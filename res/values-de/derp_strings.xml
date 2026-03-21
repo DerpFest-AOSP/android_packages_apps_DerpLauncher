@@ -157,6 +157,10 @@
     <string name="drawer_search_location_top">Oben</string>
     <string name="drawer_search_location_bottom">Unten</string>
 
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Dunkle App-Beschriftungen</string>
+    <string name="all_apps_dark_text_summary">Immer dunklen Text für App-Namen in App-Übersicht verwenden</string>
+
     <!-- Parallax -->
     <string name="short_parallax_title">Kurzes Parallax Scrollen erlauben</string>
     <string name="short_parallax_summary">Beschränkt den Scroll-Effekt auf eine kleinere Seitenanzahl, anstatt das Hintergrundbild zu beschneiden</string>

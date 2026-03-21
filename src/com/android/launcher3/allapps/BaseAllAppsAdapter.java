@@ -40,7 +40,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.launcher3.BubbleTextView;
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
+import com.android.launcher3.util.Themes;
 import com.android.launcher3.allapps.search.SearchAdapterProvider;
 import com.android.launcher3.folder.FolderIcon;
 import com.android.launcher3.model.data.AppInfo;
@@ -183,6 +185,7 @@ public abstract class BaseAllAppsAdapter
     protected final LayoutInflater mLayoutInflater;
     protected final OnClickListener mOnIconClickListener;
     protected final OnLongClickListener mOnIconLongClickListener;
+    protected final int mTextColor;
     protected OnFocusChangeListener mIconFocusListener;
 
     public BaseAllAppsAdapter(ActivityContext activityContext, LayoutInflater inflater,
@@ -190,6 +193,14 @@ public abstract class BaseAllAppsAdapter
         mActivityContext = activityContext;
         mApps = apps;
         mLayoutInflater = inflater;
+
+        boolean forceDarkText = LauncherPrefs.ALL_APPS_DARK_TEXT.get(activityContext.asContext());
+        if (forceDarkText) {
+            mTextColor = activityContext.asContext().getResources().getColor(
+                    R.color.all_apps_label_color_dark_forced, null);
+        } else {
+            mTextColor = Themes.getAttrColor(activityContext.asContext(), android.R.attr.textColorPrimary);
+        }
 
         mOnIconClickListener = mActivityContext.getItemOnClickListener();
         mOnIconLongClickListener = mActivityContext.getAllAppsItemLongClickListener();
@@ -281,6 +292,7 @@ public abstract class BaseAllAppsAdapter
                 AdapterItem adapterItem = mApps.getAdapterItems().get(position);
                 BubbleTextView icon = (BubbleTextView) holder.itemView;
                 icon.reset();
+                icon.setTextColor(mTextColor);
                 icon.applyFromApplicationInfo(adapterItem.itemInfo);
                 icon.setOnFocusChangeListener(mIconFocusListener);
                 icon.configureMinimalPopup(

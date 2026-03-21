@@ -170,6 +170,10 @@
     <string name="drawer_search_location_top">Top</string>
     <string name="drawer_search_location_bottom">Bottom</string>
 
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Dark app labels</string>
+    <string name="all_apps_dark_text_summary">Always use dark text for app labels in the app drawer</string>
+
     <!-- Parallax -->
     <string name="short_parallax_title">Allow short parallax</string>
     <string name="short_parallax_summary">Enable full wallpaper scroll effect on smaller numbers of pages instead of cropping the wallpaper</string>
