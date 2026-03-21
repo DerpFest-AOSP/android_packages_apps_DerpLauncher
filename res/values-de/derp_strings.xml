@@ -152,8 +152,10 @@
     <string name="background_opacity_title">Deckkraft des Hintergrunds</string>
 
     <!-- App drawer searchbar -->
-    <string name="drawer_search_title">App-Suchleiste</string>
-    <string name="drawer_search_summary">Suchleiste oben in der App-Übersicht</string>
+    <string name="drawer_search_title">Position der App-Suchleiste</string>
+    <string name="drawer_search_location_hidden">Ausgeblendet</string>
+    <string name="drawer_search_location_top">Oben</string>
+    <string name="drawer_search_location_bottom">Unten</string>
 
     <!-- Parallax -->
     <string name="short_parallax_title">Kurzes Parallax Scrollen erlauben</string>

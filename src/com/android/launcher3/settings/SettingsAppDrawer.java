@@ -32,6 +32,7 @@ import androidx.core.view.WindowCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
@@ -163,6 +164,11 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
         private boolean mPreferenceHighlighted = false;
         private Preference mThemeAllAppsIconsPref;
 
+        private static final String KEY_OPEN_KEYBOARD = "pref_drawer_open_keyboard";
+
+        private ListPreference mSearchPlacementPref;
+        private Preference mOpenKeyboardPref;
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             final Bundle args = getArguments();
@@ -199,6 +205,14 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
             if (getActivity() != null && !TextUtils.isEmpty(getPreferenceScreen().getTitle())) {
                 getActivity().setTitle(getPreferenceScreen().getTitle());
             }
+
+            mSearchPlacementPref = (ListPreference) screen.findPreference(
+                    LauncherPrefs.ALL_APPS_SEARCH_PLACEMENT.getSharedPrefKey());
+            mOpenKeyboardPref = screen.findPreference(KEY_OPEN_KEYBOARD);
+            updateOpenKeyboardEnabled();
+
+            getPreferenceManager().getSharedPreferences()
+                    .registerOnSharedPreferenceChangeListener(this);
         }
 
         @Override
@@ -217,20 +231,16 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
         }
 
         @Override
-        public void onStart() {
-            super.onStart();
-            LauncherPrefs.getPrefs(getContext()).registerOnSharedPreferenceChangeListener(this);
-        }
-
-        @Override
-        public void onStop() {
-            super.onStop();
-            LauncherPrefs.getPrefs(getContext()).unregisterOnSharedPreferenceChangeListener(this);
+        public void onDestroy() {
+            getPreferenceManager().getSharedPreferences()
+                    .unregisterOnSharedPreferenceChangeListener(this);
+            super.onDestroy();
         }
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (LauncherPrefs.DRAWER_SEARCH.getSharedPrefKey().equals(key)) {
+            if (LauncherPrefs.ALL_APPS_SEARCH_PLACEMENT.getSharedPrefKey().equals(key)) {
+                updateOpenKeyboardEnabled();
                 try {
                     LauncherAppState appState = LauncherAppState.getInstance(getContext());
                     appState.getModel().rebindCallbacks();
@@ -301,6 +311,11 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
             mThemeAllAppsIconsPref.setSummary(getContext().getString(enabled
                     ? R.string.pref_themed_icons_summary
                     : R.string.themed_icons_disabled_summary));
+        }
+
+        private void updateOpenKeyboardEnabled() {
+            if (mOpenKeyboardPref == null || mSearchPlacementPref == null) return;
+            mOpenKeyboardPref.setEnabled(!"hidden".equals(mSearchPlacementPref.getValue()));
         }
 
         private PreferenceHighlighter createHighlighter() {
