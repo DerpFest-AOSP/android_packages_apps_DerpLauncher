@@ -161,6 +161,13 @@
     <string name="all_apps_dark_text_title">Dunkle App-Beschriftungen</string>
     <string name="all_apps_dark_text_summary">Immer dunklen Text für App-Namen in App-Übersicht verwenden</string>
 
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">Stil der App-Übersicht</string>
+    <string name="drawer_style_normal">Normal (Seiten unten)</string>
+    <string name="drawer_style_legacy">Vollbild (alt)</string>
+    <string name="drawer_style_list">Listenstil</string>
+    <string name="drawer_style_oneui">OneUI-Stil (Seiten)</string>
+
     <!-- Parallax -->
     <string name="short_parallax_title">Kurzes Parallax Scrollen erlauben</string>
     <string name="short_parallax_summary">Beschränkt den Scroll-Effekt auf eine kleinere Seitenanzahl, anstatt das Hintergrundbild zu beschneiden</string>

@@ -62,6 +62,7 @@ import com.android.launcher3.deviceprofile.HotseatProfile;
 import com.android.launcher3.deviceprofile.OverviewProfile;
 import com.android.launcher3.deviceprofile.TaskbarProfile;
 import com.android.launcher3.deviceprofile.WorkspaceProfile;
+import com.android.launcher3.allapps.AppDrawerStyle;
 import com.android.launcher3.icons.DotRenderer;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.model.data.ItemInfo;
@@ -545,7 +546,7 @@ public class DeviceProfile {
                 mInsets,
                 res,
                 mWorkspaceProfile.getEdgeMarginPx(),
-                shouldShowAllAppsOnSheet(),
+                shouldShowAllAppsOnSheet(context),
                 mWorkspaceProfile
         );
 
@@ -560,7 +561,7 @@ public class DeviceProfile {
         }
 
 
-        if (shouldShowAllAppsOnSheet()) {
+        if (shouldShowAllAppsOnSheet(context)) {
             allAppsPadding.top = allAppsTopPadding;
             allAppsShiftRange = mDeviceProperties.getHeightPx() - allAppsTopPadding + mInsets.top;
         } else {
@@ -959,7 +960,13 @@ public class DeviceProfile {
     }
 
     /** Whether All Apps should be presented on a bottom sheet. */
-    public boolean shouldShowAllAppsOnSheet() {
+    public boolean shouldShowAllAppsOnSheet(@Nullable Context context) {
+        if (context != null) {
+            String style = AppDrawerStyle.get(context);
+            if (AppDrawerStyle.isVerticalPaged(style) || AppDrawerStyle.isFullscreen(style)) {
+                return false;
+            }
+        }
         return mDeviceProperties.isTablet() || Flags.allAppsSheetForHandheld();
     }
 

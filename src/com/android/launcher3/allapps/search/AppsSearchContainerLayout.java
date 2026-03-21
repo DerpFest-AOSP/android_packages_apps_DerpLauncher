@@ -114,26 +114,31 @@ public class AppsSearchContainerLayout extends ExtendedEditText
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // Update the width to match the grid padding
+        if (mAppsView == null) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            return;
+        }
         DeviceProfile dp = mLauncher.getDeviceProfile();
         int myRequestedWidth = getSize(widthMeasureSpec);
-        
-        // Add null check for mAppsView
-        if (mAppsView != null && mAppsView.getActiveRecyclerView() != null) {
-            int rowWidth = myRequestedWidth - mAppsView.getActiveRecyclerView().getPaddingLeft()
-                    - mAppsView.getActiveRecyclerView().getPaddingRight();
-
-            int cellWidth = DeviceProfile.calculateCellWidth(rowWidth,
-                    dp.getWorkspaceIconProfile().getCellLayoutBorderSpacePx().x, dp.numShownHotseatIcons);
-            int iconVisibleSize =
-                    Math.round(ICON_VISIBLE_AREA_FACTOR * dp.getWorkspaceIconProfile().getIconSizePx());
-            int iconPadding = cellWidth - iconVisibleSize;
-
-            int myWidth = rowWidth - iconPadding + getPaddingLeft() + getPaddingRight();
-            super.onMeasure(makeMeasureSpec(myWidth, EXACTLY), heightMeasureSpec);
-        } else {
-            // Fallback to default measurement if mAppsView is not initialized yet
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        View widthSource = mAppsView.getActiveRecyclerView();
+        if (widthSource == null) {
+            widthSource = mAppsView.getAppsRecyclerViewContainer();
         }
+        if (widthSource == null) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            return;
+        }
+        int rowWidth = myRequestedWidth - widthSource.getPaddingLeft()
+                - widthSource.getPaddingRight();
+
+        int cellWidth = DeviceProfile.calculateCellWidth(rowWidth,
+                dp.getWorkspaceIconProfile().getCellLayoutBorderSpacePx().x, dp.numShownHotseatIcons);
+        int iconVisibleSize =
+                Math.round(ICON_VISIBLE_AREA_FACTOR * dp.getWorkspaceIconProfile().getIconSizePx());
+        int iconPadding = cellWidth - iconVisibleSize;
+
+        int myWidth = rowWidth - iconPadding + getPaddingLeft() + getPaddingRight();
+        super.onMeasure(makeMeasureSpec(myWidth, EXACTLY), heightMeasureSpec);
     }
 
     @Override

@@ -165,8 +165,10 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
         private Preference mThemeAllAppsIconsPref;
 
         private static final String KEY_OPEN_KEYBOARD = "pref_drawer_open_keyboard";
+        private static final String KEY_APP_DRAWER_STYLE = "pref_app_drawer_style";
 
         private ListPreference mSearchPlacementPref;
+        private ListPreference mDrawerStylePref;
         private Preference mOpenKeyboardPref;
 
         @Override
@@ -208,8 +210,10 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
 
             mSearchPlacementPref = (ListPreference) screen.findPreference(
                     LauncherPrefs.ALL_APPS_SEARCH_PLACEMENT.getSharedPrefKey());
+            mDrawerStylePref = (ListPreference) screen.findPreference(KEY_APP_DRAWER_STYLE);
             mOpenKeyboardPref = screen.findPreference(KEY_OPEN_KEYBOARD);
             updateOpenKeyboardEnabled();
+            updateDrawerStyleSummary();
 
             getPreferenceManager().getSharedPreferences()
                     .registerOnSharedPreferenceChangeListener(this);
@@ -239,8 +243,12 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (LauncherPrefs.ALL_APPS_SEARCH_PLACEMENT.getSharedPrefKey().equals(key)) {
+            if (LauncherPrefs.ALL_APPS_SEARCH_PLACEMENT.getSharedPrefKey().equals(key)
+                    || LauncherPrefs.APP_DRAWER_STYLE.getSharedPrefKey().equals(key)) {
                 updateOpenKeyboardEnabled();
+                updateDrawerStyleSummary();
+            }
+            if (LauncherPrefs.ALL_APPS_SEARCH_PLACEMENT.getSharedPrefKey().equals(key)) {
                 try {
                     LauncherAppState appState = LauncherAppState.getInstance(getContext());
                     appState.getModel().rebindCallbacks();
@@ -259,7 +267,8 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
                     LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
                 }
             }
-            if (LauncherPrefs.ALL_APPS_DARK_TEXT.getSharedPrefKey().equals(key)) {
+            if (LauncherPrefs.ALL_APPS_DARK_TEXT.getSharedPrefKey().equals(key)
+                    || LauncherPrefs.APP_DRAWER_STYLE.getSharedPrefKey().equals(key)) {
                 LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
             }
         }
@@ -319,6 +328,13 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
         private void updateOpenKeyboardEnabled() {
             if (mOpenKeyboardPref == null || mSearchPlacementPref == null) return;
             mOpenKeyboardPref.setEnabled(!"hidden".equals(mSearchPlacementPref.getValue()));
+        }
+
+        private void updateDrawerStyleSummary() {
+            if (mDrawerStylePref == null) {
+                return;
+            }
+            mDrawerStylePref.setSummary(mDrawerStylePref.getEntry());
         }
 
         private PreferenceHighlighter createHighlighter() {
