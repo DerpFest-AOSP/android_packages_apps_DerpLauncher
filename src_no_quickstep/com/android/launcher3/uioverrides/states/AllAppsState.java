@@ -24,6 +24,7 @@ import androidx.core.graphics.ColorUtils;
 
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherPrefs;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.LauncherState;
 import com.android.launcher3.LauncherUiState;
 import com.android.launcher3.R;
@@ -108,12 +109,21 @@ public class AllAppsState extends LauncherState {
 
     @Override
     public ScrimColors getWorkspaceScrimColor(Launcher launcher) {
-        int color = launcher.getDeviceProfile().getDeviceProperties().isTablet()
-                ? launcher.getResources().getColor(R.color.widgets_picker_scrim)
-                : Themes.getAttrColor(launcher, R.attr.allAppsScrimColor);
+        int color;
+        if (LauncherPrefs.APP_DRAWER_CUSTOM_COLOR_ENABLED.get(launcher)) {
+            color = Utilities.isDarkTheme(launcher)
+                    ? LauncherPrefs.APP_DRAWER_CUSTOM_COLOR_DARK.get(launcher)
+                    : LauncherPrefs.APP_DRAWER_CUSTOM_COLOR_LIGHT.get(launcher);
+        } else {
+            color = launcher.getDeviceProfile().getDeviceProperties().isTablet()
+                    ? launcher.getResources().getColor(R.color.widgets_picker_scrim)
+                    : Themes.getAttrColor(launcher, R.attr.allAppsScrimColor);
+        }
+        int scrimColor = ColorUtils.setAlphaComponent(
+                color,
+                LauncherPrefs.APP_DRAWER_OPACITY.get(launcher) * 255 / 100);
         return new ScrimColors(
-                /* backgroundColor */ ColorUtils.setAlphaComponent(color,
-                        LauncherPrefs.APP_DRAWER_OPACITY.get(launcher) * 255 / 100),
+                /* backgroundColor */ scrimColor,
                 /* foregroundColor */ Color.TRANSPARENT);
     }
 }
