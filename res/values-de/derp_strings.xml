@@ -175,6 +175,12 @@
     <string name="app_drawer_sort_install_date">Nach Installationsdatum sortieren</string>
     <string name="app_drawer_sort_usage">Nach Nutzung sortieren</string>
 
+    <!-- App drawer color -->
+    <string name="pref_app_drawer_custom_color_title">Benutzerdefinierte Hintergrundfarbe</string>
+    <string name="pref_app_drawer_custom_color_summary">Eine benutzerdefinierte Farbe für den Hintergrund der App-Übersicht verwenden</string>
+    <string name="pref_app_drawer_custom_color_light_title">Farbe im Hellmodus</string>
+    <string name="pref_app_drawer_custom_color_dark_title">Farbe im Dunkelmodus</string>
+
     <!-- Parallax -->
     <string name="short_parallax_title">Kurzes Parallax Scrollen erlauben</string>
     <string name="short_parallax_summary">Beschränkt den Scroll-Effekt auf eine kleinere Seitenanzahl, anstatt das Hintergrundbild zu beschneiden</string>
