@@ -180,6 +180,8 @@
     <string name="drawer_style_legacy">Legacy fullscreen</string>
     <string name="drawer_style_list">List style</string>
     <string name="drawer_style_oneui">OneUI style (paged)</string>
+    <string name="drawer_style_unavailable_with_caddy">Only normal style is available while Caddy layout is enabled.</string>
+    <string name="drawer_list_unavailable_with_special_drawer">Caddy is only available when app drawer style is normal.</string>
 
     <!-- Parallax -->
     <string name="short_parallax_title">Allow short parallax</string>

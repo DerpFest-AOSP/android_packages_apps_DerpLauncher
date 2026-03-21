@@ -18,6 +18,7 @@ package com.android.launcher3.settings;
 
 import static androidx.core.view.accessibility.AccessibilityNodeInfoCompat.ACTION_ACCESSIBILITY_FOCUS;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -48,6 +49,7 @@ import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
+import com.android.launcher3.allapps.AppDrawerStyle;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.model.WidgetsModel;
@@ -169,6 +171,7 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
 
         private ListPreference mSearchPlacementPref;
         private ListPreference mDrawerStylePref;
+        private Preference mDrawerListPref;
         private Preference mOpenKeyboardPref;
 
         @Override
@@ -211,9 +214,32 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
             mSearchPlacementPref = (ListPreference) screen.findPreference(
                     LauncherPrefs.ALL_APPS_SEARCH_PLACEMENT.getSharedPrefKey());
             mDrawerStylePref = (ListPreference) screen.findPreference(KEY_APP_DRAWER_STYLE);
+            mDrawerListPref = screen.findPreference(LauncherPrefs.DRAWER_LIST.getSharedPrefKey());
             mOpenKeyboardPref = screen.findPreference(KEY_OPEN_KEYBOARD);
             updateOpenKeyboardEnabled();
-            updateDrawerStyleSummary();
+            ensureDrawerCaddyPrefsConsistent();
+            if (mDrawerStylePref != null) {
+                mDrawerStylePref.setOnPreferenceChangeListener((preference, newValue) -> {
+                    if (!AppDrawerStyle.NORMAL.equals(String.valueOf(newValue))) {
+                        LauncherPrefs.INSTANCE.get(requireContext()).put(LauncherPrefs.DRAWER_LIST, true);
+                    }
+                    return true;
+                });
+            }
+            if (mDrawerListPref != null) {
+                mDrawerListPref.setOnPreferenceChangeListener((preference, newValue) -> {
+                    boolean defaultList = (Boolean) newValue;
+                    if (!defaultList) {
+                        LauncherPrefs.INSTANCE.get(requireContext()).put(
+                                LauncherPrefs.APP_DRAWER_STYLE, AppDrawerStyle.NORMAL);
+                        if (mDrawerStylePref != null) {
+                            mDrawerStylePref.setValue(AppDrawerStyle.NORMAL);
+                        }
+                    }
+                    return true;
+                });
+            }
+            updateDrawerCaddyRestrictionUi();
 
             getPreferenceManager().getSharedPreferences()
                     .registerOnSharedPreferenceChangeListener(this);
@@ -246,7 +272,11 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
             if (LauncherPrefs.ALL_APPS_SEARCH_PLACEMENT.getSharedPrefKey().equals(key)
                     || LauncherPrefs.APP_DRAWER_STYLE.getSharedPrefKey().equals(key)) {
                 updateOpenKeyboardEnabled();
-                updateDrawerStyleSummary();
+            }
+            if (LauncherPrefs.ALL_APPS_SEARCH_PLACEMENT.getSharedPrefKey().equals(key)
+                    || LauncherPrefs.APP_DRAWER_STYLE.getSharedPrefKey().equals(key)
+                    || LauncherPrefs.DRAWER_LIST.getSharedPrefKey().equals(key)) {
+                updateDrawerCaddyRestrictionUi();
             }
             if (LauncherPrefs.ALL_APPS_SEARCH_PLACEMENT.getSharedPrefKey().equals(key)) {
                 try {
@@ -315,6 +345,8 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
             if (mThemeAllAppsIconsPref != null) {
                 updateThemeAllAppsIconsPref();
             }
+            ensureDrawerCaddyPrefsConsistent();
+            updateDrawerCaddyRestrictionUi();
         }
 
         private void updateThemeAllAppsIconsPref() {
@@ -330,11 +362,47 @@ public class SettingsAppDrawer extends CollapsingToolbarBaseActivity
             mOpenKeyboardPref.setEnabled(!"hidden".equals(mSearchPlacementPref.getValue()));
         }
 
-        private void updateDrawerStyleSummary() {
-            if (mDrawerStylePref == null) {
+        /** Aligns stored drawer style with Caddy rules and refreshes enabled state / summaries. */
+        private void ensureDrawerCaddyPrefsConsistent() {
+            Context ctx = getContext();
+            if (ctx == null) {
                 return;
             }
-            mDrawerStylePref.setSummary(mDrawerStylePref.getEntry());
+            boolean defaultList = LauncherPrefs.INSTANCE.get(ctx).get(LauncherPrefs.DRAWER_LIST);
+            String storedStyle = LauncherPrefs.INSTANCE.get(ctx).get(LauncherPrefs.APP_DRAWER_STYLE);
+            if (!defaultList && !AppDrawerStyle.NORMAL.equals(storedStyle)) {
+                LauncherPrefs.INSTANCE.get(ctx).put(LauncherPrefs.APP_DRAWER_STYLE, AppDrawerStyle.NORMAL);
+                if (mDrawerStylePref != null) {
+                    mDrawerStylePref.setValue(AppDrawerStyle.NORMAL);
+                }
+            }
+        }
+
+        private void updateDrawerCaddyRestrictionUi() {
+            Context ctx = getContext();
+            if (ctx == null) {
+                return;
+            }
+            boolean defaultList = LauncherPrefs.INSTANCE.get(ctx).get(LauncherPrefs.DRAWER_LIST);
+            String storedStyle = LauncherPrefs.INSTANCE.get(ctx).get(LauncherPrefs.APP_DRAWER_STYLE);
+            boolean nonNormal = !AppDrawerStyle.NORMAL.equals(storedStyle);
+
+            if (mDrawerStylePref != null) {
+                mDrawerStylePref.setEnabled(defaultList);
+                if (!defaultList) {
+                    mDrawerStylePref.setSummary(ctx.getString(R.string.drawer_style_unavailable_with_caddy));
+                } else {
+                    mDrawerStylePref.setSummary(mDrawerStylePref.getEntry());
+                }
+            }
+            if (mDrawerListPref != null) {
+                mDrawerListPref.setEnabled(!nonNormal);
+                if (nonNormal) {
+                    mDrawerListPref.setSummary(ctx.getString(R.string.drawer_list_unavailable_with_special_drawer));
+                } else {
+                    mDrawerListPref.setSummary(ctx.getString(R.string.drawer_list_summary));
+                }
+            }
         }
 
         private PreferenceHighlighter createHighlighter() {

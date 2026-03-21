@@ -167,6 +167,8 @@
     <string name="drawer_style_legacy">Vollbild (alt)</string>
     <string name="drawer_style_list">Listenstil</string>
     <string name="drawer_style_oneui">OneUI-Stil (Seiten)</string>
+    <string name="drawer_style_unavailable_with_caddy">Bei aktivem Caddy-Layout ist nur der normale Stil verfügbar.</string>
+    <string name="drawer_list_unavailable_with_special_drawer">Caddy ist nur verfügbar, wenn der Stil der App-Übersicht auf „Normal“ steht.</string>
 
     <!-- Parallax -->
     <string name="short_parallax_title">Kurzes Parallax Scrollen erlauben</string>

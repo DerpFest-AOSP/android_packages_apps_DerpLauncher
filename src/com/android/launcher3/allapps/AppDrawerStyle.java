@@ -32,7 +32,14 @@ public final class AppDrawerStyle {
 
     public static String get(Context context) {
         String style = LauncherPrefs.APP_DRAWER_STYLE.get(context);
-        return isSupported(style) ? style : NORMAL;
+        if (!isSupported(style)) {
+            return NORMAL;
+        }
+        // Caddy (categorized folders) is only combined with the normal drawer in settings.
+        if (!LauncherPrefs.INSTANCE.get(context).get(LauncherPrefs.DRAWER_LIST)) {
+            return NORMAL;
+        }
+        return style;
     }
 
     public static boolean isSupported(String style) {
