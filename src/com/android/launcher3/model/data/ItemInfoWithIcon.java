@@ -16,6 +16,7 @@
 
 package com.android.launcher3.model.data;
 
+import static com.android.launcher3.icons.BitmapInfo.FLAG_LAUNCHER_ICON_SHAPE;
 import static com.android.launcher3.icons.BitmapInfo.FLAG_THEMED;
 
 import android.content.Context;
@@ -341,8 +342,9 @@ public abstract class ItemInfoWithIcon extends ItemInfo {
      */
     public boolean supportsCustomShapes(@DrawableCreationFlags int creationFlags) {
         return Flags.enableLauncherIconShapes()
-                && (creationFlags & FLAG_THEMED) != 0
-                && bitmap.isFullBleed();
+                && bitmap.isFullBleed()
+                && (((creationFlags & FLAG_THEMED) != 0)
+                        || ((creationFlags & FLAG_LAUNCHER_ICON_SHAPE) != 0));
     }
 
     /**

@@ -30,6 +30,7 @@ import static com.android.launcher3.LauncherPrefs.SHOW_DRAWER_LABELS;
 import static com.android.launcher3.graphics.PreloadIconDelegate.extractPreloadDelegate;
 import static com.android.launcher3.graphics.PreloadIconDelegate.hasPendingAnimationCompleted;
 import static com.android.launcher3.graphics.PreloadIconDelegate.newPendingIcon;
+import static com.android.launcher3.icons.BitmapInfo.FLAG_LAUNCHER_ICON_SHAPE;
 import static com.android.launcher3.icons.BitmapInfo.FLAG_NO_BADGE;
 import static com.android.launcher3.icons.BitmapInfo.FLAG_SKIP_USER_BADGE;
 import static com.android.launcher3.icons.BitmapInfo.FLAG_THEMED;
@@ -91,7 +92,6 @@ import com.android.launcher3.graphics.PreloadIconDelegate;
 import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.icons.BitmapInfo.DrawableCreationFlags;
 import com.android.launcher3.icons.DotRenderer;
-import com.android.launcher3.icons.DotRenderer.IconShapeInfo;
 import com.android.launcher3.icons.FastBitmapDrawable;
 import com.android.launcher3.icons.IconCache.ItemInfoUpdateReceiver;
 import com.android.launcher3.icons.PlaceHolderDrawableDelegate;
@@ -344,8 +344,8 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
         if (mDisplay == DISPLAY_ALL_APPS) {
             mDotRenderer = mActivity.getDeviceProfile().mDotRendererAllApps;
 
-            // Do not use normalized info, as we account for normalization in iconBounds
-            mDotParams.shapeInfo = IconShapeInfo.DEFAULT;
+            mDotParams.shapeInfo = ThemeManager.INSTANCE.get(context)
+                    .getIconState().getIconShapeInfo();
         } else {
             mDotRenderer = mActivity.getDeviceProfile().mDotRendererWorkSpace;
             mDotParams.shapeInfo = ThemeManager.INSTANCE.get(context)
@@ -586,6 +586,9 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
     public int getIconCreationFlagsForInfo(ItemInfoWithIcon info) {
         // Set nonPendingIcon acts as a restart which should refresh the flag state when applicable.
         int flags = shouldUseTheme() ? FLAG_THEMED : 0;
+        if (displayIsAppDrawer() && Flags.enableLauncherIconShapes()) {
+            flags |= FLAG_LAUNCHER_ICON_SHAPE;
+        }
         // Remove badge on icons smaller than 48dp.
         if (mHideBadge || mDisplay == DISPLAY_SEARCH_RESULT_SMALL) {
             flags |= FLAG_NO_BADGE;
