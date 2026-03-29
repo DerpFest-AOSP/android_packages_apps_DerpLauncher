@@ -1471,7 +1471,7 @@ public class TaskbarActivityContext extends BaseTaskbarContext {
         Resources resources = getResources();
 
         if (isGestureNav() && !SettingsCache.INSTANCE.get(this).getValue(NAVIGATION_BAR_HINT_URI)) {
-            return 0;
+            return 1;
         }
 
         if (isPhoneMode()) {
