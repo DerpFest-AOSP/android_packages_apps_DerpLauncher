@@ -630,7 +630,7 @@ public abstract class RecentsView<
     private boolean mBorderEnabled = false;
     private boolean mShowAsGridLastOnLayout = false;
     private boolean mEnableOverlap = false;
-    private String mRecentsStyle = "stock";
+    private String mRecentsStyle = "default";
 
     public boolean isOverlapEnabled() {
         return mEnableOverlap;
@@ -1297,7 +1297,7 @@ public abstract class RecentsView<
 
     public void updateOverlapState() {
         mRecentsStyle = LauncherPrefs.RECENTS_STYLE.get(getContext());
-        mEnableOverlap = !mRecentsStyle.equals("stock");
+        mEnableOverlap = !mRecentsStyle.equals("default") && !mRecentsStyle.equals("stock");
     }
 
     @Override
@@ -5078,7 +5078,7 @@ public abstract class RecentsView<
                         .setScroll(getScrollOffset()));
         setImportantForAccessibility(isModal() ? IMPORTANT_FOR_ACCESSIBILITY_NO
                 : IMPORTANT_FOR_ACCESSIBILITY_AUTO);
-        if (!mEnableOverlap) {
+        if (mRecentsStyle.equals("stock")) {
             doScrollScale();
         }
     }
@@ -7028,7 +7028,7 @@ public abstract class RecentsView<
         super.onScrollChanged(l, t, oldl, oldt);
         dispatchScrollChanged();
         updatePageOffsets();
-        if (!mEnableOverlap) {
+        if (mRecentsStyle.equals("stock")) {
             doScrollScale();
         }
     }

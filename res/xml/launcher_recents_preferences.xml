@@ -22,6 +22,16 @@
     <PreferenceCategory
         android:title="@string/general_category_title">
 
+        <ListPreference
+            android:key="pref_recents_style"
+            android:title="@string/recents_style_title"
+            android:entries="@array/recents_styles_entries"
+            android:entryValues="@array/recents_styles_values"
+            android:defaultValue="default"
+            android:persistent="true"
+            android:summary="%s"
+            launcher:iconSpaceReserved="false" />
+
         <SwitchPreferenceCompat
             android:key="pref_scroll_vibration"
             android:title="@string/pref_scroll_vibration_title"
@@ -36,16 +46,6 @@
             android:summary="@string/recents_meminfo_summary"
             android:defaultValue="false"
             android:persistent="true"
-            launcher:iconSpaceReserved="false" />
-
-        <ListPreference
-            android:key="pref_recents_style"
-            android:title="@string/recents_style_title"
-            android:entries="@array/recents_styles_entries"
-            android:entryValues="@array/recents_styles_values"
-            android:defaultValue="stock"
-            android:persistent="true"
-            android:summary="%s"
             launcher:iconSpaceReserved="false" />
 
         <org.derpfest.support.preferences.ProperSeekBarPreference
