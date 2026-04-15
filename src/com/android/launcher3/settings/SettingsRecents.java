@@ -36,6 +36,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceFragmentCompat.OnPreferenceStartFragmentCallback;
 import androidx.preference.PreferenceFragmentCompat.OnPreferenceStartScreenCallback;
+import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceGroup.PreferencePositionCallback;
 import androidx.preference.PreferenceScreen;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,6 +49,7 @@ import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.model.WidgetsModel;
+import com.android.launcher3.util.DisplayController;
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
 import com.android.settingslib.widget.SettingsBasePreferenceFragment;
@@ -69,6 +71,8 @@ public class SettingsRecents extends CollapsingToolbarBaseActivity
     static final String EXTRA_FRAGMENT = ":settings:fragment";
     @VisibleForTesting
     static final String EXTRA_FRAGMENT_ARGS = ":settings:fragment_args";
+
+    private static final String RECENTS_STYLE_PREF = "pref_recents_style";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,12 +190,7 @@ public class SettingsRecents extends CollapsingToolbarBaseActivity
             setPreferencesFromResource(R.xml.launcher_recents_preferences, rootKey);
 
             PreferenceScreen screen = getPreferenceScreen();
-            for (int i = screen.getPreferenceCount() - 1; i >= 0; i--) {
-                Preference preference = screen.getPreference(i);
-                if (!initPreference(preference)) {
-                    screen.removePreference(preference);
-                }
-            }
+            removeUnsupportedPreferences(screen);
 
             if (getActivity() != null && !TextUtils.isEmpty(getPreferenceScreen().getTitle())) {
                 getActivity().setTitle(getPreferenceScreen().getTitle());
@@ -219,6 +218,17 @@ public class SettingsRecents extends CollapsingToolbarBaseActivity
             outState.putBoolean(SAVE_HIGHLIGHTED_KEY, mPreferenceHighlighted);
         }
 
+        private void removeUnsupportedPreferences(PreferenceGroup group) {
+            for (int i = group.getPreferenceCount() - 1; i >= 0; i--) {
+                Preference preference = group.getPreference(i);
+                if (!initPreference(preference)) {
+                    group.removePreference(preference);
+                } else if (preference instanceof PreferenceGroup) {
+                    removeUnsupportedPreferences((PreferenceGroup) preference);
+                }
+            }
+        }
+
         protected String getParentKeyForPref(String key) {
             return null;
         }
@@ -228,6 +238,16 @@ public class SettingsRecents extends CollapsingToolbarBaseActivity
          * will remove that preference from the list.
          */
         protected boolean initPreference(Preference preference) {
+            String key = preference.getKey();
+            if (key == null) {
+                return true;
+            }
+
+            DisplayController.Info info = DisplayController.INSTANCE.get(getContext()).getInfo();
+            if (key.equals(RECENTS_STYLE_PREF)) {
+                return !info.isTablet(info.realBounds);
+            }
+
             return true;
         }
 
