@@ -24,6 +24,7 @@ import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCH
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_SETTINGS_BUTTON_TAP_OR_LONGPRESS;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_WIDGETSTRAY_BUTTON_TAP_OR_LONGPRESS;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -246,6 +247,11 @@ public class OptionsPopupView<T extends Context & ActivityContext> extends Arrow
                 R.drawable.ic_setting,
                 LAUNCHER_SETTINGS_BUTTON_TAP_OR_LONGPRESS,
                 OptionsPopupView::startSettings));
+        options.add(new OptionItem(launcher,
+                R.string.wallpaper_effects_title,
+                R.drawable.ic_view_carousel,
+                IGNORE,
+                OptionsPopupView::startAxionWallpaperEffects));
         return options;
     }
 
@@ -279,6 +285,15 @@ public class OptionsPopupView<T extends Context & ActivityContext> extends Arrow
                 .setPackage(launcher.getPackageName())
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         return true;
+    }
+
+    private static boolean startAxionWallpaperEffects(View v) {
+        Launcher launcher = Launcher.getLauncher(v.getContext());
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setComponent(new ComponentName("com.android.axion.themepicker",
+                "com.android.axion.themepicker.ui.MainActivity"));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return launcher.startActivitySafely(v, intent, placeholderInfo(intent)) != null;
     }
 
     /**
