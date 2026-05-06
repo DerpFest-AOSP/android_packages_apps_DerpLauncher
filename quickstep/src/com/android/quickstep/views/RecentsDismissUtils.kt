@@ -28,22 +28,19 @@ import androidx.dynamicanimation.animation.SpringForce
 import com.android.internal.jank.Cuj
 import com.android.launcher3.PagedView
 import com.android.launcher3.R
-import com.android.launcher3.concurrent.annotations.LightweightBackground
-import com.android.launcher3.concurrent.annotations.LightweightBackgroundPriority
 import com.android.launcher3.logging.StatsLogManager.LauncherEvent
 import com.android.launcher3.util.DynamicResource
 import com.android.launcher3.util.MSDLPlayerWrapper
 import com.android.launcher3.util.OverviewReleaseFlags.enableGridOnlyOverview
 import com.android.launcher3.views.ActivityContext
 import com.android.quickstep.SystemUiProxy
+import com.android.quickstep.util.RecentHelper
 import com.android.quickstep.util.TaskGridNavHelper
 import com.android.quickstep.views.RecentsView.RECENTS_SCALE_PROPERTY
 import com.android.quickstep.views.TaskView.Companion.GRID_END_TRANSLATION_X
-import com.android.systemui.shared.system.ActivityManagerWrapper
 import com.android.systemui.shared.system.InteractionJankMonitorWrapper
 import com.android.wm.shell.shared.desktopmode.DesktopModeTransitionSource
 import com.google.android.msdl.data.model.MSDLToken
-import com.google.common.util.concurrent.ListeningExecutorService
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -62,9 +59,6 @@ class RecentsDismissUtils
 constructor(
     @Assisted private val recentsView: RecentsView<*, *>,
     private val systemUiProxy: SystemUiProxy,
-    @LightweightBackground(LightweightBackgroundPriority.UI)
-    private val uiHelperExecutor: ListeningExecutorService,
-    private val activityManagerWrapper: ActivityManagerWrapper,
     private val msdlPlayerWrapper: MSDLPlayerWrapper,
 ) {
     @AssistedFactory
@@ -334,13 +328,14 @@ constructor(
                 with(recentsView) {
                     // Remove desktops first, since desks can be empty (so they have no recent
                     // tasks), and closing all tasks on a desk doesn't always necessarily mean that
-                    // the desk will be removed. So, there are no guarantees that the below call to
-                    // `ActivityManagerWrapper::removeAllRecentTasks()` will be enough.
+                    // the desk will be removed. So, there are no guarantees that the below selective
+                    // stack clear drops every desk-associated task alone.
                     systemUiProxy.removeAllDesks(DesktopModeTransitionSource.RECENTS)
 
-                    // Remove all the task views now
+                    // Remove all the task views now (mirror non-expressive path: clear stacks on this
+                    // completion callback, then tear down task views.)
                     finishRecentsAnimation(/* toHome */ true, /* shouldPip */ false) {
-                        uiHelperExecutor.execute { activityManagerWrapper.removeAllRecentTasks() }
+                        RecentHelper.getInstance().clearAllTaskStacks(recentsView.context)
                         removeAllTaskViews()
                         if (!mUtils.isInDesktopFirstMode()) {
                             startHome()
