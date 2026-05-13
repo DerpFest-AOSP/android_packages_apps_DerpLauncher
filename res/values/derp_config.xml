@@ -48,4 +48,8 @@
 
     <!-- Quickspace: Chance of random quote happening during the day (in percent) -->
     <integer name="config_quickSpaceChanceOfQuoteDuringDayPercent">60</integer>
+
+    <!-- Burn-in protection for gesture navigation handle -->
+    <bool name="config_enableBurnInProtection">true</bool>
+    <integer name="config_burnInProtectionShiftInterval">60</integer>
 </resources>
