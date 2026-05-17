@@ -32,6 +32,8 @@ import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.LauncherModel
 import com.android.launcher3.LauncherPrefs
 import com.android.launcher3.LauncherSettings.Favorites.CONTAINER_DESKTOP
+import com.android.launcher3.Utilities.firstPagePinnedItemEnabled
+import com.android.launcher3.Workspace
 import com.android.launcher3.LauncherSettings.Favorites.CONTAINER_HOTSEAT
 import com.android.launcher3.LauncherSettings.Favorites.DESKTOP_ICON_FLAG
 import com.android.launcher3.LauncherSettings.Favorites.ITEM_TYPE_APPLICATION
@@ -468,7 +470,12 @@ constructor(
         }
 
         if (!occupied.containsKey(item.screenId)) {
-            occupied.put(item.screenId, GridOccupancy(countX + 1, countY + 1))
+            val screen = GridOccupancy(countX + 1, countY + 1)
+            if (firstPagePinnedItemEnabled() && item.screenId == Workspace.FIRST_SCREEN_ID) {
+                // Reserve the first row on screen 0 for the fixed pinned item.
+                screen.markCells(0, 0, countX, 1, true)
+            }
+            occupied.put(item.screenId, screen)
         }
         val occupancy = occupied[item.screenId]
 

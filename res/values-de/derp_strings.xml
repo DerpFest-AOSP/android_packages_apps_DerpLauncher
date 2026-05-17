@@ -58,4 +58,6 @@
     <string name="label_voice_search">Sprachsuche</string>
     <string name="label_lens">Google Lens</string>
     <string name="label_ai_mode">Assistentensuche</string>
+    <string name="first_page_pinned_item_title">Auf einen Blick</string>
+    <string name="first_page_pinned_item_subtitle">Das Companion-Widget wird hier angezeigt</string>
 </resources>

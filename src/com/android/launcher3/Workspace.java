@@ -43,6 +43,7 @@ import static com.android.launcher3.LauncherState.HINT_STATE;
 import static com.android.launcher3.LauncherState.NORMAL;
 import static com.android.launcher3.LauncherState.SPRING_LOADED;
 import static com.android.launcher3.MotionEventsUtils.isTrackpadMultiFingerSwipe;
+import static com.android.launcher3.Utilities.firstPagePinnedItemEnabled;
 import static com.android.launcher3.anim.AnimatorListeners.forSuccessCallback;
 import static com.android.launcher3.config.FeatureFlags.FOLDABLE_SINGLE_PAGE;
 import static com.android.launcher3.logging.StatsLogManager.LAUNCHER_STATE_HOME;
@@ -286,6 +287,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
     private PreviewBackground mFolderCreateBg;
     /** The underlying view that we are dragging something over. */
     private View mDragOverView = null;
+    private View mFirstPagePinnedItem;
     private FolderIcon mDragOverFolderIcon = null;
     private boolean mCreateUserFolderOnDrop = false;
     private boolean mAddToExistingFolderOnDrop = false;
@@ -726,13 +728,36 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
      */
     public void bindAndInitFirstWorkspaceScreen() {
         // Add the first page
-        insertNewWorkspaceScreen(Workspace.FIRST_SCREEN_ID, getChildCount());
+        CellLayout firstPage = insertNewWorkspaceScreen(Workspace.FIRST_SCREEN_ID, getChildCount());
+        if (!firstPagePinnedItemEnabled()) {
+            mFirstPagePinnedItem = null;
+            return;
+        }
+
+        if (mFirstPagePinnedItem == null) {
+            mFirstPagePinnedItem = LayoutInflater.from(getContext())
+                    .inflate(R.layout.search_container_workspace, firstPage, false);
+        }
+
+        int cellHSpan = firstPage.getCountX();
+        CellLayoutLayoutParams lp = new CellLayoutLayoutParams(0, 0, cellHSpan, 1);
+        lp.canReorder = false;
+        if (!firstPage.addViewToCellLayout(
+                mFirstPagePinnedItem, 0, R.id.search_container_workspace, lp, true)) {
+            Log.e(TAG, "Failed to add to item at (0, 0) to CellLayout");
+            mFirstPagePinnedItem = null;
+        }
     }
 
     public void removeAllWorkspaceScreens() {
         // Disable all layout transitions before removing all pages to ensure that we don't get the
         // transition animations competing with us changing the scroll when we add pages
         disableLayoutTransitions();
+
+        // Recycle the first page pinned item
+        if (mFirstPagePinnedItem != null) {
+            ((ViewGroup) mFirstPagePinnedItem.getParent()).removeView(mFirstPagePinnedItem);
+        }
 
         // Remove the pages and clear the screen models
         removeAllViews();

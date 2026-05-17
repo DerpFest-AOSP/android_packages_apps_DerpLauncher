@@ -104,6 +104,13 @@ public final class Utilities {
 
     public static final String GSA_PACKAGE = "com.google.android.googlequicksearchbox";
 
+    /**
+     * Temporary fixed slot on the first workspace page for the upcoming companion widget app.
+     */
+    public static boolean firstPagePinnedItemEnabled() {
+        return true;
+    }
+
     @ChecksSdkIntAtLeast(api = VERSION_CODES.TIRAMISU, codename = "T")
     public static final boolean ATLEAST_T = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU;
 

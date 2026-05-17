@@ -22,6 +22,7 @@ import static android.view.View.VISIBLE;
 import static com.android.launcher3.Hotseat.ALPHA_CHANNEL_PREVIEW_RENDERER;
 import static com.android.launcher3.LauncherModel.useModelRepositoryBinding;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_HOTSEAT_PREDICTION;
+import static com.android.launcher3.Utilities.firstPagePinnedItemEnabled;
 import static com.android.launcher3.model.ModelUtils.currentScreenContentFilter;
 import static com.android.launcher3.util.Executors.MAIN_EXECUTOR;
 
@@ -60,6 +61,7 @@ import com.android.launcher3.R;
 import com.android.launcher3.Workspace;
 import com.android.launcher3.WorkspaceLayoutManager;
 import com.android.launcher3.celllayout.CellPosMapper;
+import com.android.launcher3.celllayout.CellLayoutLayoutParams;
 import com.android.launcher3.dagger.LauncherComponentProvider;
 import com.android.launcher3.display.DisplayController;
 import com.android.launcher3.dragndrop.SimpleDragLayer;
@@ -372,6 +374,18 @@ public class LauncherPreviewRenderer extends BaseContext
                 .filter(currentScreenContentFilter(IntSet.wrap(mWorkspaceScreens.keySet())))
                 .forEach(this::inflateAndAdd);
         populateHotseatPredictions(itemIdMap);
+
+        // Add the first page pinned placeholder.
+        if (firstPagePinnedItemEnabled()) {
+            CellLayout firstScreen = mWorkspaceScreens.get(FIRST_SCREEN_ID);
+            if (firstScreen != null) {
+                View qsb = mHomeElementInflater.inflate(R.layout.qsb_preview, firstScreen, false);
+                CellLayoutLayoutParams lp = new CellLayoutLayoutParams(
+                        0, 0, firstScreen.getCountX(), 1);
+                lp.canReorder = false;
+                firstScreen.addViewToCellLayout(qsb, 0, R.id.search_container_workspace, lp, true);
+            }
+        }
 
         measureAndLayoutRootView();
         dispatchVisibilityAggregated(mRootView, true);
