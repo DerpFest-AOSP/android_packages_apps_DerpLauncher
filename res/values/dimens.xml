@@ -392,6 +392,15 @@
     <dimen name="options_menu_icon_size">24dp</dimen>
     <dimen name="options_menu_thumb_size">32dp</dimen>
 
+    <dimen name="qsb_g_icon_marginStart">20dp</dimen>
+    <dimen name="qsb_lens_padding">8dp</dimen>
+    <dimen name="qsb_marginEnd">8dp</dimen>
+    <dimen name="qsb_icon_tap_size">48dp</dimen>
+    <dimen name="qsb_icon_padding">8dp</dimen>
+    <dimen name="qsb_ai_mode_button_size">44dp</dimen>
+    <dimen name="qsb_ai_mode_button_margin">12dp</dimen>
+    <dimen name="hotseat_qsb_edge_margin">16dp</dimen>
+
     <!-- Snackbar -->
     <dimen name="snackbar_height">48dp</dimen>
     <dimen name="snackbar_content_height">48dp</dimen>
@@ -428,7 +437,7 @@
     <dimen name="qsb_search_icon_padding_end">8dp</dimen>
     <dimen name="min_hotseat_icon_space">18dp</dimen>
     <dimen name="max_hotseat_icon_space">50dp</dimen>
-    <dimen name="min_hotseat_qsb_width">0dp</dimen>
+    <dimen name="min_hotseat_qsb_width">240dp</dimen>
     <dimen name="taskbar_running_app_indicator_height">0dp</dimen>
     <dimen name="taskbar_running_app_indicator_width">0dp</dimen>
     <dimen name="taskbar_running_app_indicator_top_margin">0dp</dimen>

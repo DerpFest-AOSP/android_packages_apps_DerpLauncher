@@ -338,10 +338,16 @@ public class Hotseat extends CellLayout implements Insettable {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         DeviceProfile dp = mActivity.getDeviceProfile();
-        mQsb.measure(
-                makeMeasureSpec(dp.getHotseatProfile().getQsbWidth(), MeasureSpec.EXACTLY),
-                makeMeasureSpec(dp.getHotseatProfile().getQsbHeight(), MeasureSpec.EXACTLY)
-        );
+        int availableWidth = Math.max(0, getMeasuredWidth() - getPaddingLeft() - getPaddingRight());
+        int qsbEdgeMargin = getResources().getDimensionPixelSize(R.dimen.hotseat_qsb_edge_margin);
+        int maxQsbWidth = Math.max(0, availableWidth - 2 * qsbEdgeMargin);
+        int qsbWidth = dp.getHotseatProfile().getQsbWidth() > 0
+                ? dp.getHotseatProfile().getQsbWidth() : maxQsbWidth;
+        if (maxQsbWidth > 0) {
+            qsbWidth = Math.min(qsbWidth, maxQsbWidth);
+        }
+        mQsb.measure(makeMeasureSpec(qsbWidth, MeasureSpec.EXACTLY),
+                makeMeasureSpec(dp.getHotseatProfile().getQsbHeight(), MeasureSpec.EXACTLY));
     }
 
     @Override
@@ -399,8 +405,7 @@ public class Hotseat extends CellLayout implements Insettable {
     @Nullable
     @Override
     public View mapOverItems(ItemOperator op) {
-        if (Flags.enableQsbOnHotseat()
-                && mQsb != null
+        if (mQsb != null
                 && mQsb.getTag() instanceof ItemInfo info
                 && op.evaluate(info, mQsb)) {
             return mQsb;

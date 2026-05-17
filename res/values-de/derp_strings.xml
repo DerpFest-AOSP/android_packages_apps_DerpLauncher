@@ -52,4 +52,10 @@
     <!-- Suggestions -->
     <string name="suggestion_pref_screen_title">Vorschläge</string>
     <string name="suggestion_pref_screen_desc">Für App-Übersicht- und Startbildschirm-Vorschläge</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Suche</string>
+    <string name="label_voice_search">Sprachsuche</string>
+    <string name="label_lens">Google Lens</string>
+    <string name="label_ai_mode">Assistentensuche</string>
 </resources>
