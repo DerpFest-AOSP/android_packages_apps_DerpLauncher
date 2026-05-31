@@ -18,6 +18,10 @@ package com.android.launcher3.uioverrides
 import android.app.ActivityOptions
 import android.app.PendingIntent
 import android.app.role.RoleManager
+import android.app.smartspace.SmartspaceConfig
+import android.app.smartspace.SmartspaceManager
+import android.app.smartspace.SmartspaceSession
+import android.app.smartspace.SmartspaceTarget
 import android.content.Context
 import android.content.IIntentReceiver
 import android.content.IIntentSender
@@ -27,10 +31,13 @@ import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.content.pm.ShortcutInfo
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.graphics.Rect
 import android.os.Bundle
 import android.os.IBinder
 import android.os.UserHandle
+import android.text.TextUtils
+import android.util.Log
 import android.view.DragAndDropPermissions
 import android.view.DragEvent
 import android.view.SurfaceControlViewHost
@@ -38,6 +45,7 @@ import android.widget.Toast
 import android.window.RemoteTransition
 import android.window.ScreenCapture.ScreenCaptureParams
 import android.window.ScreenCaptureInternal
+import android.app.smartspace.uitemplatedata.Icon as SmartspaceTemplateIcon
 import com.android.launcher3.BaseActivity
 import com.android.launcher3.Flags.enablePrivateSpace
 import com.android.launcher3.R
@@ -57,6 +65,11 @@ import javax.inject.Inject
 @LauncherAppSingleton
 open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Context?) :
     ApiWrapper(context) {
+
+    companion object {
+        private const val TAG = "SystemApiWrapper"
+        private const val HOME_SMARTSPACE_SURFACE = "home"
+    }
 
     override fun getPersons(si: ShortcutInfo) = si.persons ?: Utilities.EMPTY_PERSON_ARRAY
 
@@ -186,4 +199,105 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
 
     override fun requestDragAndDropPermissions(event: DragEvent): DragAndDropPermissions? =
         DragAndDropPermissions.obtain(event)
+
+    override fun createWeatherDataProvider(): WeatherDataProvider = SmartspaceWeatherDataProvider()
+
+    private inner class SmartspaceWeatherDataProvider : WeatherDataProvider {
+        private var callback: WeatherInfoListener? = null
+        private var smartspaceSession: SmartspaceSession? = null
+        private val listener =
+            SmartspaceSession.OnTargetsAvailableListener { targets ->
+                callback?.onWeatherInfoUpdated(extractWeatherInfo(targets))
+            }
+
+        override fun setCallback(callback: WeatherInfoListener?) {
+            this.callback = callback
+        }
+
+        override fun start() {
+            if (smartspaceSession != null) {
+                return
+            }
+            val smartspaceManager = mContext.getSystemService(SmartspaceManager::class.java)
+            if (smartspaceManager == null) {
+                callback?.onWeatherInfoUpdated(null)
+                return
+            }
+            try {
+                smartspaceSession =
+                    smartspaceManager.createSmartspaceSession(
+                        SmartspaceConfig.Builder(mContext, HOME_SMARTSPACE_SURFACE)
+                            .setSmartspaceTargetCount(1)
+                            .build()
+                    )
+                smartspaceSession?.addOnTargetsAvailableListener(Executors.MAIN_EXECUTOR, listener)
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to start weather smartspace session", e)
+                callback?.onWeatherInfoUpdated(null)
+            }
+        }
+
+        override fun stop() {
+            val session = smartspaceSession ?: return
+            smartspaceSession = null
+            try {
+                session.removeOnTargetsAvailableListener(listener)
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to unregister weather listener", e)
+            }
+            try {
+                session.close()
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to close weather smartspace session", e)
+            }
+        }
+
+        private fun extractWeatherInfo(targets: List<SmartspaceTarget>): WeatherInfo? {
+            val now = System.currentTimeMillis()
+            val target =
+                targets.firstOrNull {
+                    it.featureType == SmartspaceTarget.FEATURE_WEATHER &&
+                        now >= it.creationTimeMillis &&
+                        now <= it.expiryTimeMillis
+                } ?: return null
+
+            return weatherInfoFromHeaderAction(target)
+                ?: weatherInfoFromTemplate(target)
+        }
+
+        private fun weatherInfoFromHeaderAction(target: SmartspaceTarget): WeatherInfo? {
+            val action = target.headerAction ?: return null
+            val text = action.title
+            if (TextUtils.isEmpty(text)) {
+                return null
+            }
+            return WeatherInfo(
+                text,
+                loadDrawable(action.icon),
+                false,
+            )
+        }
+
+        private fun weatherInfoFromTemplate(target: SmartspaceTarget): WeatherInfo? {
+            val subtitleItem = target.templateData?.subtitleItem ?: return null
+            val text = subtitleItem.text?.text ?: return null
+            if (TextUtils.isEmpty(text)) {
+                return null
+            }
+            val icon = subtitleItem.icon
+            return WeatherInfo(
+                text,
+                loadDrawable(icon),
+                icon?.shouldTint() ?: true,
+            )
+        }
+
+        private fun loadDrawable(icon: android.graphics.drawable.Icon?): Drawable? {
+            return icon?.loadDrawable(mContext)
+        }
+
+        private fun loadDrawable(icon: SmartspaceTemplateIcon?): Drawable? {
+            return icon?.icon?.loadDrawable(mContext)
+        }
+    }
 }

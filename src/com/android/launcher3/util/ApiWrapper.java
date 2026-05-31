@@ -27,6 +27,7 @@ import android.content.pm.LauncherActivityInfo;
 import android.content.pm.ShortcutInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Process;
 import android.os.UserHandle;
@@ -187,6 +188,56 @@ public class ApiWrapper {
     /** Returns permissions obtained from the specified drag event. */
     public @Nullable DragAndDropPermissions requestDragAndDropPermissions(DragEvent event) {
         return null;
+    }
+
+    @Nullable
+    public WeatherDataProvider createWeatherDataProvider() {
+        return null;
+    }
+
+    public interface WeatherDataProvider {
+
+        void setCallback(@Nullable WeatherInfoListener callback);
+
+        void start();
+
+        void stop();
+    }
+
+    public interface WeatherInfoListener {
+
+        void onWeatherInfoUpdated(@Nullable WeatherInfo weatherInfo);
+    }
+
+    public static final class WeatherInfo {
+        @NonNull
+        private final CharSequence mText;
+        @Nullable
+        private final Drawable mIcon;
+        private final boolean mShouldTintIcon;
+
+        public WeatherInfo(
+                @NonNull CharSequence text,
+                @Nullable Drawable icon,
+                boolean shouldTintIcon) {
+            mText = text;
+            mIcon = icon;
+            mShouldTintIcon = shouldTintIcon;
+        }
+
+        @NonNull
+        public CharSequence getText() {
+            return mText;
+        }
+
+        @Nullable
+        public Drawable getIcon() {
+            return mIcon;
+        }
+
+        public boolean shouldTintIcon() {
+            return mShouldTintIcon;
+        }
     }
 
     private static class NoopDrawable extends ColorDrawable {

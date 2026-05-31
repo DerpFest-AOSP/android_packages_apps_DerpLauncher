@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2021 The Android Open Source Project
+     Copyright (C) 2026 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<com.android.launcher3.views.FirstPageStatusView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/search_container_workspace"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingStart="@dimen/first_page_status_start_padding"
-    android:paddingTop="@dimen/first_page_pinned_item_vertical_margin"
-    android:paddingEnd="@dimen/first_page_pinned_item_horizontal_margin"
-    android:paddingBottom="@dimen/first_page_pinned_item_vertical_margin" />
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M6,14a4,4 0,0 1,0 -8a4.72,4.72 0,0 1,0.88 0.08A5.99,5.99 0,0 1,18 9a4,4 0,1 1,0 8H6zM6,12h12a2,2 0,1 0,0 -4c-0.22,0 -0.44,0.04 -0.68,0.1l-1.13,0.28 -0.18,-1.15A4,4 0,0 0,8.09 7.4l-0.35,0.79 -0.84,-0.13A2,2 0,0 0,6 12z" />
+</vector>
