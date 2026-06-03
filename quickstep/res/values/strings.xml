@@ -244,6 +244,8 @@
     <string name="action_screenshot">Screenshot</string>
     <!-- Label for a button that enters split screen selection mode. [CHAR_LIMIT=20] -->
     <string name="action_split">Split</string>
+    <!-- Label for a button that launches Google Lens in overview. [CHAR_LIMIT=20] -->
+    <string name="action_lens">Lens</string>
     <!-- Label for a button that saves a new app pair. [CHAR_LIMIT=20] -->
     <string name="action_save_app_pair">Save app pair</string>
     <!-- Label for toast with instructions for split screen selection mode. [CHAR_LIMIT=50] -->

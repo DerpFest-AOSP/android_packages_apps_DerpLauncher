@@ -242,6 +242,14 @@ public class TaskOverlayFactory {
             recentsView.dismissAllTasks();
         }
 
+        private void launchLens() {
+            RecentsView recentsView = mTaskContainer.getTaskView().getRecentsView();
+            if (recentsView != null) {
+                recentsView.startHome();
+                mImageApi.startLensActivity();
+            }
+        }
+
         /**
          * Called when the overlay is no longer used.
          */
@@ -411,6 +419,15 @@ public class TaskOverlayFactory {
             }
 
             @Override
+            public void onLens() {
+                if (mIsAllowedByPolicy) {
+                    endLiveTileMode(TaskOverlay.this::launchLens);
+                } else {
+                    showBlockedByPolicyMessage();
+                }
+            }
+
+            @Override
             public void onClearAllTasksRequested() {
                 endLiveTileMode(TaskOverlay.this::clearAllTasks);
             }
@@ -430,6 +447,9 @@ public class TaskOverlayFactory {
 
         /** User wants to save an app pair with current group of apps. */
         void onSaveAppPair();
+
+        /** User wants to launch Google Lens with the current task snapshot. */
+        void onLens();
 
         /** User wants to dismiss all tasks in overview. */
         void onClearAllTasksRequested();

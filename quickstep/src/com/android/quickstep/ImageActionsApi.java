@@ -108,6 +108,11 @@ public class ImageActionsApi {
         ImageActionUtils.startShareActivity(mContext, mBitmapSupplier, crop, null, TAG);
     }
 
+    @UiThread
+    public void startLensActivity() {
+        ImageActionUtils.startLensActivity(mContext, mBitmapSupplier, null, TAG);
+    }
+
     /**
      * @param screenshot       to be saved to the media store.
      * @param screenshotBounds the location of where the bitmap was laid out on the screen in
