@@ -45,15 +45,15 @@
     <dimen name="first_page_pinned_item_horizontal_margin">8dp</dimen>
     <dimen name="first_page_pinned_item_vertical_margin">6dp</dimen>
     <dimen name="first_page_pinned_item_content_padding_horizontal">20dp</dimen>
-    <dimen name="first_page_status_start_padding">20dp</dimen>
-    <dimen name="first_page_status_primary_text_size">16sp</dimen>
-    <dimen name="first_page_status_secondary_text_size">13sp</dimen>
-    <dimen name="first_page_status_icon_size">13dp</dimen>
-    <dimen name="first_page_status_icon_spacing">4dp</dimen>
-    <dimen name="first_page_status_item_spacing">10dp</dimen>
-    <dimen name="first_page_status_line_spacing">2dp</dimen>
+    <dimen name="first_page_status_start_padding">24dp</dimen>
+    <dimen name="first_page_status_primary_text_size">18sp</dimen>
+    <dimen name="first_page_status_secondary_text_size">16sp</dimen>
+    <dimen name="first_page_status_icon_size">16dp</dimen>
+    <dimen name="first_page_status_icon_spacing">6dp</dimen>
+    <dimen name="first_page_status_item_spacing">12dp</dimen>
+    <dimen name="first_page_status_line_spacing">6dp</dimen>
     <dimen name="first_page_status_horizontal_padding">0dp</dimen>
-    <dimen name="first_page_status_top_padding">4dp</dimen>
+    <dimen name="first_page_status_top_padding">2dp</dimen>
 
     <!-- Workspace page indicator -->
     <dimen name="workspace_page_indicator_height">24dp</dimen>
