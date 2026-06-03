@@ -22,6 +22,7 @@ import android.app.smartspace.SmartspaceConfig
 import android.app.smartspace.SmartspaceManager
 import android.app.smartspace.SmartspaceSession
 import android.app.smartspace.SmartspaceTarget
+import android.content.ComponentName
 import android.content.Context
 import android.content.IIntentReceiver
 import android.content.IIntentSender
@@ -31,8 +32,15 @@ import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.content.pm.ShortcutInfo
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.Rect
+import android.media.MediaDescription
+import android.media.MediaMetadata
+import android.media.session.MediaController
+import android.media.session.MediaSessionManager
+import android.media.session.PlaybackState
+import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
 import android.os.UserHandle
@@ -52,6 +60,7 @@ import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppSingleton
+import com.android.launcher3.notification.NotificationListener
 import com.android.launcher3.proxy.ProxyActivityStarter
 import com.android.launcher3.uioverrides.touchcontrollers.StatusBarTouchController
 import com.android.launcher3.util.ApiWrapper
@@ -202,6 +211,8 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
 
     override fun createWeatherDataProvider(): WeatherDataProvider = SmartspaceWeatherDataProvider()
 
+    override fun createMediaDataProvider(): MediaDataProvider = ActiveMediaDataProvider()
+
     private inner class SmartspaceWeatherDataProvider : WeatherDataProvider {
         private var callback: WeatherInfoListener? = null
         private var smartspaceSession: SmartspaceSession? = null
@@ -298,6 +309,188 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
 
         private fun loadDrawable(icon: SmartspaceTemplateIcon?): Drawable? {
             return icon?.icon?.loadDrawable(mContext)
+        }
+    }
+
+    private inner class ActiveMediaDataProvider : MediaDataProvider {
+        private var callback: MediaInfoListener? = null
+        private val mediaSessionManager = mContext.getSystemService(MediaSessionManager::class.java)
+        private val listenerComponent = ComponentName(mContext, NotificationListener::class.java)
+        private var mediaController: MediaController? = null
+        private val sessionsListener =
+            MediaSessionManager.OnActiveSessionsChangedListener { controllers ->
+                updateActiveController(controllers.orEmpty())
+            }
+        private val mediaCallback =
+            object : MediaController.Callback() {
+                override fun onPlaybackStateChanged(state: PlaybackState?) {
+                    dispatchCurrentMedia()
+                }
+
+                override fun onMetadataChanged(metadata: MediaMetadata?) {
+                    dispatchCurrentMedia()
+                }
+
+                override fun onSessionDestroyed() {
+                    clearController()
+                    callback?.onMediaInfoUpdated(null)
+                }
+            }
+
+        override fun setCallback(callback: MediaInfoListener?) {
+            this.callback = callback
+        }
+
+        override fun start() {
+            if (mediaSessionManager == null) {
+                callback?.onMediaInfoUpdated(null)
+                return
+            }
+            try {
+                mediaSessionManager.addOnActiveSessionsChangedListener(sessionsListener, null)
+                updateActiveController(mediaSessionManager.getActiveSessions(null))
+            } catch (e: SecurityException) {
+                try {
+                    mediaSessionManager.addOnActiveSessionsChangedListener(
+                        sessionsListener,
+                        listenerComponent,
+                    )
+                    updateActiveController(mediaSessionManager.getActiveSessions(listenerComponent))
+                } catch (inner: SecurityException) {
+                    Log.w(TAG, "Failed to register active media sessions listener", inner)
+                    callback?.onMediaInfoUpdated(null)
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to start media session monitoring", e)
+                callback?.onMediaInfoUpdated(null)
+            }
+        }
+
+        override fun stop() {
+            try {
+                mediaSessionManager?.removeOnActiveSessionsChangedListener(sessionsListener)
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to unregister active media sessions listener", e)
+            }
+            clearController()
+        }
+
+        private fun updateActiveController(controllers: List<MediaController>) {
+            val best = pickBestController(controllers)
+            if (best?.sessionToken == mediaController?.sessionToken) {
+                dispatchCurrentMedia()
+                return
+            }
+            clearController()
+            mediaController = best
+            best?.registerCallback(mediaCallback, android.os.Handler(mContext.mainLooper))
+            dispatchCurrentMedia()
+        }
+
+        private fun pickBestController(controllers: List<MediaController>): MediaController? {
+            var fallback: MediaController? = null
+            controllers.forEach { controller ->
+                val state = controller.playbackState?.state ?: PlaybackState.STATE_NONE
+                if (state == PlaybackState.STATE_PLAYING) {
+                    return controller
+                }
+                if (fallback == null && controller.metadata != null) {
+                    fallback = controller
+                }
+            }
+            return fallback ?: controllers.firstOrNull()
+        }
+
+        private fun dispatchCurrentMedia() {
+            callback?.onMediaInfoUpdated(extractMediaInfo(mediaController))
+        }
+
+        private fun extractMediaInfo(controller: MediaController?): MediaInfo? {
+            val currentController = controller ?: return null
+            val playbackState = currentController.playbackState ?: return null
+            if (!playbackState.isActiveCompat()) {
+                return null
+            }
+
+            val metadata = currentController.metadata
+            val description = metadata?.description
+            val title =
+                firstNonEmpty(
+                    metadata?.getString(MediaMetadata.METADATA_KEY_TITLE),
+                    description?.title,
+                    metadata?.getString(MediaMetadata.METADATA_KEY_DISPLAY_TITLE),
+                ) ?: return null
+            val subtitle =
+                firstNonEmpty(
+                    metadata?.getString(MediaMetadata.METADATA_KEY_ARTIST),
+                    description?.subtitle,
+                    metadata?.getString(MediaMetadata.METADATA_KEY_ALBUM_ARTIST),
+                    metadata?.getString(MediaMetadata.METADATA_KEY_ALBUM),
+                )
+
+            return MediaInfo(
+                title,
+                subtitle,
+                loadMediaDrawable(metadata, description),
+                false,
+            )
+        }
+
+        private fun firstNonEmpty(vararg texts: CharSequence?): CharSequence? {
+            return texts.firstOrNull { !TextUtils.isEmpty(it) }
+        }
+
+        private fun loadMediaDrawable(
+            metadata: MediaMetadata?,
+            description: MediaDescription?
+        ): Drawable? {
+            val bitmap =
+                metadata?.getBitmap(MediaMetadata.METADATA_KEY_DISPLAY_ICON)
+                    ?: metadata?.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART)
+                    ?: metadata?.getBitmap(MediaMetadata.METADATA_KEY_ART)
+                    ?: description?.iconBitmap
+            if (bitmap != null) {
+                return BitmapDrawable(mContext.resources, bitmap)
+            }
+
+            val uri =
+                firstNonEmpty(
+                    metadata?.getString(MediaMetadata.METADATA_KEY_DISPLAY_ICON_URI),
+                    metadata?.getString(MediaMetadata.METADATA_KEY_ALBUM_ART_URI),
+                    metadata?.getString(MediaMetadata.METADATA_KEY_ART_URI),
+                    description?.iconUri?.toString(),
+                )
+            return uri?.let(::loadMediaDrawableFromUri)
+        }
+
+        private fun loadMediaDrawableFromUri(uriString: CharSequence): Drawable? {
+            return try {
+                mContext.contentResolver.openInputStream(Uri.parse(uriString.toString()))?.use {
+                    Drawable.createFromStream(it, uriString.toString())
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to load media artwork from uri", e)
+                null
+            }
+        }
+
+        private fun clearController() {
+            mediaController?.unregisterCallback(mediaCallback)
+            mediaController = null
+        }
+    }
+
+    private fun PlaybackState.isActiveCompat(): Boolean {
+        return when (state) {
+            PlaybackState.STATE_BUFFERING,
+            PlaybackState.STATE_CONNECTING,
+            PlaybackState.STATE_FAST_FORWARDING,
+            PlaybackState.STATE_PLAYING,
+            PlaybackState.STATE_REWINDING,
+            PlaybackState.STATE_SKIPPING_TO_NEXT,
+            PlaybackState.STATE_SKIPPING_TO_PREVIOUS,
+            PlaybackState.STATE_SKIPPING_TO_QUEUE_ITEM -> true
+            else -> false
         }
     }
 }

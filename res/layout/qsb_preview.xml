@@ -18,7 +18,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/search_container_workspace"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:paddingStart="@dimen/first_page_status_start_padding"
     android:paddingTop="8dp"
     android:paddingEnd="@dimen/first_page_pinned_item_horizontal_margin"

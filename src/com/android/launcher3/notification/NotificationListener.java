@@ -16,9 +16,7 @@
 
 package com.android.launcher3.notification;
 
-import static com.android.launcher3.util.Executors.MAIN_EXECUTOR;
 import static com.android.launcher3.util.Executors.UI_HELPER_EXECUTOR;
-import static com.android.launcher3.util.SettingsCache.NOTIFICATION_BADGING_URI;
 
 import static java.util.Collections.emptyList;
 
@@ -38,8 +36,6 @@ import androidx.annotation.WorkerThread;
 import com.android.launcher3.dagger.LauncherComponentProvider;
 import com.android.launcher3.dot.DotInfo;
 import com.android.launcher3.util.PackageUserKey;
-import com.android.launcher3.util.SafeCloseable;
-import com.android.launcher3.util.SettingsCache;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -76,9 +72,6 @@ public class NotificationListener extends NotificationListenerService {
     private final Map<String, NotificationGroup> mNotificationGroupMap = new HashMap<>();
     /** Maps keys to their corresponding current group key */
     private final Map<String, String> mNotificationGroupKeyMap = new HashMap<>();
-
-    private SettingsCache mSettingsCache;
-    private @Nullable SafeCloseable mSettingCacheSafeCloseable;
 
     public NotificationListener() {
         mWorkerHandler = new Handler(UI_HELPER_EXECUTOR.getLooper(), this::handleWorkerMessage);
@@ -197,21 +190,7 @@ public class NotificationListener extends NotificationListenerService {
         Log.i(TAG, "onListenerConnected");
         mIsConnected = true;
 
-        // Register an observer to rebind the notification listener when dots are re-enabled.
-        mSettingsCache = SettingsCache.INSTANCE.get(this);
-        mSettingCacheSafeCloseable = mSettingsCache.getListenableRef(NOTIFICATION_BADGING_URI)
-                .forEach(MAIN_EXECUTOR, (dotsEnabled) -> {
-                    onNotificationSettingsChanged(dotsEnabled);
-                    return null;
-                });
-
         onNotificationFullRefresh();
-    }
-
-    private void onNotificationSettingsChanged(boolean areNotificationDotsEnabled) {
-        if (!areNotificationDotsEnabled && mIsConnected) {
-            requestUnbind();
-        }
     }
 
     private void onNotificationFullRefresh() {
@@ -223,10 +202,6 @@ public class NotificationListener extends NotificationListenerService {
         super.onListenerDisconnected();
         Log.i(TAG, "onListenerDisconnected");
         mIsConnected = false;
-        if (mSettingCacheSafeCloseable != null) {
-            mSettingCacheSafeCloseable.close();
-            mSettingCacheSafeCloseable = null;
-        }
         onNotificationFullRefresh();
     }
 

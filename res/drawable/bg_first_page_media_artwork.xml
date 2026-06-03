@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2016 The Android Open Source Project
+     Copyright (C) 2026 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,12 +14,17 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<com.android.launcher3.views.FirstPageStatusView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/search_container_workspace"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingStart="@dimen/first_page_status_start_padding"
-    android:paddingTop="0dp"
-    android:paddingEnd="@dimen/first_page_pinned_item_horizontal_margin"
-    android:paddingBottom="8dp" />
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/first_page_status_media_icon_radius" />
+            <solid android:color="#33FFFFFF" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/first_page_status_media_icon_radius" />
+            <solid android:color="#1FFFFFFF" />
+        </shape>
+    </item>
+</selector>

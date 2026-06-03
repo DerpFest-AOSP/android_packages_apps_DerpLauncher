@@ -19,10 +19,11 @@ package com.android.launcher3.views;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.FrameLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
@@ -30,9 +31,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.launcher3.R;
 import com.android.launcher3.pageindicators.PageIndicatorDots;
+import com.android.launcher3.util.ApiWrapper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -42,6 +43,10 @@ public class FirstPageStatusView extends FrameLayout {
 
     private final ArrayList<View> mPages = new ArrayList<>();
     private final PagerAdapter mAdapter = new PagerAdapter();
+    private final FirstPageCompactStatusView mCompactStatusView;
+    private final FirstPageMediaStatusView mMediaStatusView;
+    @Nullable
+    private final ApiWrapper.MediaDataProvider mMediaDataProvider;
 
     private RecyclerView mPager;
     private LinearLayoutManager mLayoutManager;
@@ -60,8 +65,11 @@ public class FirstPageStatusView extends FrameLayout {
     public FirstPageStatusView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.first_page_status_view, this, true);
+        mCompactStatusView = new FirstPageCompactStatusView(context);
+        mMediaStatusView = new FirstPageMediaStatusView(context);
+        mMediaDataProvider = ApiWrapper.INSTANCE.get(context).createMediaDataProvider();
         bindViews();
-        setPages(Collections.singletonList(new FirstPageCompactStatusView(context)));
+        rebuildPages();
     }
 
     private void bindViews() {
@@ -86,7 +94,25 @@ public class FirstPageStatusView extends FrameLayout {
         });
     }
 
-    protected void setPages(List<View> pages) {
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (mMediaDataProvider != null) {
+            mMediaDataProvider.setCallback(this::onMediaInfoUpdated);
+            mMediaDataProvider.start();
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mMediaDataProvider != null) {
+            mMediaDataProvider.setCallback(null);
+            mMediaDataProvider.stop();
+        }
+    }
+
+    private void setPages(List<View> pages) {
         int previousPage = Math.min(mCurrentPage, Math.max(0, pages.size() - 1));
         mPages.clear();
         mPages.addAll(pages);
@@ -118,6 +144,23 @@ public class FirstPageStatusView extends FrameLayout {
         int clampedPage = Math.max(0, Math.min(page, Math.max(0, mPages.size() - 1)));
         mCurrentPage = clampedPage;
         mPageIndicator.setActiveMarker(clampedPage);
+    }
+
+    private void onMediaInfoUpdated(@Nullable ApiWrapper.MediaInfo mediaInfo) {
+        boolean hadMedia = mMediaStatusView.hasMedia();
+        mMediaStatusView.setMediaInfo(mediaInfo);
+        if (hadMedia != mMediaStatusView.hasMedia()) {
+            rebuildPages();
+        }
+    }
+
+    private void rebuildPages() {
+        ArrayList<View> pages = new ArrayList<>();
+        pages.add(mCompactStatusView);
+        if (mMediaStatusView.hasMedia()) {
+            pages.add(mMediaStatusView);
+        }
+        setPages(pages);
     }
 
     private final class PagerAdapter extends RecyclerView.Adapter<PageViewHolder> {

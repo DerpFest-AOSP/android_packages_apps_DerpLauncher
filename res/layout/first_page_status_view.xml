@@ -33,9 +33,11 @@
 
         <com.android.launcher3.pageindicators.PageIndicatorDots
             android:id="@+id/first_page_status_page_indicator"
+            android:theme="@style/FirstPageStatusIndicatorTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/first_page_status_indicator_end_margin"
             android:layout_marginTop="@dimen/first_page_status_indicator_margin_top"
             android:visibility="gone" />
     </LinearLayout>

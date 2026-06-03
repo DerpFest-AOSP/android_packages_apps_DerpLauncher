@@ -195,6 +195,11 @@ public class ApiWrapper {
         return null;
     }
 
+    @Nullable
+    public MediaDataProvider createMediaDataProvider() {
+        return null;
+    }
+
     public interface WeatherDataProvider {
 
         void setCallback(@Nullable WeatherInfoListener callback);
@@ -207,6 +212,20 @@ public class ApiWrapper {
     public interface WeatherInfoListener {
 
         void onWeatherInfoUpdated(@Nullable WeatherInfo weatherInfo);
+    }
+
+    public interface MediaDataProvider {
+
+        void setCallback(@Nullable MediaInfoListener callback);
+
+        void start();
+
+        void stop();
+    }
+
+    public interface MediaInfoListener {
+
+        void onMediaInfoUpdated(@Nullable MediaInfo mediaInfo);
     }
 
     public static final class WeatherInfo {
@@ -228,6 +247,46 @@ public class ApiWrapper {
         @NonNull
         public CharSequence getText() {
             return mText;
+        }
+
+        @Nullable
+        public Drawable getIcon() {
+            return mIcon;
+        }
+
+        public boolean shouldTintIcon() {
+            return mShouldTintIcon;
+        }
+    }
+
+    public static final class MediaInfo {
+        @NonNull
+        private final CharSequence mTitle;
+        @Nullable
+        private final CharSequence mSubtitle;
+        @Nullable
+        private final Drawable mIcon;
+        private final boolean mShouldTintIcon;
+
+        public MediaInfo(
+                @NonNull CharSequence title,
+                @Nullable CharSequence subtitle,
+                @Nullable Drawable icon,
+                boolean shouldTintIcon) {
+            mTitle = title;
+            mSubtitle = subtitle;
+            mIcon = icon;
+            mShouldTintIcon = shouldTintIcon;
+        }
+
+        @NonNull
+        public CharSequence getTitle() {
+            return mTitle;
+        }
+
+        @Nullable
+        public CharSequence getSubtitle() {
+            return mSubtitle;
         }
 
         @Nullable
