@@ -40,7 +40,7 @@ import com.android.launcher3.util.MultiTranslateDelegate;
  */
 public class QsbLayout extends FrameLayout implements Reorderable {
 
-    private static final String LENS_URI = "googleapp://lens";
+    private static final String LENS_URI = "google://lens";
 
     private final MultiTranslateDelegate mTranslateDelegate = new MultiTranslateDelegate(this);
     private final ThemeManager.ThemeChangeListener mThemeChangeListener = this::updateIcons;
@@ -78,10 +78,10 @@ public class QsbLayout extends FrameLayout implements Reorderable {
                 "", false, null, true));
 
         if (mLensIcon != null) {
-            Intent lensIntent = getLensIntent(getContext());
-            boolean hasLens = lensIntent.resolveActivity(getContext().getPackageManager()) != null;
+            boolean hasLens = isLensAvailable(getContext());
             mLensIcon.setVisibility(hasLens ? VISIBLE : GONE);
             if (hasLens) {
+                Intent lensIntent = getLensIntent(getContext());
                 mLensIcon.setOnClickListener(v -> launchSafely(lensIntent));
             }
         }
@@ -132,19 +132,55 @@ public class QsbLayout extends FrameLayout implements Reorderable {
     private void launchSafely(Intent intent) {
         try {
             getContext().startActivity(intent);
+            return;
         } catch (ActivityNotFoundException | SecurityException ignored) {
-            Launcher.getLauncher(getContext()).startSearch("", false, null, true);
         }
+        // Fallback: try ACTION_WEB_SEARCH
+        try {
+            Intent search = new Intent(Intent.ACTION_WEB_SEARCH)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getContext().startActivity(search);
+            return;
+        } catch (ActivityNotFoundException | SecurityException ignored) {
+        }
+        // Last fallback: open Google app
+        try {
+            Intent launch = getContext().getPackageManager()
+                    .getLaunchIntentForPackage(com.android.launcher3.Utilities.GSA_PACKAGE);
+            if (launch != null) {
+                getContext().startActivity(launch);
+                return;
+            }
+        } catch (ActivityNotFoundException | SecurityException ignored) {
+        }
+        Launcher.getLauncher(getContext()).startSearch("", false, null, true);
     }
 
     static Intent getLensIntent(Context context) {
-        String searchPackage = getSearchPackage(context);
-        Intent lensIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(LENS_URI))
+        // Primary: launch Lens activity directly by component
+        Intent intent = new Intent()
+                .setComponent(new android.content.ComponentName(
+                        com.android.launcher3.Utilities.GSA_PACKAGE,
+                        com.android.launcher3.Utilities.LENS_ACTIVITY))
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (searchPackage != null) {
-            lensIntent.setPackage(searchPackage);
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            return intent;
         }
-        return lensIntent;
+        // Fallback: try google://lens URI
+        Intent uriIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(LENS_URI))
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .setPackage(com.android.launcher3.Utilities.GSA_PACKAGE);
+        if (uriIntent.resolveActivity(context.getPackageManager()) != null) {
+            return uriIntent;
+        }
+        // Last fallback: launch Google app
+        return context.getPackageManager().getLaunchIntentForPackage(
+                com.android.launcher3.Utilities.GSA_PACKAGE);
+    }
+
+    static boolean isLensAvailable(Context context) {
+        return com.android.launcher3.Utilities.isPackageEnabled(
+                com.android.launcher3.Utilities.GSA_PACKAGE, context);
     }
 
     @Nullable

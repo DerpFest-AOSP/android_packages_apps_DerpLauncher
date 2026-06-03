@@ -32,7 +32,9 @@ import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.Person;
 import android.app.WallpaperManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -70,7 +72,6 @@ import androidx.annotation.Nullable;
 import androidx.core.graphics.ColorUtils;
 
 import com.android.launcher3.deviceprofile.DeviceProperties;
-import com.android.launcher3.derpfest.DerpFestUtils;
 import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.graphics.TintedDrawableSpan;
 import com.android.launcher3.testing.shared.ResourceUtils;
@@ -103,6 +104,9 @@ public final class Utilities {
     public static final Person[] EMPTY_PERSON_ARRAY = new Person[0];
 
     public static final String GSA_PACKAGE = "com.google.android.googlequicksearchbox";
+    public static final String LENS_URI = "google://lens";
+    public static final String LENS_ACTIVITY = "com.google.android.apps.search.lens.LensActivity";
+    public static final String LENS_SHARE_ACTIVITY = "com.google.android.apps.search.lens.LensShareEntryPointActivity";
 
     /**
      * Temporary fixed slot on the first workspace page for the upcoming companion widget app.
@@ -168,6 +172,25 @@ public final class Utilities {
 
     public static boolean isPropertyEnabled(String propertyName) {
         return Log.isLoggable(propertyName, Log.VERBOSE);
+    }
+
+    public static boolean isPackageEnabled(String packageName, Context context) {
+        try {
+            context.getPackageManager().getPackageInfo(packageName, 0);
+            return true;
+        } catch (android.content.pm.PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    public static boolean isGSAEnabled(Context context) {
+        if (!isPackageEnabled(GSA_PACKAGE, context)) {
+            return false;
+        }
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setComponent(new ComponentName(GSA_PACKAGE, LENS_SHARE_ACTIVITY));
+        return context.getPackageManager().queryIntentActivities(intent,
+                android.content.pm.PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
     }
 
     /**
@@ -961,9 +984,5 @@ public final class Utilities {
 
     public static boolean isWorkspaceEditAllowed(Context context) {
         return !LauncherPrefs.WORKSPACE_LOCK.get(context);
-    }
-
-    public static boolean isGSAEnabled(Context context) {
-        return DerpFestUtils.isPackageEnabled(context, GSA_PACKAGE);
     }
 }
