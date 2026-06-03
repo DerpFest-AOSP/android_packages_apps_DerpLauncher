@@ -16,58 +16,38 @@
 
 package com.android.launcher3.views;
 
-import android.app.AlarmManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
-import android.text.TextUtils;
-import android.text.format.DateFormat;
-import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.launcher3.R;
-import com.android.launcher3.util.ApiWrapper;
-import com.android.launcher3.util.Themes;
+import com.android.launcher3.pageindicators.PageIndicatorDots;
 
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
- * Compact first-page status strip that mirrors the lockscreen right-side smartspace content.
+ * Container for swipeable first-page status content.
  */
 public class FirstPageStatusView extends FrameLayout {
 
-    private final AlarmManager mAlarmManager;
-    @Nullable
-    private final ApiWrapper.WeatherDataProvider mWeatherDataProvider;
-    private final int mWorkspaceTextColor;
+    private final ArrayList<View> mPages = new ArrayList<>();
+    private final PagerAdapter mAdapter = new PagerAdapter();
 
-    private TextView mDateTextView;
-    private LinearLayout mSecondaryRow;
-    private LinearLayout mWeatherContainer;
-    private ImageView mWeatherIconView;
-    private TextView mWeatherTextView;
-    private LinearLayout mAlarmContainer;
-    private TextView mAlarmTextView;
-
-    private boolean mReceiverRegistered;
-
-    private final BroadcastReceiver mTimeReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            refreshDateAndAlarm();
-        }
-    };
+    private RecyclerView mPager;
+    private LinearLayoutManager mLayoutManager;
+    private PageIndicatorDots mPageIndicator;
+    private PagerSnapHelper mSnapHelper;
+    private int mCurrentPage;
 
     public FirstPageStatusView(Context context) {
         this(context, null);
@@ -79,126 +59,102 @@ public class FirstPageStatusView extends FrameLayout {
 
     public FirstPageStatusView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        LayoutInflater.from(context).inflate(R.layout.first_page_status_content, this, true);
-        mAlarmManager = context.getSystemService(AlarmManager.class);
-        mWeatherDataProvider = ApiWrapper.INSTANCE.get(context).createWeatherDataProvider();
-        mWorkspaceTextColor = Themes.getAttrColor(context, R.attr.workspaceTextColor);
+        LayoutInflater.from(context).inflate(R.layout.first_page_status_view, this, true);
         bindViews();
-        refreshDateAndAlarm();
-        updateWeather(null);
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        registerTimeReceiver();
-        if (mWeatherDataProvider != null) {
-            mWeatherDataProvider.setCallback(this::updateWeather);
-            mWeatherDataProvider.start();
-        }
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (mWeatherDataProvider != null) {
-            mWeatherDataProvider.setCallback(null);
-            mWeatherDataProvider.stop();
-        }
-        unregisterTimeReceiver();
+        setPages(Collections.singletonList(new FirstPageCompactStatusView(context)));
     }
 
     private void bindViews() {
-        mDateTextView = findViewById(R.id.first_page_status_date);
-        mSecondaryRow = findViewById(R.id.first_page_status_secondary_row);
-        mWeatherContainer = findViewById(R.id.first_page_status_weather_container);
-        mWeatherIconView = findViewById(R.id.first_page_status_weather_icon);
-        mWeatherTextView = findViewById(R.id.first_page_status_weather);
-        mAlarmContainer = findViewById(R.id.first_page_status_alarm_container);
-        mAlarmTextView = findViewById(R.id.first_page_status_alarm);
+        mPager = findViewById(R.id.first_page_status_pager);
+        mPageIndicator = findViewById(R.id.first_page_status_page_indicator);
+        mLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
+        mPager.setLayoutManager(mLayoutManager);
+        mPager.setAdapter(mAdapter);
+        mPager.setItemAnimator(null);
+        mPager.setOverScrollMode(OVER_SCROLL_NEVER);
+        mPager.setNestedScrollingEnabled(false);
+
+        mSnapHelper = new PagerSnapHelper();
+        mSnapHelper.attachToRecyclerView(mPager);
+        mPager.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    updateCurrentPage(findSnappedPage());
+                }
+            }
+        });
     }
 
-    private void registerTimeReceiver() {
-        if (mReceiverRegistered) {
-            return;
+    protected void setPages(List<View> pages) {
+        int previousPage = Math.min(mCurrentPage, Math.max(0, pages.size() - 1));
+        mPages.clear();
+        mPages.addAll(pages);
+        mAdapter.notifyDataSetChanged();
+        updatePagerUi();
+        if (!mPages.isEmpty()) {
+            mPager.scrollToPosition(previousPage);
+            updateCurrentPage(previousPage);
         }
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_DATE_CHANGED);
-        filter.addAction(Intent.ACTION_LOCALE_CHANGED);
-        filter.addAction(Intent.ACTION_TIME_CHANGED);
-        filter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
-        filter.addAction(Intent.ACTION_TIME_TICK);
-        filter.addAction(AlarmManager.ACTION_NEXT_ALARM_CLOCK_CHANGED);
-        ContextCompat.registerReceiver(
-                getContext(), mTimeReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
-        mReceiverRegistered = true;
     }
 
-    private void unregisterTimeReceiver() {
-        if (!mReceiverRegistered) {
-            return;
+    private void updatePagerUi() {
+        int pageCount = mPages.size();
+        mPageIndicator.setMarkersCount(pageCount);
+        mPageIndicator.setVisibility(pageCount > 1 ? VISIBLE : GONE);
+        mPager.setHorizontalScrollBarEnabled(pageCount > 1);
+    }
+
+    private int findSnappedPage() {
+        View snapView = mSnapHelper.findSnapView(mLayoutManager);
+        if (snapView == null) {
+            return mCurrentPage;
         }
-        getContext().unregisterReceiver(mTimeReceiver);
-        mReceiverRegistered = false;
+        int position = mLayoutManager.getPosition(snapView);
+        return position == RecyclerView.NO_POSITION ? mCurrentPage : position;
     }
 
-    private void refreshDateAndAlarm() {
-        updateDate();
-        updateAlarm();
+    private void updateCurrentPage(int page) {
+        int clampedPage = Math.max(0, Math.min(page, Math.max(0, mPages.size() - 1)));
+        mCurrentPage = clampedPage;
+        mPageIndicator.setActiveMarker(clampedPage);
     }
 
-    private void updateDate() {
-        String pattern = DateFormat.getBestDateTimePattern(Locale.getDefault(), "EEE, MMM d");
-        mDateTextView.setText(DateFormat.format(pattern, System.currentTimeMillis()));
-    }
+    private final class PagerAdapter extends RecyclerView.Adapter<PageViewHolder> {
 
-    private void updateAlarm() {
-        AlarmManager.AlarmClockInfo nextAlarm =
-                mAlarmManager == null ? null : mAlarmManager.getNextAlarmClock();
-        if (nextAlarm == null) {
-            mAlarmContainer.setVisibility(GONE);
-            updateSecondaryRowVisibility();
-            return;
-        }
-
-        long triggerTime = nextAlarm.getTriggerTime();
-        int formatFlags = DateUtils.FORMAT_SHOW_TIME;
-        if (!DateUtils.isToday(triggerTime)) {
-            formatFlags |= DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_WEEKDAY;
-        }
-        mAlarmTextView.setText(DateUtils.formatDateTime(getContext(), triggerTime, formatFlags));
-        mAlarmContainer.setVisibility(VISIBLE);
-        updateSecondaryRowVisibility();
-    }
-
-    private void updateWeather(@Nullable ApiWrapper.WeatherInfo weatherInfo) {
-        if (weatherInfo == null || TextUtils.isEmpty(weatherInfo.getText())) {
-            mWeatherContainer.setVisibility(GONE);
-            mWeatherTextView.setText(null);
-            mWeatherIconView.setImageDrawable(null);
-            updateSecondaryRowVisibility();
-            return;
+        @NonNull
+        @Override
+        public PageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            FrameLayout container = new FrameLayout(parent.getContext());
+            container.setLayoutParams(new RecyclerView.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            return new PageViewHolder(container);
         }
 
-        Drawable weatherIcon = weatherInfo.getIcon();
-        if (weatherIcon == null) {
-            weatherIcon = ContextCompat.getDrawable(getContext(), R.drawable.ic_first_page_weather);
+        @Override
+        public void onBindViewHolder(@NonNull PageViewHolder holder, int position) {
+            View page = mPages.get(position);
+            if (page.getParent() instanceof ViewGroup) {
+                ((ViewGroup) page.getParent()).removeView(page);
+            }
+            holder.container.removeAllViews();
+            holder.container.addView(page);
         }
-        mWeatherTextView.setText(weatherInfo.getText());
-        mWeatherIconView.setImageDrawable(weatherIcon);
-        mWeatherIconView.setImageTintList(
-                weatherInfo.shouldTintIcon()
-                        ? ColorStateList.valueOf(mWorkspaceTextColor)
-                        : null);
-        mWeatherContainer.setVisibility(VISIBLE);
-        updateSecondaryRowVisibility();
+
+        @Override
+        public int getItemCount() {
+            return mPages.size();
+        }
     }
 
-    private void updateSecondaryRowVisibility() {
-        mSecondaryRow.setVisibility(
-                mWeatherContainer.getVisibility() == VISIBLE
-                                || mAlarmContainer.getVisibility() == VISIBLE
-                        ? VISIBLE
-                        : GONE);
+    private static final class PageViewHolder extends RecyclerView.ViewHolder {
+
+        private final FrameLayout container;
+
+        private PageViewHolder(@NonNull FrameLayout container) {
+            super(container);
+            this.container = container;
+        }
     }
 }
