@@ -16,6 +16,8 @@
 
 package com.android.launcher3.views;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Outline;
 import android.graphics.drawable.Drawable;
@@ -28,11 +30,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import android.content.Context;
-
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.android.launcher3.Launcher;
 import com.android.launcher3.R;
 import com.android.launcher3.util.ApiWrapper;
 import com.android.launcher3.util.Themes;
@@ -85,6 +86,9 @@ public class FirstPageMediaStatusView extends FrameLayout {
     }
 
     private void bindViews() {
+        setOnClickListener(v -> openMediaApp());
+        setClickable(true);
+        setFocusable(true);
         mArtworkContainer = findViewById(R.id.first_page_status_media_artwork_container);
         mArtworkContainer.setClipToOutline(true);
         mArtworkContainer.setOutlineProvider(new ViewOutlineProvider() {
@@ -106,9 +110,11 @@ public class FirstPageMediaStatusView extends FrameLayout {
             mIconView.setImageDrawable(mFallbackIcon);
             mIconView.setImageTintList(ColorStateList.valueOf(mWorkspaceTextColor));
             mArtworkContainer.setSelected(false);
+            setEnabled(false);
             return;
         }
 
+        setEnabled(true);
         Drawable icon = mMediaInfo.getIcon();
         if (icon == null) {
             icon = mFallbackIcon;
@@ -133,5 +139,20 @@ public class FirstPageMediaStatusView extends FrameLayout {
             mSubtitleView.setText(subtitle);
             mSubtitleView.setVisibility(VISIBLE);
         }
+    }
+
+    private void openMediaApp() {
+        if (!hasMedia()) {
+            return;
+        }
+        Intent intent = null;
+        String packageName = mMediaInfo.getPackageName();
+        if (!TextUtils.isEmpty(packageName)) {
+            intent = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+        }
+        if (intent == null) {
+            intent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_MUSIC);
+        }
+        Launcher.getLauncher(getContext()).startActivitySafely(this, intent, null);
     }
 }

@@ -51,9 +51,12 @@
     <dimen name="first_page_status_icon_size">16dp</dimen>
     <dimen name="first_page_status_icon_spacing">6dp</dimen>
     <dimen name="first_page_status_item_spacing">12dp</dimen>
+    <dimen name="first_page_status_forecast_spacing">32dp</dimen>
     <dimen name="first_page_status_line_spacing">6dp</dimen>
+    <dimen name="first_page_status_secondary_row_placeholder_height">18dp</dimen>
     <dimen name="first_page_status_horizontal_padding">0dp</dimen>
     <dimen name="first_page_status_top_padding">4dp</dimen>
+    <dimen name="first_page_status_timer_end_margin">28dp</dimen>
     <dimen name="first_page_status_indicator_margin_top">4dp</dimen>
     <dimen name="first_page_status_indicator_end_margin">16dp</dimen>
     <dimen name="first_page_status_media_artwork_width">88dp</dimen>

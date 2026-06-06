@@ -229,22 +229,50 @@ public class ApiWrapper {
     }
 
     public static final class WeatherInfo {
-        @NonNull
+        @Nullable
         private final CharSequence mText;
         @Nullable
         private final Drawable mIcon;
         private final boolean mShouldTintIcon;
+        @Nullable
+        private final CharSequence mForecastText;
+        @Nullable
+        private final CharSequence mTimerText;
+        @Nullable
+        private final Drawable mTimerIcon;
+        private final boolean mShouldTintTimerIcon;
+        private final long mTimerBaseElapsedRealtime;
+        private final boolean mShouldCountDownTimer;
 
         public WeatherInfo(
-                @NonNull CharSequence text,
+                @Nullable CharSequence text,
                 @Nullable Drawable icon,
                 boolean shouldTintIcon) {
+            this(text, icon, shouldTintIcon, null, null, null, true, -1L, false);
+        }
+
+        public WeatherInfo(
+                @Nullable CharSequence text,
+                @Nullable Drawable icon,
+                boolean shouldTintIcon,
+                @Nullable CharSequence forecastText,
+                @Nullable CharSequence timerText,
+                @Nullable Drawable timerIcon,
+                boolean shouldTintTimerIcon,
+                long timerBaseElapsedRealtime,
+                boolean shouldCountDownTimer) {
             mText = text;
             mIcon = icon;
             mShouldTintIcon = shouldTintIcon;
+            mForecastText = forecastText;
+            mTimerText = timerText;
+            mTimerIcon = timerIcon;
+            mShouldTintTimerIcon = shouldTintTimerIcon;
+            mTimerBaseElapsedRealtime = timerBaseElapsedRealtime;
+            mShouldCountDownTimer = shouldCountDownTimer;
         }
 
-        @NonNull
+        @Nullable
         public CharSequence getText() {
             return mText;
         }
@@ -257,6 +285,33 @@ public class ApiWrapper {
         public boolean shouldTintIcon() {
             return mShouldTintIcon;
         }
+
+        @Nullable
+        public CharSequence getForecastText() {
+            return mForecastText;
+        }
+
+        @Nullable
+        public CharSequence getTimerText() {
+            return mTimerText;
+        }
+
+        @Nullable
+        public Drawable getTimerIcon() {
+            return mTimerIcon;
+        }
+
+        public boolean shouldTintTimerIcon() {
+            return mShouldTintTimerIcon;
+        }
+
+        public long getTimerBaseElapsedRealtime() {
+            return mTimerBaseElapsedRealtime;
+        }
+
+        public boolean shouldCountDownTimer() {
+            return mShouldCountDownTimer;
+        }
     }
 
     public static final class MediaInfo {
@@ -266,16 +321,20 @@ public class ApiWrapper {
         private final CharSequence mSubtitle;
         @Nullable
         private final Drawable mIcon;
+        @Nullable
+        private final String mPackageName;
         private final boolean mShouldTintIcon;
 
         public MediaInfo(
                 @NonNull CharSequence title,
                 @Nullable CharSequence subtitle,
                 @Nullable Drawable icon,
+                @Nullable String packageName,
                 boolean shouldTintIcon) {
             mTitle = title;
             mSubtitle = subtitle;
             mIcon = icon;
+            mPackageName = packageName;
             mShouldTintIcon = shouldTintIcon;
         }
 
@@ -292,6 +351,11 @@ public class ApiWrapper {
         @Nullable
         public Drawable getIcon() {
             return mIcon;
+        }
+
+        @Nullable
+        public String getPackageName() {
+            return mPackageName;
         }
 
         public boolean shouldTintIcon() {

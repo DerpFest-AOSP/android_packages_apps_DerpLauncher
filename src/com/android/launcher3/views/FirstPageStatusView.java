@@ -112,12 +112,21 @@ public class FirstPageStatusView extends FrameLayout {
         }
     }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if (w != oldw) {
+            updatePagerHeight();
+        }
+    }
+
     private void setPages(List<View> pages) {
         int previousPage = Math.min(mCurrentPage, Math.max(0, pages.size() - 1));
         mPages.clear();
         mPages.addAll(pages);
         mAdapter.notifyDataSetChanged();
         updatePagerUi();
+        updatePagerHeight();
         if (!mPages.isEmpty()) {
             mPager.scrollToPosition(previousPage);
             updateCurrentPage(previousPage);
@@ -149,6 +158,8 @@ public class FirstPageStatusView extends FrameLayout {
     private void onMediaInfoUpdated(@Nullable ApiWrapper.MediaInfo mediaInfo) {
         boolean hadMedia = mMediaStatusView.hasMedia();
         mMediaStatusView.setMediaInfo(mediaInfo);
+        mCompactStatusView.setForceTwoLineLayout(mMediaStatusView.hasMedia());
+        updatePagerHeight();
         if (hadMedia != mMediaStatusView.hasMedia()) {
             rebuildPages();
         }
@@ -161,6 +172,29 @@ public class FirstPageStatusView extends FrameLayout {
             pages.add(mMediaStatusView);
         }
         setPages(pages);
+    }
+
+    private void updatePagerHeight() {
+        mPager.post(() -> {
+            int availableWidth = mPager.getWidth();
+            if (availableWidth <= 0) {
+                return;
+            }
+            int widthSpec = View.MeasureSpec.makeMeasureSpec(
+                    availableWidth, View.MeasureSpec.EXACTLY);
+            int heightSpec = View.MeasureSpec.makeMeasureSpec(
+                    0, View.MeasureSpec.UNSPECIFIED);
+            int maxHeight = 0;
+            for (View page : mPages) {
+                page.measure(widthSpec, heightSpec);
+                maxHeight = Math.max(maxHeight, page.getMeasuredHeight());
+            }
+            ViewGroup.LayoutParams layoutParams = mPager.getLayoutParams();
+            if (layoutParams.height != maxHeight && maxHeight > 0) {
+                layoutParams.height = maxHeight;
+                mPager.setLayoutParams(layoutParams);
+            }
+        });
     }
 
     private final class PagerAdapter extends RecyclerView.Adapter<PageViewHolder> {

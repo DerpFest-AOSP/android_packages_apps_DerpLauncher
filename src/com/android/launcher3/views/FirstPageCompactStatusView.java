@@ -28,6 +28,8 @@ import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,6 +38,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.android.launcher3.Launcher;
 import com.android.launcher3.R;
 import com.android.launcher3.util.ApiWrapper;
 import com.android.launcher3.util.Themes;
@@ -47,20 +50,29 @@ import java.util.Locale;
  */
 public class FirstPageCompactStatusView extends FrameLayout {
 
+    private static final String PIXEL_WEATHER_PACKAGE = "com.google.android.apps.weather";
+
     private final AlarmManager mAlarmManager;
     @Nullable
     private final ApiWrapper.WeatherDataProvider mWeatherDataProvider;
     private final int mWorkspaceTextColor;
+    private final int mSecondaryRowPlaceholderHeight;
 
+    private LinearLayout mDateContainer;
     private TextView mDateTextView;
+    private LinearLayout mTimerContainer;
+    private ImageView mTimerIconView;
+    private Chronometer mTimerTextView;
     private LinearLayout mSecondaryRow;
     private LinearLayout mWeatherContainer;
     private ImageView mWeatherIconView;
     private TextView mWeatherTextView;
+    private TextView mWeatherForecastTextView;
     private LinearLayout mAlarmContainer;
     private TextView mAlarmTextView;
 
     private boolean mReceiverRegistered;
+    private boolean mForceTwoLineLayout;
 
     private final BroadcastReceiver mTimeReceiver = new BroadcastReceiver() {
         @Override
@@ -83,9 +95,11 @@ public class FirstPageCompactStatusView extends FrameLayout {
         mAlarmManager = context.getSystemService(AlarmManager.class);
         mWeatherDataProvider = ApiWrapper.INSTANCE.get(context).createWeatherDataProvider();
         mWorkspaceTextColor = Themes.getAttrColor(context, R.attr.workspaceTextColor);
+        mSecondaryRowPlaceholderHeight = getResources().getDimensionPixelSize(
+                R.dimen.first_page_status_secondary_row_placeholder_height);
         bindViews();
         refreshDateAndAlarm();
-        updateWeather(null);
+        updateStatusInfo(null);
     }
 
     @Override
@@ -93,7 +107,7 @@ public class FirstPageCompactStatusView extends FrameLayout {
         super.onAttachedToWindow();
         registerTimeReceiver();
         if (mWeatherDataProvider != null) {
-            mWeatherDataProvider.setCallback(this::updateWeather);
+            mWeatherDataProvider.setCallback(this::updateStatusInfo);
             mWeatherDataProvider.start();
         }
     }
@@ -109,13 +123,33 @@ public class FirstPageCompactStatusView extends FrameLayout {
     }
 
     private void bindViews() {
+        mDateContainer = findViewById(R.id.first_page_status_date_container);
         mDateTextView = findViewById(R.id.first_page_status_date);
+        mTimerContainer = findViewById(R.id.first_page_status_timer_container);
+        mTimerIconView = findViewById(R.id.first_page_status_timer_icon);
+        mTimerTextView = findViewById(R.id.first_page_status_timer);
         mSecondaryRow = findViewById(R.id.first_page_status_secondary_row);
         mWeatherContainer = findViewById(R.id.first_page_status_weather_container);
         mWeatherIconView = findViewById(R.id.first_page_status_weather_icon);
         mWeatherTextView = findViewById(R.id.first_page_status_weather);
+        mWeatherForecastTextView = findViewById(R.id.first_page_status_weather_forecast);
         mAlarmContainer = findViewById(R.id.first_page_status_alarm_container);
         mAlarmTextView = findViewById(R.id.first_page_status_alarm);
+        mDateContainer.setOnClickListener(v -> openCalendar());
+        mDateContainer.setClickable(true);
+        mDateContainer.setFocusable(true);
+        mWeatherContainer.setOnClickListener(v -> openWeather());
+        mWeatherContainer.setClickable(true);
+        mWeatherContainer.setFocusable(true);
+        mSecondaryRow.setMinimumHeight(mSecondaryRowPlaceholderHeight);
+    }
+
+    public void setForceTwoLineLayout(boolean forceTwoLineLayout) {
+        if (mForceTwoLineLayout == forceTwoLineLayout) {
+            return;
+        }
+        mForceTwoLineLayout = forceTwoLineLayout;
+        updateSecondaryRowVisibility();
     }
 
     private void registerTimeReceiver() {
@@ -171,34 +205,96 @@ public class FirstPageCompactStatusView extends FrameLayout {
         updateSecondaryRowVisibility();
     }
 
-    private void updateWeather(@Nullable ApiWrapper.WeatherInfo weatherInfo) {
-        if (weatherInfo == null || TextUtils.isEmpty(weatherInfo.getText())) {
+    private void updateStatusInfo(@Nullable ApiWrapper.WeatherInfo weatherInfo) {
+        CharSequence weatherText = weatherInfo == null ? null : weatherInfo.getText();
+        if (TextUtils.isEmpty(weatherText)) {
             mWeatherContainer.setVisibility(GONE);
             mWeatherTextView.setText(null);
             mWeatherIconView.setImageDrawable(null);
-            updateSecondaryRowVisibility();
-            return;
+            mWeatherIconView.setImageTintList(null);
+            mWeatherForecastTextView.setVisibility(GONE);
+            mWeatherForecastTextView.setText(null);
+        } else {
+            Drawable weatherIcon = weatherInfo.getIcon();
+            if (weatherIcon == null) {
+                weatherIcon = ContextCompat.getDrawable(
+                        getContext(), R.drawable.ic_first_page_weather);
+            }
+            mWeatherTextView.setText(weatherText);
+            mWeatherIconView.setImageDrawable(weatherIcon);
+            mWeatherIconView.setImageTintList(
+                    weatherInfo.shouldTintIcon()
+                            ? ColorStateList.valueOf(mWorkspaceTextColor)
+                            : null);
+            mWeatherContainer.setVisibility(VISIBLE);
+
+            CharSequence forecastText = weatherInfo.getForecastText();
+            if (TextUtils.isEmpty(forecastText)) {
+                mWeatherForecastTextView.setVisibility(GONE);
+                mWeatherForecastTextView.setText(null);
+            } else {
+                mWeatherForecastTextView.setText(forecastText);
+                mWeatherForecastTextView.setVisibility(VISIBLE);
+            }
         }
 
-        Drawable weatherIcon = weatherInfo.getIcon();
-        if (weatherIcon == null) {
-            weatherIcon = ContextCompat.getDrawable(getContext(), R.drawable.ic_first_page_weather);
+        CharSequence timerText = weatherInfo == null ? null : weatherInfo.getTimerText();
+        if (TextUtils.isEmpty(timerText)) {
+            mTimerTextView.stop();
+            mTimerContainer.setVisibility(GONE);
+            mTimerTextView.setText(null);
+            mTimerIconView.setImageDrawable(null);
+            mTimerIconView.setImageTintList(null);
+        } else {
+            Drawable timerIcon = weatherInfo.getTimerIcon();
+            if (timerIcon == null) {
+                timerIcon = ContextCompat.getDrawable(getContext(), R.drawable.ic_first_page_timer);
+            }
+            mTimerTextView.setText(timerText);
+            long timerBase = weatherInfo.getTimerBaseElapsedRealtime();
+            if (timerBase > 0L) {
+                mTimerTextView.setBase(timerBase);
+                mTimerTextView.setCountDown(weatherInfo.shouldCountDownTimer());
+                mTimerTextView.start();
+            } else {
+                mTimerTextView.stop();
+            }
+            mTimerIconView.setImageDrawable(timerIcon);
+            mTimerIconView.setImageTintList(
+                    weatherInfo.shouldTintTimerIcon()
+                            ? ColorStateList.valueOf(mWorkspaceTextColor)
+                            : null);
+            mTimerContainer.setVisibility(VISIBLE);
         }
-        mWeatherTextView.setText(weatherInfo.getText());
-        mWeatherIconView.setImageDrawable(weatherIcon);
-        mWeatherIconView.setImageTintList(
-                weatherInfo.shouldTintIcon()
-                        ? ColorStateList.valueOf(mWorkspaceTextColor)
-                        : null);
-        mWeatherContainer.setVisibility(VISIBLE);
+
         updateSecondaryRowVisibility();
     }
 
     private void updateSecondaryRowVisibility() {
+        boolean hasSecondaryContent = mWeatherContainer.getVisibility() == VISIBLE
+                || mWeatherForecastTextView.getVisibility() == VISIBLE
+                || mAlarmContainer.getVisibility() == VISIBLE;
         mSecondaryRow.setVisibility(
-                mWeatherContainer.getVisibility() == VISIBLE
-                                || mAlarmContainer.getVisibility() == VISIBLE
+                hasSecondaryContent
                         ? VISIBLE
-                        : GONE);
+                        : (mForceTwoLineLayout ? INVISIBLE : GONE));
+    }
+
+    private void openCalendar() {
+        launchIntent(
+                mDateContainer,
+                new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_CALENDAR));
+    }
+
+    private void openWeather() {
+        Intent fallbackIntent = getContext().getPackageManager()
+                .getLaunchIntentForPackage(PIXEL_WEATHER_PACKAGE);
+        if (fallbackIntent != null) {
+            launchIntent(mWeatherContainer, fallbackIntent);
+        }
+    }
+
+    private void launchIntent(View source, Intent intent) {
+        Launcher.getLauncher(getContext()).startActivitySafely(source, intent, null);
     }
 }

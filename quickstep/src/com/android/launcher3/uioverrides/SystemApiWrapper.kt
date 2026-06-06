@@ -49,6 +49,11 @@ import android.util.Log
 import android.view.DragAndDropPermissions
 import android.view.DragEvent
 import android.view.SurfaceControlViewHost
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Chronometer
+import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
 import android.window.RemoteTransition
 import android.window.ScreenCapture.ScreenCaptureParams
@@ -75,9 +80,24 @@ import javax.inject.Inject
 open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Context?) :
     ApiWrapper(context) {
 
+    private data class StatusLineInfo(
+        val text: CharSequence,
+        val icon: Drawable?,
+        val shouldTintIcon: Boolean,
+    )
+
+    private data class TimerLineInfo(
+        val text: CharSequence,
+        val icon: Drawable?,
+        val shouldTintIcon: Boolean,
+        val baseElapsedRealtime: Long = -1L,
+        val shouldCountDown: Boolean = false,
+    )
+
     companion object {
         private const val TAG = "SystemApiWrapper"
         private const val HOME_SMARTSPACE_SURFACE = "home"
+        private const val LOCKSCREEN_SMARTSPACE_SURFACE = "lockscreen"
     }
 
     override fun getPersons(si: ShortcutInfo) = si.persons ?: Utilities.EMPTY_PERSON_ARRAY
@@ -215,10 +235,19 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
 
     private inner class SmartspaceWeatherDataProvider : WeatherDataProvider {
         private var callback: WeatherInfoListener? = null
-        private var smartspaceSession: SmartspaceSession? = null
-        private val listener =
+        private var homeSmartspaceSession: SmartspaceSession? = null
+        private var lockscreenSmartspaceSession: SmartspaceSession? = null
+        private var homeTargets: List<SmartspaceTarget> = emptyList()
+        private var lockscreenTargets: List<SmartspaceTarget> = emptyList()
+        private val homeListener =
             SmartspaceSession.OnTargetsAvailableListener { targets ->
-                callback?.onWeatherInfoUpdated(extractWeatherInfo(targets))
+                homeTargets = targets
+                dispatchStatusInfo()
+            }
+        private val lockscreenListener =
+            SmartspaceSession.OnTargetsAvailableListener { targets ->
+                lockscreenTargets = targets
+                dispatchStatusInfo()
             }
 
         override fun setCallback(callback: WeatherInfoListener?) {
@@ -226,7 +255,7 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
         }
 
         override fun start() {
-            if (smartspaceSession != null) {
+            if (homeSmartspaceSession != null || lockscreenSmartspaceSession != null) {
                 return
             }
             val smartspaceManager = mContext.getSystemService(SmartspaceManager::class.java)
@@ -235,13 +264,18 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
                 return
             }
             try {
-                smartspaceSession =
-                    smartspaceManager.createSmartspaceSession(
-                        SmartspaceConfig.Builder(mContext, HOME_SMARTSPACE_SURFACE)
-                            .setSmartspaceTargetCount(1)
-                            .build()
+                homeSmartspaceSession =
+                    createSmartspaceSession(
+                        smartspaceManager,
+                        HOME_SMARTSPACE_SURFACE,
+                        homeListener,
                     )
-                smartspaceSession?.addOnTargetsAvailableListener(Executors.MAIN_EXECUTOR, listener)
+                lockscreenSmartspaceSession =
+                    createSmartspaceSession(
+                        smartspaceManager,
+                        LOCKSCREEN_SMARTSPACE_SURFACE,
+                        lockscreenListener,
+                    )
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to start weather smartspace session", e)
                 callback?.onWeatherInfoUpdated(null)
@@ -249,8 +283,39 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
         }
 
         override fun stop() {
-            val session = smartspaceSession ?: return
-            smartspaceSession = null
+            closeSmartspaceSession(homeSmartspaceSession, homeListener)
+            closeSmartspaceSession(lockscreenSmartspaceSession, lockscreenListener)
+            homeSmartspaceSession = null
+            lockscreenSmartspaceSession = null
+            homeTargets = emptyList()
+            lockscreenTargets = emptyList()
+        }
+
+        private fun dispatchStatusInfo() {
+            callback?.onWeatherInfoUpdated(extractWeatherInfo(homeTargets, lockscreenTargets))
+        }
+
+        private fun createSmartspaceSession(
+            smartspaceManager: SmartspaceManager,
+            surface: String,
+            listener: SmartspaceSession.OnTargetsAvailableListener,
+        ): SmartspaceSession {
+            return smartspaceManager.createSmartspaceSession(
+                SmartspaceConfig.Builder(mContext, surface)
+                    .setSmartspaceTargetCount(8)
+                    .build()
+            ).also { session ->
+                session.addOnTargetsAvailableListener(Executors.MAIN_EXECUTOR, listener)
+            }
+        }
+
+        private fun closeSmartspaceSession(
+            session: SmartspaceSession?,
+            listener: SmartspaceSession.OnTargetsAvailableListener,
+        ) {
+            if (session == null) {
+                return
+            }
             try {
                 session.removeOnTargetsAvailableListener(listener)
             } catch (e: Exception) {
@@ -263,44 +328,218 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
             }
         }
 
-        private fun extractWeatherInfo(targets: List<SmartspaceTarget>): WeatherInfo? {
-            val now = System.currentTimeMillis()
-            val target =
-                targets.firstOrNull {
-                    it.featureType == SmartspaceTarget.FEATURE_WEATHER &&
-                        now >= it.creationTimeMillis &&
-                        now <= it.expiryTimeMillis
-                } ?: return null
+        private fun extractWeatherInfo(
+            homeTargets: List<SmartspaceTarget>,
+            lockscreenTargets: List<SmartspaceTarget>,
+        ): WeatherInfo? {
+            val activeHomeTargets = homeTargets.filter(::isActiveTarget)
+            val activeLockscreenTargets = lockscreenTargets.filter(::isActiveTarget)
+            val weatherTarget =
+                findFirstTargetByFeatures(
+                    activeHomeTargets,
+                    SmartspaceTarget.FEATURE_WEATHER,
+                ) ?: findFirstTargetByFeatures(
+                    activeLockscreenTargets,
+                    SmartspaceTarget.FEATURE_WEATHER,
+                )
+            val timerTarget =
+                findFirstTargetByFeatures(
+                    activeLockscreenTargets,
+                    SmartspaceTarget.FEATURE_TIMER,
+                    SmartspaceTarget.FEATURE_STOPWATCH,
+                    SmartspaceTarget.FEATURE_CROSS_DEVICE_TIMER,
+                ) ?: findFirstTargetByFeatures(
+                    activeHomeTargets,
+                    SmartspaceTarget.FEATURE_TIMER,
+                    SmartspaceTarget.FEATURE_STOPWATCH,
+                    SmartspaceTarget.FEATURE_CROSS_DEVICE_TIMER,
+                )
+                // Some timer/stopwatch targets are rendered by SystemUI without relying on
+                // creation/expiry timestamps, so fall back to the raw targets if active filtering
+                // strips them out.
+                ?: findFirstTargetByFeatures(
+                    lockscreenTargets,
+                    SmartspaceTarget.FEATURE_TIMER,
+                    SmartspaceTarget.FEATURE_STOPWATCH,
+                    SmartspaceTarget.FEATURE_CROSS_DEVICE_TIMER,
+                ) ?: findFirstTargetByFeatures(
+                    homeTargets,
+                    SmartspaceTarget.FEATURE_TIMER,
+                    SmartspaceTarget.FEATURE_STOPWATCH,
+                    SmartspaceTarget.FEATURE_CROSS_DEVICE_TIMER,
+                )
 
-            return weatherInfoFromHeaderAction(target)
-                ?: weatherInfoFromTemplate(target)
+            val weather = weatherTarget?.let(::extractWeatherLineInfo)
+            val forecastText = weatherTarget?.let(::extractForecastText)
+            val timer = timerTarget?.let(::extractTimerLineInfo)
+            if (weather == null && timer == null) {
+                return null
+            }
+
+            return WeatherInfo(
+                weather?.text,
+                weather?.icon,
+                weather?.shouldTintIcon ?: true,
+                forecastText,
+                timer?.text,
+                timer?.icon,
+                timer?.shouldTintIcon ?: true,
+                timer?.baseElapsedRealtime ?: -1L,
+                timer?.shouldCountDown ?: false,
+            )
         }
 
-        private fun weatherInfoFromHeaderAction(target: SmartspaceTarget): WeatherInfo? {
+        private fun extractWeatherLineInfo(target: SmartspaceTarget): StatusLineInfo? {
+            return weatherInfoFromHeaderAction(target) ?: weatherInfoFromTemplate(target)
+        }
+
+        private fun findFirstTargetByFeatures(
+            targets: List<SmartspaceTarget>,
+            vararg featureTypes: Int,
+        ): SmartspaceTarget? {
+            return targets.firstOrNull { target -> featureTypes.any { it == target.featureType } }
+        }
+
+        private fun weatherInfoFromHeaderAction(target: SmartspaceTarget): StatusLineInfo? {
             val action = target.headerAction ?: return null
             val text = action.title
             if (TextUtils.isEmpty(text)) {
                 return null
             }
-            return WeatherInfo(
+            return StatusLineInfo(
                 text,
                 loadDrawable(action.icon),
                 false,
             )
         }
 
-        private fun weatherInfoFromTemplate(target: SmartspaceTarget): WeatherInfo? {
+        private fun weatherInfoFromTemplate(target: SmartspaceTarget): StatusLineInfo? {
             val subtitleItem = target.templateData?.subtitleItem ?: return null
             val text = subtitleItem.text?.text ?: return null
             if (TextUtils.isEmpty(text)) {
                 return null
             }
             val icon = subtitleItem.icon
-            return WeatherInfo(
+            return StatusLineInfo(
                 text,
                 loadDrawable(icon),
                 icon?.shouldTint() ?: true,
             )
+        }
+
+        private fun extractForecastText(target: SmartspaceTarget): CharSequence? {
+            val extras = target.baseAction?.extras ?: return null
+            val temperatures = extras.getStringArray("temperatureValues").orEmpty()
+            val timestamps = extras.getStringArray("timestamps").orEmpty()
+            val maxCount = maxOf(temperatures.size, timestamps.size)
+            for (index in 0 until maxCount) {
+                val timestamp = timestamps.getOrNull(index)
+                val temperature = temperatures.getOrNull(index)
+                val forecast = listOfNotNull(timestamp?.takeIf { it.isNotBlank() }, temperature?.takeIf { it.isNotBlank() })
+                    .joinToString(" ")
+                if (forecast.isNotBlank()) {
+                    return forecast
+                }
+            }
+            return null
+        }
+
+        private fun extractTimerLineInfo(target: SmartspaceTarget): TimerLineInfo? {
+            extractTimerLineInfoFromRemoteViews(target)?.let {
+                return it
+            }
+            val templateData = target.templateData
+            val text =
+                firstNonEmptyText(
+                    target.headerAction?.title,
+                    target.headerAction?.subtitle,
+                    templateData?.primaryItem?.text?.text,
+                    templateData?.subtitleItem?.text?.text,
+                    templateData?.subtitleSupplementalItem?.text?.text,
+                    target.baseAction?.subtitle,
+                ) ?: return null
+            return TimerLineInfo(
+                text,
+                loadDrawable(target.headerAction?.icon) ?: loadDrawable(target.baseAction?.icon),
+                true,
+            )
+        }
+
+        private fun extractTimerLineInfoFromRemoteViews(target: SmartspaceTarget): TimerLineInfo? {
+            val remoteViews = target.remoteViews ?: return null
+            return try {
+                val host = FrameLayout(mContext)
+                val root = remoteViews.apply(mContext, host)
+                val chronometer = findFirstVisibleChronometer(root)
+                if (chronometer != null) {
+                    val text = chronometer.text?.takeIf { it.isNotBlank() } ?: "00:00"
+                    return TimerLineInfo(
+                        text = text,
+                        icon = null,
+                        shouldTintIcon = true,
+                        baseElapsedRealtime = chronometer.base,
+                        shouldCountDown = chronometer.isCountDown,
+                    )
+                }
+                val textView = findFirstVisibleTextView(root) ?: return null
+                val text = textView.text?.takeIf { it.isNotBlank() } ?: return null
+                TimerLineInfo(
+                    text = text,
+                    icon = null,
+                    shouldTintIcon = true,
+                )
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to parse timer remote views", e)
+                null
+            }
+        }
+
+        private fun findFirstVisibleChronometer(view: View): Chronometer? {
+            if (view.visibility != View.VISIBLE) {
+                return null
+            }
+            if (view is Chronometer) {
+                return view
+            }
+            if (view is ViewGroup) {
+                for (index in 0 until view.childCount) {
+                    findFirstVisibleChronometer(view.getChildAt(index))?.let {
+                        return it
+                    }
+                }
+            }
+            return null
+        }
+
+        private fun findFirstVisibleTextView(view: View): TextView? {
+            if (view.visibility != View.VISIBLE) {
+                return null
+            }
+            if (view is Chronometer && !view.text.isNullOrBlank()) {
+                return view
+            }
+            if (view is TextView && !view.text.isNullOrBlank()) {
+                return view
+            }
+            if (view is ViewGroup) {
+                for (index in 0 until view.childCount) {
+                    findFirstVisibleTextView(view.getChildAt(index))?.let {
+                        return it
+                    }
+                }
+            }
+            return null
+        }
+
+        private fun firstNonEmptyText(vararg values: CharSequence?): CharSequence? {
+            return values.firstOrNull { !TextUtils.isEmpty(it) }
+        }
+
+        private fun isActiveTarget(target: SmartspaceTarget): Boolean {
+            val now = System.currentTimeMillis()
+            val created = target.creationTimeMillis
+            val expires = target.expiryTimeMillis
+            return now >= created && (expires <= 0L || now <= expires)
         }
 
         private fun loadDrawable(icon: android.graphics.drawable.Icon?): Drawable? {
@@ -432,6 +671,7 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
                 title,
                 subtitle,
                 loadMediaDrawable(metadata, description),
+                currentController.packageName,
                 false,
             )
         }
