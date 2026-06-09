@@ -135,6 +135,7 @@ import com.android.launcher3.model.data.LauncherAppWidgetInfo;
 import com.android.launcher3.model.data.WorkspaceItemCoordinates;
 import com.android.launcher3.model.data.WorkspaceItemInfo;
 import com.android.launcher3.pageindicators.PageIndicator;
+import com.android.launcher3.smartspacer.LauncherSmartspacer;
 import com.android.launcher3.pageindicators.PageIndicatorDotsWithArrows;
 import com.android.launcher3.popup.Poppable;
 import com.android.launcher3.popup.Popup;
@@ -735,8 +736,11 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
         }
 
         if (mFirstPagePinnedItem == null) {
+            int firstPagePinnedLayout = LauncherSmartspacer.isEnabled(getContext())
+                    ? R.layout.search_container_smartspacer
+                    : R.layout.search_container_workspace;
             mFirstPagePinnedItem = LayoutInflater.from(getContext())
-                    .inflate(R.layout.search_container_workspace, firstPage, false);
+                    .inflate(firstPagePinnedLayout, firstPage, false);
         }
 
         int cellHSpan = firstPage.getCountX();

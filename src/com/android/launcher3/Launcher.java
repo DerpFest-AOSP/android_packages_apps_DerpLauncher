@@ -52,6 +52,7 @@ import static com.android.launcher3.LauncherConstants.TraceEvents.SINGLE_TRACE_C
 import static com.android.launcher3.LauncherModel.useModelRepositoryBinding;
 import static com.android.launcher3.LauncherPrefs.DRAWER_OPEN_KEYBOARD;
 import static com.android.launcher3.LauncherPrefs.FIXED_LANDSCAPE_MODE;
+import static com.android.launcher3.LauncherPrefs.SMARTSPACER_ENABLED;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_ALL_APPS;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_ALL_APPS_PREDICTION;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_DESKTOP;
@@ -250,6 +251,7 @@ import com.android.launcher3.widget.picker.model.WidgetPickerDataProvider;
 import com.android.launcher3.widget.util.WidgetSizeHandler;
 import com.android.systemui.plugins.shared.LauncherOverlayManager;
 import com.android.systemui.plugins.shared.LauncherOverlayManager.LauncherOverlayTouchProxy;
+import com.kieronquinn.app.smartspacer.sdk.client.SmartspacerClient;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -395,6 +397,8 @@ public class Launcher extends StatefulActivity<LauncherState>
 
     private @Nullable SafeCloseable mNaturalScrollingChangedSafeCloseable;
 
+    private final LauncherPrefChangeListener mSmartspacerChangedListener = key -> recreate();
+
     private StartupLatencyLogger mStartupLatencyLogger;
 
     protected WallpaperThemeManager mWallpaperThemeManager;
@@ -424,6 +428,7 @@ public class Launcher extends StatefulActivity<LauncherState>
         initDeviceProfile(idp);
         idp.addOnChangeListener(this);
         mSharedPrefs = LauncherPrefs.getPrefs(this);
+        LauncherPrefs.get(this).addListener(mSmartspacerChangedListener, SMARTSPACER_ENABLED);
         mAccessibilityDelegate = createAccessibilityDelegate();
 
         initDragController();
@@ -1593,11 +1598,13 @@ public class Launcher extends StatefulActivity<LauncherState>
 
         mModel.removeCallbacks(modelCallbacks);
         mRotationHelper.destroy();
+        LauncherPrefs.get(this).removeListener(mSmartspacerChangedListener, SMARTSPACER_ENABLED);
 
         mAppWidgetHolder.stopListening();
         mAppWidgetHolder.destroy();
         mWidgetVisibilityTracker.destroy();
         mWidgetPickerDataProvider.destroy();
+        SmartspacerClient.Companion.close();
 
         TextKeyListener.getInstance().release();
         modelCallbacks.clearPendingBinds();

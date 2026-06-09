@@ -67,4 +67,8 @@
     <string name="label_ai_mode">Assistant search</string>
     <string name="first_page_pinned_item_title">At a Glance</string>
     <string name="first_page_pinned_item_subtitle">Companion widget will appear here</string>
+
+    <!-- Smartspacer -->
+    <string name="pref_enable_smartspacer_title">Show Smartspacer on home screen</string>
+    <string name="pref_enable_smartspacer_summary">Replace the first home screen status area with Smartspacer</string>
 </resources>
