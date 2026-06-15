@@ -117,7 +117,7 @@ class DeviceProfileDumpTest : AbstractDeviceProfileTest() {
         fun getInstances(): List<TestCase> {
             return listOf(
                 TestCase("phone", gridName = "5_by_5"),
-                TestCase("tablet", gridName = "6_by_5", isTaskbarPresentInApps = true),
+                TestCase("tablet", gridName = "tablet_normal", isTaskbarPresentInApps = true),
                 TestCase("twopanel-tablet", gridName = "4_by_4", isTaskbarPresentInApps = true),
             )
         }

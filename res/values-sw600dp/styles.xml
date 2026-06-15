@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (C) 2023 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2026 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -15,9 +16,22 @@
   -->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="CellStyleDefault">
-        <item name="iconDrawablePadding">7dp</item>
+    <style name="FolderStyleDefault">
+        <item name="folderTopPadding">22dp</item>
+        <item name="folderCellHeight">92dp</item>
+        <item name="folderCellWidth">80dp</item>
+        <item name="folderBorderSpace">14dp</item>
+        <item name="folderFooterHeight">52dp</item>
     </style>
+
+    <style name="CellStyleDefault">
+        <item name="iconDrawablePadding">6dp</item>
+    </style>
+
+    <style name="AllAppsStyleDefault">
+        <item name="horizontalPadding">20dp</item>
+    </style>
+
     <style name="DropTargetButton" parent="DropTargetButtonBase">
         <item name="android:fontFamily">variable-title-large</item>
     </style>
