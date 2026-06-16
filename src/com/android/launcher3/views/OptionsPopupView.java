@@ -72,6 +72,7 @@ public class OptionsPopupView<T extends Context & ActivityContext> extends Arrow
     // An intent extra to indicate the launch source by launcher.
     private static final String EXTRA_WALLPAPER_LAUNCH_SOURCE =
             "com.android.wallpaper.LAUNCH_SOURCE";
+    private static final String EXTRA_OPEN_WALLPAPER_EFFECTS = "open_wallpaper_effects";
 
     private final ArrayMap<View, OptionItem> mItemMap = new ArrayMap<>();
     private RectF mTargetRect;
@@ -292,6 +293,7 @@ public class OptionsPopupView<T extends Context & ActivityContext> extends Arrow
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setComponent(new ComponentName("com.android.axion.themepicker",
                 "com.android.axion.themepicker.ui.MainActivity"));
+        intent.putExtra(EXTRA_OPEN_WALLPAPER_EFFECTS, true);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return launcher.startActivitySafely(v, intent, placeholderInfo(intent)) != null;
     }
