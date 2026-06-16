@@ -250,7 +250,7 @@ public class OptionsPopupView<T extends Context & ActivityContext> extends Arrow
                 OptionsPopupView::startSettings));
         options.add(new OptionItem(launcher,
                 R.string.wallpaper_effects_title,
-                R.drawable.ic_view_carousel,
+                R.drawable.ic_auto_awesome,
                 IGNORE,
                 OptionsPopupView::startAxionWallpaperEffects));
         return options;
