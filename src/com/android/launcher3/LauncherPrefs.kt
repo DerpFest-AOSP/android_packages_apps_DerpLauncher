@@ -246,6 +246,55 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         }
     }
 
+    /** Migrates legacy numeric recents style values to current string values. */
+    fun migrateRecentsStyleIfNeeded() {
+        if (get(RECENTS_STYLE_MIGRATED_V3)) {
+            return
+        }
+
+        val sharedPrefs = backedUpPrefs
+        if (!sharedPrefs.contains(RECENTS_STYLE.sharedPrefKey)) {
+            put(RECENTS_STYLE_MIGRATED_V3, true)
+            return
+        }
+
+        val stored = get(RECENTS_STYLE)
+        if (stored in VALID_RECENTS_STYLES) {
+            put(RECENTS_STYLE_MIGRATED_V3, true)
+            return
+        }
+
+        val index = stored.toIntOrNull()
+        val migratedV2 = sharedPrefs.getBoolean(LEGACY_RECENTS_STYLE_MIGRATED_V2_KEY, false)
+        val migratedValue =
+            if (index != null) {
+                if (migratedV2) {
+                    when (index) {
+                        0 -> "default"
+                        1 -> "stock"
+                        2 -> "staple"
+                        3 -> "ios"
+                        4 -> "oxygen"
+                        else -> "default"
+                    }
+                } else {
+                    when (index) {
+                        0 -> "stock"
+                        1 -> "staple"
+                        2 -> "ios"
+                        3 -> "oxygen"
+                        else -> "default"
+                    }
+                }
+            } else {
+                "default"
+            }
+
+        put(RECENTS_STYLE, migratedValue)
+        put(RECENTS_STYLE_MIGRATED_V3, true)
+        sharedPrefs.edit().remove(LEGACY_RECENTS_STYLE_MIGRATED_V2_KEY).apply()
+    }
+
     companion object {
         @VisibleForTesting const val BOOT_AWARE_PREFS_KEY = "boot_aware_prefs"
 
@@ -286,6 +335,9 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField val RECENTS_LENS = backedUpItem("pref_recents_lens", false)
         @JvmField val RECENTS_MEMINFO = backedUpItem("pref_recents_meminfo", false)
         @JvmField val RECENTS_STYLE = backedUpItem("pref_recents_style", "default")
+        @JvmField
+        val RECENTS_STYLE_MIGRATED_V3 =
+            nonRestorableItem("pref_recents_style_migrated_v3", false)
         @JvmField val RECENTS_OPACITY = backedUpItem("pref_recents_opacity", 40)
         @JvmField val RECENTS_SCREENSHOT = backedUpItem("pref_recents_screenshot", true)
         @JvmField val RECENTS_SPLIT_SCREEN = backedUpItem("pref_recents_split_screen", false)
@@ -413,6 +465,24 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @Deprecated("Don't use shared preferences directly. Use other LauncherPref methods.")
         @JvmStatic
         fun getPrefs(context: Context) = INSTANCE[context].backedUpPrefs
+
+        /** Returns the recents style pref, migrating legacy stored values when needed. */
+        @JvmStatic
+        fun getRecentsStyle(context: Context): String {
+            migrateRecentsStyleIfNeeded(context)
+            return get(context).get(RECENTS_STYLE)
+        }
+
+        /** @see migrateRecentsStyleIfNeeded */
+        @JvmStatic
+        fun migrateRecentsStyleIfNeeded(context: Context) {
+            get(context).migrateRecentsStyleIfNeeded()
+        }
+
+        private val VALID_RECENTS_STYLES = setOf("default", "stock", "staple", "ios", "oxygen")
+
+        /** Legacy int-index migration flag from an intermediate build. */
+        private const val LEGACY_RECENTS_STYLE_MIGRATED_V2_KEY = "pref_recents_style_migrated_v2"
     }
 }
 

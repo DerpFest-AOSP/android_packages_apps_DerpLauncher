@@ -187,6 +187,7 @@ public class SettingsRecents extends CollapsingToolbarBaseActivity
             }
 
             getPreferenceManager().setSharedPreferencesName(LauncherFiles.SHARED_PREFERENCES_KEY);
+            LauncherPrefs.migrateRecentsStyleIfNeeded(getContext());
             setPreferencesFromResource(R.xml.launcher_recents_preferences, rootKey);
 
             PreferenceScreen screen = getPreferenceScreen();

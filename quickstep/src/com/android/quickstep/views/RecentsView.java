@@ -1304,7 +1304,7 @@ public abstract class RecentsView<
     }
 
     public void updateOverlapState() {
-        mRecentsStyle = LauncherPrefs.RECENTS_STYLE.get(getContext());
+        mRecentsStyle = LauncherPrefs.getRecentsStyle(getContext());
         mEnableOverlap = !mRecentsStyle.equals("default");
     }
 

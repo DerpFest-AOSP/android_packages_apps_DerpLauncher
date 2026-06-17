@@ -1068,7 +1068,9 @@ constructor(
 
             // Page snapping and relayout to run after all animations have completed.
             val onFinishComplete = {
-                val isCustomStyle = com.android.launcher3.LauncherPrefs.RECENTS_STYLE.get(recentsView.context) != "default"
+                val isCustomStyle =
+                    com.android.launcher3.LauncherPrefs.getRecentsStyle(recentsView.context) !=
+                        "default"
                 val previousScales = mutableMapOf<Int, Float>()
                 val previousScaleYs = mutableMapOf<Int, Float>()
 
