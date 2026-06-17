@@ -32,6 +32,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.util.Property;
@@ -51,6 +52,7 @@ import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.dragndrop.DragLayer;
 import com.android.launcher3.shortcuts.DeepShortcutView;
+import com.android.launcher3.util.BlurBackgroundHelper;
 import com.android.launcher3.util.RunnableList;
 import com.android.launcher3.util.Themes;
 import com.android.launcher3.views.ActivityContext;
@@ -130,11 +132,15 @@ public abstract class ArrowPopup<T extends Context & ActivityContext>
 
     protected final int[] mColors;
 
+    private final BlurBackgroundHelper mBlurBackgroundHelper;
+
     public ArrowPopup(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mInflater = LayoutInflater.from(context);
         mOutlineRadius = Themes.getDialogCornerRadius(context);
         mActivityContext = ActivityContext.lookupContext(context);
+        mBlurBackgroundHelper =
+                mActivityContext.getActivityComponent().getBlurBackgroundHelper();
         mIsRtl = Utilities.isRtl(getResources());
         mElevation = getResources().getDimension(R.dimen.deep_shortcuts_elevation);
 
@@ -253,8 +259,10 @@ public abstract class ArrowPopup<T extends Context & ActivityContext>
                 mlp.bottomMargin = 0;
 
                 if (colors != null && isShortcutContainer(view)) {
-                    setChildColor(view.getBackground(), colors[0], colorAnimator);
-                    mArrowColor = colors[0];
+                    int containerColor =
+                            mBlurBackgroundHelper.getPopupBlurSurfaceColor(colors[0]);
+                    setChildColor(view.getBackground(), containerColor, colorAnimator);
+                    mArrowColor = containerColor;
                 }
 
                 if (view instanceof ViewGroup && isShortcutContainer(view)) {
@@ -283,6 +291,9 @@ public abstract class ArrowPopup<T extends Context & ActivityContext>
 
         colorAnimator.setDuration(0).start();
         measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
+        if (mBlurBackgroundHelper.isPopupBlurEnabled()) {
+            post(this::applyPopupBlurToHierarchy);
+        }
     }
 
     /**
@@ -303,14 +314,39 @@ public abstract class ArrowPopup<T extends Context & ActivityContext>
      * Sets the background color of the child.
      */
     protected void setChildColor(Drawable bg, int color, AnimatorSet animatorSetOut) {
-        if (bg instanceof GradientDrawable) {
-            GradientDrawable gd = (GradientDrawable) bg.mutate();
-            int oldColor = ((GradientDrawable) bg).getColor().getDefaultColor();
+        color = mBlurBackgroundHelper.getPopupBlurSurfaceColor(color);
+        Drawable surface = getPopupSurfaceDrawable(bg);
+        if (surface instanceof GradientDrawable) {
+            GradientDrawable gd = (GradientDrawable) surface.mutate();
+            int oldColor = ((GradientDrawable) surface).getColor().getDefaultColor();
             animatorSetOut.play(ObjectAnimator.ofArgb(gd, "color", oldColor, color));
-        } else if (bg instanceof ColorDrawable) {
-            ColorDrawable cd = (ColorDrawable) bg.mutate();
-            int oldColor = ((ColorDrawable) bg).getColor();
+        } else if (surface instanceof ColorDrawable) {
+            ColorDrawable cd = (ColorDrawable) surface.mutate();
+            int oldColor = ((ColorDrawable) surface).getColor();
             animatorSetOut.play(ObjectAnimator.ofArgb(cd, "color", oldColor, color));
+        }
+    }
+
+    private Drawable getPopupSurfaceDrawable(Drawable bg) {
+        if (bg instanceof LayerDrawable layer && layer.getNumberOfLayers() > 1) {
+            return layer.getDrawable(1);
+        }
+        return bg;
+    }
+
+    private void applyPopupBlurToHierarchy() {
+        applyPopupBlurToHierarchy(this);
+    }
+
+    private void applyPopupBlurToHierarchy(View view) {
+        if (isShortcutContainer(view) || isShortcutOrWrapper(view)) {
+            mBlurBackgroundHelper.applyPopupBlurBackground(view);
+        }
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                applyPopupBlurToHierarchy(viewGroup.getChildAt(i));
+            }
         }
     }
 
@@ -538,6 +574,9 @@ public abstract class ArrowPopup<T extends Context & ActivityContext>
         }
         if (Gravity.isVertical(mGravity)) {
             setY(dragLayer.getHeight() / 2 - getMeasuredHeight() / 2);
+        }
+        if (mBlurBackgroundHelper.isPopupBlurEnabled()) {
+            applyPopupBlurToHierarchy();
         }
     }
 

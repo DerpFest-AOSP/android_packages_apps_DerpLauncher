@@ -17,15 +17,22 @@
 package com.android.launcher3.util
 
 import android.graphics.Canvas
+import android.graphics.Color
+import androidx.core.graphics.ColorUtils
 import android.graphics.Outline
 import android.graphics.Path
 import android.graphics.Rect
 import android.graphics.RenderEffect
 import android.graphics.RenderNode
 import android.graphics.Shader
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.view.View
+import com.android.internal.R as InternalR
 import com.android.internal.graphics.drawable.BackgroundBlurDrawable
-import com.android.launcher3.Flags.blurOnMoreSurfaces
+import com.android.launcher3.Launcher
+import com.android.launcher3.LauncherState
 import com.android.launcher3.R
 import com.android.launcher3.dagger.ActivityContextSingleton
 import com.android.launcher3.folder.Folder
@@ -47,16 +54,19 @@ constructor(
     @Named(WINDOW_BLUR_STATE) private val blurState: ListenableRef<Boolean>,
 ) : BlurBackgroundHelper() {
 
-    private val folderBlurRadius = activityContext.asContext().resources.getDimension(
-        R.dimen.folder_blur_radius
-    )
+    private val context = activityContext.asContext()
 
-    private val cornerRadius = Themes.getDialogCornerRadius(activityContext.asContext())
+    private val folderBlurRadius = context.resources.getDimension(R.dimen.folder_blur_radius)
+
+    private val popupBlurRadius =
+        context.resources.getDimensionPixelSize(R.dimen.popup_blur_radius)
+
+    private val cornerRadius = Themes.getDialogCornerRadius(context)
     private val workspaceBlurRenderNode = RenderNode("workspaceBlur")
     private val workspaceBlurRenderNodeOutline = Outline()
     private val bounds = Rect()
     private val folderBlurDrawable: BackgroundBlurDrawable? by lazy {
-        if (!isBlurEnabled()) null
+        if (!blurState.value) null
         else
             activityContext.dragLayer.getViewRootImpl()
                 .createBackgroundBlurDrawable()?.apply {
@@ -151,7 +161,77 @@ constructor(
         folderBlurDrawable?.setVisible(false, false)
     }
 
-    override fun isBlurEnabled(): Boolean {
-        return blurOnMoreSurfaces() && blurState.value
+    override fun isBlurEnabled(): Boolean = blurState.value && isHomescreen()
+
+    override fun isPopupBlurEnabled(): Boolean = isBlurEnabled()
+
+    /** Folders and popups blur only on the workspace, not in All Apps. */
+    private fun isHomescreen(): Boolean {
+        (activityContext as? Launcher)?.let { launcher ->
+            if (launcher.isInState(LauncherState.ALL_APPS)) {
+                return false
+            }
+        }
+        activityContext.appsView?.let { appsView ->
+            if (appsView.isInAllApps) {
+                return false
+            }
+        }
+        return true
+    }
+
+    override fun applyPopupBlurBackground(view: View) {
+        if (!isPopupBlurEnabled()) {
+            return
+        }
+        val surfaceDrawable = view.background ?: return
+        if (surfaceDrawable is LayerDrawable
+            && surfaceDrawable.numberOfLayers > 1
+            && surfaceDrawable.getDrawable(0) is BackgroundBlurDrawable) {
+            return
+        }
+
+        val viewRoot = activityContext.dragLayer.viewRootImpl ?: return
+        val blurDrawable =
+            viewRoot.createBackgroundBlurDrawable().apply {
+                setBlurRadius(popupBlurRadius)
+                setCornerRadius(getPopupCornerRadius(surfaceDrawable, view))
+                setVisible(true, false)
+            }
+        view.background = LayerDrawable(arrayOf(blurDrawable, surfaceDrawable.mutate()))
+        view.invalidate()
+    }
+
+    override fun getPopupBlurSurfaceColor(fallbackColor: Int): Int {
+        if (!isPopupBlurEnabled() || fallbackColor == Color.TRANSPARENT) {
+            return fallbackColor
+        }
+        return getPopupBlurSurfaceColor()
+    }
+
+    private fun getPopupBlurSurfaceColor(): Int {
+        val color =
+            try {
+                context.getColor(InternalR.color.surface_effect_0)
+            } catch (_: Exception) {
+                context.getColor(R.color.materialColorSurfaceContainer)
+            }
+        return if (Color.alpha(color) < 255) {
+            color
+        } else {
+            ColorUtils.setAlphaComponent(color, (0.45f * 255).toInt())
+        }
+    }
+
+    private fun getPopupCornerRadius(drawable: Drawable, view: View): Float {
+        if (drawable is GradientDrawable) {
+            drawable.cornerRadii?.let { radii ->
+                if (radii.isNotEmpty()) {
+                    return radii.max()
+                }
+            }
+            return drawable.cornerRadius
+        }
+        return Themes.getDialogCornerRadius(view.context)
     }
 }

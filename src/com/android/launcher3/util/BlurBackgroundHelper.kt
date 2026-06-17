@@ -39,4 +39,13 @@ constructor() {
     open fun folderCloseComplete() {}
 
     open fun isBlurEnabled() = false
+
+    /** Whether cross-window blur should be applied to popup surfaces. */
+    open fun isPopupBlurEnabled() = isBlurEnabled()
+
+    /** Wraps [view]'s background with a cross-window blur layer when blur is enabled. */
+    open fun applyPopupBlurBackground(view: View) {}
+
+    /** Returns the surface color to use for popup children when blur is enabled. */
+    open fun getPopupBlurSurfaceColor(fallbackColor: Int) = fallbackColor
 }
