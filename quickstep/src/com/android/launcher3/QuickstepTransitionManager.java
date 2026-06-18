@@ -49,7 +49,6 @@ import static com.android.launcher3.BaseActivity.INVISIBLE_ALL;
 import static com.android.launcher3.BaseActivity.INVISIBLE_BY_APP_TRANSITIONS;
 import static com.android.launcher3.BaseActivity.INVISIBLE_BY_PENDING_FLAGS;
 import static com.android.launcher3.BaseActivity.PENDING_INVISIBLE_BY_WALLPAPER_ANIMATION;
-import static com.android.launcher3.Flags.appLaunchBlur;
 import static com.android.launcher3.Flags.refactorTaskbarUiState;
 import static com.android.launcher3.Flags.syncAppLaunchWithTaskbarStash;
 import static com.android.launcher3.LauncherAnimUtils.SCALE_PROPERTY;
@@ -334,7 +333,7 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
         mCoordinateTransfer = new RemoteAnimationCoordinateTransfer(mLauncher);
         mLatencyTracker = LatencyTracker.getInstance(launcher);
 
-        mMaxBlurRadius = launcher.getResources().getDimensionPixelSize(
+        mMaxBlurRadius = res.getDimensionPixelSize(
                 R.dimen.max_depth_blur_radius_enhanced);
     }
 
@@ -864,9 +863,7 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
                 if (taskbarInteractor != null) {
                     taskbarInteractor.showEduOnAppLaunch();
                 }
-                if (appLaunchBlur()) {
-                    resetScrim(surfaceApplier, scrimLayer);
-                }
+                resetScrim(surfaceApplier, scrimLayer);
                 openingTargets.release();
             }
 
@@ -1085,7 +1082,7 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
                     }
                 }
 
-                if (appLaunchBlur() && scrimLayer != null && scrimLayer.isValid()) {
+                if (scrimLayer != null && scrimLayer.isValid()) {
                     SurfaceProperties builder = transaction.forSurface(scrimLayer);
                     builder.setAlpha(mBlurScrimAlpha.value);
                     builder.setBackgroundBlurRadius((int) mBlurRadius.value);
@@ -1160,9 +1157,7 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
         appAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (appLaunchBlur()) {
-                    resetScrim(surfaceApplier, scrimLayer);
-                }
+                resetScrim(surfaceApplier, scrimLayer);
                 openingTargets.release();
             }
         });
@@ -1243,7 +1238,7 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
                     }
                 }
 
-                if (appLaunchBlur() && scrimLayer != null && scrimLayer.isValid()) {
+                if (scrimLayer != null && scrimLayer.isValid()) {
                     SurfaceProperties builder = transaction.forSurface(scrimLayer);
                     builder.setAlpha(percent * scrimAlpha);
                     builder.setBackgroundBlurRadius((int) (percent * mMaxBlurRadius));
@@ -1265,10 +1260,6 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
 
     private SurfaceControl addScrimLayer(SurfaceTransactionApplier applier,
             RemoteAnimationTargets targets) {
-        if (!appLaunchBlur()) {
-            return null;
-        }
-
         RemoteAnimationTarget launcherTarget = null;
         if (targets.unfilteredApps != null) {
             for (final RemoteAnimationTarget target : targets.unfilteredApps) {
