@@ -104,6 +104,10 @@
     <string name="hotseat_bg_title">Hintergrund im Dock</string>
     <string name="hotseat_bg_summary">Transparenten Hintergrund im Dock anzeigen</string>
 
+    <!-- App launch blur -->
+    <string name="pref_app_launch_blur_title">Weichzeichner bei App-Übergängen</string>
+    <string name="pref_app_launch_blur_summary">Weichzeichner beim Öffnen und Schließen von Apps anzeigen</string>
+
     <!-- Wallpaper carousel -->
     <string name="wallpaper_carousel_title">Hintergrundbild-Karussell</string>
     <string name="wallpaper_carousel_summary">Hintergrundbilder schnell im Langdruck-Menü wechseln</string>

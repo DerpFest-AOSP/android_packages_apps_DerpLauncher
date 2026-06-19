@@ -52,6 +52,7 @@ import static com.android.launcher3.BaseActivity.PENDING_INVISIBLE_BY_WALLPAPER_
 import static com.android.launcher3.Flags.refactorTaskbarUiState;
 import static com.android.launcher3.Flags.syncAppLaunchWithTaskbarStash;
 import static com.android.launcher3.LauncherAnimUtils.SCALE_PROPERTY;
+import static com.android.launcher3.LauncherPrefs.APP_LAUNCH_BLUR_ENABLED;
 import static com.android.launcher3.LauncherState.ALL_APPS;
 import static com.android.launcher3.LauncherState.BACKGROUND_APP;
 import static com.android.launcher3.LauncherState.NORMAL;
@@ -131,6 +132,7 @@ import com.android.internal.jank.Cuj;
 import com.android.internal.util.LatencyTracker;
 import com.android.launcher3.DeviceProfile.OnDeviceProfileChangeListener;
 import com.android.launcher3.LauncherAnimationRunner.RemoteAnimationFactory;
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.anim.AnimationSuccessListener;
 import com.android.launcher3.anim.AnimatorListeners;
 import com.android.launcher3.compat.AccessibilityManagerCompat;
@@ -1260,6 +1262,10 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
 
     private SurfaceControl addScrimLayer(SurfaceTransactionApplier applier,
             RemoteAnimationTargets targets) {
+        if (!isAppLaunchBlurEnabled()) {
+            return null;
+        }
+
         RemoteAnimationTarget launcherTarget = null;
         if (targets.unfilteredApps != null) {
             for (final RemoteAnimationTarget target : targets.unfilteredApps) {
@@ -1312,6 +1318,10 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
     @Nullable
     private SurfaceControl createClosingScrimLayer(SurfaceTransactionApplier applier,
             RemoteAnimationTarget[] targets) {
+        if (!isAppLaunchBlurEnabled()) {
+            return null;
+        }
+
         RemoteAnimationTarget launcherTarget = null;
         for (final RemoteAnimationTarget target : targets) {
             if (target.mode == MODE_OPENING) {
@@ -1344,6 +1354,10 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
                 .setLayer(1000);
         applier.scheduleApply(transaction);
         return scrimLayer;
+    }
+
+    private boolean isAppLaunchBlurEnabled() {
+        return LauncherPrefs.get(mLauncher).get(APP_LAUNCH_BLUR_ENABLED);
     }
 
     /** Returns animator that controls depth/blur of the background during app/widget opening. */

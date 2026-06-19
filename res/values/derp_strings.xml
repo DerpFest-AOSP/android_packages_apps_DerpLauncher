@@ -107,6 +107,10 @@
     <string name="hotseat_bg_title">Hotseat background</string>
     <string name="hotseat_bg_summary">Add translucent background to the app dock</string>
 
+    <!-- App launch blur -->
+    <string name="pref_app_launch_blur_title">App transition blur</string>
+    <string name="pref_app_launch_blur_summary">Show blur when opening and closing apps</string>
+
     <!-- Wallpaper carousel -->
     <string name="wallpaper_carousel_title">Wallpaper carousel</string>
     <string name="wallpaper_carousel_summary">Quickly switch wallpapers from the long-press menu</string>
