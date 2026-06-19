@@ -192,14 +192,48 @@ constructor(
         }
 
         val viewRoot = activityContext.dragLayer.viewRootImpl ?: return
+        val surface = surfaceDrawable.mutate()
         val blurDrawable =
             viewRoot.createBackgroundBlurDrawable().apply {
                 setBlurRadius(popupBlurRadius)
-                setCornerRadius(getPopupCornerRadius(surfaceDrawable, view))
+                getPopupCornerRadii(surface, view).applyTo(this)
                 setVisible(true, false)
             }
-        view.background = LayerDrawable(arrayOf(blurDrawable, surfaceDrawable.mutate()))
+        view.background = LayerDrawable(arrayOf(blurDrawable, surface))
         view.invalidate()
+    }
+
+    private data class PopupCornerRadii(
+        val topLeft: Float,
+        val topRight: Float,
+        val bottomLeft: Float,
+        val bottomRight: Float,
+    ) {
+        fun applyTo(blurDrawable: BackgroundBlurDrawable) {
+            blurDrawable.setCornerRadius(topLeft, topRight, bottomLeft, bottomRight)
+        }
+    }
+
+    /** Matches [BackgroundBlurDrawable] corner order to a [GradientDrawable]'s radii. */
+    private fun getPopupCornerRadii(drawable: Drawable, view: View): PopupCornerRadii {
+        if (drawable is GradientDrawable) {
+            drawable.cornerRadii?.let { radii ->
+                if (radii.size >= 8) {
+                    return PopupCornerRadii(
+                        maxOf(radii[0], radii[1]),
+                        maxOf(radii[2], radii[3]),
+                        maxOf(radii[6], radii[7]),
+                        maxOf(radii[4], radii[5]),
+                    )
+                }
+            }
+            val radius = drawable.cornerRadius
+            if (radius > 0f) {
+                return PopupCornerRadii(radius, radius, radius, radius)
+            }
+        }
+        val fallback = Themes.getDialogCornerRadius(view.context)
+        return PopupCornerRadii(fallback, fallback, fallback, fallback)
     }
 
     override fun getPopupBlurSurfaceColor(fallbackColor: Int): Int {
@@ -221,17 +255,5 @@ constructor(
         } else {
             ColorUtils.setAlphaComponent(color, (0.45f * 255).toInt())
         }
-    }
-
-    private fun getPopupCornerRadius(drawable: Drawable, view: View): Float {
-        if (drawable is GradientDrawable) {
-            drawable.cornerRadii?.let { radii ->
-                if (radii.isNotEmpty()) {
-                    return radii.max()
-                }
-            }
-            return drawable.cornerRadius
-        }
-        return Themes.getDialogCornerRadius(view.context)
     }
 }

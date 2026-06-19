@@ -339,7 +339,10 @@ public abstract class ArrowPopup<T extends Context & ActivityContext>
     }
 
     private void applyPopupBlurToHierarchy(View view) {
-        if (isShortcutContainer(view) || isShortcutOrWrapper(view)) {
+        if (isShortcutOrWrapper(view)) {
+            mBlurBackgroundHelper.applyPopupBlurBackground(view);
+        } else if (isShortcutContainer(view) && !hasShortcutOrWrapperChild(view)) {
+            // Icons-only rows (e.g. system shortcuts) have no per-item backgrounds.
             mBlurBackgroundHelper.applyPopupBlurBackground(view);
         }
         if (view instanceof ViewGroup) {
@@ -348,6 +351,18 @@ public abstract class ArrowPopup<T extends Context & ActivityContext>
                 applyPopupBlurToHierarchy(viewGroup.getChildAt(i));
             }
         }
+    }
+
+    private boolean hasShortcutOrWrapperChild(View view) {
+        if (!(view instanceof ViewGroup viewGroup)) {
+            return false;
+        }
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            if (isShortcutOrWrapper(viewGroup.getChildAt(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
