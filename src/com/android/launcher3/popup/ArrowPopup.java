@@ -335,34 +335,27 @@ public abstract class ArrowPopup<T extends Context & ActivityContext>
     }
 
     private void applyPopupBlurToHierarchy() {
-        applyPopupBlurToHierarchy(this);
+        applyPopupBlurToHierarchy(this, null);
     }
 
-    private void applyPopupBlurToHierarchy(View view) {
-        if (isShortcutOrWrapper(view)) {
+    /**
+     * Applies blur to popup surfaces. Shortcut containers (deep shortcuts, icon rows, etc.) get a
+     * single blurred panel; individual {@link DeepShortcutView} children stay transparent so the
+     * container background shows through. Standalone shortcut rows (e.g. OptionsPopupView) blur
+     * each item directly.
+     */
+    private void applyPopupBlurToHierarchy(View view, View parent) {
+        if (isShortcutContainer(view)) {
             mBlurBackgroundHelper.applyPopupBlurBackground(view);
-        } else if (isShortcutContainer(view) && !hasShortcutOrWrapperChild(view)) {
-            // Icons-only rows (e.g. system shortcuts) have no per-item backgrounds.
+        } else if (isShortcutOrWrapper(view)
+                && (parent == null || !isShortcutContainer(parent))) {
             mBlurBackgroundHelper.applyPopupBlurBackground(view);
         }
-        if (view instanceof ViewGroup) {
-            ViewGroup viewGroup = (ViewGroup) view;
+        if (view instanceof ViewGroup viewGroup) {
             for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                applyPopupBlurToHierarchy(viewGroup.getChildAt(i));
+                applyPopupBlurToHierarchy(viewGroup.getChildAt(i), view);
             }
         }
-    }
-
-    private boolean hasShortcutOrWrapperChild(View view) {
-        if (!(view instanceof ViewGroup viewGroup)) {
-            return false;
-        }
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-            if (isShortcutOrWrapper(viewGroup.getChildAt(i))) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
