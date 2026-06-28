@@ -16,7 +16,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
@@ -59,6 +58,7 @@ import com.android.launcher3.util.ActivityOptionsWrapper;
 import com.android.launcher3.util.ApiWrapper;
 import com.android.launcher3.util.ApplicationInfoWrapper;
 import com.android.launcher3.util.ComponentKey;
+import com.android.launcher3.util.CustomAppNameStore;
 import com.android.launcher3.util.InstantAppResolver;
 import com.android.launcher3.util.PackageManagerHelper;
 import com.android.launcher3.util.PackageUserKey;
@@ -82,35 +82,6 @@ import java.util.List;
 public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
         implements View.OnClickListener {
     private static final String TAG = "SystemShortcut";
-
-    public static final String CUSTOM_NAMES_PREFS = "custom_app_names";
-
-    @Nullable
-    public static String customNameKey(ItemInfo info) {
-        ComponentName cn = info.getTargetComponent();
-        if (cn == null) return null;
-        return cn.getPackageName() + "/" + cn.getClassName() + "/" + info.user.hashCode();
-    }
-
-    public static void saveCustomName(Context context, ItemInfo info, @Nullable String name) {
-        String key = customNameKey(info);
-        if (key == null) return;
-        SharedPreferences prefs = context.getSharedPreferences(CUSTOM_NAMES_PREFS,
-                Context.MODE_PRIVATE);
-        if (name == null) {
-            prefs.edit().remove(key).apply();
-        } else {
-            prefs.edit().putString(key, name).apply();
-        }
-    }
-
-    @Nullable
-    public static String getCustomName(Context context, ItemInfo info) {
-        String key = customNameKey(info);
-        if (key == null) return null;
-        return context.getSharedPreferences(CUSTOM_NAMES_PREFS, Context.MODE_PRIVATE)
-                .getString(key, null);
-    }
 
     private final int mIconResId;
     protected final int mLabelResId;
@@ -749,7 +720,7 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
 
             builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel());
 
-            if (getCustomName((Context) mTarget, mItemInfo) != null) {
+            if (CustomAppNameStore.getCustomName((Context) mTarget, mItemInfo) != null) {
                 builder.setNeutralButton(R.string.rename_app_reset, (dialog2, which2) -> {
                     resetToOriginalName(context);
                     Toast.makeText(context,
@@ -780,7 +751,7 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
 
             mItemInfo.title = newName;
 
-            saveCustomName(context, mItemInfo, newName);
+            CustomAppNameStore.saveCustomName(context, mItemInfo, newName);
             if (mItemInfo instanceof WorkspaceItemInfo) {
                 WorkspaceItemInfo wsInfo = (WorkspaceItemInfo) mItemInfo;
                 LauncherAppState.getInstance(context).getModel().getWriter(false, null, null)
@@ -793,7 +764,7 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
         }
 
         private void resetToOriginalName(Context context) {
-            saveCustomName(context, mItemInfo, null);
+            CustomAppNameStore.saveCustomName(context, mItemInfo, null);
             CharSequence systemTitle = getSystemTitle(context, mItemInfo);
             if (systemTitle != null) {
                 mItemInfo.title = systemTitle;

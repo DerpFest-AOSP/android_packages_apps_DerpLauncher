@@ -67,12 +67,12 @@ import com.android.launcher3.model.data.PackageItemInfo;
 import com.android.launcher3.model.data.WorkspaceItemInfo;
 import com.android.launcher3.pm.InstallSessionHelper;
 import com.android.launcher3.pm.UserCache;
-import com.android.launcher3.popup.SystemShortcut;
 import com.android.launcher3.shortcuts.ShortcutKey;
 import com.android.launcher3.shortcuts.ShortcutRequest;
 import com.android.launcher3.util.ApplicationInfoWrapper;
 import com.android.launcher3.util.CancellableTask;
 import com.android.launcher3.util.ComponentKey;
+import com.android.launcher3.util.CustomAppNameStore;
 import com.android.launcher3.util.DaggerSingletonTracker;
 import com.android.launcher3.util.InstantAppResolver;
 import com.android.launcher3.util.PackageUserKey;
@@ -633,7 +633,7 @@ public class IconCache extends BaseIconCache {
     protected void applyCacheEntry(@NonNull final CacheEntry entry,
             @NonNull final ItemInfoWithIcon info) {
         info.title = Utilities.trim(entry.title);
-        String customTitle = SystemShortcut.getCustomName(mContext, info);
+        String customTitle = CustomAppNameStore.getCustomName(mContext, info);
         if (customTitle != null) {
             info.title = customTitle;
         }
@@ -661,7 +661,7 @@ public class IconCache extends BaseIconCache {
         }
         info.appTitle = Utilities.trim(info.title);
         info.title = Utilities.trim(packageEntry.title);
-        customTitle = SystemShortcut.getCustomName(mContext, info);
+        customTitle = CustomAppNameStore.getCustomName(mContext, info);
         if (customTitle != null) {
             info.title = customTitle;
         }
