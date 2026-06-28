@@ -24,6 +24,7 @@ import android.content.pm.ShortcutInfo;
 import android.graphics.Rect;
 import android.os.Process;
 import android.os.UserHandle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -725,7 +726,7 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
             final EditText input = new EditText(context);
             input.setText(mItemInfo.title);
             input.setSelection(0, mItemInfo.title != null ? mItemInfo.title.length() : 0);
-            input.setMaxEms(MAX_APP_NAME_LENGTH);
+            input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_APP_NAME_LENGTH)});
             input.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
 
             builder.setView(input);
