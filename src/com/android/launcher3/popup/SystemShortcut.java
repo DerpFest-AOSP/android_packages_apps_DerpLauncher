@@ -799,10 +799,8 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
         private void forceUiUpdate(Context context) {
             ComponentName cn = mItemInfo.getTargetComponent();
             if (cn != null) {
-                LauncherAppState.getInstance(context).getModel().onPackageIconsUpdated(
-                        new java.util.HashSet<>(java.util.Arrays.asList(cn.getPackageName())),
-                        mItemInfo.user
-                );
+                LauncherAppState.getInstance(context).getModel()
+                        .onCustomAppNameChanged(cn, mItemInfo.user);
             }
         }
     }
