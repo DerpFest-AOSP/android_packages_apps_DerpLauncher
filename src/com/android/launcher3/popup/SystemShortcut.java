@@ -18,6 +18,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.LauncherActivityInfo;
+import android.content.pm.LauncherApps;
 import android.content.pm.ShortcutInfo;
 import android.graphics.Rect;
 import android.os.Process;
@@ -701,15 +703,10 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
 
     public static class RenameApp<T extends ActivityContext> extends SystemShortcut<T> {
         private static final int MAX_APP_NAME_LENGTH = 32;
-        private CharSequence mOriginalTitle;
-        private CharSequence mSystemTitle;
 
         public RenameApp(T target, ItemInfo itemInfo, @NonNull View originalView) {
             super(getDrawableId(), R.string.rename_app_label, target,
                     itemInfo, originalView);
-            mSystemTitle = itemInfo.title;
-            String saved = getCustomName((Context) target, itemInfo);
-            mOriginalTitle = (saved != null) ? saved : itemInfo.title;
         }
 
         public static int getDrawableId() {
@@ -798,15 +795,35 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
 
         private void resetToOriginalName(Context context) {
             saveCustomName(context, mItemInfo, null);
-            mItemInfo.title = mSystemTitle;
+            CharSequence systemTitle = getSystemTitle(context, mItemInfo);
+            if (systemTitle != null) {
+                mItemInfo.title = systemTitle;
+            }
 
-            if (mItemInfo instanceof WorkspaceItemInfo) {
+            if (mItemInfo instanceof WorkspaceItemInfo && systemTitle != null) {
                 WorkspaceItemInfo wsInfo = (WorkspaceItemInfo) mItemInfo;
                 LauncherAppState.getInstance(context).getModel().getWriter(false, null, null)
                         .updateItemInDatabase(wsInfo);
             }
 
             forceUiUpdate(context);
+        }
+
+        @Nullable
+        private static CharSequence getSystemTitle(Context context, ItemInfo info) {
+            ComponentName cn = info.getTargetComponent();
+            if (cn == null) {
+                return null;
+            }
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            intent.setComponent(cn);
+            LauncherActivityInfo activityInfo = context.getSystemService(LauncherApps.class)
+                    .resolveActivity(intent, info.user);
+            if (activityInfo != null) {
+                return Utilities.trim(activityInfo.getLabel());
+            }
+            return null;
         }
 
         private void forceUiUpdate(Context context) {
