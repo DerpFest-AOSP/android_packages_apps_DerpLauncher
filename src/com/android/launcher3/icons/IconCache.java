@@ -67,6 +67,7 @@ import com.android.launcher3.model.data.PackageItemInfo;
 import com.android.launcher3.model.data.WorkspaceItemInfo;
 import com.android.launcher3.pm.InstallSessionHelper;
 import com.android.launcher3.pm.UserCache;
+import com.android.launcher3.popup.SystemShortcut;
 import com.android.launcher3.shortcuts.ShortcutKey;
 import com.android.launcher3.shortcuts.ShortcutRequest;
 import com.android.launcher3.util.ApplicationInfoWrapper;
@@ -105,6 +106,7 @@ public class IconCache extends BaseIconCache {
     private static final String TAG = "Launcher.IconCache";
 
     private final LauncherApps mLauncherApps;
+    private final Context mContext;
     private final UserCache mUserManager;
     private final InstallSessionHelper mInstallSessionHelper;
     private final InstantAppResolver mInstantAppResolver;
@@ -128,6 +130,7 @@ public class IconCache extends BaseIconCache {
             DaggerSingletonTracker lifecycle) {
         super(context, dbFileName, MODEL_EXECUTOR.getLooper(),
                 idp.fillResIconDpi, idp.iconBitmapSize, true /* inMemoryCache */, iconProvider);
+        mContext = context;
         mLauncherApps = context.getSystemService(LauncherApps.class);
         mUserManager = userCache;
         mInstallSessionHelper = installSessionHelper;
@@ -630,6 +633,10 @@ public class IconCache extends BaseIconCache {
     protected void applyCacheEntry(@NonNull final CacheEntry entry,
             @NonNull final ItemInfoWithIcon info) {
         info.title = Utilities.trim(entry.title);
+        String customTitle = SystemShortcut.getCustomName(mContext, info);
+        if (customTitle != null) {
+            info.title = customTitle;
+        }
         info.contentDescription = entry.contentDescription;
         info.bitmap = entry.bitmap;
         // Clear any previously set appTitle, if the packageOverride is no longer valid
@@ -654,6 +661,10 @@ public class IconCache extends BaseIconCache {
         }
         info.appTitle = Utilities.trim(info.title);
         info.title = Utilities.trim(packageEntry.title);
+        customTitle = SystemShortcut.getCustomName(mContext, info);
+        if (customTitle != null) {
+            info.title = customTitle;
+        }
         info.contentDescription = packageEntry.contentDescription;
         info.bitmap = packageEntry.bitmap;
     }
