@@ -694,9 +694,7 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
     public static final Factory<ActivityContext> RENAME_APP =
             (activity, itemInfo, originalView) -> {
                 if (itemInfo.itemType == ITEM_TYPE_APPLICATION
-                        || (itemInfo instanceof WorkspaceItemInfo
-                        && ((WorkspaceItemInfo) itemInfo).itemType
-                                != LauncherSettings.Favorites.ITEM_TYPE_FOLDER)) {
+                        && itemInfo.getTargetComponent() != null) {
                     return new RenameApp<>(activity, itemInfo, originalView);
                 }
                 return null;
