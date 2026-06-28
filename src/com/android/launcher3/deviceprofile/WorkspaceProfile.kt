@@ -278,7 +278,7 @@ data class WorkspaceProfile(
                         hotseatProfile.barWorkspaceSpacePx)
                 }
                 isQsbInline -> {
-                    (max(iconSizePx, hotseatProfile.qsbVisualHeight) + hotseatBarBottomSpacePx)
+                    (max(iconSizePx, hotseatProfile.qsbHeight) + hotseatBarBottomSpacePx)
                 }
                 else -> {
                     (iconSizePx +

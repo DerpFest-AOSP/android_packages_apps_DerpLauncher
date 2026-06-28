@@ -991,8 +991,7 @@ public class DeviceProfile {
                     - ((getHotseatProfile().getQsbHeight()
                     - mHotseatProfile.getCellHeightPx()) / 2);
         } else if (mDeviceProperties.getTaskbarConfiguration().isTaskbarPresent()) { // QSB on top
-            return mHotseatProfile.getBarSizePx() - getHotseatProfile().getQsbHeight()
-                    + getHotseatProfile().getQsbShadowHeight();
+            return mHotseatProfile.getBarSizePx() - getHotseatProfile().getQsbHeight();
         } else {
             return mHotseatProfile.getBarBottomSpacePx() - getHotseatProfile().getQsbShadowHeight();
         }

@@ -65,6 +65,7 @@ data class HotseatProfileInitialValues(
             barEdgePaddingPx: Int,
             isVerticalBarLayout: Boolean,
             barWorkspaceSpacePx: Int,
+            qsbHeight: Int,
             qsbVisualHeight: Int,
             barBottomSpacePx: Int,
             qsbSpace: Int,
@@ -73,7 +74,7 @@ data class HotseatProfileInitialValues(
             if (isVerticalBarLayout) {
                 return (hotseatIconSizePx + barEdgePaddingPx + barWorkspaceSpacePx)
             } else if (isQsbInline) {
-                return (max(hotseatIconSizePx, qsbVisualHeight) + barBottomSpacePx)
+                return (max(hotseatIconSizePx, qsbHeight) + barBottomSpacePx)
             } else {
                 return (hotseatIconSizePx + qsbSpace + qsbVisualHeight + barBottomSpacePx)
             }
@@ -224,6 +225,7 @@ data class HotseatProfileInitialValues(
                         barEdgePaddingPx = 0,
                         isVerticalBarLayout = isVerticalBarLayout,
                         barWorkspaceSpacePx = 0,
+                        qsbHeight = hotseatQsbHeight,
                         qsbVisualHeight = qsbVisualHeight,
                         barBottomSpacePx = barBottomSpacePx,
                         qsbSpace = hotseatQsbSpace,
@@ -348,6 +350,7 @@ data class HotseatProfileInitialValues(
                         barEdgePaddingPx = barEdgePaddingPx,
                         isVerticalBarLayout = isVerticalBarLayout,
                         barWorkspaceSpacePx = barWorkspaceSpacePx,
+                        qsbHeight = hotseatQsbHeight,
                         qsbVisualHeight = qsbVisualHeight,
                         barBottomSpacePx = barBottomSpacePx,
                         qsbSpace = hotseatQsbSpace,

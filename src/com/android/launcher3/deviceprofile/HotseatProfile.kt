@@ -413,6 +413,7 @@ data class HotseatProfile(
                         barEdgePaddingPx = hotseatProfileInitialValues.barEdgePaddingPx,
                         isVerticalBarLayout = isVerticalBarLayout,
                         barWorkspaceSpacePx = hotseatProfileInitialValues.barWorkspaceSpacePx,
+                        qsbHeight = hotseatProfileInitialValues.qsbHeight,
                         qsbVisualHeight = hotseatProfileInitialValues.qsbVisualHeight,
                         barBottomSpacePx = hotseatProfileInitialValues.barBottomSpacePx,
                         qsbSpace = hotseatProfileInitialValues.qsbSpace,
