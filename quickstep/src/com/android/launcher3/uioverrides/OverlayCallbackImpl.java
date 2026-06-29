@@ -59,7 +59,6 @@ public class OverlayCallbackImpl
         mLauncher = launcher;
         SharedPreferences prefs = LauncherPrefs.getPrefs(launcher);
         mClient = new LauncherClient(mLauncher, this, getClientOptions());
-        mLauncher.setLauncherOverlay(this);
 
         prefs.registerOnSharedPreferenceChangeListener(this);
         mLauncher.addOnDeviceProfileChangeListener(this);
@@ -165,6 +164,7 @@ public class OverlayCallbackImpl
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
         if (LauncherPrefs.ENABLE_MINUS_ONE.getSharedPrefKey().equals(key)) {
             mClient.setClientOptions(getClientOptions());
+            updateLauncherOverlay();
         }
     }
 
@@ -172,7 +172,7 @@ public class OverlayCallbackImpl
     public void onServiceStateChanged(boolean overlayAttached, boolean hotwordActive) {
         if (overlayAttached != mWasOverlayAttached) {
             mWasOverlayAttached = overlayAttached;
-            mLauncher.setLauncherOverlay(overlayAttached ? this : null);
+            updateLauncherOverlay();
         }
     }
 
@@ -194,5 +194,10 @@ public class OverlayCallbackImpl
                 true, /* enableHotword */
                 true /* enablePrewarming */
         );
+    }
+
+    private void updateLauncherOverlay() {
+        mLauncher.setLauncherOverlay(
+                mWasOverlayAttached && LauncherPrefs.ENABLE_MINUS_ONE.get(mLauncher) ? this : null);
     }
 }
