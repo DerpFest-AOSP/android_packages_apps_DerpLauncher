@@ -40,6 +40,7 @@ import com.android.launcher3.LauncherAnimUtils.VIEW_ALPHA
 import com.android.launcher3.LauncherAnimUtils.WORKSPACE_SCALE_PROPERTY_FACTORY
 import com.android.launcher3.LauncherState
 import com.android.launcher3.R
+import com.android.launcher3.Utilities
 import com.android.launcher3.anim.AnimatorListeners
 import com.android.launcher3.anim.PendingAnimation
 import com.android.launcher3.anim.PropertySetter
@@ -319,7 +320,8 @@ class ScalingWorkspaceRevealAnim(
     }
 
     private fun addBlurLayer() {
-        if (!Flags.blurredHomeAnimation()) {
+        if (!Flags.blurredHomeAnimation()
+                || !Utilities.blurBackgroundAtAppLaunch(launcher)) {
             return
         }
         val parent = launcher.dragLayer.viewRootImpl?.surfaceControl ?: return

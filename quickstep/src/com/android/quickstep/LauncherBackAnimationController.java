@@ -473,7 +473,8 @@ public class LauncherBackAnimationController {
     }
 
     private void setBlur(int blurRadius) {
-        if (Settings.Global.getInt(mLauncher.getContentResolver(),
+        if (!Utilities.blurBackgroundAtAppLaunch(mLauncher)
+                || Settings.Global.getInt(mLauncher.getContentResolver(),
                 Settings.Global.DISABLE_WINDOW_BLURS, 0) == 1) {
             mTransaction.setBackgroundBlurRadius(mScrimLayer, 0);
         } else {

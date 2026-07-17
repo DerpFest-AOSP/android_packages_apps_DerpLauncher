@@ -92,7 +92,9 @@ public class SettingsMisc extends SettingsCategoryActivity {
                     return true;
                 });
                 return true;
-            } else if (LauncherPrefs.BLUR_DEPTH.getSharedPrefKey().equals(preference.getKey())) {
+            } else if (LauncherPrefs.BLUR_DEPTH.getSharedPrefKey().equals(preference.getKey())
+                    || LauncherPrefs.ANIMATION_BLUR.getSharedPrefKey().equals(
+                            preference.getKey())) {
                 return BlurUtils.supportsBlursOnWindows();
             }
             return true;

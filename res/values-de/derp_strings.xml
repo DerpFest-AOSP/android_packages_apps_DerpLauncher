@@ -225,6 +225,8 @@
     <!-- Background blur -->
     <string name="background_blur_title">Tiefenschärfegrad des Hintergrunds</string>
     <string name="background_blur_summary">Tiefenschärfegrad in App-Übersicht und -Verlauf anpassen</string>
+    <string name="pref_blur_background_at_app_launch_title">Hintergrundunschärfe bei Animationen</string>
+    <string name="pref_blur_background_at_app_launch_summary">Hintergrund beim Starten und Beenden von Apps weichzeichnen</string>
 
     <!-- Background opacity -->
     <string name="background_opacity_title">Hintergrundtransparenz</string>

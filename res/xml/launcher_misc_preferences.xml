@@ -16,7 +16,6 @@
 -->
 <androidx.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res-auto"
     xmlns:settings="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreferenceCompat
@@ -35,6 +34,13 @@
         android:min="0"
         settings:units="px"
         android:defaultValue="34" />
+
+    <SwitchPreferenceCompat
+        android:key="pref_blur_background_at_app_launch"
+        android:title="@string/pref_blur_background_at_app_launch_title"
+        android:summary="@string/pref_blur_background_at_app_launch_summary"
+        android:defaultValue="true"
+        android:persistent="true" />
 
     <Preference
         android:key="pref_trust_apps"

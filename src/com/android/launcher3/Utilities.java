@@ -1001,6 +1001,10 @@ public final class Utilities {
         return !LauncherPrefs.WORKSPACE_LOCK.get(context);
     }
 
+    public static boolean blurBackgroundAtAppLaunch(Context context) {
+        return LauncherPrefs.ANIMATION_BLUR.get(context);
+    }
+
     public static int getBlurRadius(Context context) {
         return LauncherPrefs.getPrefs(context.getApplicationContext()).getInt(
                 LauncherPrefs.BLUR_DEPTH.getSharedPrefKey(),

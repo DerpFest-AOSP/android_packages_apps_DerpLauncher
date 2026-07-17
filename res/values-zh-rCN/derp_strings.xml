@@ -218,6 +218,8 @@
     <!-- Background blur -->
     <string name="background_blur_title">背景模糊深度</string>
     <string name="background_blur_summary">设置最近任务与应用抽屉的背景模糊深度</string>
+    <string name="pref_blur_background_at_app_launch_title">动画背景模糊</string>
+    <string name="pref_blur_background_at_app_launch_summary">为应用启动与退出动画添加背景模糊</string>
 
     <!-- QuickSpace: QuickEvent: Device Intro Event -->
     <string name="quick_event_rom_intro_welcome">欢迎使用 DerpFest！</string>

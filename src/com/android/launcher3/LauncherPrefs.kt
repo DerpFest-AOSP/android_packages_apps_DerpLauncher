@@ -310,6 +310,8 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField val ALLAPPS_THEMED_ICONS = backedUpItem("pref_allapps_themed_icons", false)
         @JvmField val DRAWER_OPEN_KEYBOARD = backedUpItem("pref_drawer_open_keyboard", false)
         @JvmField val BLUR_DEPTH = backedUpItem("pref_blur_depth", 34)
+        @JvmField val ANIMATION_BLUR =
+            backedUpItem("pref_blur_background_at_app_launch", true)
         @JvmField val APP_DRAWER_OPACITY = backedUpItem("pref_app_drawer_opacity", 80)
         @JvmField val APP_DRAWER_CUSTOM_COLOR_ENABLED =
             backedUpItem("pref_app_drawer_custom_color_enabled", false)

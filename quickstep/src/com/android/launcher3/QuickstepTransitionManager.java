@@ -1321,7 +1321,7 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
 
     private SurfaceControl addScrimLayer(SurfaceTransactionApplier applier,
             AnimatedSurfaces surfaces) {
-        if (!mIsAppLaunchBlurEnabled) {
+        if (!mIsAppLaunchBlurEnabled || !Utilities.blurBackgroundAtAppLaunch(mLauncher)) {
             return null;
         }
 
@@ -1377,7 +1377,7 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
 
     /** Returns animator that controls depth/blur of the background during app/widget opening. */
     private Animator getBackgroundAnimator() {
-        if (!Flags.allAppsSurface()) {
+        if (!Flags.allAppsSurface() || !Utilities.blurBackgroundAtAppLaunch(mLauncher)) {
             // Don't animate/blur the background for this launch, regardless of the launcher state.
             // We have too many performance issues with the blur.
             return new AnimatorSet();
@@ -1413,8 +1413,15 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
                     .setEffectLayer()
                     .build();
 
+            backgroundRadiusAnim.addUpdateListener(animation -> {
+                float progress = animation.getAnimatedFraction();
+                try (SurfaceControl.Transaction transaction = new SurfaceControl.Transaction()) {
+                    transaction.setBackgroundBlurRadius(dimLayer,
+                            Math.round(progress * mMaxBlurRadius));
+                    transaction.apply();
+                }
+            });
             backgroundRadiusAnim.addListener(AnimatorListeners.forEndCallback(() -> {
-                // Use try-with-resources to ensure the transaction gets closed.
                 try (SurfaceControl.Transaction transaction = new SurfaceControl.Transaction()) {
                     transaction.remove(dimLayer).apply();
                 }
