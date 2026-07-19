@@ -471,7 +471,7 @@ constructor(
 
         if (!occupied.containsKey(item.screenId)) {
             val screen = GridOccupancy(countX + 1, countY + 1)
-            if (firstPagePinnedItemEnabled() && item.screenId == Workspace.FIRST_SCREEN_ID) {
+            if (firstPagePinnedItemEnabled(context) && item.screenId == Workspace.FIRST_SCREEN_ID) {
                 // Reserve the first row on screen 0 for the fixed pinned item.
                 screen.markCells(0, 0, countX, 1, true)
             }

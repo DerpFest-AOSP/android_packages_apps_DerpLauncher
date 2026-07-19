@@ -376,7 +376,7 @@ public class LauncherPreviewRenderer extends BaseContext
         populateHotseatPredictions(itemIdMap);
 
         // Add the first page pinned placeholder.
-        if (firstPagePinnedItemEnabled()) {
+        if (firstPagePinnedItemEnabled(this)) {
             CellLayout firstScreen = mWorkspaceScreens.get(FIRST_SCREEN_ID);
             if (firstScreen != null) {
                 View qsb = mHomeElementInflater.inflate(R.layout.qsb_preview, firstScreen, false);

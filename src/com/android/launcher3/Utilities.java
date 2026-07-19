@@ -111,8 +111,8 @@ public final class Utilities {
     /**
      * Temporary fixed slot on the first workspace page for the upcoming companion widget app.
      */
-    public static boolean firstPagePinnedItemEnabled() {
-        return true;
+    public static boolean firstPagePinnedItemEnabled(Context context) {
+        return LauncherPrefs.get(context).get(LauncherPrefs.SHOW_AT_A_GLANCE);
     }
 
     @ChecksSdkIntAtLeast(api = VERSION_CODES.TIRAMISU, codename = "T")

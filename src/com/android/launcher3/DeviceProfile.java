@@ -273,7 +273,8 @@ public class DeviceProfile {
                     responsiveAspectRatio, mDeviceProperties.getHeightPx());
         }
 
-        int qsbHeight = res.getDimensionPixelSize(R.dimen.qsb_widget_height);
+        int qsbHeight = LauncherPrefs.get(context).get(LauncherPrefs.SHOW_SEARCH_BAR)
+                ? res.getDimensionPixelSize(R.dimen.qsb_widget_height) : 0;
 
         HotseatProfileInitialValues hotseatProfileInitialValues =
                 HotseatProfileInitialValues.Factory.createHotseatProfileInitialValues(
@@ -289,7 +290,8 @@ public class DeviceProfile {
                                 R.dimen.workspace_page_indicator_height
                         ),
                         /*responsiveWorkspaceCellSpec*/ mResponsiveWorkspaceCellSpec,
-                        qsbHeight
+                        qsbHeight,
+                        /*showSearchBar*/ qsbHeight > 0
                 );
 
         int allAppsTopPadding = mDeviceProperties.getInsets().top;

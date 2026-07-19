@@ -71,4 +71,10 @@
     <!-- Smartspacer -->
     <string name="pref_enable_smartspacer_title">Show Smartspacer on home screen</string>
     <string name="pref_enable_smartspacer_summary">Replace the first home screen status area with Smartspacer</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="pref_show_at_a_glance_title">Show At a Glance</string>
+    <string name="pref_show_at_a_glance_summary">Show the status widget at the top of the first home screen</string>
+    <string name="pref_show_search_bar_title">Show search bar</string>
+    <string name="pref_show_search_bar_summary">Show the Google search bar in the hotseat</string>
 </resources>

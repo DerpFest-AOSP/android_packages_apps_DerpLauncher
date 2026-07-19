@@ -505,7 +505,7 @@ constructor(
         val occupied = GridOccupancy(trgX, trgY)
         val trg = Point(trgX, trgY)
         val next: Point =
-            if (screenId == 0 && firstPagePinnedItemEnabled()) {
+            if (screenId == 0 && firstPagePinnedItemEnabled(context)) {
                 Point(0, 1 /* smartspace */)
             } else {
                 Point(0, 0)

@@ -506,7 +506,7 @@ class ModelCallbacks(private var launcher: Launcher) : BgDataModel.Callbacks {
 
         MAIN_EXECUTOR.execute { clearPendingBinds() }
 
-        val orderedScreenIds = itemIdMap.collectWorkspaceScreens()
+        val orderedScreenIds = itemIdMap.collectWorkspaceScreens(launcher)
         val currentScreenIds = getPagesToBindSynchronously(orderedScreenIds)
 
         fun setupPendingBind(pendingExecutor: Executor) {
@@ -606,7 +606,7 @@ class ModelCallbacks(private var launcher: Launcher) : BgDataModel.Callbacks {
 
         val tracer = TraceHelper.INSTANCE.beginAsyncSection("launcher-bind-$reason")
 
-        val orderedScreenIds = itemIdMap.collectWorkspaceScreens()
+        val orderedScreenIds = itemIdMap.collectWorkspaceScreens(launcher)
         val currentScreenIds = getPagesToBindSynchronously(orderedScreenIds)
 
         // Separate the items that are on the current screen, and all the other remaining items

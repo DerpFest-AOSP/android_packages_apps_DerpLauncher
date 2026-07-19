@@ -110,7 +110,8 @@ public class Hotseat extends CellLayout implements Insettable {
     public Hotseat(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mQsb = LauncherComponentProvider.get(context).getQsbWidgetFactory().createView(this);
-
+        mQsb.setVisibility(LauncherPrefs.get(context).get(LauncherPrefs.SHOW_SEARCH_BAR)
+                ? VISIBLE : GONE);
         addView(mQsb);
         mIconsAlphaChannels = new MultiValueAlpha(getShortcutsAndWidgets(),
                 ALPHA_CHANNEL_CHANNELS_COUNT);
@@ -281,7 +282,8 @@ public class Hotseat extends CellLayout implements Insettable {
                 lp.width = grid.getHotseatProfile().getBarSizePx() + insets.right;
             }
         } else {
-            mQsb.setVisibility(View.VISIBLE);
+            mQsb.setVisibility(LauncherPrefs.get(getContext()).get(LauncherPrefs.SHOW_SEARCH_BAR)
+                    ? View.VISIBLE : View.GONE);
             lp.gravity = Gravity.BOTTOM;
             lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
 

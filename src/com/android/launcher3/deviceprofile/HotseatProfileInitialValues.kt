@@ -92,6 +92,7 @@ data class HotseatProfileInitialValues(
             workspacePageIndicatorHeight: Int,
             responsiveWorkspaceCellSpec: CalculatedCellSpec?,
             qsbHeight: Int,
+            showSearchBar: Boolean,
         ): HotseatProfileInitialValues {
             return when {
                 responsiveHotseatSpec != null && responsiveWorkspaceCellSpec != null ->
@@ -105,6 +106,7 @@ data class HotseatProfileInitialValues(
                         isVerticalBarLayout = isVerticalBarLayout,
                         typeIndex = typeIndex,
                         qsbHeight = qsbHeight,
+                        showSearchBar = showSearchBar,
                     )
                 else ->
                     createNonResponsiveHotseatProfileInitialValues(
@@ -117,6 +119,7 @@ data class HotseatProfileInitialValues(
                         isVerticalBarLayout = isVerticalBarLayout,
                         workspacePageIndicatorHeight = workspacePageIndicatorHeight,
                         qsbHeight = qsbHeight,
+                        showSearchBar = showSearchBar,
                     )
             }
         }
@@ -131,6 +134,7 @@ data class HotseatProfileInitialValues(
             responsiveWorkspaceCellSpec: CalculatedCellSpec,
             qsbHeight: Int,
             typeIndex: Int,
+            showSearchBar: Boolean,
         ): HotseatProfileInitialValues {
 
             // For foldable (two panel), we inline the qsb if we have the screen open and we are in
@@ -143,7 +147,8 @@ data class HotseatProfileInitialValues(
                 if (deviceProperties.isTwoPanels) twoPanelCanInline else tabletInlineQsb
             canQsbInline = canQsbInline && qsbHeight > 0
 
-            val isQsbInline = (inv.inlineQsb[typeIndex] && canQsbInline) || inv.isFixedLandscape
+            val isQsbInline =
+                showSearchBar && ((inv.inlineQsb[typeIndex] && canQsbInline) || inv.isFixedLandscape)
 
             val areNavButtonsInline =
                 deviceProperties.taskbarConfiguration.isTaskbarPresent &&
@@ -168,16 +173,20 @@ data class HotseatProfileInitialValues(
                     )
                 else res.getDimensionPixelSize(R.dimen.spring_loaded_hotseat_top_margin)
 
-            val hotseatQsbHeight = res.getDimensionPixelSize(R.dimen.qsb_widget_height)
-            val hotseatQsbShadowHeight = res.getDimensionPixelSize(R.dimen.qsb_shadow_height)
+            val hotseatQsbHeight =
+                if (showSearchBar) res.getDimensionPixelSize(R.dimen.qsb_widget_height) else 0
+            val hotseatQsbShadowHeight =
+                if (showSearchBar) res.getDimensionPixelSize(R.dimen.qsb_shadow_height) else 0
 
-            var hotseatQsbSpace: Int = responsiveHotseatSpec.hotseatQsbSpace
+            var hotseatQsbSpace: Int =
+                if (showSearchBar) responsiveHotseatSpec.hotseatQsbSpace else 0
             val hotseatBarBottomSpace: Int = responsiveHotseatSpec.edgePadding
             var minQsbMargin = res.getDimensionPixelSize(R.dimen.min_qsb_margin)
 
             var barBottomSpacePx = 0
             // Have a little space between the inset and the QSB
-            if (deviceProperties.insets.bottom + minQsbMargin > hotseatBarBottomSpace) {
+            if (showSearchBar &&
+                deviceProperties.insets.bottom + minQsbMargin > hotseatBarBottomSpace) {
                 val availableSpace: Int =
                     hotseatQsbSpace - (deviceProperties.insets.bottom - hotseatBarBottomSpace)
 
@@ -245,6 +254,7 @@ data class HotseatProfileInitialValues(
             isVerticalBarLayout: Boolean,
             workspacePageIndicatorHeight: Int,
             qsbHeight: Int,
+            showSearchBar: Boolean,
         ): HotseatProfileInitialValues {
             // For foldable (two panel), we inline the qsb if we have the screen open and we are in
             // either Landscape or Portrait. This cal also be disabled in the device_profile.xml
@@ -257,7 +267,8 @@ data class HotseatProfileInitialValues(
                 (if (deviceProperties.isTwoPanels) twoPanelCanInline else tabletInlineQsb) &&
                     qsbHeight > 0
 
-            val isQsbInline = (inv.inlineQsb[typeIndex] && canQsbInline) || inv.isFixedLandscape
+            val isQsbInline =
+                showSearchBar && ((inv.inlineQsb[typeIndex] && canQsbInline) || inv.isFixedLandscape)
 
             val areNavButtonsInline =
                 deviceProperties.taskbarConfiguration.isTaskbarPresent &&
@@ -288,17 +299,21 @@ data class HotseatProfileInitialValues(
                 }
             val hotseatBarWorkspaceSpacePx =
                 res.getDimensionPixelSize(R.dimen.dynamic_grid_hotseat_side_padding)
-            val hotseatQsbHeight = res.getDimensionPixelSize(R.dimen.qsb_widget_height)
-            val hotseatQsbShadowHeight = res.getDimensionPixelSize(R.dimen.qsb_shadow_height)
+            val hotseatQsbHeight =
+                if (showSearchBar) res.getDimensionPixelSize(R.dimen.qsb_widget_height) else 0
+            val hotseatQsbShadowHeight =
+                if (showSearchBar) res.getDimensionPixelSize(R.dimen.qsb_shadow_height) else 0
 
-            var hotseatQsbSpace = pxFromDp(inv.hotseatQsbSpace[typeIndex], metrics)
+            var hotseatQsbSpace =
+                if (showSearchBar) pxFromDp(inv.hotseatQsbSpace[typeIndex], metrics) else 0
             var hotseatBarBottomSpace = pxFromDp(inv.hotseatBarBottomSpace[typeIndex], metrics)
 
             var minQsbMargin = res.getDimensionPixelSize(R.dimen.min_qsb_margin)
 
             var barBottomSpacePx = 0
             // Have a little space between the inset and the QSB
-            if (deviceProperties.insets.bottom + minQsbMargin > hotseatBarBottomSpace) {
+            if (showSearchBar &&
+                deviceProperties.insets.bottom + minQsbMargin > hotseatBarBottomSpace) {
                 val availableSpace: Int =
                     hotseatQsbSpace - (deviceProperties.insets.bottom - hotseatBarBottomSpace)
 
@@ -319,7 +334,8 @@ data class HotseatProfileInitialValues(
 
             if (isVerticalBarLayout) {
                 barBottomSpacePx = 0
-                hotseatQsbSpace = pxFromDp(inv.hotseatQsbSpace[typeIndex], metrics)
+                hotseatQsbSpace =
+                    if (showSearchBar) pxFromDp(inv.hotseatQsbSpace[typeIndex], metrics) else 0
             }
 
             val barEdgePaddingPx = hotseatBarEdgePaddingPx

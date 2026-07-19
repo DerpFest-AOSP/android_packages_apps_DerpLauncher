@@ -16,6 +16,7 @@
 
 package com.android.launcher3.organizer.creation.screen.ui.workspaceorganizer
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -25,6 +26,7 @@ import com.android.launcher3.CellLayout
 import com.android.launcher3.Launcher
 import com.android.launcher3.concurrent.annotations.LightweightBackgroundContext
 import com.android.launcher3.concurrent.annotations.LightweightBackgroundPriority.UI
+import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.icons.BitmapRenderer
 import com.android.launcher3.model.IModelWriter
 import com.android.launcher3.model.repository.HomeScreenRepository
@@ -45,6 +47,7 @@ import kotlinx.coroutines.withContext
 class WorkspaceOrganizerViewModel
 @Inject
 constructor(
+    @ApplicationContext private val context: Context,
     private val homeScreenRepository: HomeScreenRepository,
     private val modelWriter: IModelWriter,
     private val organizerTransactionContextFactory: OrganizerTransactionContext.Factory,
@@ -70,7 +73,7 @@ constructor(
     private suspend fun loadPages() {
         _workspacePages.value =
             withContext(lightweightBackgroundContext) {
-                val screens = homeScreenRepository.workspaceState.value.collectWorkspaceScreens()
+                val screens = homeScreenRepository.workspaceState.value.collectWorkspaceScreens(context)
                 screens.map { screenId -> WorkspacePage(bitmap = null, screenId = screenId) }
             }
     }

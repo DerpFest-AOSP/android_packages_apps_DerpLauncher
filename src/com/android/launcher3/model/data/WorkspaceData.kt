@@ -16,6 +16,7 @@
 
 package com.android.launcher3.model.data
 
+import android.content.Context
 import android.util.SparseArray
 import androidx.core.util.putAll
 import androidx.core.util.valueIterator
@@ -35,10 +36,10 @@ import java.util.stream.StreamSupport
 sealed class WorkspaceData : Iterable<ItemInfo> {
 
     /** Creates an array of valid workspace screens based on current items in the model. */
-    fun collectWorkspaceScreens(): IntArray {
+    fun collectWorkspaceScreens(context: Context): IntArray {
         val screenSet = IntSet()
         forEach { if (it.container == CONTAINER_DESKTOP) screenSet.add(it.screenId) }
-        if (firstPagePinnedItemEnabled() || screenSet.isEmpty) {
+        if (firstPagePinnedItemEnabled(context) || screenSet.isEmpty) {
             screenSet.add(Workspace.FIRST_SCREEN_ID)
         }
         return screenSet.array

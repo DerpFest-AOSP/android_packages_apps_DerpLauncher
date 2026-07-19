@@ -64,4 +64,10 @@
     <!-- Smartspacer -->
     <string name="pref_enable_smartspacer_title">Smartspacer auf dem Startbildschirm anzeigen</string>
     <string name="pref_enable_smartspacer_summary">Den Statusbereich oben auf dem Startbildschirm durch Smartspacer ersetzen</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="pref_show_at_a_glance_title">Auf einen Blick anzeigen</string>
+    <string name="pref_show_at_a_glance_summary">Status-Widget oben auf dem ersten Startbildschirm anzeigen</string>
+    <string name="pref_show_search_bar_title">Suchleiste anzeigen</string>
+    <string name="pref_show_search_bar_summary">Google-Suchleiste in der Dockleiste anzeigen</string>
 </resources>

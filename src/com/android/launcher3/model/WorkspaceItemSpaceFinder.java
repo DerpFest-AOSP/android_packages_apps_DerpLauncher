@@ -18,11 +18,13 @@ package com.android.launcher3.model;
 import static com.android.launcher3.WorkspaceLayoutManager.FIRST_SCREEN_ID;
 import static com.android.launcher3.Utilities.firstPagePinnedItemEnabled;
 
+import android.content.Context;
 import android.util.SparseArray;
 
 import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.LauncherModel;
 import com.android.launcher3.LauncherSettings;
+import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.model.data.WorkspaceItemCoordinates;
 import com.android.launcher3.util.GridOccupancy;
@@ -38,13 +40,18 @@ import javax.inject.Inject;
  */
 public class WorkspaceItemSpaceFinder {
 
+    private final Context mContext;
     private final BgDataModel mDataModel;
     private final InvariantDeviceProfile mIDP;
     private final LauncherModel mModel;
 
     @Inject
     WorkspaceItemSpaceFinder(
-            BgDataModel dataModel, InvariantDeviceProfile idp, LauncherModel model) {
+            @ApplicationContext Context context,
+            BgDataModel dataModel,
+            InvariantDeviceProfile idp,
+            LauncherModel model) {
+        mContext = context;
         mDataModel = dataModel;
         mIDP = idp;
         mModel = model;
@@ -168,7 +175,7 @@ public class WorkspaceItemSpaceFinder {
             int startingFromCellY, int spanX, int spanY, int[] cellXY) {
         GridOccupancy occupied = new GridOccupancy(mIDP.numColumns, mIDP.numRows);
 
-        if (screenId == FIRST_SCREEN_ID && firstPagePinnedItemEnabled()) {
+        if (screenId == FIRST_SCREEN_ID && firstPagePinnedItemEnabled(mContext)) {
             occupied.markCells(0, 0, mIDP.numColumns, 1, true);
         }
 

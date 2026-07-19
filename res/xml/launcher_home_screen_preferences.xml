@@ -68,6 +68,20 @@
             android:persistent="true" />
 
         <SwitchPreferenceCompat
+            android:key="pref_show_at_a_glance"
+            android:title="@string/pref_show_at_a_glance_title"
+            android:summary="@string/pref_show_at_a_glance_summary"
+            android:defaultValue="true"
+            android:persistent="true" />
+
+        <SwitchPreferenceCompat
+            android:key="pref_show_search_bar"
+            android:title="@string/pref_show_search_bar_title"
+            android:summary="@string/pref_show_search_bar_summary"
+            android:defaultValue="true"
+            android:persistent="true" />
+
+        <SwitchPreferenceCompat
             android:key="pref_desktop_show_labels"
             android:title="@string/title_desktop_labels"
             android:summary="@string/summary_desktop_labels"

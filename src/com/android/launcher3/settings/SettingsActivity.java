@@ -64,6 +64,8 @@ public class SettingsActivity extends CollapsingToolbarBaseActivity
 
     public static final String FIXED_LANDSCAPE_MODE = "pref_fixed_landscape_mode";
     public static final String SMARTSPACER_PREFERENCE_KEY = "pref_enable_smartspacer";
+    public static final String SHOW_AT_A_GLANCE_PREFERENCE_KEY = "pref_show_at_a_glance";
+    public static final String SHOW_SEARCH_BAR_PREFERENCE_KEY = "pref_show_search_bar";
 
     public static final String EXTRA_FRAGMENT_ARGS = ":settings:fragment_args";
 

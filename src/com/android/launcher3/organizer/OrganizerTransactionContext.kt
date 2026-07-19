@@ -16,7 +16,9 @@
 
 package com.android.launcher3.organizer
 
+import android.content.Context
 import com.android.launcher3.LauncherSettings.Favorites
+import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.model.BgDataModel
 import com.android.launcher3.model.TransactionContext
 import com.android.launcher3.model.WorkspaceItemSpaceFinder
@@ -34,6 +36,7 @@ class OrganizerTransactionContext
 @AssistedInject
 constructor(
     @Assisted private val delegate: TransactionContext,
+    @ApplicationContext private val context: Context,
     private val bgDataModel: BgDataModel,
     private val spaceFinder: WorkspaceItemSpaceFinder,
     private val homeScreenRepository: HomeScreenRepository,
@@ -51,7 +54,7 @@ constructor(
      * that screen within the desktop container.
      */
     fun addScreen(items: List<ItemInfo>) {
-        val screens = bgDataModel.itemsIdMap.collectWorkspaceScreens()
+        val screens = bgDataModel.itemsIdMap.collectWorkspaceScreens(context)
         val maxScreenId = (0 until screens.size()).maxOfOrNull { screens.get(it) } ?: -1
         val nextScreenId = maxScreenId + 1
 

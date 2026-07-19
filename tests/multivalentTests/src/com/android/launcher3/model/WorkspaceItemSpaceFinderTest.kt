@@ -50,6 +50,7 @@ class WorkspaceItemSpaceFinderTest : AbstractWorkspaceModelTest() {
         startingFrom: WorkspaceItemCoordinates = WorkspaceItemCoordinates(FIRST_SCREEN_ID, 0, 0),
     ): WorkspaceItemCoordinates =
         WorkspaceItemSpaceFinder(
+                mTargetContext,
                 mTargetContext.bgDataModel,
                 mAppState.invariantDeviceProfile,
                 model,
