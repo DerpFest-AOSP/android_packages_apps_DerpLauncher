@@ -17,10 +17,12 @@
 package com.android.launcher3.popup
 
 import android.animation.AnimatorSet
+import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.PointF
 import android.graphics.Rect
 import android.os.Trace
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +38,7 @@ import com.android.launcher3.LauncherPrefs
 import com.android.launcher3.LauncherSettings.Favorites.ITEM_TYPE_CUSTOM_VIEW
 import com.android.launcher3.R
 import com.android.launcher3.accessibility.LauncherAccessibilityDelegate
+import com.android.launcher3.data.wallpaper.service.WallpaperService
 import com.android.launcher3.dragndrop.DragController
 import com.android.launcher3.dragndrop.DragOptions
 import com.android.launcher3.folder.Folder
@@ -53,6 +56,7 @@ import com.android.launcher3.shortcuts.DeepShortcutView
 import com.android.launcher3.util.ShortcutUtil
 import com.android.launcher3.views.ActivityContext
 import com.android.launcher3.views.BaseDragLayer
+import kotlinx.coroutines.runBlocking
 
 /**
  * Base popup container for shortcuts associated with the item {@code originalView}
@@ -123,6 +127,7 @@ open class PopupContainer<T : ActivityContext>(
         itemView: View,
     ) {
         if (Flags.expandableLongPressMenu()) {
+            maybeAddWallpaperCarousel()
             showComposePopup(
                 systemShortcuts =
                     systemShortcuts.map { popupData ->
@@ -137,6 +142,7 @@ open class PopupContainer<T : ActivityContext>(
                     }
             )
         } else {
+            maybeAddWallpaperCarousel()
             systemShortcutContainer = inflateAndAdd(R.layout.system_shortcut_rows_container, this)
             systemShortcuts.forEach { systemShortcut ->
                 val view: DeepShortcutView =
@@ -158,6 +164,33 @@ open class PopupContainer<T : ActivityContext>(
             }
             show()
         }
+    }
+
+    /**
+     * Adds the wallpaper history carousel above system shortcuts when we have captured wallpapers.
+     * Seeds the DB from the current wallpaper on first open if needed.
+     */
+    private fun maybeAddWallpaperCarousel() {
+        val service = WallpaperService.INSTANCE.get(context)
+        var wallpapers =
+            runCatching { service.getTopWallpapersBlocking() }.getOrDefault(emptyList())
+        if (wallpapers.isEmpty()) {
+            runBlocking {
+                runCatching {
+                        service.saveWallpaper(WallpaperManager.getInstance(context))
+                    }
+                    .onFailure {
+                        Log.w(TAG, "Failed to seed wallpaper carousel", it)
+                    }
+            }
+            wallpapers =
+                runCatching { service.getTopWallpapersBlocking() }.getOrDefault(emptyList())
+        }
+        if (wallpapers.isEmpty()) {
+            Log.d(TAG, "Wallpaper carousel skipped; no wallpapers in DB")
+            return
+        }
+        inflateAndAdd<ViewGroup>(R.layout.wallpaper_carousel_header, this)
     }
 
     open fun showComposePopup(systemShortcuts: List<PopupItem>, deepShortcutCount: Int = 0) {
@@ -384,6 +417,8 @@ open class PopupContainer<T : ActivityContext>(
     }
 
     companion object {
+        private const val TAG = "PopupContainer"
+
         /** Returns a PopupContainer which is already open or null */
         @JvmStatic
         fun getOpen(context: ActivityContext): PopupContainer<*>? =

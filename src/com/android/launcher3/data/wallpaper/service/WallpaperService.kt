@@ -3,6 +3,8 @@ package com.android.launcher3.data.wallpaper.service
 import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 
@@ -40,13 +42,45 @@ class WallpaperService @Inject constructor(
 
     suspend fun saveWallpaper(wallpaperManager: WallpaperManager) {
         runCatching {
-            val wallpaperDrawable = wallpaperManager.drawable as? BitmapDrawable
-            val currentBitmap = wallpaperDrawable?.bitmap ?: return
+            val currentBitmap = captureWallpaperBitmap(wallpaperManager) ?: run {
+                Log.w(TAG, "Unable to capture current wallpaper bitmap")
+                return
+            }
             val byteArray = bitmapToByteArray(currentBitmap)
             saveWallpaper(byteArray)
         }.onFailure {
-            Log.e("WallpaperChange", "Error detecting wallpaper change: ${it.message}", it)
+            Log.e(TAG, "Error detecting wallpaper change: ${it.message}", it)
         }
+    }
+
+    private fun captureWallpaperBitmap(wallpaperManager: WallpaperManager): Bitmap? {
+        wallpaperManager.drawable?.let { drawable ->
+            when (drawable) {
+                is BitmapDrawable -> drawable.bitmap?.takeIf { !it.isRecycled }
+                else ->
+                    runCatching {
+                            val width = drawable.intrinsicWidth.takeIf { it > 0 } ?: return@runCatching null
+                            val height =
+                                drawable.intrinsicHeight.takeIf { it > 0 } ?: return@runCatching null
+                            Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888).also { bmp ->
+                                val canvas = Canvas(bmp)
+                                drawable.setBounds(0, 0, width, height)
+                                drawable.draw(canvas)
+                            }
+                        }
+                        .getOrNull()
+            }
+        }?.let {
+            return it
+        }
+
+        return runCatching {
+                wallpaperManager.getWallpaperFile(WallpaperManager.FLAG_SYSTEM)?.use { pfd ->
+                    BitmapFactory.decodeFileDescriptor(pfd.fileDescriptor)
+                }
+            }
+            .onFailure { Log.w(TAG, "getWallpaperFile failed: ${it.message}") }
+            .getOrNull()
     }
 
     private fun calculateChecksum(imageData: ByteArray): String {
@@ -141,14 +175,14 @@ class WallpaperService @Inject constructor(
             runCatching {
                 FileOutputStream(imageFile).use { it.write(imageData) }
             }.onFailure {
-                Log.e("WallpaperService", "Error saving image: ${it.message}", it)
+                Log.e(TAG, "Error saving image: ${it.message}", it)
             }
         }
         return imageFile.absolutePath
     }
 
     override fun close() {
-        TODO("Not yet implemented")
+        // Room DB is process-scoped; nothing to tear down.
     }
 
     private fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
@@ -158,6 +192,8 @@ class WallpaperService @Inject constructor(
     }
 
     companion object {
+        private const val TAG = "WallpaperService"
+
         @JvmField
         val INSTANCE = DaggerSingletonObject(LauncherAppComponent::getWallpaperService)
     }
