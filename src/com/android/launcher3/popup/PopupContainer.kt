@@ -127,7 +127,6 @@ open class PopupContainer<T : ActivityContext>(
         itemView: View,
     ) {
         if (Flags.expandableLongPressMenu()) {
-            maybeAddWallpaperCarousel()
             showComposePopup(
                 systemShortcuts =
                     systemShortcuts.map { popupData ->
@@ -142,11 +141,12 @@ open class PopupContainer<T : ActivityContext>(
                     }
             )
         } else {
-            maybeAddWallpaperCarousel()
+            val popupWidth = resolveHomescreenPopupWidth(activityContext)
             systemShortcutContainer = inflateAndAdd(R.layout.system_shortcut_rows_container, this)
-            systemShortcuts.forEach { systemShortcut ->
+            systemShortcuts.forEachIndexed { index, systemShortcut ->
                 val view: DeepShortcutView =
                     inflateAndAdd(R.layout.system_shortcut, systemShortcutContainer)
+                view.layoutParams.width = popupWidth
 
                 view.iconView.setBackgroundResource(systemShortcut.iconResId)
                 view.bubbleText.setText(systemShortcut.labelResId)
@@ -161,16 +161,30 @@ open class PopupContainer<T : ActivityContext>(
                     }
                     systemShortcut.popupAction.invoke(activityContext, itemInfo, itemView)
                 }
+                // Wallpaper chips sit under "Wallpaper & style" (first item).
+                if (index == 0) {
+                    maybeAddWallpaperCarousel(systemShortcutContainer!!)
+                }
             }
             show()
         }
     }
 
+    private fun resolveHomescreenPopupWidth(activityContext: ActivityContext): Int {
+        val screenWidth = activityContext.deviceProfile.deviceProperties.widthPx
+        val maxWidth =
+            resources.getDimensionPixelSize(R.dimen.homescreen_options_popup_max_width)
+        val minWidth = resources.getDimensionPixelSize(R.dimen.bg_popup_item_width)
+        val fraction =
+            if (activityContext.deviceProfile.deviceProperties.isPhone) 0.80f else 0.50f
+        return ((screenWidth * fraction).toInt()).coerceIn(minWidth, maxWidth)
+    }
+
     /**
-     * Adds the wallpaper history carousel above system shortcuts when we have captured wallpapers.
+     * Adds wallpaper history chips under the Wallpaper & style row when available.
      * Seeds the DB from the current wallpaper on first open if needed.
      */
-    private fun maybeAddWallpaperCarousel() {
+    private fun maybeAddWallpaperCarousel(parent: ViewGroup) {
         val service = WallpaperService.INSTANCE.get(context)
         var wallpapers =
             runCatching { service.getTopWallpapersBlocking() }.getOrDefault(emptyList())
@@ -190,7 +204,7 @@ open class PopupContainer<T : ActivityContext>(
             Log.d(TAG, "Wallpaper carousel skipped; no wallpapers in DB")
             return
         }
-        inflateAndAdd<ViewGroup>(R.layout.wallpaper_carousel_header, this)
+        inflateAndAdd<ViewGroup>(R.layout.wallpaper_carousel_header, parent)
     }
 
     open fun showComposePopup(systemShortcuts: List<PopupItem>, deepShortcutCount: Int = 0) {

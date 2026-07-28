@@ -3,19 +3,21 @@
      SPDX-FileCopyrightText: DerpFest AOSP
      SPDX-License-Identifier: Apache-2.0
 -->
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/wallpaper_container"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/popup_background"
-    android:tag="@string/popup_container_iterate_children"
-    android:elevation="@dimen/deep_shortcuts_elevation">
+    android:paddingHorizontal="@dimen/wallpaper_carousel_horizontal_padding"
+    android:paddingVertical="@dimen/wallpaper_carousel_vertical_padding"
+    android:clipToPadding="true"
+    android:clipChildren="true">
     <com.android.launcher3.popup.WallpaperCarouselView
-        android:orientation="horizontal"
         android:id="@+id/wallpaper_carousel"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/wallpaper_carousel_height"
-        android:layout_margin="@dimen/system_shortcut_margin_start"/>
-</LinearLayout>
+        android:gravity="center_vertical"
+        android:clipToPadding="true"
+        android:clipChildren="true"/>
+</FrameLayout>
