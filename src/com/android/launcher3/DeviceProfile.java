@@ -34,6 +34,7 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.os.UserManager;
 import android.util.DisplayMetrics;
 import android.view.Surface;
 
@@ -273,7 +274,9 @@ public class DeviceProfile {
                     responsiveAspectRatio, mDeviceProperties.getHeightPx());
         }
 
-        int qsbHeight = LauncherPrefs.get(context).get(LauncherPrefs.SHOW_SEARCH_BAR)
+        boolean showSearchBar = context.getSystemService(UserManager.class).isUserUnlocked()
+                ? LauncherPrefs.get(context).get(LauncherPrefs.SHOW_SEARCH_BAR) : true;
+        int qsbHeight = showSearchBar
                 ? res.getDimensionPixelSize(R.dimen.qsb_widget_height) : 0;
 
         HotseatProfileInitialValues hotseatProfileInitialValues =

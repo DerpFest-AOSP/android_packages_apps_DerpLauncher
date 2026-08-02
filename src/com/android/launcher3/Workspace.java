@@ -746,6 +746,10 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
         int cellHSpan = firstPage.getCountX();
         CellLayoutLayoutParams lp = new CellLayoutLayoutParams(0, 0, cellHSpan, 1);
         lp.canReorder = false;
+        ViewParent parent = mFirstPagePinnedItem.getParent();
+        if (parent instanceof ViewGroup) {
+            ((ViewGroup) parent).removeView(mFirstPagePinnedItem);
+        }
         if (!firstPage.addViewToCellLayout(
                 mFirstPagePinnedItem, 0, R.id.search_container_workspace, lp, true)) {
             Log.e(TAG, "Failed to add to item at (0, 0) to CellLayout");

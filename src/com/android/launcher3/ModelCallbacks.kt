@@ -473,7 +473,7 @@ class ModelCallbacks(private var launcher: Launcher) : BgDataModel.Callbacks {
             return
         }
 
-        if (Flags.simplifiedLauncherModelBinding()) {
+        if (useSimplifiedModelBinding()) {
             bindModelWithAsyncInflation(itemIdMap, isBindingSync, "bindCompleteModelAsync")
             return
         }
@@ -667,5 +667,7 @@ class ModelCallbacks(private var launcher: Launcher) : BgDataModel.Callbacks {
 
     companion object {
         private const val TAG = "ModelCallbacks"
+
+        private fun useSimplifiedModelBinding() = false
     }
 }
