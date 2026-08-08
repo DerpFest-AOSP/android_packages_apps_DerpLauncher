@@ -1282,11 +1282,12 @@ public class TaskbarActivityContext extends BaseTaskbarContext {
         mControllers.taskbarViewController.setRecentsButtonDisabled(
                 mControllers.navbarButtonsViewController.isRecentsDisabled()
                         || isNavBarKidsModeActive());
+        mControllers.taskbarKeyguardController.updateStateForSysuiFlags(systemUiStateFlags);
         mControllers.stashedHandleViewController.setIsHomeButtonDisabled(
-                mControllers.navbarButtonsViewController.isHomeDisabled());
+                mControllers.navbarButtonsViewController.isHomeDisabled()
+                        || mControllers.taskbarKeyguardController.isKeyguardVisible());
         mControllers.cueBarController.updateStateForSysuiFlags(systemUiStateFlags);
         mControllers.stashedHandleViewController.updateStateForSysuiFlags(systemUiStateFlags);
-        mControllers.taskbarKeyguardController.updateStateForSysuiFlags(systemUiStateFlags);
         mControllers.taskbarStashController.updateStateForSysuiFlags(
                 systemUiStateFlags, fromInit || !isUserSetupComplete());
         mControllers.taskbarScrimViewController.updateStateForSysuiFlags(systemUiStateFlags,
