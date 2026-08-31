@@ -53,12 +53,14 @@ import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.dagger.LauncherAppSingleton;
 import com.android.launcher3.deviceprofile.parser.GridOption;
+import com.android.launcher3.customization.IconDatabase;
 import com.android.launcher3.graphics.theme.ThemePreference;
 import com.android.launcher3.preview.PreviewLifecycleObserver;
 import com.android.launcher3.preview.PreviewSurfaceRenderer;
 import com.android.launcher3.shapes.IconShapeModel;
 import com.android.launcher3.shapes.ShapesProvider;
 import com.android.launcher3.util.ApiWrapper;
+import com.android.launcher3.util.AppReloader;
 import com.android.launcher3.util.ContentProviderProxy.ProxyProvider;
 import com.android.launcher3.util.DaggerSingletonTracker;
 import com.android.launcher3.util.RunnableList;
@@ -137,6 +139,11 @@ public class GridCustomizationsProxy implements ProxyProvider {
             "/set_workspace_items_label_hidden";
     public static final String WORKSPACE_ITEMS_LABEL_HIDDEN = "/workspace_items_label_hidden";
     public static final String BOOLEAN_VALUE = "boolean_value";
+
+    /** Play Store icon pack selected by ThemePicker / Settings. */
+    public static final String ICON_PACK = "/icon_pack";
+    public static final String KEY_ICON_PACK_VALUE = "icon_pack_value";
+    private static final String SYSTEM_ICONS_SENTINEL = "system_icons";
 
     private static final String KEY_SURFACE_PACKAGE = "surface_package";
     private static final String KEY_CALLBACK = "callback";
@@ -264,6 +271,11 @@ public class GridCustomizationsProxy implements ProxyProvider {
                         mPrefs.get(LauncherPrefs.WORKSPACE_ITEMS_LABEL_HIDDEN);
                 cursor.newRow().add(BOOLEAN_VALUE, isWorkspaceItemsLabelHidden ? 1 : 0);
                 return cursor;
+            case ICON_PACK: {
+                MatrixCursor packCursor = new MatrixCursor(new String[]{KEY_ICON_PACK_VALUE});
+                packCursor.newRow().add(KEY_ICON_PACK_VALUE, IconDatabase.getGlobal(mContext));
+                return packCursor;
+            }
             default: {
                 Log.d(TAG, "query: path=" + path + " not found, returning null.");
                 return null;
@@ -332,6 +344,18 @@ public class GridCustomizationsProxy implements ProxyProvider {
                         LauncherPrefs.WORKSPACE_ITEMS_LABEL_HIDDEN,
                         values.getAsBoolean(BOOLEAN_VALUE)
                 );
+                return UPDATE_SETTING_SUCCESS;
+            }
+            case ICON_PACK: {
+                String pack = values.getAsString(KEY_ICON_PACK_VALUE);
+                if (pack == null) {
+                    return UPDATE_SETTING_FAILURE;
+                }
+                if (SYSTEM_ICONS_SENTINEL.equals(pack)) {
+                    pack = IconDatabase.VALUE_DEFAULT;
+                }
+                IconDatabase.setGlobal(mContext, pack);
+                AppReloader.get(mContext).reload();
                 return UPDATE_SETTING_SUCCESS;
             }
             default:
