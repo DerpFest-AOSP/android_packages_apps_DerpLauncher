@@ -26,6 +26,7 @@ import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.dagger.LauncherAppSingleton;
 import com.android.launcher3.graphics.ThemeManager;
+import com.android.launcher3.icons.pack.IconPackManager;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -58,6 +59,7 @@ public class LauncherIconProvider extends ThirdPartyIconProvider {
         super(context);
         mThemeManager = themeManager;
         mThemedIconMap = FeatureFlags.USE_LOCAL_ICON_OVERRIDES.get() ? null : DISABLED_MAP;
+        IconPackManager.get(context);
     }
 
     @Override
