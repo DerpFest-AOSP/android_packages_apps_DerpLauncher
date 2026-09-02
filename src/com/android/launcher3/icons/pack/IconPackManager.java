@@ -13,7 +13,6 @@ import android.util.Log;
 
 import static com.android.launcher3.util.Executors.MODEL_EXECUTOR;
 
-import com.android.launcher3.LauncherModel;
 import com.android.launcher3.util.ComponentKey;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -168,7 +167,15 @@ public class IconPackManager extends BroadcastReceiver {
      * @return Resolver that loads the icon, or null if there is no resolution strategy.
      */
     public IconResolver resolve(ComponentKey key) {
-        String packPackage = IconDatabase.getByComponent(mContext, key);
+        return resolve(mContext, key);
+    }
+
+    /**
+     * @param dbContext Context whose {@link IconDatabase} should be read. Preview uses a sandboxed
+     *                  prefs instance, so this must be the caller context rather than the singleton.
+     */
+    public IconResolver resolve(Context dbContext, ComponentKey key) {
+        String packPackage = IconDatabase.getByComponent(dbContext, key);
         if (mProviders.containsKey(packPackage)) {
             // The icon provider package is available.
             try {
@@ -184,13 +191,13 @@ public class IconPackManager extends BroadcastReceiver {
                     }
                 }
                 if (data.hasMasking()) {
-                    return new IconResolverMasked(mContext, data, pack.getAi(), key.hashCode());
+                    return new IconResolverMasked(dbContext, data, pack.getAi(), key.hashCode());
                 }
             } catch (PackageManager.NameNotFoundException | XmlPullParserException | IOException ignored) {
             }
         } else if (!packPackage.isEmpty()) {
             // The provider is not available, save for next time.
-            IconDatabase.resetForComponent(mContext, key);
+            IconDatabase.resetForComponent(dbContext, key);
         }
         return null;
     }

@@ -16,13 +16,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AppReloader {
-    private static AppReloader sInstance;
-
-    public static synchronized AppReloader get(Context context) {
-        if (sInstance == null) {
-            sInstance = new AppReloader(context);
-        }
-        return sInstance;
+    public static AppReloader get(Context context) {
+        return new AppReloader(context);
     }
 
     private final Context mContext;

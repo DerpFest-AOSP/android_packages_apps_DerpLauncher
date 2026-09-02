@@ -64,6 +64,7 @@ import com.android.launcher3.util.AppReloader;
 import com.android.launcher3.util.ContentProviderProxy.ProxyProvider;
 import com.android.launcher3.util.DaggerSingletonTracker;
 import com.android.launcher3.util.RunnableList;
+import com.android.launcher3.util.SandboxContext;
 
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
@@ -353,6 +354,10 @@ public class GridCustomizationsProxy implements ProxyProvider {
                 }
                 if (SYSTEM_ICONS_SENTINEL.equals(pack)) {
                     pack = IconDatabase.VALUE_DEFAULT;
+                } else if (pack.isEmpty() && mContext instanceof SandboxContext sandbox) {
+                    // Preview reset: restore the pack persisted on the real launcher.
+                    pack = IconDatabase.getGlobal(
+                            sandbox.getBaseContext().getApplicationContext());
                 }
                 IconDatabase.setGlobal(mContext, pack);
                 AppReloader.get(mContext).reload();

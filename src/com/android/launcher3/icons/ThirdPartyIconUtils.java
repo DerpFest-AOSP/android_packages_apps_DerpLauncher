@@ -11,7 +11,7 @@ import com.android.launcher3.util.ComponentKey;
 class ThirdPartyIconUtils {
     static Drawable getByKey(Context context, ComponentKey key, int iconDpi,
                              IconResolver.DefaultDrawableProvider fallback) {
-        IconResolver resolver = IconPackManager.get(context).resolve(key);
+        IconResolver resolver = IconPackManager.get(context).resolve(context, key);
         if (resolver == null) {
             return null;
         }
