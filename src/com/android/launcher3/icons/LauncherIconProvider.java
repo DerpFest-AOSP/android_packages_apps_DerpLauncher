@@ -23,6 +23,7 @@ import android.util.Log;
 
 import com.android.launcher3.R;
 import com.android.launcher3.config.FeatureFlags;
+import com.android.launcher3.customization.IconDatabase;
 import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.dagger.LauncherAppSingleton;
 import com.android.launcher3.graphics.ThemeManager;
@@ -70,8 +71,12 @@ public class LauncherIconProvider extends ThirdPartyIconProvider {
     @Override
     public void updateSystemState() {
         super.updateSystemState();
+        // Icons coming from an icon pack look different from the ones the system provides, so the
+        // pack has to be part of the state, otherwise cached bitmaps survive a pack change.
+        String themeCode = mThemeManager.getIconState().getThemeCode();
+        String iconPack = IconDatabase.getGlobal(mContext);
         mSystemState = mSystemState.withTheme(
-                mThemeManager.getIconState().getThemeCode(),
+                iconPack.isEmpty() ? themeCode : themeCode + ":" + iconPack,
                 mThemeManager.getIconState().isCircle());
     }
 

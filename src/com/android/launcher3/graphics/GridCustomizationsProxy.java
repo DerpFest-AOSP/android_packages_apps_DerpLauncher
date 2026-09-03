@@ -52,6 +52,7 @@ import com.android.launcher3.LauncherModel;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.dagger.LauncherAppSingleton;
+import com.android.launcher3.dagger.LauncherComponentProvider;
 import com.android.launcher3.deviceprofile.parser.GridOption;
 import com.android.launcher3.customization.IconDatabase;
 import com.android.launcher3.graphics.theme.ThemePreference;
@@ -60,7 +61,6 @@ import com.android.launcher3.preview.PreviewSurfaceRenderer;
 import com.android.launcher3.shapes.IconShapeModel;
 import com.android.launcher3.shapes.ShapesProvider;
 import com.android.launcher3.util.ApiWrapper;
-import com.android.launcher3.util.AppReloader;
 import com.android.launcher3.util.ContentProviderProxy.ProxyProvider;
 import com.android.launcher3.util.DaggerSingletonTracker;
 import com.android.launcher3.util.RunnableList;
@@ -359,13 +359,28 @@ public class GridCustomizationsProxy implements ProxyProvider {
                     pack = IconDatabase.getGlobal(
                             sandbox.getBaseContext().getApplicationContext());
                 }
+                if (pack.equals(IconDatabase.getGlobal(mContext))) {
+                    return UPDATE_SETTING_SUCCESS;
+                }
                 IconDatabase.setGlobal(mContext, pack);
-                AppReloader.get(mContext).reload();
+                reloadIcons();
                 return UPDATE_SETTING_SUCCESS;
             }
             default:
                 return UPDATE_SETTING_FAILURE;
         }
+    }
+
+    /**
+     * Drops every cached icon and reloads the model. Icons loaded from an icon pack are only
+     * rebuilt during a model load, so an in-place cache update would leave an already rendered
+     * preview or workspace showing the previous icons.
+     */
+    private void reloadIcons() {
+        LauncherAppState appState = LauncherAppState.getInstance(mContext);
+        LauncherComponentProvider.get(mContext).getIconPool().clear();
+        appState.getIconCache().updateIconParams(mIdp.fillResIconDpi, mIdp.iconBitmapSize);
+        appState.getModel().reloadIfActive("icon-pack-changed");
     }
 
     @Override

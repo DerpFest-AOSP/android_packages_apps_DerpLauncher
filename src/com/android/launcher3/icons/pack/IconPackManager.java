@@ -14,6 +14,7 @@ import android.util.Log;
 import static com.android.launcher3.util.Executors.MODEL_EXECUTOR;
 
 import com.android.launcher3.util.ComponentKey;
+import com.android.launcher3.util.SandboxContext;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -51,7 +52,11 @@ public class IconPackManager extends BroadcastReceiver {
 
     public static synchronized IconPackManager get(Context context) {
         if (sInstance == null) {
-            sInstance = new IconPackManager(context);
+            // The list of packs is process wide, so it must never be pinned to a preview sandbox,
+            // which is torn down as soon as the preview goes away.
+            sInstance = new IconPackManager(context instanceof SandboxContext sandbox
+                    ? sandbox.getBaseContext().getApplicationContext()
+                    : context.getApplicationContext());
         }
         return sInstance;
     }
