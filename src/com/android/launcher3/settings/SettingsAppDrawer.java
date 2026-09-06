@@ -76,8 +76,7 @@ public class SettingsAppDrawer extends SettingsCategoryActivity {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (LauncherPrefs.DRAWER_SEARCH.getSharedPrefKey().equals(key)
-                    || LauncherPrefs.APP_DRAWER_OPACITY.getSharedPrefKey().equals(key)) {
+            if (LauncherPrefs.DRAWER_SEARCH.getSharedPrefKey().equals(key)) {
                 LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
             }
         }

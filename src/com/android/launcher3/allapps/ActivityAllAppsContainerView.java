@@ -33,6 +33,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Outline;
@@ -118,8 +119,7 @@ import java.util.stream.Stream;
 public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         extends SpringRelativeLayout implements DragSource, Insettable,
         OnDeviceProfileChangeListener, PersonalWorkSlidingTabStrip.OnActivePageChangedListener,
-        ScrimView.ScrimDrawingController {
-
+        ScrimView.ScrimDrawingController, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "ActivityAllAppsContainerView";
     public static final float PULL_MULTIPLIER = .02f;
@@ -323,12 +323,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
                 0 // Bottom left
         };
 
-        int layerFg = getContext().getColor(R.color.blur_shade_panel_fg);
-        int layerBg = getContext().getColor(R.color.blur_shade_panel_bg);
-        mBottomSheetBackgroundColorOverBlur = ColorUtils.compositeColors(layerFg, layerBg);
-        mBottomSheetBackgroundColorBlurFallback = getContext().getColor(
-                Utilities.isDarkTheme(getContext()) ? android.R.color.system_accent2_800
-                        : android.R.color.system_accent2_200);
+        updateAllAppsBackgroundColors();
 
         mSearchUiManager.initializeSearch(this);
         if (useModelRepositoryBinding()) {
@@ -349,12 +344,23 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             mSearchUiDelegate.onInitializeSearchBar();
         }
         mActivityContext.addOnDeviceProfileChangeListener(this);
+        LauncherPrefs.getPrefs(getContext()).registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mActivityContext.removeOnDeviceProfileChangeListener(this);
+        LauncherPrefs.getPrefs(getContext()).unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        if (LauncherPrefs.APP_DRAWER_OPACITY.getSharedPrefKey().equals(key)) {
+            updateAllAppsBackgroundColors();
+            invalidateHeader();
+            invalidate();
+        }
     }
 
     public SearchUiManager getSearchUiManager() {
@@ -859,6 +865,19 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         return isBackgroundBlurEnabled()
                 ? mBottomSheetBackgroundColorOverBlur
                 : mBottomSheetBackgroundColorBlurFallback;
+    }
+
+    private void updateAllAppsBackgroundColors() {
+        int layerFg = getContext().getColor(R.color.blur_shade_panel_fg);
+        int layerBg = getContext().getColor(R.color.blur_shade_panel_bg);
+        int alpha = Utilities.getAllAppsAlpha(getContext());
+        mBottomSheetBackgroundColorOverBlur = ColorUtils.setAlphaComponent(
+                ColorUtils.compositeColors(layerFg, layerBg), alpha);
+        mBottomSheetBackgroundColorBlurFallback = ColorUtils.setAlphaComponent(
+                getContext().getColor(Utilities.isDarkTheme(getContext())
+                        ? android.R.color.system_accent2_800
+                        : android.R.color.system_accent2_200),
+                alpha);
     }
 
     boolean isBackgroundBlurEnabled() {
