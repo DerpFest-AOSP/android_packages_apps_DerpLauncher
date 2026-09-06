@@ -21,8 +21,6 @@
 <!-- DragController -->
     <dimen name="drag_flingToDeleteMinVelocity">-1000dp</dimen>
 
-<!-- AllApps -->
-    <dimen name="all_apps_search_bar_content_overlap">0dp</dimen>
     <dimen name="workspace_page_indicator_height">32dp</dimen>
     <dimen name="workspace_page_indicator_margin_bottom">6dp</dimen>
     <dimen name="workspace_page_indicator_arrow_spacing">8dp</dimen>
