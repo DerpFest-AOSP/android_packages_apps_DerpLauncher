@@ -500,50 +500,65 @@ public interface TaskShortcutFactory {
         }
     };
 
-    TaskShortcutFactory KILL_APP = new TaskShortcutFactory() {
-        @Override
-        public List<SystemShortcut> getShortcuts(RecentsViewContainer container,
-                TaskContainer taskContainer) {
-            if (taskContainer.getItemInfo().getTargetComponent() == null) {
-                return null;
-            }
-            String packageName = taskContainer.getItemInfo().getTargetComponent().getPackageName();
-            return Collections.singletonList(
-                    new KillSystemShortcut(container, taskContainer, packageName));
-        }
-    };
+    class RemoveTaskSystemShortcut extends SystemShortcut {
+        private final TaskContainer mTaskContainer;
 
-    class KillSystemShortcut extends SystemShortcut<RecentsViewContainer> {
-        private static final String TAG = "KillSystemShortcut";
-        private final TaskView mTaskView;
-        private final Task mTask;
-        private final String mPackageName;
-
-        public KillSystemShortcut(RecentsViewContainer target,
-                TaskContainer taskContainer, String packageName) {
-            super(R.drawable.ic_kill_app, R.string.recent_task_option_kill_app,
-                    target, taskContainer.getItemInfo(), taskContainer.getTaskView());
-            mTaskView = taskContainer.getTaskView();
-            mTask = taskContainer.getTask();
-            mPackageName = packageName;
+        public RemoveTaskSystemShortcut(int iconResId, int textResId,
+                RecentsViewContainer container, TaskContainer taskContainer) {
+            super(iconResId, textResId, container, taskContainer.getItemInfo(),
+                    taskContainer.getTaskView());
+            mTaskContainer = taskContainer;
         }
 
         @Override
         public void onClick(View view) {
-            if (mPackageName != null) {
-                IActivityManager iam = ActivityManagerNative.getDefault();
-                if (mTask != null) {
-                    try {
-                        iam.forceStopPackage(mPackageName, UserHandle.USER_CURRENT);
-                        Toast appKilled = Toast.makeText(mTarget.asContext(), R.string.recents_app_killed,
-                            Toast.LENGTH_SHORT);
-                        appKilled.show();
-                        RecentsView recentsView = mTarget.getOverviewPanel();
-                        recentsView.dismissTaskView(mTaskView, true /* removeTask */);
-                    } catch (RemoteException e) { }
-                }
+            if (mTaskContainer.getItemInfo().getTargetComponent() == null) {
+                return;
             }
-            dismissTaskMenuView();
+            String packageName = mTaskContainer.getItemInfo()
+                    .getTargetComponent().getPackageName();
+            TaskView taskView = mTaskContainer.getTaskView();
+            Task task = mTaskContainer.getTask();
+            if (packageName == null || task == null || taskView == null) {
+                return;
+            }
+            IActivityManager iam = ActivityManagerNative.getDefault();
+            try {
+                iam.forceStopPackage(packageName, UserHandle.USER_CURRENT);
+                Toast appKilled = Toast.makeText(mTarget.asContext(), R.string.recents_app_killed,
+                    Toast.LENGTH_SHORT);
+                appKilled.show();
+
+                RecentsView<?, ?> recentsView = taskView.getRecentsView();
+                if (recentsView != null) {
+                    recentsView.dismissTaskView(taskView, true);
+                }
+            } catch (RemoteException e) { }
+            RecentsView<?, ?> recentsView = taskView.getRecentsView();
+            if (recentsView != null) {
+                dismissTaskMenuView();
+                recentsView.dismissTaskView(taskView, true);
+            }
         }
     }
+
+    TaskShortcutFactory REMOVE_TASK = new TaskShortcutFactory() {
+        @Override
+        public List<SystemShortcut> getShortcuts(RecentsViewContainer container,
+                TaskContainer taskContainer) {
+            return Collections.singletonList(new RemoveTaskSystemShortcut(
+                    R.drawable.ic_remove_task_option,
+                    R.string.recent_task_option_kill_app, container, taskContainer));
+        }
+
+        @Override
+        public boolean showForGroupedTask() {
+            return true;
+        }
+
+        @Override
+        public boolean showForDesktopTask() {
+            return true;
+        }
+    };
 }
