@@ -179,4 +179,42 @@
 
     <!-- Background opacity -->
     <string name="background_opacity_title">Background opacity</string>
+
+    <!-- Extra icon shapes for customization picker -->
+    <!-- label for iOS rounded square shape option in customization picker -->
+    <string name="ios_rounded_square_shape_title">iOS Rounded Square</string>
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">Meow</string>
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">Flower</string>
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">Heart</string>
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">Hexagon</string>
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">Leaf</string>
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Cloudy</string>
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">Cylindrical</string>
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">Stretched</string>
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">Pebble</string>
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">Pure square</string>
+    <!-- label for Rice Balls shape option in customization picker -->
+    <string name="rice_balls_shape_title">Rice Balls</string>
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">Rounded Rectangle</string>
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">Squircle</string>
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">Tapered Rect</string>
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">Teardrop</string>
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">Vessel</string>
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">Rounded Hexagon</string>
 </resources>
