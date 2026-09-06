@@ -21,4 +21,6 @@
 
     <!-- Wallpaper carousel -->
     <color name="accent_primary_device_default">#ffd3e3fd</color>
+
+    <color name="mid_clear_all_background_color">@*android:color/system_neutral2_50</color>
 </resources>

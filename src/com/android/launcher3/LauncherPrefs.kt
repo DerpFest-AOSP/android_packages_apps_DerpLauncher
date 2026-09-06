@@ -280,6 +280,7 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField val DRAWER_SEARCH = backedUpItem("pref_drawer_search", true)
         @JvmField val FONT_SIZE = backedUpItem("pref_custom_font_size", 100)
         @JvmField val ICON_SIZE = backedUpItem("pref_custom_icon_size", 100)
+        @JvmField val RECENTS_CHIPS = backedUpItem("pref_recents_chips", true)
         @JvmField val RECENTS_CLEAR_ALL = backedUpItem("pref_recents_clear_all", true)
         @JvmField val RECENTS_LENS = backedUpItem("pref_recents_lens", false)
         @JvmField val RECENTS_MEMINFO = backedUpItem("pref_recents_meminfo", false)

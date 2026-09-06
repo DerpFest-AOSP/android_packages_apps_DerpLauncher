@@ -55,7 +55,8 @@ public class SettingsRecents extends SettingsCategoryActivity {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (LauncherPrefs.RECENTS_MEMINFO.getSharedPrefKey().equals(key)
-                    || LauncherPrefs.RECENTS_OPACITY.getSharedPrefKey().equals(key)) {
+                    || LauncherPrefs.RECENTS_OPACITY.getSharedPrefKey().equals(key)
+                    || LauncherPrefs.RECENTS_CHIPS.getSharedPrefKey().equals(key)) {
                 LauncherAppState.INSTANCE.get(getContext()).setNeedsRestart();
             }
         }

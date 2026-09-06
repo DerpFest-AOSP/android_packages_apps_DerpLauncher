@@ -30,6 +30,12 @@
         android:layout_gravity="bottom|center_horizontal"
         android:orientation="horizontal">
 
+        <Space
+            android:id="@+id/screenshot_space"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
         <Button
             android:id="@+id/action_screenshot"
             android:layout_width="wrap_content"
@@ -40,11 +46,37 @@
             android:visibility="gone" />
 
         <Button
+            android:id="@+id/action2_screenshot"
+            style="@style/OverviewActionChip"
+            android:tooltipText="@string/recents_screenshot_title"
+            android:foreground="@drawable/ic_screenshot" />
+
+        <Space
+            android:id="@+id/action_split_space"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:visibility="gone" />
+
+        <Button
             android:id="@+id/action_split"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="6dp"
             android:text="@string/action_split"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/action2_split"
+            style="@style/OverviewActionChip"
+            android:tooltipText="@string/action_split"
+            android:visibility="gone" />
+
+        <Space
+            android:id="@+id/lens_space"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
             android:visibility="gone" />
 
         <Button
@@ -57,6 +89,19 @@
             android:text="@string/action_lens" />
 
         <Button
+            android:id="@+id/action2_lens"
+            style="@style/OverviewActionChip"
+            android:tooltipText="@string/recents_lens_title"
+            android:foreground="@drawable/ic_lens"
+            android:visibility="gone" />
+
+        <Space
+            android:id="@+id/clear_all_space"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <Button
             android:id="@+id/action_clear_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,6 +109,18 @@
             android:drawableStart="@drawable/ic_clear_all"
             android:text="@string/recents_clear_all_title"
             android:visibility="gone" />
+
+        <Button
+            android:id="@+id/action2_clear_all"
+            style="@style/OverviewActionChip"
+            android:tooltipText="@string/recents_clear_all_title"
+            android:foreground="@drawable/ic_clear_all" />
+
+        <Space
+            android:id="@+id/end_space"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
