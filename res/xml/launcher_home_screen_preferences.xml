@@ -126,6 +126,13 @@
             android:persistent="true" />
 
         <SwitchPreferenceCompat
+            android:key="pref_dock_ai_music_search"
+            android:title="@string/dock_ai_music_search_title"
+            android:summary="@string/dock_ai_music_search_summary"
+            android:defaultValue="false"
+            launcher:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
             android:key="pref_show_statusbar"
             android:title="@string/show_statusbar_title"
             android:summary="@string/show_statusbar_summary"

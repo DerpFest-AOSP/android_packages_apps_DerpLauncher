@@ -82,6 +82,8 @@
     <string name="pref_show_at_a_glance_summary">Show the status widget at the top of the first home screen</string>
     <string name="pref_show_search_bar_title">Show search bar</string>
     <string name="pref_show_search_bar_summary">Show the Google search bar in the hotseat</string>
+    <string name="dock_ai_music_search_title">Music search</string>
+    <string name="dock_ai_music_search_summary">Start music search on pressing AI mode button</string>
 
     <!-- Hotseat Background -->
     <string name="hotseat_bg_title">Hotseat background</string>

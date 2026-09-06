@@ -75,6 +75,8 @@
     <string name="pref_show_at_a_glance_summary">Status-Widget oben auf dem ersten Startbildschirm anzeigen</string>
     <string name="pref_show_search_bar_title">Suchleiste anzeigen</string>
     <string name="pref_show_search_bar_summary">Google-Suchleiste in der Dockleiste anzeigen</string>
+    <string name="dock_ai_music_search_title">Musiksuche</string>
+    <string name="dock_ai_music_search_summary">Musiksuche beim Drücken der KI-Modus-Taste starten</string>
 
     <!-- Hotseat Background -->
     <string name="hotseat_bg_title">Hintergrund im Dock</string>

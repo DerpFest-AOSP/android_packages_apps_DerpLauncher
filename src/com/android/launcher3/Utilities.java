@@ -1004,4 +1004,8 @@ public final class Utilities {
     public static int getAllAppsAlpha(Context context) {
         return LauncherPrefs.APP_DRAWER_OPACITY.get(context) * 255 / 100;
     }
+
+    public static boolean isAiMusicSearchEnabled(Context context) {
+        return LauncherPrefs.DOCK_AI_MUSIC_SEARCH.get(context);
+    }
 }

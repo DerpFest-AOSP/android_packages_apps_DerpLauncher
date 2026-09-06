@@ -19,6 +19,7 @@ package com.android.launcher3.qsb;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.View;
@@ -29,6 +30,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.Nullable;
 
 import com.android.launcher3.Launcher;
+import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
 import com.android.launcher3.Reorderable;
 import com.android.launcher3.Utilities;
@@ -38,7 +40,8 @@ import com.android.launcher3.util.MultiTranslateDelegate;
 /**
  * Bottom hotseat QSB styled close to Pixel Launcher.
  */
-public class QsbLayout extends FrameLayout implements Reorderable {
+public class QsbLayout extends FrameLayout implements Reorderable,
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String LENS_URI = "google://lens";
 
@@ -94,6 +97,7 @@ public class QsbLayout extends FrameLayout implements Reorderable {
         if (mThemeManager != null) {
             mThemeManager.addChangeListener(mThemeChangeListener);
         }
+        LauncherPrefs.getPrefs(getContext()).registerOnSharedPreferenceChangeListener(this);
         updateIcons();
     }
 
@@ -102,7 +106,15 @@ public class QsbLayout extends FrameLayout implements Reorderable {
         if (mThemeManager != null) {
             mThemeManager.removeChangeListener(mThemeChangeListener);
         }
+        LauncherPrefs.getPrefs(getContext()).unregisterOnSharedPreferenceChangeListener(this);
         super.onDetachedFromWindow();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        if (LauncherPrefs.DOCK_AI_MUSIC_SEARCH.getSharedPrefKey().equals(key)) {
+            updateIcons();
+        }
     }
 
     private void updateIcons() {
@@ -123,9 +135,16 @@ public class QsbLayout extends FrameLayout implements Reorderable {
                     : R.drawable.ic_lens_color);
         }
         if (mAiModeButton != null) {
-            mAiModeButton.setImageResource(themedIconsEnabled
-                    ? R.drawable.ic_ai_mode_themed
-                    : R.drawable.ic_ai_mode_color);
+            boolean isMusicSearch = Utilities.isAiMusicSearchEnabled(getContext());
+            if (themedIconsEnabled) {
+                mAiModeButton.setImageResource(isMusicSearch
+                        ? R.drawable.ic_music_themed
+                        : R.drawable.ic_ai_mode_themed);
+            } else {
+                mAiModeButton.setImageResource(isMusicSearch
+                        ? R.drawable.ic_music_color
+                        : R.drawable.ic_ai_mode_color);
+            }
         }
     }
 
