@@ -187,10 +187,13 @@ public class AllAppsTransitionController
         boolean hasNavScrim = progress < NAV_BAR_COLOR_FORCE_UPDATE_THRESHOLD
                 && mLauncher.getAppsView().getNavBarScrimHeight() > 0;
         boolean hasStatusScrim = progress < STATUS_BAR_COLOR_FORCE_UPDATE_THRESHOLD;
-        // When using the phone bottom sheet, the status bar is over the dimmed/blurred scrim which
-        // appears dark regardless of theme, so use light status bar icons for visibility.
-        int statusScrimFlag = mLauncher.getDeviceProfile().getDeviceProperties().isPhone()
-                ? FLAG_DARK_STATUS : mStatusScrimFlag;
+        // Portrait phones use a bottom sheet; the status bar sits over the dimmed/blurred
+        // wallpaper, not the sheet. Force light icons for that dark dim. Landscape phones and
+        // large screens are full-screen all-apps, so keep the theme-based status flag.
+        // (mShouldShowAllAppsOnSheet is gone; this matches AllAppsState sheet detection.)
+        boolean onAllAppsSheet = mLauncher.getDeviceProfile().getDeviceProperties().isPhone()
+                && !mLauncher.getDeviceProfile().getDeviceProperties().isLandscape();
+        int statusScrimFlag = onAllAppsSheet ? FLAG_DARK_STATUS : mStatusScrimFlag;
         mLauncher.getSystemUiController().updateUiState(UI_STATE_ALL_APPS,
                 (hasNavScrim ? mNavScrimFlag : 0) | (hasStatusScrim ? statusScrimFlag : 0));
     }
