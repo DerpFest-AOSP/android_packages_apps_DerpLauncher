@@ -21,20 +21,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Insettable;
@@ -151,7 +149,7 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
 
     /** Container for the action buttons below a focused, non-split Overview tile. */
     protected LinearLayout mActionButtons;
-    private Button mSplitButton;
+    private View mSplitButton;
     /**
      * The "save app pair" button. Currently this is the only button that is not contained in
      * mActionButtons, since it is the sole button that appears for a grouped task.
@@ -477,7 +475,7 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
             mActionButtons.requestLayout();
         }
         // Update mSplitButton reference to keep it in sync
-        mSplitButton = (Button) splitButton;
+        mSplitButton = splitButton;
     }
 
     public AnimatedFloat getContentAlpha() {
@@ -569,11 +567,11 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
                     ? R.drawable.ic_split_horizontal
                     : R.drawable.ic_split_vertical;
             if (mUseChips) {
-                Drawable splitButton = ContextCompat.getDrawable(getContext(), splitIconRes);
-                mSplitButton.setForeground(splitButton);
-                mSplitButton.setForegroundGravity(Gravity.CENTER);
-            } else {
-                mSplitButton.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                if (mSplitButton instanceof ImageButton) {
+                    ((ImageButton) mSplitButton).setImageResource(splitIconRes);
+                }
+            } else if (mSplitButton instanceof Button) {
+                ((Button) mSplitButton).setCompoundDrawablesRelativeWithIntrinsicBounds(
                         splitIconRes, 0, 0, 0);
             }
         }
