@@ -336,6 +336,8 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
         mDeviceProfile = mActivity.getDeviceProfile();
         mCenterVertically = a.getBoolean(R.styleable.BubbleTextView_centerVertically, false);
 
+        mShouldShowLabel = SHOW_DESKTOP_LABELS.get(context);
+
         mDisplay = a.getInteger(R.styleable.BubbleTextView_iconDisplay, DISPLAY_WORKSPACE);
         final int defaultIconSize;
         if (mDisplay == DISPLAY_WORKSPACE) {
@@ -345,7 +347,6 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
                     mDeviceProfile.getWorkspaceProfile().getIconDrawablePaddingPx());
             defaultIconSize = mDeviceProfile.getWorkspaceProfile().getIconSizePx();
             setCenterVertically(mDeviceProfile.getWorkspaceProfile().getIconCenterVertically());
-            mShouldShowLabel = SHOW_DESKTOP_LABELS.get(context);
         } else if (displayIsAppDrawer()) {
             setTextSize(TypedValue.COMPLEX_UNIT_PX,
                     mDeviceProfile.getAllAppsProfile().getIconTextSizePx());
@@ -360,16 +361,13 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
             setCompoundDrawablePadding(
                     mDeviceProfile.getFolderProfile().getChildDrawablePaddingPx());
             defaultIconSize = mDeviceProfile.getFolderProfile().getChildIconSizePx();
-            mShouldShowLabel = SHOW_DESKTOP_LABELS.get(context);
         } else if (mDisplay == DISPLAY_SEARCH_RESULT) {
             setTextSize(TypedValue.COMPLEX_UNIT_PX,
                     mDeviceProfile.getAllAppsProfile().getIconTextSizePx());
             defaultIconSize = getResources().getDimensionPixelSize(R.dimen.search_row_icon_size);
-            mShouldShowLabel = SHOW_DESKTOP_LABELS.get(context);
         } else if (mDisplay == DISPLAY_SEARCH_RESULT_SMALL) {
             defaultIconSize = getResources().getDimensionPixelSize(
                     R.dimen.search_row_small_icon_size);
-            mShouldShowLabel = SHOW_DESKTOP_LABELS.get(context);
         } else if (mDisplay == DISPLAY_TASKBAR) {
             float iconSize;
             if (mDeviceProfile.getTaskbarProfile().isTransientTaskbar()) {
@@ -381,7 +379,7 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
         } else {
             // widget_selection or shortcut_popup
             defaultIconSize = mDeviceProfile.getWorkspaceProfile().getIconSizePx();
-            mShouldShowLabel = SHOW_DESKTOP_LABELS.get(context);
+            mShouldShowLabel = true;
         }
 
 
