@@ -167,7 +167,7 @@ private constructor(@JvmField val grid: GridOption, context: Context, ta: TypedA
     @JvmField
     val allAppsIconSizes: FloatArray =
         ta.parseTypedMap(
-                iconSizes[INDEX_DEFAULT],
+                0f,
                 R.styleable.ProfileDisplayOption_allAppsIconSize,
                 R.styleable.ProfileDisplayOption_allAppsIconSizeLandscape,
                 R.styleable.ProfileDisplayOption_allAppsIconSizeTwoPanelPortrait,
@@ -176,6 +176,19 @@ private constructor(@JvmField val grid: GridOption, context: Context, ta: TypedA
                 getFloat(i, v)
             }
             .toFloatArray()
+            .also { sizes ->
+                // Tablets often set allAppsIconSize explicitly. Apply ICON_SIZE to those
+                // values; fall back to the already-scaled workspace icon size when unset.
+                val iconSizeModifier = LauncherPrefs.ICON_SIZE.get(context) / 100f
+                for (i in sizes.indices) {
+                    sizes[i] =
+                        if (sizes[i] == 0f) {
+                            iconSizes[i]
+                        } else {
+                            sizes[i] * iconSizeModifier
+                        }
+                }
+            }
 
     @JvmField
     val allAppsIconTextSizes: FloatArray =
