@@ -109,11 +109,7 @@ public class SysUiScrim implements View.OnAttachStateChangeListener,
         mHideSysUiScrim = !prefs.getBoolean(KEY_SHOW_TOP_SHADOW, true)
                 || Themes.getAttrBoolean(view.getContext(), R.attr.isWorkspaceDarkText);
         createMaskBitmaps();
-
-        if (!mHideSysUiScrim) {
-            view.addOnAttachStateChangeListener(this);
-        }
-        prefs.registerOnSharedPreferenceChangeListener(this);
+        view.addOnAttachStateChangeListener(this);
     }
 
     /**
@@ -176,11 +172,13 @@ public class SysUiScrim implements View.OnAttachStateChangeListener,
     @Override
     public void onViewAttachedToWindow(View view) {
         ScreenOnTracker.INSTANCE.get(mContainer.asContext()).addListener(mScreenOnListener);
+        LauncherPrefs.getPrefs(view.getContext()).registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     public void onViewDetachedFromWindow(View view) {
         ScreenOnTracker.INSTANCE.get(mContainer.asContext()).removeListener(mScreenOnListener);
+        LauncherPrefs.getPrefs(view.getContext()).unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
