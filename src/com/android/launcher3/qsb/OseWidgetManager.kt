@@ -175,7 +175,8 @@ constructor(
                     .getAllProviders(PackageUserKey(pkg, myUserHandle()))
                     .filter {
                         it.configure == null ||
-                            ((it.widgetFeatures and WIDGET_FEATURE_CONFIGURATION_OPTIONAL) != 0)
+                            ((it.widgetFeatures and WIDGET_FEATURE_CONFIGURATION_OPTIONAL) != 0) ||
+                            ((it.widgetCategory and WIDGET_CATEGORY_SEARCHBOX) != 0)
                     }
             val allSearchBoxWidgets =
                 allEligibleWidgets.filter { (it.widgetCategory and WIDGET_CATEGORY_SEARCHBOX) != 0 }
