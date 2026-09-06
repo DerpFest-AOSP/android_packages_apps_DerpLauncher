@@ -90,7 +90,7 @@ public class TaskOverlayFactory {
                 shortcuts.addAll(menuShortcuts);
             }
         }
-        shortcuts.addAll(TaskViewShortFactory.Companion.getEnabledShortcuts(taskView));
+        //shortcuts.addAll(TaskViewShortFactory.Companion.getEnabledShortcuts(taskView));
         return shortcuts;
     }
 
