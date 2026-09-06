@@ -180,6 +180,7 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
     private boolean mScreenshot;
     private boolean mClearAll;
     private boolean mLens;
+    private boolean mSplitScreenEnabled;
 
     private SharedPreferences mPrefs;
     private boolean mPrefsRegistered;
@@ -199,6 +200,7 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
         mScreenshot = LauncherPrefs.RECENTS_SCREENSHOT.get(context);
         mClearAll = LauncherPrefs.RECENTS_CLEAR_ALL.get(context);
         mLens = LauncherPrefs.RECENTS_LENS.get(context);
+        mSplitScreenEnabled = LauncherPrefs.RECENTS_SPLIT_SCREEN.get(context);
     }
 
     @Override
@@ -242,6 +244,7 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
         // Currently, the only grouped task action is "save app pairs".
         mActionButtons = findViewById(R.id.action_buttons);
         mSaveAppPairButton = findViewById(R.id.action_save_app_pair);
+        mSplitButton = findViewById(R.id.action_split);
         TypefaceUtils.setTypeface(mSaveAppPairButton, FontFamily.GSF_LABEL_LARGE);
         // Initialize a list to hold alphas for mActionButtons and any group action buttons.
         mMultiValueAlphas[ACTIONS_ALPHAS] = new MultiValueAlpha(mActionButtons, NUM_ALPHAS);
@@ -299,6 +302,9 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
 
         mSplitButton = findViewById(mUseChips ? R.id.action2_split : R.id.action_split);
         mSplitButton.setOnClickListener(this);
+        mSplitButton.setVisibility(mSplitScreenEnabled ? VISIBLE : GONE);
+        findViewById(R.id.action_split_space).setVisibility(
+                mSplitScreenEnabled && mUseChips ? VISIBLE : GONE);
         mSaveAppPairButton.setOnClickListener(this);
     }
 
@@ -356,6 +362,8 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
             mClearAll = prefs.getBoolean(key, true);
         } else if (LauncherPrefs.RECENTS_LENS.getSharedPrefKey().equals(key)) {
             mLens = prefs.getBoolean(key, false);
+        } else if (LauncherPrefs.RECENTS_SPLIT_SCREEN.getSharedPrefKey().equals(key)) {
+            mSplitScreenEnabled = LauncherPrefs.RECENTS_SPLIT_SCREEN.get(getContext());
         } else {
             return;
         }
@@ -452,19 +460,24 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
      */
     void updateSplitButtonHiddenFlags(@SplitButtonHiddenFlags int flag,
             boolean enable) {
-        if (mSplitButton == null) return;
+        // Ensure we're working with the correct button based on current chips state
+        View splitButton = findViewById(mUseChips ? R.id.action2_split : R.id.action_split);
+        if (splitButton == null) return;
         if (enable) {
             mSplitButtonHiddenFlags |= flag;
         } else {
             mSplitButtonHiddenFlags &= ~flag;
         }
-        int desiredVisibility = mSplitButtonHiddenFlags == 0 ? VISIBLE : GONE;
-        if (mSplitButton.getVisibility() != desiredVisibility) {
-            mSplitButton.setVisibility(desiredVisibility);
+        int desiredVisibility = (mSplitButtonHiddenFlags == 0 && mSplitScreenEnabled)
+                ? VISIBLE : GONE;
+        if (splitButton.getVisibility() != desiredVisibility) {
+            splitButton.setVisibility(desiredVisibility);
             findViewById(R.id.action_split_space).setVisibility(
                     desiredVisibility == VISIBLE && mUseChips ? VISIBLE : GONE);
             mActionButtons.requestLayout();
         }
+        // Update mSplitButton reference to keep it in sync
+        mSplitButton = (Button) splitButton;
     }
 
     public AnimatedFloat getContentAlpha() {
