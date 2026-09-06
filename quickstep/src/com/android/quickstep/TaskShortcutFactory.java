@@ -23,7 +23,9 @@ import static android.view.Display.DEFAULT_DISPLAY;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_SYSTEM_SHORTCUT_FREE_FORM_TAP;
 import static com.android.launcher3.util.SplitConfigurationOptions.STAGE_POSITION_BOTTOM_OR_RIGHT;
 
+import android.app.ActivityManagerNative;
 import android.app.ActivityOptions;
+import android.app.IActivityManager;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Handler;
@@ -31,11 +33,13 @@ import android.os.Looper;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.util.Log;
+import android.os.UserHandle;
 import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowManagerGlobal;
 import android.window.DesktopExperienceFlags;
 import android.window.SplashScreen;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -495,4 +499,51 @@ public interface TaskShortcutFactory {
             return createSingletonShortcutList(modalStateSystemShortcut);
         }
     };
+
+    TaskShortcutFactory KILL_APP = new TaskShortcutFactory() {
+        @Override
+        public List<SystemShortcut> getShortcuts(RecentsViewContainer container,
+                TaskContainer taskContainer) {
+            if (taskContainer.getItemInfo().getTargetComponent() == null) {
+                return null;
+            }
+            String packageName = taskContainer.getItemInfo().getTargetComponent().getPackageName();
+            return Collections.singletonList(
+                    new KillSystemShortcut(container, taskContainer, packageName));
+        }
+    };
+
+    class KillSystemShortcut extends SystemShortcut<RecentsViewContainer> {
+        private static final String TAG = "KillSystemShortcut";
+        private final TaskView mTaskView;
+        private final Task mTask;
+        private final String mPackageName;
+
+        public KillSystemShortcut(RecentsViewContainer target,
+                TaskContainer taskContainer, String packageName) {
+            super(R.drawable.ic_kill_app, R.string.recent_task_option_kill_app,
+                    target, taskContainer.getItemInfo(), taskContainer.getTaskView());
+            mTaskView = taskContainer.getTaskView();
+            mTask = taskContainer.getTask();
+            mPackageName = packageName;
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (mPackageName != null) {
+                IActivityManager iam = ActivityManagerNative.getDefault();
+                if (mTask != null) {
+                    try {
+                        iam.forceStopPackage(mPackageName, UserHandle.USER_CURRENT);
+                        Toast appKilled = Toast.makeText(mTarget.asContext(), R.string.recents_app_killed,
+                            Toast.LENGTH_SHORT);
+                        appKilled.show();
+                        RecentsView recentsView = mTarget.getOverviewPanel();
+                        recentsView.dismissTaskView(mTaskView, true /* removeTask */);
+                    } catch (RemoteException e) { }
+                }
+            }
+            dismissTaskMenuView();
+        }
+    }
 }

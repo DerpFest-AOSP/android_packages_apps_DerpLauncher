@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<permissions>
+
+    <!-- Additional permissions on top of privapp_whitelist_com.android.launcher3.xml -->
+    <privapp-permissions package="com.android.launcher3">
+        <permission name="android.permission.FORCE_STOP_PACKAGES"/>
+    </privapp-permissions>
+</permissions>
