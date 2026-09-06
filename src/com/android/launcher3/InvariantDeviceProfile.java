@@ -388,9 +388,7 @@ public class InvariantDeviceProfile {
     private void initGridForDisplayOption(
             LauncherDisplayInfo displayInfo, DisplayOption displayOption) {
         Context context = displayInfo.context;
-        enableTwoLinesInAllApps = Flags.enableTwolineToggle()
-                && Utilities.isEnglishLanguage(context)
-                && mPrefs.get(ENABLE_TWOLINE_ALLAPPS_TOGGLE);
+        enableTwoLinesInAllApps = mPrefs.get(ENABLE_TWOLINE_ALLAPPS_TOGGLE);
         mLocale = context.getResources().getConfiguration().locale.toString();
 
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
