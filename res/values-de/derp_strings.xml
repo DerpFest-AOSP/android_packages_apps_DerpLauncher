@@ -108,9 +108,13 @@
 
     <!-- About info -->
     <string name="about_app_subtitle">Basierend auf AOSP Launcher3</string>
+    <string name="about_app_version_text">Version</string>
     <string name="about_thanks_cat">Besonderen Dank an</string>
     <string name="about">Über</string>
     <string name="about_summary">Info über den DerpLauncher</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Standard</string>
 
     <!-- Icon size -->
     <string name="icon_size_title">Symbolgröße</string>
@@ -178,13 +182,51 @@
     <string name="pref_scroll_vibration_summary">Haptisches Feedback beim Scrollen durch aktuelle Apps, sofern unterstützt</string>
 
     <!-- Recents icons -->
+    <string name="recents_chips_title">Kompaktes Aktionsdesign verwenden</string>
+    <string name="recents_chips_summary">Kann bei vielen Aktionen erforderlich sein, damit alle angezeigt werden</string>
     <string name="recents_screenshot_title">Screenshot</string>
     <string name="recents_clear_all_title">Alle Apps schließen</string>
     <string name="recents_lens_title">Lens</string>
+    <string name="recents_split_screen_title">Geteilter Bildschirm</string>
+
+    <!-- A widget category label for grouping widgets related to battery. [CHAR_LIMIT=30] -->
+    <string name="widget_category_battery">Akku</string>
+
+    <!-- A widget category label for grouping widgets related to bubbles. [CHAR_LIMIT=30] -->
+    <string name="widget_category_bubbles">Blasen</string>
+
+    <!-- A widget category label for grouping widgets related to snapshot. [CHAR_LIMIT=30] -->
+    <string name="widget_category_snapshot">Schnappschuss</string>
+
+    <!-- A widget category label for grouping widgets related to weather. [CHAR_LIMIT=30] -->
+    <string name="widget_category_weather">Wetter</string>
 
     <!-- Background blur -->
     <string name="background_blur_title">Tiefenschärfegrad des Hintergrunds</string>
     <string name="background_blur_summary">Tiefenschärfegrad in App-Übersicht und -Verlauf anpassen</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Hintergrundtransparenz</string>
+
+    <!-- Extra icon shapes for customization picker -->
+    <string name="ios_rounded_square_shape_title">Abgerundetes iOS-Quadrat</string>
+    <string name="meow_shape_title">Meow</string>
+    <string name="flower_shape_title">Blume</string>
+    <string name="heart_shape_title">Herz</string>
+    <string name="hexagon_shape_title">Sechseck</string>
+    <string name="leaf_shape_title">Blatt</string>
+    <string name="cloudy_shape_title">Wolkig</string>
+    <string name="cylindrical_shape_title">Zylindrisch</string>
+    <string name="stretched_shape_title">Gestreckt</string>
+    <string name="pebble_shape_title">Kiesel</string>
+    <string name="pure_square_shape_title">Reines Quadrat</string>
+    <string name="rice_balls_shape_title">Reisbällchen</string>
+    <string name="rounded_rect_shape_title">Abgerundetes Rechteck</string>
+    <string name="squircle_shape_title">Squircle</string>
+    <string name="tapered_rect_shape_title">Verjüngtes Rechteck</string>
+    <string name="teardrop_shape_title">Tropfen</string>
+    <string name="vessel_shape_title">Gefäß</string>
+    <string name="rounded_hexagon_shape_title">Abgerundetes Sechseck</string>
 
     <!-- App drawer categories -->
     <string name="others_category_label">Sonstiges</string>
