@@ -16,7 +16,8 @@
 -->
 <androidx.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res-auto">
+    xmlns:launcher="http://schemas.android.com/apk/res-auto"
+    xmlns:settings="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreferenceCompat
         android:key="pref_fixed_landscape_mode"
@@ -24,6 +25,16 @@
         android:summary="@string/landscape_mode_desc"
         android:defaultValue="false"
         android:persistent="true" />
+
+    <org.derpfest.support.preferences.ProperSeekBarPreference
+        android:key="pref_blur_depth"
+        android:title="@string/background_blur_title"
+        android:summary="@string/background_blur_summary"
+        android:persistent="true"
+        android:max="175"
+        android:min="0"
+        settings:units="px"
+        android:defaultValue="34" />
 
     <androidx.preference.PreferenceScreen
         android:key="pref_suggestions"
