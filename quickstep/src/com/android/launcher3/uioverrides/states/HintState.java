@@ -23,6 +23,7 @@ import androidx.core.graphics.ColorUtils;
 
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherState;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.views.ScrimColors;
 
@@ -61,8 +62,7 @@ public class HintState extends LauncherState {
         return new ScrimColors(
                 /* backgroundColor */
                 ColorUtils.setAlphaComponent(overviewStateColor.getBackgroundColor(),
-                        Math.round(Color.valueOf(overviewStateColor.getBackgroundColor()).alpha()
-                                * 100)),
+                        Utilities.getRecentsAlpha(launcher)),
                 /* foregroundColor */ Color.TRANSPARENT);
     }
 

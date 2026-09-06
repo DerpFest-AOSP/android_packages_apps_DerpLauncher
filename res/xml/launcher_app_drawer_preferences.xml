@@ -16,7 +16,8 @@
 -->
 <androidx.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res-auto">
+    xmlns:launcher="http://schemas.android.com/apk/res-auto"
+    xmlns:settings="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreferenceCompat
         android:key="pref_drawer_open_keyboard"
@@ -56,6 +57,16 @@
         android:summary="@string/pref_themed_icons_summary"
         android:defaultValue="false"
         android:persistent="true"
+        launcher:iconSpaceReserved="false" />
+
+    <org.derpfest.support.preferences.ProperSeekBarPreference
+        android:key="pref_app_drawer_opacity"
+        android:title="@string/background_opacity_title"
+        android:persistent="true"
+        android:max="100"
+        android:min="0"
+        settings:units="%"
+        android:defaultValue="80"
         launcher:iconSpaceReserved="false" />
 
 </androidx.preference.PreferenceScreen>

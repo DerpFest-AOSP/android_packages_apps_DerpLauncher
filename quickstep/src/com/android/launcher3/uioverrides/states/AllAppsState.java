@@ -20,6 +20,8 @@ import static com.android.launcher3.logging.StatsLogManager.LAUNCHER_STATE_ALLAP
 
 import android.graphics.Color;
 
+import androidx.core.graphics.ColorUtils;
+
 import com.android.internal.jank.Cuj;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Flags;
@@ -27,6 +29,7 @@ import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherState;
 import com.android.launcher3.LauncherUiState;
 import com.android.launcher3.R;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.util.Themes;
 import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.views.ScrimColors;
@@ -170,7 +173,9 @@ public class AllAppsState extends LauncherState {
             // No scrim.
             return super.getWorkspaceScrimColor(launcher);
         }
-        int backgroundColor = Themes.getAttrColor(launcher, R.attr.allAppsScrimColor);
+        int backgroundColor = ColorUtils.setAlphaComponent(
+                Themes.getAttrColor(launcher, R.attr.allAppsScrimColor),
+                Utilities.getAllAppsAlpha(launcher));
         return new ScrimColors(backgroundColor, /* foregroundColor */ Color.TRANSPARENT);
     }
 }

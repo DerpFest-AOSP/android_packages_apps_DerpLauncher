@@ -996,4 +996,12 @@ public final class Utilities {
                 context.getResources().getDimensionPixelSize(
                         R.dimen.max_depth_blur_radius_enhanced));
     }
+
+    public static int getRecentsAlpha(Context context) {
+        return LauncherPrefs.RECENTS_OPACITY.get(context) * 255 / 100;
+    }
+
+    public static int getAllAppsAlpha(Context context) {
+        return LauncherPrefs.APP_DRAWER_OPACITY.get(context) * 255 / 100;
+    }
 }

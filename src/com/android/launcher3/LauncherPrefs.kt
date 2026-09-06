@@ -294,6 +294,8 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField val ALLAPPS_THEMED_ICONS = backedUpItem("pref_allapps_themed_icons", false)
         @JvmField val DRAWER_OPEN_KEYBOARD = backedUpItem("pref_drawer_open_keyboard", false)
         @JvmField val BLUR_DEPTH = backedUpItem("pref_blur_depth", 34)
+        @JvmField val APP_DRAWER_OPACITY = backedUpItem("pref_app_drawer_opacity", 80)
+        @JvmField val RECENTS_OPACITY = backedUpItem("pref_recents_opacity", 40)
         @JvmField
         val PROMISE_ICON_IDS = nonRestorableItem(InstallSessionHelper.PROMISE_ICON_IDS, "")
         @JvmField val WORK_EDU_STEP = backedUpItem("showed_work_profile_edu", 0)
