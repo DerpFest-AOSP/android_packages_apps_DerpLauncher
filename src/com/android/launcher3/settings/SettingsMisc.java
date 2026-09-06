@@ -32,6 +32,7 @@ import com.android.launcher3.R;
 import com.android.launcher3.derpfest.DerpFestUtils;
 import com.android.launcher3.display.DisplayController;
 import com.android.launcher3.display.LauncherDisplayInfo;
+import com.android.systemui.shared.system.BlurUtils;
 
 /**
  * Settings activity for miscellaneous launcher preferences.
@@ -77,6 +78,8 @@ public class SettingsMisc extends SettingsCategoryActivity {
                 return !info.isLargeScreen(info.realBounds);
             } else if (KEY_SUGGESTIONS.equals(preference.getKey())) {
                 return DerpFestUtils.isPackageEnabled(getContext(), SUGGESTIONS_PACKAGE);
+            } else if (LauncherPrefs.BLUR_DEPTH.getSharedPrefKey().equals(preference.getKey())) {
+                return BlurUtils.supportsBlursOnWindows();
             }
             return true;
         }
