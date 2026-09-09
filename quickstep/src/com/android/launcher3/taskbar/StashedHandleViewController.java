@@ -436,7 +436,19 @@ public class StashedHandleViewController implements TaskbarControllers.LoggableT
 
     @Override
     public boolean canNavHandleBeLongPressed() {
-        return isStashedHandleVisible();
+        return isStashedHandleVisible() || isHiddenOnlyByGestureHintSetting();
+    }
+
+    /**
+     * The hint-hidden layout uses a zero-height handle, which MultiValueAlpha then marks
+     * INVISIBLE. That should not disable long-press on phones in gesture nav.
+     */
+    private boolean isHiddenOnlyByGestureHintSetting() {
+        TaskbarActivityContext activity = mActivityRef.get();
+        if (activity == null || !activity.isPhoneGestureNavMode() || mTaskbarHidden) {
+            return false;
+        }
+        return !SettingsCache.INSTANCE.get(activity).getValue(NAVIGATION_BAR_HINT_URI);
     }
 
     @Override
@@ -446,6 +458,7 @@ public class StashedHandleViewController implements TaskbarControllers.LoggableT
 
     @Override
     public Rect getBoundsOnScreen() {
-        return mStashedHandleView.getSampledRegion();
+        Rect bounds = mStashedHandleView.getSampledRegion();
+        return (bounds == null || bounds.isEmpty()) ? null : bounds;
     }
 }
