@@ -775,6 +775,13 @@ public class NavbarButtonsViewController implements TaskbarControllers.LoggableT
                 if (mHitboxExtender.extendedHitboxEnabled()) {
                     mTempRect.bottom += mContext.getDeviceProfile().getTaskbarOffsetY();
                 }
+                // The IME switcher is placed above the stashed taskbar when IME nav space is
+                // hidden, which lands on Gboard's backspace. Claiming that hitbox from a
+                // TYPE_NAVIGATION_BAR window (higher z-order than the IME) steals the tap and
+                // leaves a hole in system-gesture exclusion.
+                if (!mTempRect.intersect(0, 0, parent.getWidth(), parent.getHeight())) {
+                    continue;
+                }
                 outRegion.op(mTempRect, Op.UNION);
             }
         }

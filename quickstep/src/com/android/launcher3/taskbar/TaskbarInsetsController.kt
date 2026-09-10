@@ -470,6 +470,16 @@ class TaskbarInsetsController(val context: TaskbarActivityContext) : LoggableTas
             insetsInfo.touchableRegion,
         )
 
+        // Never accept touches outside this window. Out-of-bounds IME-switcher hitboxes would
+        // otherwise sit on the keyboard and block backspace / start an edge-back gesture.
+        if (touchableInsets == TOUCHABLE_INSETS_REGION) {
+            val w = context.dragLayer.width
+            val h = context.dragLayer.height
+            if (w > 0 && h > 0) {
+                insetsInfo.touchableRegion.op(Rect(0, 0, w, h), Region.Op.INTERSECT)
+            }
+        }
+
         insetsInfo.setTouchableInsets(touchableInsets)
         debugTouchableRegion.lastSetTouchableInsets = touchableInsets
         debugTouchableRegion.lastSetTouchableBounds.set(insetsInfo.touchableRegion.bounds)
