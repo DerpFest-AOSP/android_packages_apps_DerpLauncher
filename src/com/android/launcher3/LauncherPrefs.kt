@@ -373,6 +373,10 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         val FIXED_LANDSCAPE_MODE = backedUpItem(SettingsActivity.FIXED_LANDSCAPE_MODE, false)
 
         @JvmField
+        val WALLPAPER_CAROUSEL_BOTH_SCREENS =
+            backedUpItem("pref_wallpaper_carousel_both_screens", true)
+
+        @JvmField
         val SMARTSPACER_ENABLED =
             backedUpItem(SettingsActivity.SMARTSPACER_PREFERENCE_KEY, false)
 

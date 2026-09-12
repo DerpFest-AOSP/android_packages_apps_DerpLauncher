@@ -44,6 +44,14 @@
             launcher:logIdOff="614" />
 
         <SwitchPreferenceCompat
+            android:key="pref_wallpaper_carousel_both_screens"
+            android:title="@string/wallpaper_carousel_lockscreen_title"
+            android:summary="@string/wallpaper_carousel_lockscreen_summary"
+            android:defaultValue="true"
+            android:persistent="true"
+            launcher:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
             android:key="pref_allow_wallpaper_scrolling"
             android:title="@string/allow_wallpaper_scrolling"
             android:summary="@string/allow_wallpaper_scrolling_summary"

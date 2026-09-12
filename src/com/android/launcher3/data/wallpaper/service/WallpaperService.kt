@@ -10,6 +10,7 @@ import android.util.Log
 
 import androidx.room.withTransaction
 
+import com.android.launcher3.LauncherPrefs
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
@@ -155,8 +156,15 @@ class WallpaperService @Inject constructor(
         rankMutex.withLock {
             runCatching {
                 val bmp = decodeForDisplay(wallpaper.imagePath) ?: return@runCatching false
-                val newId =
-                    wallpaperManager.setBitmap(bmp, null, true, WallpaperManager.FLAG_SYSTEM)
+                val applyLockscreen =
+                    LauncherPrefs.get(context).get(LauncherPrefs.WALLPAPER_CAROUSEL_BOTH_SCREENS)
+                val flags =
+                    if (applyLockscreen) {
+                        WallpaperManager.FLAG_SYSTEM or WallpaperManager.FLAG_LOCK
+                    } else {
+                        WallpaperManager.FLAG_SYSTEM
+                    }
+                val newId = wallpaperManager.setBitmap(bmp, null, true, flags)
                 if (newId == 0) return@runCatching false
                 promoteToRank0(wallpaper.id, System.currentTimeMillis())
                 lastHandledWallpaperId = newId
