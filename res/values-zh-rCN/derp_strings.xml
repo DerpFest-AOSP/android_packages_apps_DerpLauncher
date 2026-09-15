@@ -101,6 +101,12 @@
     <string name="hotseat_bg_title">应用坞背景</string>
     <string name="hotseat_bg_summary">为应用坞添加半透明背景</string>
 
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_title">壁纸轮播</string>
+    <string name="wallpaper_carousel_summary">通过长按菜单快速切换壁纸</string>
+    <string name="wallpaper_carousel_lockscreen_title">应用到锁屏</string>
+    <string name="wallpaper_carousel_lockscreen_summary">为锁屏设置相同的壁纸</string>
+
     <!-- Wallpaper scrolling -->
     <string name="allow_wallpaper_scrolling">壁纸滚动</string>
     <string name="allow_wallpaper_scrolling_summary">在不同页面间滑动时使壁纸随之滚动</string>
@@ -153,12 +159,66 @@
     <string name="recents_meminfo_title">内存信息</string>
     <string name="recents_meminfo_summary">在底部显示内存用量</string>
 
+    <!-- Recents style -->
+    <string name="recents_style_title">最近任务布局风格</string>
+    <string name="recents_style_default">默认</string>
+    <string name="recents_style_stock">缩放效果</string>
+    <string name="recents_style_staple">Kami 风格</string>
+    <string name="recents_style_ios">iOS 风格</string>
+    <string name="recents_style_oxygen">OxygenOS 风格</string>
+
     <!-- Background opacity -->
     <string name="background_opacity_title">背景不透明度</string>
 
-    <!-- App drawer searchbar -->
-    <string name="drawer_search_title">应用搜索栏</string>
-    <string name="drawer_search_summary">应用抽屉顶部的搜索栏</string>
+<!-- App drawer search bar placement -->
+    <string name="drawer_search_title">应用搜索栏位置</string>
+    <string name="drawer_search_location_hidden">隐藏</string>
+    <string name="drawer_search_location_top">顶部</string>
+    <string name="drawer_search_location_bottom">底部</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">深色应用标签</string>
+    <string name="all_apps_dark_text_summary">在应用抽屉中始终使用深色文本显示应用名称</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">应用抽屉风格</string>
+    <string name="drawer_style_normal">普通（底部面板）</string>
+    <string name="drawer_style_legacy">传统全屏</string>
+    <string name="drawer_style_list">列表风格</string>
+    <string name="drawer_style_oneui">OneUI 风格（分页）</string>
+    <string name="drawer_style_ios">iOS 风格（仅主屏幕）</string>
+    <string name="drawer_style_summary_ios_forced">应用抽屉已停用；请从主屏幕添加应用</string>
+    <string name="auto_add_shortcuts_forced_ios_summary">在启用 iOS 风格时自动开启</string>
+    <string name="drawer_style_unavailable_with_caddy">启用 Caddy 布局时仅可使用普通风格。</string>
+    <string name="drawer_list_unavailable_with_special_drawer">仅当应用抽屉风格为普通时才可使用 Caddy 布局。</string>
+
+    <!-- Notification badge counts -->
+    <string name="notification_badge_counts_title">通知数量</string>
+    <string name="notification_badge_counts_summary">在应用图标上显示未读数量，而不是通知圆点</string>
+    <string name="notification_badge_counts_disabled_summary">请先启用“通知圆点”</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">应用抽屉排序</string>
+    <string name="app_drawer_sort_alphabetical">按字母顺序排序</string>
+    <string name="app_drawer_sort_install_date">按安装日期排序</string>
+    <string name="app_drawer_sort_usage">按使用频率排序</string>
+
+    <!-- App drawer color -->
+    <string name="pref_app_drawer_custom_color_title">自定义背景颜色</string>
+    <string name="pref_app_drawer_custom_color_summary">为应用抽屉背景使用自定义颜色</string>
+    <string name="pref_app_drawer_custom_color_light_title">浅色模式颜色</string>
+    <string name="pref_app_drawer_custom_color_dark_title">深色模式颜色</string>
+
+    <!-- Color Picker -->
+    <string name="color_picker_hsb">HSB</string>
+    <string name="color_picker_rgb">RGB</string>
+    <string name="color_picker_hue">色相</string>
+    <string name="color_picker_saturation">饱和度</string>
+    <string name="color_picker_brightness">亮度</string>
+    <string name="color_picker_red">红</string>
+    <string name="color_picker_green">绿</string>
+    <string name="color_picker_blue">蓝</string>
+    <string name="color_picker_hex">HEX</string>
 
     <!-- Parallax -->
     <string name="short_parallax_title">允许短视差滚动效果</string>
@@ -228,7 +288,7 @@
     <!-- Quickspace Now Playing -->
     <string name="quickspace_now_playing_title">显示“正在播放”</string>
     <string name="quickspace_now_playing_summary">在资讯一览显示正在播放的歌曲。警告：并非与所有媒体播放器完全兼容！</string>
-    <string name="quickspace_now_playing_showdate_title">...显示日期作为替代</string>
+    <string name="quickspace_now_playing_showdate_title">……显示日期作为替代</string>
     <string name="quickspace_now_playing_showdate_summary">在第一行显示日期而不是“正在播放”</string>
 
     <!-- Quickspace PSA - Custom messages for the glance -->
@@ -256,7 +316,7 @@
         <item>明天见！</item>
         <item>做个好梦！</item>
         <item>别熬夜太久哦</item>
-        <item>看看日落吧...</item>
+        <item>看看日落吧……</item>
         <item>祝你睡个好觉</item>
         <item>该休息啦</item>
         <item>放松时间到</item>
@@ -268,84 +328,84 @@
         <item>今天很漫长吧？</item>
     </string-array>
     <string-array name="quickspace_psa_midnight">
-        <item>呃...晚安？</item>
+        <item>呃……晚安？</item>
         <item>现在有点晚了哦</item>
         <item>你该调整作息了</item>
         <item>你这个时候效率更高吗？</item>
     </string-array>
     <string-array name="quickspace_psa_random">
-        <item>It do be like that sometimes</item>
-        <item>Is it time to flash another ROM already?</item>
-        <item>Enjoying Android 16?</item>
-        <item>Hyped about Android 16 QPR3?</item>
-        <item>Oh hey, what\'s up?</item>
-        <item>Time to brag my #setup</item>
-        <item>Focus on your tasks</item>
-        <item>Did you checkout all the tweaks?</item>
-        <item>How many screenshots do you take?</item>
-        <item>Spread love not havoc</item>
-        <item>Is your device derped?</item>
-        <item>I wish I could use VoLTE</item>
-        <item>Have fun!</item>
-        <item>Let\'s get this grind, gamer!</item>
+        <item>有时候就是这样</item>
+        <item>是时候刷个新 ROM 了吗？</item>
+        <item>喜欢 Android 16 吗？</item>
+        <item>期待 Android 16 QPR3 吗？</item>
+        <item>嗨，最近怎么样？</item>
+        <item>是时候炫耀一下我的桌面布局了</item>
+        <item>专心做你的事</item>
+        <item>你试过所有的微调选项了吗？</item>
+        <item>你到底截了多少张图？</item>
+        <item>传播爱，而不是破坏</item>
+        <item>你的设备 Derp 了吗？</item>
+        <item>真希望我能用 VoLTE</item>
+        <item>玩得开心！</item>
+        <item>开肝吧，玩家！</item>
         <item>\u003C\u003C\u003C\u003C\u003C\u003C\u003C HEAD</item>
-        <item>You need DerpLauncher Premium to see this</item>
-        <item>You need DerpFest Premium to see this</item>
-        <item>A carbonized owl statue</item>
-        <item>...cause 404 sucks!</item>
-        <item>Eat your veggies and send logs</item>
-        <item>Oh no, it\'s updog again</item>
-        <item>I\'ve come to make an announcement</item>
-        <item>Lots of options!</item>
-        <item>I am not your F1 button</item>
-        <item>Don\'t pass me!</item>
-        <item>Did you finish your homework? ツ</item>
-        <item>Stay Home, Stay Safe</item>
-        <item>Do something nice today</item>
-        <item>This is best ROM Experience, isn\'t it?</item>
-        <item>How is everything going?</item>
-        <item>No illusions, welcome to reality!</item>
-        <item>Well done! You have earned a bonus feature</item>
-        <item>That\'s enough, stop tapping me!</item>
-        <item>Only for pro users</item>
-        <item>You are what you flash, don\'t be a potato</item>
-        <item>Thank you for your support</item>
-        <item>One of the buildbot\'s best picks</item>
-        <item>If you love an app, please, support it by purchasing it</item>
-        <item>What a lovely experience, isn\'t it?</item>
+        <item>你需要 DerpLauncher 高级版才能查看此内容</item>
+        <item>你需要 DerpFest 高级版才能查看此内容</item>
+        <item>一座碳化的猫头鹰雕像</item>
+        <item>……因为 404 太糟糕了！</item>
+        <item>多吃蔬菜，多发 Log</item>
+        <item>噢不，又是 updog</item>
+        <item>我是来发个公告的</item>
+        <item>超多选项！</item>
+        <item>我不是你的 F1 键</item>
+        <item>别不理我！</item>
+        <item>你的作业写完了吗？ ツ</item>
+        <item>待在家里，保持安全</item>
+        <item>今天做点好事吧</item>
+        <item>这是最棒的 ROM 体验，不是吗？</item>
+        <item>一切都好吗？</item>
+        <item>没有幻想，欢迎来到现实！</item>
+        <item>干得漂亮！你获得了一个隐藏功能</item>
+        <item>够了，别再点我了！</item>
+        <item>仅限专业用户</item>
+        <item>刷什么 ROM 决定你是什么样的人，别当个土豆</item>
+        <item>感谢您的支持</item>
+        <item>编译机器人的精选之作</item>
+        <item>如果你喜欢一款应用，请购买支持它</item>
+        <item>多么美妙的体验，不是吗？</item>
         <item>nice</item>
         <item>ツ</item>
         <item>#StayDerped \m/</item>
         <item>DerpFest FTW \m/</item>
-        <item>What\'s on your mind?</item>
-        <item>Got an issue? Don\'t forget a logcat</item>
-        <item>Get Derped</item>
+        <item>你在想什么？</item>
+        <item>遇到问题了？别忘了抓个 logcat</item>
+        <item>尽情 Derp 吧</item>
         <item>#StayDerped</item>
-        <item>Charlie Watts is dead and you are alive</item>
+        <item>查理·沃茨已逝，而你还活着</item>
         <item>rm -rf \/</item>
     </string-array>
     <string-array name="quickspace_psa_blaze_it">
         <item>420</item>
         <item>#420 blaze it</item>
-        <item>Let\'s roll one up...</item>
-        <item>Enjoying the herbs, are ya?</item>
-        <item>Ever been to Amsterdam?</item>
+        <item>让我们卷一根……</item>
+        <item>喜欢这些草药，是吧？</item>
+        <item>去过阿姆斯特丹吗？</item>
     </string-array>
     <string-array name="quickspace_psa_encouraged_apps_messages">
-        <item>Enjoying §...?</item>
-        <item>Great choice in §!</item>
-        <item>§... Love to see it!</item>
-        <item>§? Cool.</item>
-        <item>Using §? Nice!</item>
-        <item>§ is amazing indeed.</item>
+        <item>喜欢 § 吗……？</item>
+        <item>选择 §，眼光不错！</item>
+        <item>§…… 喜闻乐见！</item>
+        <item>§？很酷哦。</item>
+        <item>在用 §？不错嘛！</item>
+        <item>§ 确实很棒。</item>
     </string-array>
     <string-array name="quickspace_psa_discouraged_apps_messages">
-        <item>Confident in §...?</item>
-        <item>Not so sure about §...</item>
-        <item>Uhm... using §?</item>
-        <item>§? You can do better than that.</item>
-        <item>Are you sure about §?</item>
-        <item>So you\'re still using §...</item>
+        <item>对 § 这么有信心……？</item>
+        <item>对 § 持保留意见……</item>
+        <item>额…… 在用 §？</item>
+        <item>§？你可以有更好的选择。</item>
+        <item>你确定要用 §？</item>
+        <item>所以你还在用 §……</item>
     </string-array>
     <string-array name="quickspace_psa_encouraged_apps_keywords">
         <item>viper</item>
