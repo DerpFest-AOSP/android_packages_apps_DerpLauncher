@@ -69,6 +69,7 @@ import com.android.launcher3.shortcuts.ShortcutRequest
 import com.android.launcher3.util.ApplicationInfoWrapper
 import com.android.launcher3.util.CancellableTask
 import com.android.launcher3.util.ComponentKey
+import com.android.launcher3.util.CustomAppNameStore
 import com.android.launcher3.util.DaggerSingletonTracker
 import com.android.launcher3.util.Executors
 import com.android.launcher3.util.Executors.MAIN_EXECUTOR
@@ -604,6 +605,10 @@ constructor(
 
     private fun applyCacheEntry(entry: CacheEntry, info: ItemInfoWithIcon) {
         info.title = Utilities.trim(entry.title)
+        var customTitle = CustomAppNameStore.getCustomName(context, info)
+        if (customTitle != null) {
+            info.title = customTitle
+        }
         info.contentDescription =
             if (info.isFileSystemFolderItem())
                 context.getString(
@@ -629,6 +634,10 @@ constructor(
 
         info.appTitle = Utilities.trim(info.title)
         info.title = Utilities.trim(packageEntry.title)
+        customTitle = CustomAppNameStore.getCustomName(context, info)
+        if (customTitle != null) {
+            info.title = customTitle
+        }
         info.contentDescription = packageEntry.contentDescription
         info.bitmap = packageEntry.bitmap
     }
