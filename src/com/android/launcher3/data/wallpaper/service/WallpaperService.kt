@@ -154,7 +154,7 @@ class WallpaperService @Inject constructor(
     ): Boolean = withContext(Dispatchers.IO) {
         rankMutex.withLock {
             runCatching {
-                val bmp = BitmapFactory.decodeFile(wallpaper.imagePath) ?: return@runCatching false
+                val bmp = decodeForDisplay(wallpaper.imagePath) ?: return@runCatching false
                 val newId =
                     wallpaperManager.setBitmap(bmp, null, true, WallpaperManager.FLAG_SYSTEM)
                 if (newId == 0) return@runCatching false
@@ -163,6 +163,24 @@ class WallpaperService @Inject constructor(
                 true
             }.getOrDefault(false)
         }
+    }
+
+    /** Decode at about screen size so setBitmap is not blocked on a 4K+ image. */
+    private fun decodeForDisplay(path: String): Bitmap? {
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeFile(path, bounds)
+        val target =
+            maxOf(
+                context.resources.displayMetrics.widthPixels,
+                context.resources.displayMetrics.heightPixels,
+            ).coerceAtLeast(1)
+        val longest = maxOf(bounds.outWidth, bounds.outHeight).coerceAtLeast(1)
+        var sample = 1
+        while (longest / sample > target) {
+            sample *= 2
+        }
+        val opts = BitmapFactory.Options().apply { inSampleSize = sample }
+        return BitmapFactory.decodeFile(path, opts)
     }
 
     suspend fun getTopWallpapers(): List<Wallpaper> = withContext(Dispatchers.IO) {
