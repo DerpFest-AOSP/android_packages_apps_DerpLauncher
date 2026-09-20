@@ -292,18 +292,8 @@ class WallpaperCarouselView @JvmOverloads constructor(
         applyJob =
             scope.launch {
                 val success =
-                    withContext(Dispatchers.IO) {
-                        runCatching {
-                                val bmp =
-                                    BitmapFactory.decodeFile(wallpaper.imagePath)
-                                        ?: return@runCatching false
-                                WallpaperManager.getInstance(context)
-                                    .setBitmap(bmp, null, true, WallpaperManager.FLAG_SYSTEM)
-                                WallpaperService.INSTANCE.get(context).updateWallpaperRank(wallpaper)
-                                true
-                            }
-                            .getOrDefault(false)
-                    }
+                    WallpaperService.INSTANCE.get(context)
+                        .applyWallpaper(wallpaper, WallpaperManager.getInstance(context))
 
                 if (!isAttachedToWindow) return@launch
                 chip.removeView(spinner)
