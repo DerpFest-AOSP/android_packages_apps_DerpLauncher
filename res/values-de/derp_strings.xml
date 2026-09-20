@@ -286,6 +286,10 @@
     <string name="rename_app_title">App umbenennen</string>
     <string name="rename_app_reset">Zurücksetzen</string>
 
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">Benutzerdefiniertes Symbol</string>
+    <string name="icon_picker_search_hint">Symbole suchen</string>
+
     <!-- Hidden apps -->
     <string name="trust_apps_manager_name">Versteckte Apps</string>
     <string name="trust_apps_auth_manager">Entsperren, um versteckte Apps zu verwalten</string>

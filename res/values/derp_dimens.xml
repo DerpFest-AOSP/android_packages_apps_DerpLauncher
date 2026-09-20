@@ -41,4 +41,9 @@
     <dimen name="all_apps_search_bar_margin_side">38dp</dimen>
     <dimen name="all_apps_search_bar_margin_top">28dp</dimen>
     <dimen name="all_apps_search_bar_height">48dp</dimen>
+
+    <!-- Custom icon -->
+    <dimen name="icon_picker_cell_size">56dp</dimen>
+    <dimen name="icon_picker_cell_padding">8dp</dimen>
+    <dimen name="icon_picker_search_min_height">52dp</dimen>
 </resources>

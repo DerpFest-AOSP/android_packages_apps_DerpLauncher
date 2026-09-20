@@ -313,6 +313,10 @@
     <string name="rename_app_title">Rename app</string>
     <string name="rename_app_reset">Reset</string>
 
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">Custom icon</string>
+    <string name="icon_picker_search_hint">Search icons</string>
+
     <!-- Hidden apps -->
     <string name="trust_apps_manager_name">Hidden apps</string>
     <string name="trust_apps_auth_manager">Unlock to manage hidden apps</string>
