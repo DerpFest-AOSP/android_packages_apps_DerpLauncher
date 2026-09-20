@@ -1,5 +1,6 @@
 /*
  * SPDX-FileCopyrightText: Lunaris AOSP
+ * SPDX-FileCopyrightText: DerpFest AOSP
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -12,6 +13,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
@@ -34,6 +36,7 @@ import com.android.launcher3.BaseActivity;
 import com.android.launcher3.R;
 import com.android.launcher3.icons.pack.IconPack;
 import com.android.launcher3.icons.pack.IconPackManager;
+import com.android.launcher3.util.BlurBackgroundHelper;
 import com.android.launcher3.util.ComponentKey;
 import com.android.launcher3.views.AbstractSlideInView;
 
@@ -54,6 +57,7 @@ public class IconPickerBottomSheet extends AbstractSlideInView<BaseActivity> {
     private TextView mTitle;
     private EditText mSearchField;
     private final IconPackManager mManager;
+    private final BlurBackgroundHelper mBlurBackgroundHelper;
     private ComponentKey mKey;
     private OnIconChosen mCallback;
 
@@ -71,6 +75,7 @@ public class IconPickerBottomSheet extends AbstractSlideInView<BaseActivity> {
     public IconPickerBottomSheet(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mManager = IconPackManager.get(context);
+        mBlurBackgroundHelper = mActivityContext.getActivityComponent().getBlurBackgroundHelper();
         setWillNotDraw(false);
     }
 
@@ -93,8 +98,8 @@ public class IconPickerBottomSheet extends AbstractSlideInView<BaseActivity> {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-        setContentBackgroundWithParent(
-                getContext().getDrawable(R.drawable.bg_rounded_corner_bottom_sheet), mContent);
+        mContent.setBackground(
+                getContext().getDrawable(R.drawable.bg_rounded_corner_bottom_sheet).mutate());
     }
 
     public void show(ComponentKey key, OnIconChosen callback) {
@@ -103,8 +108,22 @@ public class IconPickerBottomSheet extends AbstractSlideInView<BaseActivity> {
         mTitle.setText(R.string.app_info_custom_icon_title);
         showPackList();
         attachToContainer();
+        post(this::applySheetBlur);
         mIsOpen = false;
         animateOpenSelf();
+    }
+
+    private void applySheetBlur() {
+        Drawable surface = mContent.getBackground();
+        if (surface instanceof GradientDrawable) {
+            GradientDrawable gd = (GradientDrawable) surface.mutate();
+            if (gd.getColor() != null) {
+                gd.setColor(mBlurBackgroundHelper.getPopupBlurSurfaceColor(
+                        gd.getColor().getDefaultColor()));
+            }
+            mContent.setBackground(gd);
+        }
+        mBlurBackgroundHelper.applyPopupBlurBackground(mContent);
     }
 
     private void animateOpenSelf() {
