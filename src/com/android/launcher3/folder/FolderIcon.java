@@ -34,6 +34,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Property;
 import android.view.LayoutInflater;
@@ -71,6 +72,7 @@ import com.android.launcher3.dragndrop.BaseItemDragListener;
 import com.android.launcher3.dragndrop.DragLayer;
 import com.android.launcher3.dragndrop.DragView;
 import com.android.launcher3.dragndrop.DraggableView;
+import com.android.launcher3.flowerpot.Flowerpot;
 import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.homescreenfiles.HomeScreenFilesUtils;
 import com.android.launcher3.icons.DotRenderer;
@@ -100,7 +102,9 @@ import com.android.launcher3.views.FloatingIconViewCompanion;
 import com.android.launcher3.widget.PendingAddShortcutInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 /**
@@ -233,6 +237,13 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
 
         icon.setClipToPadding(false);
         icon.mFolderName = icon.findViewById(R.id.folder_icon_name);
+        // Like iOS, a folder is never left without a name.
+        if (TextUtils.isEmpty(folderInfo.title)
+                && folderInfo.getLabelState() == LabelState.UNLABELED
+                && activity instanceof Launcher launcher) {
+            CharSequence name = categoryName(launcher, folderInfo);
+            if (name != null) folderInfo.setTitle(name, launcher.getModelWriter());
+        }
         if (icon.mFolderName.shouldShowLabel()) {
             icon.mFolderName.applyLabel(folderInfo.title);
         }
@@ -462,21 +473,19 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
         if (!mInfo.getLabelState().equals(LabelState.UNLABELED)) {
             return;
         }
-        if (nameInfos == null || !nameInfos.hasSuggestions()) {
+        // Without a suggestion, fall back to the apps' category, as the App Library groups them.
+        CharSequence newTitle = nameInfos != null && nameInfos.hasPrimary()
+                ? nameInfos.getLabels()[0]
+                : categoryName(getContext(), mInfo);
+        if (newTitle == null) {
             StatsLogManager.newInstance(getContext()).logger()
                     .withInstanceId(instanceId)
                     .withItemInfo(mInfo)
-                    .log(LAUNCHER_FOLDER_AUTO_LABELING_SKIPPED_EMPTY_SUGGESTIONS);
+                    .log(nameInfos == null || !nameInfos.hasSuggestions()
+                            ? LAUNCHER_FOLDER_AUTO_LABELING_SKIPPED_EMPTY_SUGGESTIONS
+                            : LAUNCHER_FOLDER_AUTO_LABELING_SKIPPED_EMPTY_PRIMARY);
             return;
         }
-        if (!nameInfos.hasPrimary()) {
-            StatsLogManager.newInstance(getContext()).logger()
-                    .withInstanceId(instanceId)
-                    .withItemInfo(mInfo)
-                    .log(LAUNCHER_FOLDER_AUTO_LABELING_SKIPPED_EMPTY_PRIMARY);
-            return;
-        }
-        CharSequence newTitle = nameInfos.getLabels()[0];
         FromState fromState = mInfo.getFromLabelState();
 
         mInfo.setTitle(newTitle, mActivity.getModelWriter());
@@ -744,6 +753,22 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
         updatePreviewItems(animate);
         invalidate();
         requestLayout();
+    }
+
+    /** The category most of the folder's apps fall in, or null when none has one. */
+    @Nullable
+    private static CharSequence categoryName(Context context, FolderInfo info) {
+        Flowerpot.Manager pots = Flowerpot.Manager.getInstance(context);
+        Map<String, Integer> counts = new HashMap<>();
+        String best = null;
+        for (WorkspaceItemInfo item : info.getAppContents()) {
+            String pkg = item.getTargetPackage();
+            String category = pkg == null ? null : pots.categoryOf(pkg);
+            if (category == null) continue;
+            int count = counts.merge(category, 1, Integer::sum);
+            if (best == null || count > counts.get(best)) best = category;
+        }
+        return best;
     }
 
     public void onTitleChanged(CharSequence title) {
