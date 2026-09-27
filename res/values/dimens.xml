@@ -58,7 +58,6 @@
     <dimen name="first_page_status_top_padding">10.24dp</dimen>
     <dimen name="first_page_status_timer_end_margin">28dp</dimen>
     <dimen name="first_page_status_indicator_margin_top">4dp</dimen>
-    <dimen name="first_page_status_indicator_end_margin">16dp</dimen>
     <dimen name="first_page_status_media_artwork_width">88dp</dimen>
     <dimen name="first_page_status_media_artwork_height">50dp</dimen>
     <dimen name="first_page_status_media_icon_spacing">14dp</dimen>
