@@ -19,7 +19,9 @@ package com.android.launcher3.views;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
@@ -53,6 +55,12 @@ public class FirstPageStatusView extends FrameLayout {
     private PageIndicatorDots mPageIndicator;
     private PagerSnapHelper mSnapHelper;
     private int mCurrentPage;
+    private final int mTouchSlop;
+    private float mDownX;
+    private float mDownY;
+    private boolean mGestureSettled;
+    private boolean mPassTouchToParent;
+    private boolean mForwardingToPager;
 
     public FirstPageStatusView(Context context) {
         this(context, null);
@@ -64,6 +72,7 @@ public class FirstPageStatusView extends FrameLayout {
 
     public FirstPageStatusView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         LayoutInflater.from(context).inflate(R.layout.first_page_status_view, this, true);
         mCompactStatusView = new FirstPageCompactStatusView(context);
         mMediaStatusView = new FirstPageMediaStatusView(context);
@@ -92,6 +101,120 @@ public class FirstPageStatusView extends FrameLayout {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (mPages.size() <= 1) {
+            return false;
+        }
+        switch (ev.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                mDownX = ev.getX();
+                mDownY = ev.getY();
+                mGestureSettled = false;
+                mPassTouchToParent = false;
+                mForwardingToPager = false;
+                // Claim the gesture before Workspace, which otherwise wins the touch-slop race
+                // and turns this swipe into a home-screen or Google Now page change.
+                requestDisallowInterceptTouchEvent(true);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (!mGestureSettled) {
+                    settleGesture(ev);
+                }
+                if (mPassTouchToParent) {
+                    if (mForwardingToPager) {
+                        forwardCancelToPager(ev);
+                        mForwardingToPager = false;
+                    }
+                    requestDisallowInterceptTouchEvent(false);
+                    return true;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                mPassTouchToParent = false;
+                mForwardingToPager = false;
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        if (mPages.size() <= 1) {
+            return super.onTouchEvent(ev);
+        }
+        // Empty parts of the cell never hit the pager, so this view keeps the gesture. Settle it
+        // here as well: once a child misses ACTION_DOWN, later moves skip onInterceptTouchEvent.
+        if (ev.getActionMasked() == MotionEvent.ACTION_MOVE && !mGestureSettled) {
+            settleGesture(ev);
+        }
+        if (mPassTouchToParent) {
+            if (mForwardingToPager) {
+                forwardCancelToPager(ev);
+                mForwardingToPager = false;
+            }
+            requestDisallowInterceptTouchEvent(false);
+            return true;
+        }
+        // Touches that miss the text still belong to this row. Send them to the pager so the
+        // whole cell, not only the date and weather, changes pages.
+        int action = ev.getActionMasked();
+        if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+            mForwardingToPager = false;
+        } else {
+            mForwardingToPager = true;
+        }
+        return forwardToPager(ev);
+    }
+
+    private void settleGesture(MotionEvent ev) {
+        float dx = ev.getX() - mDownX;
+        float dy = ev.getY() - mDownY;
+        if (Math.hypot(dx, dy) < mTouchSlop) {
+            return;
+        }
+        mGestureSettled = true;
+        boolean horizontal = Math.abs(dx) > Math.abs(dy);
+        mPassTouchToParent = !horizontal || !pagerCanScroll(dx);
+    }
+
+    private boolean pagerCanScroll(float dx) {
+        boolean towardEnd = dx < 0;
+        if (mPager.canScrollHorizontally(towardEnd ? 1 : -1)) {
+            return true;
+        }
+        return towardEnd ? mCurrentPage < mPages.size() - 1 : mCurrentPage > 0;
+    }
+
+    private boolean forwardToPager(MotionEvent ev) {
+        if (mPager.getWidth() <= 0 || mPager.getHeight() <= 0) {
+            return false;
+        }
+        int[] parentLocation = new int[2];
+        int[] pagerLocation = new int[2];
+        getLocationInWindow(parentLocation);
+        mPager.getLocationInWindow(pagerLocation);
+        float localX = ev.getX() + parentLocation[0] - pagerLocation[0];
+        float localY = ev.getY() + parentLocation[1] - pagerLocation[1];
+        localX = Math.max(0f, Math.min(localX, mPager.getWidth() - 1));
+        localY = Math.max(0f, Math.min(localY, mPager.getHeight() - 1));
+        MotionEvent forwarded = MotionEvent.obtain(ev);
+        forwarded.setLocation(localX, localY);
+        boolean handled = mPager.dispatchTouchEvent(forwarded);
+        forwarded.recycle();
+        return handled;
+    }
+
+    private void forwardCancelToPager(MotionEvent ev) {
+        MotionEvent cancel = MotionEvent.obtain(ev);
+        cancel.setAction(MotionEvent.ACTION_CANCEL);
+        forwardToPager(cancel);
+        cancel.recycle();
     }
 
     @Override
