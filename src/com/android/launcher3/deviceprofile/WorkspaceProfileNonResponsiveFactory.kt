@@ -150,6 +150,44 @@ object WorkspaceProfileNonResponsiveFactory {
         }
     }
 
+    /**
+     * Phone grids are not responsive, so they never reach the responsive profile path that
+     * honors [DeviceProperties.deviceConfiguration.isWorkspaceItemsLabelHidden]. Apply that
+     * setting here: drop the label from the cell and let the existing cell padding center
+     * the icon.
+     */
+    private fun hideWorkspaceItemLabels(
+        isHidden: Boolean,
+        isScalableGrid: Boolean,
+        workspaceProfile: WorkspaceProfile,
+        inv: InvariantDeviceProfile,
+    ): WorkspaceProfile {
+        if (!isHidden) return workspaceProfile
+        val iconHeight = getIconSizeWithOverlap(workspaceProfile.iconSizePx)
+        return if (isScalableGrid) {
+            workspaceProfile.copy(
+                iconTextSizePx = 0,
+                iconDrawablePaddingPx = 0,
+                maxIconTextLineCount = 0,
+                isItemsLabelHidden = true,
+                cellYPaddingPx = max(0, (workspaceProfile.cellHeightPx - iconHeight) / 2),
+            )
+        } else {
+            workspaceProfile.copy(
+                iconTextSizePx = 0,
+                iconDrawablePaddingPx = 0,
+                cellHeightPx = iconHeight,
+                maxIconTextLineCount = 0,
+                isItemsLabelHidden = true,
+                cellLayoutHeightSpecification =
+                    (iconHeight * inv.numRows) +
+                        (workspaceProfile.cellLayoutBorderSpacePx.y * (inv.numRows - 1)) +
+                        workspaceProfile.cellLayoutPaddingPx.top +
+                        workspaceProfile.cellLayoutPaddingPx.bottom,
+            )
+        }
+    }
+
     fun hideWorkspaceLabelsIfNotEnoughSpace(
         isVerticalLayout: Boolean,
         workspaceProfile: WorkspaceProfile,
@@ -598,6 +636,14 @@ object WorkspaceProfileNonResponsiveFactory {
                         hotseatProfile = hotseatProfile,
                         deviceProperties = deviceProperties,
                     )
+                    .let {
+                        hideWorkspaceItemLabels(
+                            deviceProperties.deviceConfiguration.isWorkspaceItemsLabelHidden,
+                            isScalableGrid = true,
+                            it,
+                            inv,
+                        )
+                    }
                     .let { hideWorkspaceLabelsIfNotEnoughSpace(isVerticalLayout, it, inv) }
 
             else ->
@@ -617,6 +663,14 @@ object WorkspaceProfileNonResponsiveFactory {
                         panelCount = panelCount,
                         scale = scale,
                     )
+                    .let {
+                        hideWorkspaceItemLabels(
+                            deviceProperties.deviceConfiguration.isWorkspaceItemsLabelHidden,
+                            isScalableGrid = false,
+                            it,
+                            inv,
+                        )
+                    }
                     .let { hideWorkspaceLabelsIfNotEnoughSpace(isVerticalLayout, it, inv) }
         }
     }
