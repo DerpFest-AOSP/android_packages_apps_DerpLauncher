@@ -244,9 +244,7 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
             CharSequence name = categoryName(launcher, folderInfo);
             if (name != null) folderInfo.setTitle(name, launcher.getModelWriter());
         }
-        if (icon.mFolderName.shouldShowLabel()) {
-            icon.mFolderName.applyLabel(folderInfo.title);
-        }
+        icon.mFolderName.applyLabel(folderInfo.title);
         icon.mFolderName.setCompoundDrawablePadding(0);
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) icon.mFolderName.getLayoutParams();
         if (folderInfo.container == ItemInfo.NO_ID) {
@@ -772,9 +770,7 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
     }
 
     public void onTitleChanged(CharSequence title) {
-        if (mFolderName.shouldShowLabel()) {
-            mFolderName.applyLabel(title);
-        }
+        mFolderName.applyLabel(title);
         setContentDescription(getAccessiblityTitle(title));
     }
 

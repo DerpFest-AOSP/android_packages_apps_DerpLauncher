@@ -302,8 +302,6 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
             backedUpItem("pref_haptics_on_swipe_down_gestures", true)
         @JvmField val RECENTS_SHAKE_CLEAR_ALL = backedUpItem("pref_recents_shake_clear_all", false)
         @JvmField val SHORT_PARALLAX = backedUpItem("pref_short_parallax", false)
-        @JvmField val SHOW_DESKTOP_LABELS = backedUpItem("pref_desktop_show_labels", true)
-        @JvmField val SHOW_DRAWER_LABELS = backedUpItem("pref_drawer_show_labels", true)
         @JvmField val SHOW_HOTSEAT_BG = backedUpItem("pref_show_hotseat_bg", false)
         @JvmField val SHOW_STATUS_BAR = backedUpItem("pref_show_statusbar", true)
         @JvmField val SINGLE_PAGE_CENTER = backedUpItem("pref_single_page_center", false)
@@ -390,6 +388,8 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
 
         @JvmField
         val WORKSPACE_ITEMS_LABEL_HIDDEN = backedUpItem("pref_workspace_items_label_hidden", false)
+
+        @JvmField val SHOW_ALL_APPS_ITEM_LABELS = backedUpItem("pref_drawer_show_labels", true)
 
         @JvmField
         val EXPANDED_POPUP_MENU_SECTION =

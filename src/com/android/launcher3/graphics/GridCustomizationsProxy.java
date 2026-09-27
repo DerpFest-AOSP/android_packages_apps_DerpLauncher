@@ -139,6 +139,11 @@ public class GridCustomizationsProxy implements ProxyProvider {
     private static final String SET_WORKSPACE_ITEMS_LABEL_HIDDEN =
             "/set_workspace_items_label_hidden";
     public static final String WORKSPACE_ITEMS_LABEL_HIDDEN = "/workspace_items_label_hidden";
+    private static final String GET_ALL_APPS_ITEMS_LABEL_HIDDEN =
+            "/get_all_apps_items_label_hidden";
+    private static final String SET_ALL_APPS_ITEMS_LABEL_HIDDEN =
+            "/set_all_apps_items_label_hidden";
+    public static final String ALL_APPS_ITEMS_LABEL_HIDDEN = "/all_apps_items_label_hidden";
     public static final String BOOLEAN_VALUE = "boolean_value";
 
     /** Play Store icon pack selected by ThemePicker / Settings. */
@@ -272,6 +277,14 @@ public class GridCustomizationsProxy implements ProxyProvider {
                         mPrefs.get(LauncherPrefs.WORKSPACE_ITEMS_LABEL_HIDDEN);
                 cursor.newRow().add(BOOLEAN_VALUE, isWorkspaceItemsLabelHidden ? 1 : 0);
                 return cursor;
+            case GET_ALL_APPS_ITEMS_LABEL_HIDDEN:
+            case ALL_APPS_ITEMS_LABEL_HIDDEN:
+                MatrixCursor allAppsCursor = new MatrixCursor(new String[]{BOOLEAN_VALUE});
+                boolean areAllAppsItemsLabelsHidden =
+                        !mPrefs.get(LauncherPrefs.SHOW_ALL_APPS_ITEM_LABELS);
+                allAppsCursor.newRow().add(
+                        BOOLEAN_VALUE, areAllAppsItemsLabelsHidden ? 1 : 0);
+                return allAppsCursor;
             case ICON_PACK: {
                 MatrixCursor packCursor = new MatrixCursor(new String[]{KEY_ICON_PACK_VALUE});
                 packCursor.newRow().add(KEY_ICON_PACK_VALUE, IconDatabase.getGlobal(mContext));
@@ -344,6 +357,13 @@ public class GridCustomizationsProxy implements ProxyProvider {
                 mPrefs.put(
                         LauncherPrefs.WORKSPACE_ITEMS_LABEL_HIDDEN,
                         values.getAsBoolean(BOOLEAN_VALUE)
+                );
+                return UPDATE_SETTING_SUCCESS;
+            }
+            case SET_ALL_APPS_ITEMS_LABEL_HIDDEN: {
+                mPrefs.put(
+                        LauncherPrefs.SHOW_ALL_APPS_ITEM_LABELS,
+                        !values.getAsBoolean(BOOLEAN_VALUE)
                 );
                 return UPDATE_SETTING_SUCCESS;
             }

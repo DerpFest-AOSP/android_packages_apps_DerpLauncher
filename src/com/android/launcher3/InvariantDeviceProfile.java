@@ -25,8 +25,7 @@ import static com.android.launcher3.LauncherPrefs.ICON_SIZE;
 import static com.android.launcher3.LauncherPrefs.NON_FIXED_LANDSCAPE_GRID_NAME;
 import static com.android.launcher3.LauncherPrefs.ALLAPPS_THEMED_ICONS;
 import static com.android.launcher3.LauncherPrefs.DRAWER_OPEN_KEYBOARD;
-import static com.android.launcher3.LauncherPrefs.SHOW_DESKTOP_LABELS;
-import static com.android.launcher3.LauncherPrefs.SHOW_DRAWER_LABELS;
+import static com.android.launcher3.LauncherPrefs.SHOW_ALL_APPS_ITEM_LABELS;
 import static com.android.launcher3.LauncherPrefs.WORKSPACE_ITEMS_LABEL_HIDDEN;
 import static com.android.launcher3.Utilities.dpiFromPx;
 import static com.android.launcher3.deviceprofile.parser.DeviceTypedMap.COUNT_SIZES;
@@ -43,6 +42,7 @@ import static com.android.launcher3.util.SimpleBroadcastReceiver.actionsFilter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -125,6 +125,7 @@ public class InvariantDeviceProfile {
     private static final float WEIGHT_EFFICIENT = 100000f;
 
     /** These resources are used to override the device profile */
+    private static final String LEGACY_SHOW_WORKSPACE_ITEM_LABELS = "pref_desktop_show_labels";
     private static final String RES_GRID_NUM_ROWS = "grid_num_rows";
     private static final String RES_GRID_NUM_COLUMNS = "grid_num_columns";
     private static final String RES_GRID_ICON_SIZE_DP = "grid_icon_size_dp";
@@ -274,6 +275,17 @@ public class InvariantDeviceProfile {
         mThemeManager = themeManager;
         mMainExecutor = mainExecutor;
 
+        SharedPreferences sharedPrefs = LauncherPrefs.getPrefs(context);
+        if (!sharedPrefs.contains(WORKSPACE_ITEMS_LABEL_HIDDEN.getSharedPrefKey())
+                && sharedPrefs.contains(LEGACY_SHOW_WORKSPACE_ITEM_LABELS)) {
+            sharedPrefs.edit()
+                    .putBoolean(
+                            WORKSPACE_ITEMS_LABEL_HIDDEN.getSharedPrefKey(),
+                            !sharedPrefs.getBoolean(LEGACY_SHOW_WORKSPACE_ITEM_LABELS, true))
+                    .remove(LEGACY_SHOW_WORKSPACE_ITEM_LABELS)
+                    .apply();
+        }
+
         String gridName = prefs.get(GRID_NAME);
         initGrid(gridName);
         mThemeManager.generateIconShape(iconBitmapSize);
@@ -306,9 +318,9 @@ public class InvariantDeviceProfile {
             } else if (WORKSPACE_ITEMS_LABEL_HIDDEN.getSharedPrefKey().equals(key)
                     && com.android.systemui.shared.Flags.workspaceItemsLabelHidden()) {
                 onConfigChanged();
-            } else if (SHOW_DESKTOP_LABELS.getSharedPrefKey().equals(key)
-                    || SHOW_DRAWER_LABELS.getSharedPrefKey().equals(key)
-                    || ALLAPPS_THEMED_ICONS.getSharedPrefKey().equals(key)
+            } else if (SHOW_ALL_APPS_ITEM_LABELS.getSharedPrefKey().equals(key)) {
+                onConfigChanged();
+            } else if (ALLAPPS_THEMED_ICONS.getSharedPrefKey().equals(key)
                     || DRAWER_OPEN_KEYBOARD.getSharedPrefKey().equals(key)
                     || ICON_SIZE.getSharedPrefKey().equals(key)
                     || FONT_SIZE.getSharedPrefKey().equals(key)) {
@@ -316,12 +328,12 @@ public class InvariantDeviceProfile {
             }
         };
         prefs.addListener(prefListener, FIXED_LANDSCAPE_MODE, ENABLE_TWOLINE_ALLAPPS_TOGGLE,
-                SHOW_DESKTOP_LABELS, SHOW_DRAWER_LABELS, ALLAPPS_THEMED_ICONS,
-                DRAWER_OPEN_KEYBOARD, ICON_SIZE, FONT_SIZE);
+                WORKSPACE_ITEMS_LABEL_HIDDEN, SHOW_ALL_APPS_ITEM_LABELS,
+                ALLAPPS_THEMED_ICONS, DRAWER_OPEN_KEYBOARD, ICON_SIZE, FONT_SIZE);
         lifeCycle.addCloseable(() -> prefs.removeListener(prefListener,
                 FIXED_LANDSCAPE_MODE, ENABLE_TWOLINE_ALLAPPS_TOGGLE,
-                SHOW_DESKTOP_LABELS, SHOW_DRAWER_LABELS, ALLAPPS_THEMED_ICONS,
-                DRAWER_OPEN_KEYBOARD, ICON_SIZE, FONT_SIZE));
+                WORKSPACE_ITEMS_LABEL_HIDDEN, SHOW_ALL_APPS_ITEM_LABELS,
+                ALLAPPS_THEMED_ICONS, DRAWER_OPEN_KEYBOARD, ICON_SIZE, FONT_SIZE));
 
         SimpleBroadcastReceiver localeReceiver = new SimpleBroadcastReceiver(context,
                 mMainExecutor, i -> onConfigChanged());

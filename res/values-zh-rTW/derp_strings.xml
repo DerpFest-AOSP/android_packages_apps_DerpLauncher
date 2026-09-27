@@ -41,12 +41,6 @@
     <string name="settings_lock_layout_summary_off">可在主畫面上新增、移除與移動圖示和小工具</string>
     <string name="settings_edit_widgets_error">無法在主畫面上新增小工具</string>
 
-    <!-- Hide labels -->
-    <string name="title_desktop_labels">桌面標籤</string>
-    <string name="summary_desktop_labels">在桌面顯示圖示標籤</string>
-    <string name="title_drawer_labels">抽屜標籤</string>
-    <string name="summary_drawer_labels">在應用程式抽屜顯示圖示標籤</string>
-
     <!-- Settings title to show Google Now at -1 screen on launcher. [CHAR LIMIT=50] -->
     <string name="title_show_google_app">滑動以存取 Google 應用程式</string>
     <!-- Settings message explaining when the -1 screen is available on an LTR device. [CHAR LIMIT=100] -->

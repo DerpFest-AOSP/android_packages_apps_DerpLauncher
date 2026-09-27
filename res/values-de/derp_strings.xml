@@ -31,12 +31,6 @@
     <string name="settings_lock_layout_summary_off">Symbole und Widgets können auf dem Startbildschirm hinzugefügt, entfernt und verschoben werden</string>
     <string name="settings_edit_widgets_error">Es ist nicht möglich, Widgets zum Startbildschirm hinzuzufügen</string>
 
-    <!-- Hide labels -->
-    <string name="title_desktop_labels">Startbildschirm-Beschriftungen</string>
-    <string name="summary_desktop_labels">Symbolbeschriftungen auf dem Startbildschirm anzeigen</string>
-    <string name="title_drawer_labels">App-Übersicht-Beschriftungen</string>
-    <string name="summary_drawer_labels">Symbolbeschriftungen in der App-Übersicht anzeigen</string>
-
     <!-- Two-line labels in app drawer -->
     <string name="two_line_labels_title">Zweizeilige Beschriftungen</string>
     <string name="two_line_labels_summary">Lange App-Namen in der App-Übersicht auf zwei Zeilen umbrechen</string>
