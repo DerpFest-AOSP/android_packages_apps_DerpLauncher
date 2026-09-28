@@ -562,6 +562,8 @@ public class DeviceProfile {
                 .setIsMultiDisplay(mDeviceProperties.getDeviceConfiguration().isMultiDisplay())
                 .setExternalDisplay(mDeviceProperties.getDeviceConfiguration().isExternalDisplay())
                 .setGestureMode(mDeviceProperties.getDeviceConfiguration().isGestureMode())
+                .setIsWorkspaceItemsLabelHidden(
+                        mDeviceProperties.getDeviceConfiguration().isWorkspaceItemsLabelHidden())
                 .setDisplayOptionSpec(mDisplayOptionSpec);
     }
 
