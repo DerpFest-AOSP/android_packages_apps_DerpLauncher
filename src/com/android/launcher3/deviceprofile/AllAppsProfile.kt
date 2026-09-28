@@ -24,6 +24,7 @@ import android.graphics.Rect
 import android.util.DisplayMetrics
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.DisplayOptionSpec
+import com.android.launcher3.LauncherPrefs
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import com.android.launcher3.Utilities.getIconVisibleSizePx
@@ -78,6 +79,7 @@ data class AllAppsProfile(
         }
 
         private fun getDynamicPhoneAllAppsIconSizePx(
+            context: Context,
             res: Resources,
             inv: InvariantDeviceProfile,
             deviceProperties: DeviceProperties,
@@ -87,12 +89,19 @@ data class AllAppsProfile(
                 return 0
             }
 
-            val minIconSizePx = pxFromDp(DYNAMIC_PHONE_ALL_APPS_ICON_MIN_DP, res.displayMetrics)
-            val maxIconSizePx = pxFromDp(DYNAMIC_PHONE_ALL_APPS_ICON_MAX_DP, res.displayMetrics)
+            // 4x5 portrait phones ignore the profile icon size and derive one from the cell.
+            // Scale that result by the icon size preference, same as DisplayOption.iconSizes.
+            val iconSizeScale = LauncherPrefs.ICON_SIZE.get(context) / 100f
+            val minIconSizePx =
+                (pxFromDp(DYNAMIC_PHONE_ALL_APPS_ICON_MIN_DP, res.displayMetrics) * iconSizeScale)
+                    .roundToInt()
+            val maxIconSizePx =
+                (pxFromDp(DYNAMIC_PHONE_ALL_APPS_ICON_MAX_DP, res.displayMetrics) * iconSizeScale)
+                    .roundToInt()
             val cellWidthPx =
                 (deviceProperties.availableWidthPx / allAppsColumns.toFloat()).roundToInt()
             val targetIconSizePx =
-                (cellWidthPx * DYNAMIC_PHONE_ALL_APPS_ICON_WIDTH_RATIO).roundToInt()
+                (cellWidthPx * DYNAMIC_PHONE_ALL_APPS_ICON_WIDTH_RATIO * iconSizeScale).roundToInt()
 
             return targetIconSizePx.coerceIn(minIconSizePx, maxIconSizePx)
         }
@@ -254,6 +263,7 @@ data class AllAppsProfile(
             val allAppsBorderSpacePx = calculateAllAppsBorderSpacePx(inv, metric, typeIndex, scale)
             val allAppsIconSizePx =
                 getDynamicPhoneAllAppsIconSizePx(
+                    context = context,
                     res = res,
                     inv = inv,
                     deviceProperties = deviceProperties,

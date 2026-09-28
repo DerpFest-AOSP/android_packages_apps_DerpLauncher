@@ -23,6 +23,7 @@ import android.graphics.Point
 import android.graphics.Rect
 import android.util.DisplayMetrics
 import com.android.launcher3.InvariantDeviceProfile
+import com.android.launcher3.LauncherPrefs
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import com.android.launcher3.Utilities.getIconSizeWithOverlap
@@ -66,6 +67,7 @@ object WorkspaceProfileNonResponsiveFactory {
     }
 
     private fun getDynamicPhoneWorkspaceIconSizePx(
+        context: Context,
         res: Resources,
         inv: InvariantDeviceProfile,
         deviceProperties: DeviceProperties,
@@ -76,9 +78,17 @@ object WorkspaceProfileNonResponsiveFactory {
             return 0
         }
 
-        val minIconSizePx = pxFromDp(DYNAMIC_PHONE_WORKSPACE_ICON_MIN_DP, res.displayMetrics)
-        val maxIconSizePx = pxFromDp(DYNAMIC_PHONE_WORKSPACE_ICON_MAX_DP, res.displayMetrics)
-        val targetIconSizePx = (cellSize.x * DYNAMIC_PHONE_WORKSPACE_ICON_WIDTH_RATIO).roundToInt()
+        // 4x5 portrait phones ignore the profile icon size and derive one from the cell.
+        // Scale that result by the icon size preference, same as DisplayOption.iconSizes.
+        val iconSizeScale = LauncherPrefs.ICON_SIZE.get(context) / 100f
+        val minIconSizePx =
+            (pxFromDp(DYNAMIC_PHONE_WORKSPACE_ICON_MIN_DP, res.displayMetrics) * iconSizeScale)
+                .roundToInt()
+        val maxIconSizePx =
+            (pxFromDp(DYNAMIC_PHONE_WORKSPACE_ICON_MAX_DP, res.displayMetrics) * iconSizeScale)
+                .roundToInt()
+        val targetIconSizePx =
+            (cellSize.x * DYNAMIC_PHONE_WORKSPACE_ICON_WIDTH_RATIO * iconSizeScale).roundToInt()
 
         return targetIconSizePx.coerceIn(minIconSizePx, maxIconSizePx)
     }
@@ -222,6 +232,7 @@ object WorkspaceProfileNonResponsiveFactory {
     }
 
     fun createWorkspaceProfileNonScalable(
+        context: Context,
         res: Resources,
         deviceProperties: DeviceProperties,
         inv: InvariantDeviceProfile,
@@ -250,6 +261,7 @@ object WorkspaceProfileNonResponsiveFactory {
             )
         val resolvedIconSizePx =
             getDynamicPhoneWorkspaceIconSizePx(
+                context = context,
                 res = res,
                 inv = inv,
                 deviceProperties = deviceProperties,
@@ -648,6 +660,7 @@ object WorkspaceProfileNonResponsiveFactory {
 
             else ->
                 createWorkspaceProfileNonScalable(
+                        context = context,
                         res = res,
                         deviceProperties = deviceProperties,
                         cellScaleToFit = cellScaleToFit,
