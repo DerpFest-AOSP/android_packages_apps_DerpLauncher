@@ -269,9 +269,6 @@ public class GridCustomizationsProxy implements ProxyProvider {
             }
             case GET_WORKSPACE_ITEMS_LABEL_HIDDEN:
             case WORKSPACE_ITEMS_LABEL_HIDDEN:
-                if (!com.android.systemui.shared.Flags.workspaceItemsLabelHidden()) {
-                    return null;
-                }
                 MatrixCursor cursor = new MatrixCursor(new String[]{BOOLEAN_VALUE});
                 boolean isWorkspaceItemsLabelHidden =
                         mPrefs.get(LauncherPrefs.WORKSPACE_ITEMS_LABEL_HIDDEN);

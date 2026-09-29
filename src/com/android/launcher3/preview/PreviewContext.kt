@@ -78,9 +78,7 @@ constructor(
         val prefs = ProxyPrefs(this, getSharedPreferences(mPrefName, MODE_PRIVATE))
         prefs.putOrRemove(LauncherPrefs.GRID_NAME, gridName)
         prefs.put(LauncherPrefs.FIXED_LANDSCAPE_MODE, false)
-        if (com.android.systemui.shared.Flags.workspaceItemsLabelHidden()) {
-            prefs.put(LauncherPrefs.WORKSPACE_ITEMS_LABEL_HIDDEN, workspaceHideItemsLabel)
-        }
+        prefs.put(LauncherPrefs.WORKSPACE_ITEMS_LABEL_HIDDEN, workspaceHideItemsLabel)
 
         val isTwoPanel =
             base.appComponent.idp.supportedProfiles.any { it.deviceProperties.isTwoPanels }

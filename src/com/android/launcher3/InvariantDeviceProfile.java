@@ -316,9 +316,7 @@ public class InvariantDeviceProfile {
                     && enableTwoLinesInAllApps != prefs.get(ENABLE_TWOLINE_ALLAPPS_TOGGLE)) {
                 onConfigChanged();
             } else if (WORKSPACE_ITEMS_LABEL_HIDDEN.getSharedPrefKey().equals(key)
-                    && com.android.systemui.shared.Flags.workspaceItemsLabelHidden()) {
-                onConfigChanged();
-            } else if (SHOW_ALL_APPS_ITEM_LABELS.getSharedPrefKey().equals(key)) {
+                    || SHOW_ALL_APPS_ITEM_LABELS.getSharedPrefKey().equals(key)) {
                 onConfigChanged();
             } else if (ALLAPPS_THEMED_ICONS.getSharedPrefKey().equals(key)
                     || DRAWER_OPEN_KEYBOARD.getSharedPrefKey().equals(key)
@@ -495,9 +493,7 @@ public class InvariantDeviceProfile {
             DeviceProfile.Builder builder = newDPBuilder(displayInfo)
                     .setIsMultiDisplay(deviceType == TYPE_MULTI_DISPLAY)
                     .setWindowBounds(bounds);
-            if (com.android.systemui.shared.Flags.workspaceItemsLabelHidden()) {
-                builder.setIsWorkspaceItemsLabelHidden(mPrefs.get(WORKSPACE_ITEMS_LABEL_HIDDEN));
-            }
+            builder.setIsWorkspaceItemsLabelHidden(mPrefs.get(WORKSPACE_ITEMS_LABEL_HIDDEN));
             localSupportedProfiles.add(builder.build());
 
             // Wallpaper size should be the maximum of the all possible sizes Launcher expects

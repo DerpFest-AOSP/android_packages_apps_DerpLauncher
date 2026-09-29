@@ -412,9 +412,7 @@ data class WorkspaceProfile(
 
             var iconDrawablePaddingPx: Int
 
-            if (
-                isItemLabelHidden && com.android.systemui.shared.Flags.workspaceItemsLabelHidden()
-            ) {
+            if (isItemLabelHidden) {
                 iconDrawablePaddingPx = 0
                 iconTextSizePx = 0
                 maxIconTextLineCount = 0

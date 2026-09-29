@@ -123,11 +123,9 @@ public class LauncherPreviewRenderer extends BaseContext
 
         DeviceProfile.Builder dpBuilder = getDeviceProfileForPreview(context)
                 .toBuilder();
-        if (com.android.systemui.shared.Flags.workspaceItemsLabelHidden()) {
-            dpBuilder.setIsWorkspaceItemsLabelHidden(
-                    LauncherPrefs.WORKSPACE_ITEMS_LABEL_HIDDEN.get(context)
-            );
-        }
+        dpBuilder.setIsWorkspaceItemsLabelHidden(
+                LauncherPrefs.WORKSPACE_ITEMS_LABEL_HIDDEN.get(context)
+        );
         mDp = dpBuilder
                 .setViewScaleProvider(new PreviewScaleProvider(this))
                 .build();
