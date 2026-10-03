@@ -37,6 +37,7 @@ import com.android.launcher3.util.DynamicResource
 import com.android.launcher3.util.MSDLPlayerWrapper
 import com.android.launcher3.views.ActivityContext
 import com.android.quickstep.SystemUiProxy
+import com.android.quickstep.util.RecentHelper
 import com.android.quickstep.util.TaskGridNavHelper
 import com.android.quickstep.views.RecentsView.RECENTS_SCALE_PROPERTY
 import com.android.quickstep.views.RecentsView.TAG
@@ -350,7 +351,9 @@ constructor(
 
                     // Remove all the task views now
                     finishRecentsAnimation(/* toHome */ true, /* shouldPip */ false) {
-                        uiHelperExecutor.execute { activityManagerWrapper.removeAllRecentTasks() }
+                        uiHelperExecutor.execute {
+                            RecentHelper.getInstance().clearAllTaskStacks(recentsView.context)
+                        }
                         removeAllTaskViews()
                         if (!mUtils.isInDesktopFirstMode()) {
                             startHome()
