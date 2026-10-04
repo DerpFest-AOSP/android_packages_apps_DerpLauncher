@@ -358,9 +358,9 @@
     <!-- Suggestions -->
     <string name="suggestion_pref_screen_title">Пропозиції</string>
     <string name="system_apps_category_label">Системні програми</string>
-    <string name="task_menu_item_lock">Заблокувати</string>
-    <!-- Task lock -->
-    <string name="task_menu_item_unlock">Розблокувати</string>
+    <string name="task_menu_item_lock">Закріпити застосунок</string>
+    <!-- App pinning -->
+    <string name="task_menu_item_unlock">Відкріпити застосунок</string>
     <string name="themed_icons_disabled_summary">Тематичні значки вимкнено в розділі \"Шпалери та стиль\"</string>
     <!-- Settings title to show Google Now at -1 screen on launcher. [CHAR LIMIT=50] -->
     <string name="title_show_google_app">Свайпніть, щоб отримати доступ до програми Google</string>

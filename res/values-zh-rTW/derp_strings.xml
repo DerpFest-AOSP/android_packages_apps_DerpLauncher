@@ -189,9 +189,9 @@
     <string name="pref_scroll_vibration_title">捲動震動</string>
     <string name="pref_scroll_vibration_summary">在捲動瀏覽最近使用的應用程式時提供觸覺回饋（若支援）</string>
 
-    <!-- Task lock -->
-    <string name="task_menu_item_unlock">解鎖</string>
-    <string name="task_menu_item_lock">鎖定</string>
+    <!-- App pinning -->
+    <string name="task_menu_item_unlock">取消釘選</string>
+    <string name="task_menu_item_lock">釘選應用程式</string>
 
     <!-- A widget category label for grouping widgets related to battery. [CHAR_LIMIT=30] -->
     <string name="widget_category_battery">電池</string>

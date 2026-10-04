@@ -318,4 +318,8 @@
     <string name="trust_apps_no_lock_error">Bitte richte eine sichere Displaysperre ein, um den App-Zugriff einzuschränken</string>
     <string name="trust_apps_help">Hilfe</string>
     <string name="trust_apps_info_hidden">Versteckte Apps und ihre Widgets werden in der App-Übersicht ausgeblendet</string>
+
+    <!-- App pinning -->
+    <string name="task_menu_item_unlock">Anheftung aufheben</string>
+    <string name="task_menu_item_lock">App anheften</string>
 </resources>

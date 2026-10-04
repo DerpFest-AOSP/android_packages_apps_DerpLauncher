@@ -181,9 +181,9 @@
     <string name="pref_scroll_vibration_title">滚动时振动</string>
     <string name="pref_scroll_vibration_summary">如果支持，在最近任务页面滚动时提供振动反馈</string>
 
-    <!-- Task lock -->
-    <string name="task_menu_item_unlock">解锁</string>
-    <string name="task_menu_item_lock">锁定</string>
+    <!-- App pinning -->
+    <string name="task_menu_item_unlock">取消固定应用</string>
+    <string name="task_menu_item_lock">固定应用</string>
 
     <!-- A widget category label for grouping widgets related to battery. [CHAR_LIMIT=30] -->
     <string name="widget_category_battery">电池</string>
