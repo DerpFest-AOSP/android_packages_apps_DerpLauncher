@@ -14,4 +14,26 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<icons></icons>
+<!--
+  Inbuilt monochrome (themed) icon map.
+
+  An entry applies only when that app's adaptive icon has no monochrome
+  layer of its own. Apps that ship one are left unchanged.
+
+  The vectors are Pixel Launcher artwork, Copyright Google LLC, taken from
+  Android 17 versionCode 907 (CANARY). They are not Apache-licensed and
+  are not relicensed by this file. See each themed_icon_*.xml.
+-->
+<icons>
+    <icon drawable="@drawable/themed_icon_recorder" package="com.google.android.apps.recorder" />
+    <icon drawable="@drawable/themed_icon_settings" package="com.android.settings" />
+    <icon drawable="@drawable/themed_icon_g_translate" package="com.google.android.apps.translate" />
+    <icon drawable="@drawable/themed_icon_gpay" package="com.google.android.apps.nbu.paisa.user" />
+    <icon drawable="@drawable/themed_icon_play_services" package="com.google.android.ims" />
+    <icon drawable="@drawable/themed_icon_gfit_health" package="com.google.android.apps.fitness" />
+    <icon drawable="@drawable/themed_icon_podcasts" package="com.google.android.apps.podcasts" />
+    <icon drawable="@drawable/themed_icon_pixeltips" package="com.google.android.apps.tips" />
+    <icon drawable="@drawable/themed_icon_wear_os" package="com.google.android.wearable.app" />
+    <icon drawable="@drawable/themed_icon_classroom" package="com.google.android.apps.classroom" />
+    <icon drawable="@drawable/themed_icon_nest" package="com.nest.android" />
+</icons>

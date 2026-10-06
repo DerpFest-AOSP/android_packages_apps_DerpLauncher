@@ -50,6 +50,9 @@ public class LauncherIconProvider extends ThirdPartyIconProvider {
     private static final String TAG = "LIconProvider";
     private static final Map<String, ThemeData> DISABLED_MAP = Collections.emptyMap();
 
+    /** Bump when the grayscale map changes so cached icons for those apps reload. */
+    private static final String THEMED_ICON_MAP_STATE = "themed-icon-map-v1";
+
     private Map<String, ThemeData> mThemedIconMap;
 
     protected final ThemeManager mThemeManager;
@@ -84,7 +87,14 @@ public class LauncherIconProvider extends ThirdPartyIconProvider {
     @Override
     public PersistedItemState getStateForApp(ApplicationInfo info) {
         // Force one refresh of rasters made before pack artwork was drawn as-is.
-        return super.getStateForApp(info).withAdditionalValues("icon-pack-artwork-v1");
+        PersistedItemState state = super.getStateForApp(info)
+                .withAdditionalValues("icon-pack-artwork-v1");
+        // The theme preference is already in the cache key. The fallback map is not,
+        // so apps that gain an inbuilt monochrome icon must be named here too.
+        if (info != null && getThemedIconMap().containsKey(info.packageName)) {
+            state = state.withAdditionalValues(THEMED_ICON_MAP_STATE);
+        }
+        return state;
     }
 
     private Map<String, ThemeData> getThemedIconMap() {
