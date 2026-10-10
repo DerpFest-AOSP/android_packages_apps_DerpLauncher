@@ -113,6 +113,11 @@ public class IconPickerBottomSheet extends AbstractSlideInView<BaseActivity> {
         mKey = key;
         mCallback = callback;
         mTitle.setText(R.string.app_info_custom_icon_title);
+        // Draw the sheet through the navbar. Padding keeps the list above the nav buttons;
+        // the background still fills the padding.
+        int bottomInset = mActivityContext.getDeviceProfile().getInsets().bottom;
+        mContent.setPadding(mContent.getPaddingLeft(), mContent.getPaddingTop(),
+                mContent.getPaddingRight(), bottomInset);
         showPackList();
         attachToContainer();
         post(this::applySheetBlur);
