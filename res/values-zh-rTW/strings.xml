@@ -19,98 +19,92 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Launcher3</string>
-    <string name="work_folder_name">工作</string>
-    <string name="activity_not_found">應用程式未安裝。</string>
-    <string name="activity_not_available">應用程式無法使用</string>
-    <string name="safemode_shortcut_error">安全模式下已停用下載的應用程式</string>
-    <string name="safemode_widget_error">安全模式下已停用小工具</string>
-    <string name="shortcut_not_available">捷徑無法使用</string>
-    <string name="home_screen">主畫面</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="set_default_home_app">在「設定」中將 <xliff:g id="launcher_name" example="Launcher3">%1$s</xliff:g> 設為預設主畫面應用程式</string>
-    <string name="recent_task_option_split_screen">分割螢幕</string>
-    <string name="recent_task_option_aspect_ratio">更改長寬比</string>
-    <string name="split_app_info_accessibility">%1$s 的應用程式資訊</string>
-    <string name="split_app_usage_settings">%1$s 的使用設定</string>
-    <string name="close_task_accessibility">關閉 %1$s</string>
-    <string name="new_window_option_taskbar">新視窗</string>
-    <string name="manage_windows_option_taskbar">管理視窗</string>
-    <string name="close_app_taskbar">關閉</string>
-    <string name="save_app_pair">儲存應用程式對</string>
+    <string name="app_name" msgid="649227358658669779">Launcher3</string>
+    <string name="work_folder_name" msgid="3753320833950115786">工作</string>
+    <string name="activity_not_found" msgid="8071924732094499514">應用程式未安裝。</string>
+    <string name="activity_not_available" msgid="7456344436509528827">應用程式無法使用</string>
+    <string name="safemode_shortcut_error" msgid="9160126848219158407">安全模式下已停用下載的應用程式</string>
+    <string name="safemode_widget_error" msgid="4863470563535682004">安全模式下已停用小工具</string>
+    <string name="shortcut_not_available" msgid="2536503539825726397">捷徑無法使用</string>
+    <string name="home_screen" msgid="5629429142036709174">主畫面</string>
+    <string name="set_default_home_app" msgid="5808906607627586381">在「設定」中將 <xliff:g id="launcher_name" example="Launcher3">%1$s</xliff:g> 設為預設主畫面應用程式</string>
+    <string name="recent_task_option_split_screen" msgid="6690461455618725183">分割螢幕</string>
+    <string name="recent_task_option_aspect_ratio" msgid="7008605516391096989">更改長寬比</string>
+    <string name="split_app_info_accessibility" msgid="5475288491241414932">%1$s 的應用程式資訊</string>
+    <string name="split_app_usage_settings" msgid="7214375263347964093">%1$s 的使用設定</string>
+    <string name="close_task_accessibility" msgid="4765872229211282647">關閉 %1$s</string>
+    <string name="new_window_option_taskbar" msgid="6448780542727767211">新視窗</string>
+    <string name="manage_windows_option_taskbar" msgid="2294109489960654212">管理視窗</string>
+    <string name="close_app_taskbar" msgid="3238979263877091273">關閉</string>
+    <string name="save_app_pair" msgid="5647523853662686243">儲存應用程式對</string>
     <string name="app_pair_default_title" msgid="4045241727446873529">"<xliff:g id="APP1">%1$s</xliff:g> | <xliff:g id="APP2">%2$s</xliff:g>"</string>
-    <string name="app_pair_unlaunchable_at_screen_size">此裝置不支援此應用程式對</string>
-    <string name="app_pair_needs_unfold">請展開裝置以使用此應用程式對</string>
-    <string name="app_pair_not_available">應用程式對無法使用</string>
-    <string name="long_press_widget_to_add">長按以移動小工具。</string>
-    <string name="long_accessible_way_to_add">按住並點兩下以移動小工具，或使用自訂動作。</string>
-    <string name="widget_picker_widget_options_button_description">更多選項</string>
-    <string name="widget_picker_show_all_widgets_menu_item_title">顯示所有小工具</string>
-    <string name="widget_dims_format">%1$d \u00d7 %2$d</string>
-    <string name="widget_accessible_dims_format">寬 %1$d 高 %2$d</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="widget_preview_context_description"><xliff:g id="widget_name" example="Calendar month view">%1$s</xliff:g> 小工具</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="widget_preview_name_and_dims_content_description">
-            <xliff:g id="widget_name" example="Calendar month view">%1$s</xliff:g> 小工具，寬 %2$d 高 %3$d
-        </string>
-    <string name="add_item_request_drag_hint">按住小工具即可在主畫面上移動它</string>
-    <string name="add_to_home_screen">新增至主畫面</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="added_to_home_screen_accessibility_text">已將 <xliff:g id="widget_name" example="Calendar month view">%1$s</xliff:g> 小工具新增至主畫面</string>
-    <string name="suggested_widgets_header_title">建議</string>
-    <string name="productivity_widget_recommendation_category_label">必備工具</string>
-    <string name="news_widget_recommendation_category_label">新聞與雜誌</string>
-    <string name="entertainment_widget_recommendation_category_label">娛樂</string>
-    <string name="social_widget_recommendation_category_label">社群</string>
-    <string name="others_widget_recommendation_category_label">為您推薦</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="widget_picker_right_pane_accessibility_title">右側為 <xliff:g id="selected_header" example="Calendar">%1$s</xliff:g> 小工具，左側為搜尋與選項</string>
-    <string name="widgets_count">
-            {count, plural, =1{# 個小工具} other{# 個小工具}}
-        </string>
-    <string name="shortcuts_count">
-            {count, plural, =1{# 個捷徑} other{# 個捷徑}}
-        </string>
+    <string name="app_pair_unlaunchable_at_screen_size" msgid="3446551575502685376">此裝置不支援此應用程式對</string>
+    <string name="app_pair_needs_unfold" msgid="4588897528143807002">請展開裝置以使用此應用程式對</string>
+    <string name="app_pair_not_available" msgid="3556767440808032031">應用程式對無法使用</string>
+    <string name="long_press_widget_to_add" msgid="3587712543577675817">長按以移動小工具。</string>
+    <string name="long_accessible_way_to_add" msgid="2733588281439571974">輕觸兩下並按住，以移動小工具或使用自訂動作。</string>
+    <string name="widget_picker_widget_options_button_description" msgid="4770099264476852363">更多選項</string>
+    <string name="widget_picker_show_all_widgets_menu_item_title" msgid="9023638224586908119">顯示所有小工具</string>
+    <string name="widget_dims_format" msgid="2370757736025621599">%1$d \u00d7 %2$d</string>
+    <string name="widget_accessible_dims_format" msgid="3640149169885301790">寬 %1$d 高 %2$d</string>
+    <string name="widget_preview_context_description" msgid="9045841361655787574"><xliff:g id="widget_name" example="Calendar month view">%1$s</xliff:g> 小工具</string>
+    <string name="widget_preview_name_and_dims_content_description" msgid="8489038126122831595"><xliff:g id="widget_name" example="Calendar month view">%1$s</xliff:g> 小工具，寬 %2$d 高 %3$d</string>
+    <string name="add_item_request_drag_hint" msgid="8730547755622776606">按住小工具即可在主畫面上移動它</string>
+    <string name="add_to_home_screen" msgid="9168649446635919791">新增至主畫面</string>
+    <string name="added_to_home_screen_accessibility_text" msgid="4451545765448884415">已將 <xliff:g id="widget_name" example="Calendar month view">%1$s</xliff:g> 小工具新增至主畫面</string>
+    <string name="suggested_widgets_header_title" msgid="1844314680798145222">建議</string>
+    <string name="productivity_widget_recommendation_category_label" msgid="3811812719618323750">必備工具</string>
+    <string name="news_widget_recommendation_category_label" msgid="6756167867113741310">新聞與雜誌</string>
+    <string name="entertainment_widget_recommendation_category_label" msgid="3973107268630717874">娛樂</string>
+    <string name="social_widget_recommendation_category_label" msgid="689147679536384717">社群</string>
+    <string name="others_widget_recommendation_category_label" msgid="5555987036267226245">為您推薦</string>
+    <string name="widget_picker_right_pane_accessibility_title" msgid="1673313931455067502">右側為 <xliff:g id="selected_header" example="Calendar">%1$s</xliff:g> 小工具，左側為搜尋與選項</string>
+    <string name="widgets_count" msgid="6467746476364652096">{count, plural, =1{# 個小工具} other{# 個小工具}}</string>
+    <string name="shortcuts_count" msgid="8471715556199592381">{count, plural, =1{# 個捷徑} other{# 個捷徑}}</string>
     <string name="widgets_and_shortcuts_count" msgid="7209136747878365116">"<xliff:g id="WIDGETS_COUNT">%1$s</xliff:g>、<xliff:g id="SHORTCUTS_COUNT">%2$s</xliff:g>"</string>
-    <string name="widget_button_text">小工具</string>
-    <string name="no_widgets_available">小工具與捷徑無法使用</string>
-    <string name="no_search_results">找不到任何小工具或捷徑</string>
-    <string name="widgets_full_sheet_personal_tab">個人</string>
-    <string name="widgets_full_sheet_work_tab">工作</string>
-    <string name="widget_category_conversations">對話</string>
-    <string name="widget_category_note_taking">筆記</string>
-    <string name="widget_cell_tap_to_show_add_button_label">顯示新增按鈕</string>
-    <string name="widget_cell_tap_to_hide_add_button_label">隱藏新增按鈕</string>
-    <string name="widget_add_button_label">新增</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="widget_add_button_content_description">新增 <xliff:g id="widget_name" example="Calendar month view">%1$s</xliff:g> 小工具</string>
-    <string name="widgets_list_expand_button_label">顯示全部</string>
-    <string name="widgets_list_expand_button_content_description">顯示所有小工具</string>
-    <string name="widgets_list_expanded">正在顯示所有小工具</string>
-    <string name="reconfigurable_widget_education_tip">點擊以更改小工具設定</string>
-    <string name="widget_reconfigure_button_content_description">更改小工具設定</string>
-    <string name="all_apps_search_bar_hint">搜尋應用程式</string>
-    <string name="all_apps_loading_message">載入應用程式\u2026</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="all_apps_no_search_results">找不到符合「<xliff:g id="query" example="Android">%1$s</xliff:g>」的應用程式</string>
-    <string name="label_application">應用程式</string>
-    <string name="all_apps_label">所有應用程式</string>
-    <string name="all_apps_list_label">應用程式列表</string>
-    <string name="notifications_header">通知</string>
-    <string name="long_press_shortcut_to_add">長按以移動捷徑。</string>
-    <string name="long_accessible_way_to_add_shortcut">按住並點兩下以移動捷徑，或使用自訂動作。</string>
-    <string name="out_of_space">主畫面空間不足</string>
-    <string name="hotseat_out_of_space">常用列已無空間</string>
-    <string name="all_apps_button_label">應用程式列表</string>
-    <string name="all_apps_search_results">搜尋結果</string>
-    <string name="all_apps_button_personal_label">個人應用程式列表</string>
-    <string name="all_apps_button_work_label">工作應用程式列表</string>
-    <string name="remove_drop_target_label">移除</string>
-    <string name="uninstall_drop_target_label">解除安裝</string>
-    <string name="app_info_drop_target_label">應用程式資訊</string>
-    <string name="install_private_system_shortcut_label">以私人模式安裝</string>
-    <string name="uninstall_private_system_shortcut_label">解除安裝應用程式</string>
-    <string name="install_drop_target_label">安裝</string>
-    <string name="dismiss_prediction_label">不要建議此應用程式</string>
-    <string name="pin_prediction">釘選建議</string>
-    <string name="bubble">氣泡</string>
+    <string name="widget_button_text" msgid="2880537293434387943">小工具</string>
+    <string name="no_widgets_available" msgid="4337693382501046170">小工具與捷徑無法使用</string>
+    <string name="no_search_results" msgid="3787956167293097509">找不到任何小工具或捷徑</string>
+    <string name="widgets_full_sheet_personal_tab" msgid="2743540105607120182">個人</string>
+    <string name="widgets_full_sheet_work_tab" msgid="3767150027110633765">工作</string>
+    <string name="widget_category_conversations" msgid="8894438636213590446">對話</string>
+    <string name="widget_category_note_taking" msgid="3469689394504266039">筆記</string>
+    <string name="widget_cell_tap_to_show_add_button_label" msgid="4354194214317043581">顯示新增按鈕</string>
+    <string name="widget_cell_tap_to_hide_add_button_label" msgid="6117805205101555997">隱藏新增按鈕</string>
+    <string name="widget_add_button_label" msgid="2761267068711937179">新增</string>
+    <string name="widget_add_button_content_description" msgid="1810530016360039643">新增 <xliff:g id="widget_name" example="Calendar month view">%1$s</xliff:g> 小工具</string>
+    <string name="widgets_list_expand_button_label" msgid="7912016136574932622">顯示全部</string>
+    <string name="widgets_list_expand_button_content_description" msgid="4600513860973450888">顯示所有小工具</string>
+    <string name="widgets_list_expanded" msgid="7374857868788557730">正在顯示所有小工具</string>
+    <string name="reconfigurable_widget_education_tip" msgid="6336962690888067057">點擊以更改小工具設定</string>
+    <string name="widget_reconfigure_button_content_description" msgid="8811472721881205250">更改小工具設定</string>
+    <string name="all_apps_search_bar_hint" msgid="1390553134053255246">搜尋應用程式</string>
+    <string name="all_apps_loading_message" msgid="5813968043155271636">載入應用程式\u2026</string>
+    <string name="all_apps_no_search_results" msgid="3200346862396363786">找不到符合「<xliff:g id="query" example="Android">%1$s</xliff:g>」的應用程式</string>
+    <string name="label_application" msgid="8531721983832654978">應用程式</string>
+    <string name="all_apps_label" msgid="5015784846527570951">所有應用程式</string>
+    <string name="all_apps_list_label" msgid="5106226764073070906">應用程式列表</string>
+    <string name="notifications_header" msgid="1404149926117359025">通知</string>
+    <string name="long_press_shortcut_to_add" msgid="5405328730817637737">長按以移動捷徑。</string>
+    <string name="long_accessible_way_to_add_shortcut" msgid="2199537273817090740">輕觸兩下並按住，以移動捷徑或使用自訂動作。</string>
+    <string name="out_of_space" msgid="6455557115204099579">主畫面空間不足</string>
+    <string name="hotseat_out_of_space" msgid="7448809638125333693">常用列已無空間</string>
+    <string name="all_apps_button_label" msgid="8130441508702294465">應用程式列表</string>
+    <string name="all_apps_search_results" msgid="5889367432531296759">搜尋結果</string>
+    <string name="all_apps_button_personal_label" msgid="1315764287305224468">個人應用程式列表</string>
+    <string name="all_apps_button_work_label" msgid="7270707118948892488">工作應用程式列表</string>
+    <string name="remove_drop_target_label" msgid="7812859488053230776">移除</string>
+    <string name="uninstall_drop_target_label" msgid="4722034217958379417">解除安裝</string>
+    <string name="app_info_drop_target_label" msgid="692894985365717661">應用程式資訊</string>
+    <string name="install_private_system_shortcut_label" msgid="1616889277073184841">安裝至私人空間</string>
+    <string name="uninstall_private_system_shortcut_label" msgid="8423460530441627982">解除安裝應用程式</string>
+    <string name="install_drop_target_label" msgid="2539096853673231757">安裝</string>
+    <string name="dismiss_prediction_label" msgid="3357562989568808658">不要建議此應用程式</string>
+    <string name="pin_prediction" msgid="4196423321649756498">釘選建議</string>
+    <string name="bubble" msgid="3072951361014076670">氣泡</string>
     <string name="enable_app_lock" msgid="5606772593969266718">"啟用應用程式鎖定"</string>
     <string name="disable_app_lock" msgid="2252606435270354961">"停用應用程式鎖定"</string>
-    <string name="widget_settings">設定</string>
+    <string name="widget_settings" msgid="5280157748464495511">設定</string>
     <string name="add_to_taskbar" msgid="1442306985857150792">"加到工作列"</string>
     <string name="remove_from_taskbar" msgid="5817026706030273018">"從工作列移除"</string>
     <string name="no_room_in_taskbar" msgid="6885243748717395469">"工作列沒有空間"</string>
@@ -130,153 +124,146 @@
     <string name="actions_popup_menu_button_description" msgid="4224192559473869722">"顯示動作選單"</string>
     <string name="shortcuts_popup_menu_button_description" msgid="7566698511556454634">"顯示應用程式捷徑選單"</string>
     <string name="pause_app_label" msgid="6796255881727695791">"暫停應用程式"</string>
-    <string name="permlab_install_shortcut">安裝捷徑</string>
-    <string name="permdesc_install_shortcut">允許應用程式在無需使用者干預的情況下新增捷徑。</string>
-    <string name="permlab_read_settings">讀取主畫面設定與捷徑</string>
-    <string name="permdesc_read_settings">允許應用程式讀取主畫面中的設定與捷徑。</string>
-    <string name="permlab_write_settings">寫入主畫面設定與捷徑</string>
-    <string name="permdesc_write_settings">允許應用程式變更主畫面中的設定與捷徑。</string>
-    <string name="gadget_error_text">無法載入小工具</string>
-    <string name="gadget_setup_text">小工具設定</string>
-    <string name="gadget_complete_setup_text">點擊以完成設定</string>
-    <string name="uninstall_system_app_text">這是系統應用程式，無法解除安裝。</string>
-    <string name="folder_hint_text">編輯名稱</string>
-    <string name="paginate_left">向左分頁</string>
-    <string name="paginate_right">向右分頁</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="disabled_app_label">已停用 <xliff:g id="app_name" example="Messenger">%1$s</xliff:g></string>
-    <string name="dotted_app_label">
-            {count, plural,
-                =1      {{app_name} 有 # 則通知}
-                other   {{app_name} 有 # 則通知}
-            }
-        </string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="hotseat_prediction_content_description">建議應用程式：<xliff:g id="title" example="Chrome">%1$s</xliff:g></string>
-    <string name="default_scroll_format">第 %1$d 頁，共 %2$d 頁</string>
-    <string name="workspace_scroll_format">主畫面第 %1$d 頁，共 %2$d 頁</string>
-    <string name="workspace_new_page">新主畫面頁面</string>
-    <string name="app_running_state_description">使用中</string>
-    <string name="app_minimized_state_description">已最小化</string>
-    <string name="folder_opened">資料夾已開啟，寬 %1$d 高 %2$d</string>
-    <string name="folder_tap_to_close">點擊以關閉資料夾</string>
-    <string name="folder_tap_to_rename">點擊以儲存重新命名</string>
-    <string name="folder_closed">資料夾已關閉</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="folder_renamed">資料夾已重新命名為 <xliff:g id="name" example="Games">%1$s</xliff:g></string>
+    <string name="permlab_install_shortcut" msgid="5632423390354674437">安裝捷徑</string>
+    <string name="permdesc_install_shortcut" msgid="923466509822011139">允許應用程式在無需使用者干預的情況下新增捷徑。</string>
+    <string name="permlab_read_settings" msgid="5136500343007704955">讀取主畫面設定與捷徑</string>
+    <string name="permdesc_read_settings" msgid="4208061150510996676">允許應用程式讀取主畫面中的設定與捷徑。</string>
+    <string name="permlab_write_settings" msgid="4820028712156303762">寫入主畫面設定與捷徑</string>
+    <string name="permdesc_write_settings" msgid="726859348127868466">允許應用程式變更主畫面中的設定與捷徑。</string>
+    <string name="gadget_error_text" msgid="740356548025791839">無法載入小工具</string>
+    <string name="gadget_setup_text" msgid="8348374825537681407">小工具設定</string>
+    <string name="gadget_complete_setup_text" msgid="309040266978007925">點擊以完成設定</string>
+    <string name="uninstall_system_app_text" msgid="4172046090762920660">這是系統應用程式，無法解除安裝。</string>
+    <string name="folder_hint_text" msgid="5174843001373488816">編輯名稱</string>
+    <string name="paginate_left" msgid="7915437358451360433">向左分頁</string>
+    <string name="paginate_right" msgid="6701038155201975878">向右分頁</string>
+    <string name="disabled_app_label" msgid="6673129024321402780">已停用 <xliff:g id="app_name" example="Messenger">%1$s</xliff:g></string>
+    <string name="dotted_app_label" msgid="1865617679843363410">{count, plural, =1      {{app_name} 有 # 則通知} other   {{app_name} 有 # 則通知} }</string>
+    <string name="hotseat_prediction_content_description" msgid="7680403232742709704">建議應用程式：<xliff:g id="title" example="Chrome">%1$s</xliff:g></string>
+    <string name="default_scroll_format" msgid="7475544710230993317">第 %1$d 頁，共 %2$d 頁</string>
+    <string name="workspace_scroll_format" msgid="8458889198184077399">主畫面第 %1$d 頁，共 %2$d 頁</string>
+    <string name="workspace_new_page" msgid="257366611030256142">新主畫面頁面</string>
+    <string name="app_running_state_description" msgid="5645053189564740904">使用中</string>
+    <string name="app_minimized_state_description" msgid="710740620044902509">已最小化</string>
+    <string name="folder_opened" msgid="94695026776264709">資料夾已開啟，寬 <xliff:g id="width" example="5">%1$d</xliff:g> 高 <xliff:g id="height" example="3">%2$d</xliff:g></string>
+    <string name="folder_tap_to_close" msgid="4625795376335528256">點擊以關閉資料夾</string>
+    <string name="folder_tap_to_rename" msgid="4017685068016979677">點擊以儲存重新命名</string>
+    <string name="folder_closed" msgid="4100806530910930934">資料夾已關閉</string>
+    <string name="folder_renamed" msgid="1794088362165669656">資料夾已重新命名為 <xliff:g id="name" example="Games">%1$s</xliff:g></string>
     <string name="folder_type_name" msgid="506043307348675355">"資料夾"</string>
     <string name="app_folder_type_name" msgid="149643408248060284">"應用程式資料夾"</string>
     <string name="apps_folder_name_format_exact" msgid="891345161390366700">"<xliff:g id="TYPE">%1$s</xliff:g>：<xliff:g id="NAME">%2$s</xliff:g>，<xliff:g id="SIZE">%3$d</xliff:g> 個項目"</string>
     <string name="apps_folder_name_format_exact_with_dot" msgid="7729062268048931718">"<xliff:g id="TYPE">%1$s</xliff:g>：<xliff:g id="NAME">%2$s</xliff:g>，<xliff:g id="SIZE">%3$d</xliff:g> 個項目，有通知"</string>
     <string name="apps_folder_name_format_overflow" msgid="4614729357510054194">"<xliff:g id="TYPE">%1$s</xliff:g>：<xliff:g id="NAME">%2$s</xliff:g>，<xliff:g id="SIZE">%3$d</xliff:g> 個以上的項目"</string>
     <string name="apps_folder_name_format_overflow_with_dot" msgid="4738681518782744688">"<xliff:g id="TYPE">%1$s</xliff:g>：<xliff:g id="NAME">%2$s</xliff:g>，<xliff:g id="SIZE">%3$d</xliff:g> 個以上的項目，有通知"</string>
-    <string name="unnamed_folder">未命名的資料夾</string>
+    <string name="unnamed_folder" msgid="2420192029474044442">未命名的資料夾</string>
     <string name="files_folder_name" msgid="7712191128817533622">"文件夾：<xliff:g id="NAME">%1$s</xliff:g>"</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="app_pair_name_format">應用程式對：<xliff:g id="app1" example="Chrome">%1$s</xliff:g> 與 <xliff:g id="app2" example="YouTube">%2$s</xliff:g></string>
-    <string name="styles_wallpaper_button_text">桌布與樣式</string>
-    <string name="edit_home_screen">編輯主畫面</string>
-    <string name="settings_button_text">主畫面設定</string>
-    <string name="msg_disabled_by_admin">已被您的管理員停用</string>
+    <string name="app_pair_name_format" msgid="8134106404716224054">應用程式對：<xliff:g id="app1" example="Chrome">%1$s</xliff:g> 與 <xliff:g id="app2" example="YouTube">%2$s</xliff:g></string>
+    <string name="styles_wallpaper_button_text" msgid="8216961355289236794">桌布與樣式</string>
+    <string name="edit_home_screen" msgid="8947858375782098427">編輯主畫面</string>
+    <string name="settings_button_text" msgid="8873672322605444408">主畫面設定</string>
+    <string name="msg_disabled_by_admin" msgid="6898038085516271325">已被您的管理員停用</string>
     <string name="settings_home_organizer" msgid="5184766349407080054">"主畫面整理工具"</string>
-    <string name="allow_rotation_desc">當手機旋轉時</string>
+    <string name="allow_rotation_desc" msgid="8662546029078692509">當手機旋轉時</string>
     <string name="compose_developer_options_section" msgid="8211460486549952595">"Jetpack Compose"</string>
     <string name="enable_composition_tracing_title" msgid="8989606591739368424">"啟用組合追蹤功能"</string>
     <string name="enable_composition_tracing_desc" msgid="7187566039216492405">"在總覽中擷取 Perfetto 追蹤記錄時，啟用組合追蹤功能"</string>
-    <string name="landscape_mode_title">橫向模式</string>
-    <string name="landscape_mode_desc">將主畫面設定為橫向模式</string>
-    <string name="notification_dots_title">通知圓點</string>
-    <string name="notification_dots_desc_on">開啟</string>
-    <string name="notification_dots_desc_off">關閉</string>
-    <string name="title_missing_notification_access">需要通知存取權</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="msg_missing_notification_access">若要顯示通知圓點，請開啟 <xliff:g id="name" example="My App">%1$s</xliff:g> 的應用程式通知</string>
-    <string name="title_change_settings">變更設定</string>
-    <string name="notification_dots_service_title">顯示通知圓點</string>
-    <string name="developer_options_title">開發人員選項</string>
-    <string name="auto_add_shortcuts_label">將應用程式圖示新增至主畫面</string>
-    <string name="auto_add_shortcuts_description">適用於新安裝的應用程式</string>
-    <string name="package_state_unknown">未知</string>
-    <string name="abandoned_clean_this">移除</string>
-    <string name="abandoned_search">搜尋</string>
-    <string name="abandoned_promises_title">此應用程式未安裝</string>
-    <string name="abandoned_promise_explanation">此圖示對應的應用程式未安裝。
-            您可以將其移除，或搜尋並手動安裝該應用程式。
-        </string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="app_installing_title">正在安裝 <xliff:g id="name" example="Messenger">%1$s</xliff:g>，已完成 %2$s</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="app_downloading_title">正在下載 <xliff:g id="name" example="Messenger">%1$s</xliff:g>，已完成 %2$s</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="app_waiting_download_title">正在等待安裝 <xliff:g id="name" example="Messenger">%1$s</xliff:g></string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="app_archived_title"><xliff:g id="name" example="Messenger">%1$s</xliff:g> 已封存。</string>
-    <string name="app_unarchiving_action">下載並還原</string>
-    <string name="dialog_update_title">需要更新應用程式</string>
-    <string name="dialog_update_message">此圖示對應的應用程式尚未更新。您可以手動更新以重新啟用此捷徑，或是移除該圖示。</string>
-    <string name="dialog_update">更新</string>
-    <string name="dialog_remove">移除</string>
-    <string name="widgets_list">小工具列表</string>
-    <string name="widgets_list_closed">已關閉小工具列表</string>
-    <string name="action_add_to_workspace">新增至主畫面</string>
-    <string name="action_move_here">將項目移至此處</string>
-    <string name="item_removed">已移除項目</string>
-    <string name="undo">復原</string>
-    <string name="action_move">移動項目</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="move_to_empty_cell_description">移至 <xliff:g id="string" example="Home screen 2 of 4">%3$s</xliff:g> 的第 %1$s 列第 %2$s 欄</string>
-    <string name="move_to_position">移至位置 %1$s</string>
-    <string name="move_to_hotseat_position">移至常用列位置 %1$s</string>
-    <string name="item_moved">項目已移動</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="add_to_folder">新增至資料夾：<xliff:g id="name" example="Games">%1$s</xliff:g></string>
+    <string name="landscape_mode_title" msgid="5138814555934843926">橫向模式</string>
+    <string name="landscape_mode_desc" msgid="3085236452297838664">將主畫面設定為橫向模式</string>
+    <string name="notification_dots_title" msgid="9062440428204120317">通知圓點</string>
+    <string name="notification_dots_desc_on" msgid="1679848116452218908">開啟</string>
+    <string name="notification_dots_desc_off" msgid="1760796511504341095">關閉</string>
+    <string name="title_missing_notification_access" msgid="7503287056163941064">需要通知存取權</string>
+    <string name="msg_missing_notification_access" msgid="281113995110910548">若要顯示通知圓點，請開啟 <xliff:g id="name" example="My App">%1$s</xliff:g> 的應用程式通知</string>
+    <string name="title_change_settings" msgid="1376365968844349552">變更設定</string>
+    <string name="notification_dots_service_title" msgid="4284221181793592871">顯示通知圓點</string>
+    <string name="developer_options_title" msgid="700788437593726194">開發人員選項</string>
+    <string name="auto_add_shortcuts_label" msgid="4926805029653694105">將應用程式圖示新增至主畫面</string>
+    <string name="auto_add_shortcuts_description" msgid="7117251166066978730">適用於新安裝的應用程式</string>
+    <string name="package_state_unknown" msgid="7592128424511031410">未知</string>
+    <string name="abandoned_clean_this" msgid="7610119707847920412">移除</string>
+    <string name="abandoned_search" msgid="891119232568284442">搜尋</string>
+    <string name="abandoned_promises_title" msgid="7096178467971716750">此應用程式未安裝</string>
+    <string name="abandoned_promise_explanation" msgid="3990027586878167529">此圖示對應的應用程式未安裝。 您可以將其移除，或搜尋並手動安裝該應用程式。</string>
+    <string name="app_installing_title" msgid="5864044122733792085">正在安裝 <xliff:g id="name" example="Messenger">%1$s</xliff:g>，已完成 <xliff:g id="progress" example="30%">%2$s</xliff:g></string>
+    <string name="app_downloading_title" msgid="8336702962104482644">正在下載 <xliff:g id="name" example="Messenger">%1$s</xliff:g>，已完成 <xliff:g id="progress" example="30%">%2$s</xliff:g></string>
+    <string name="app_waiting_download_title" msgid="7053938513995617849">正在等待安裝 <xliff:g id="name" example="Messenger">%1$s</xliff:g></string>
+    <string name="app_archived_title" msgid="4548283110222420708"><xliff:g id="name" example="Messenger">%1$s</xliff:g> 已封存。</string>
+    <string name="app_unarchiving_action" msgid="5736107006413929484">下載並還原</string>
+    <string name="dialog_update_title" msgid="114234265740994042">需要更新應用程式</string>
+    <string name="dialog_update_message" msgid="4176784553982226114">此圖示對應的應用程式尚未更新。您可以手動更新以重新啟用此捷徑，或是移除該圖示。</string>
+    <string name="dialog_update" msgid="2178028071796141234">更新</string>
+    <string name="dialog_remove" msgid="6510806469849709407">移除</string>
+    <string name="widgets_list" msgid="796804551140113767">小工具列表</string>
+    <string name="widgets_list_closed" msgid="6141506579418771922">已關閉小工具列表</string>
+    <string name="action_add_to_workspace" msgid="215894119683164916">新增至主畫面</string>
+    <string name="action_move_here" msgid="2170188780612570250">將項目移至此處</string>
+    <string name="item_removed" msgid="851119963877842327">已移除項目</string>
+    <string name="undo" msgid="4151576204245173321">復原</string>
+    <string name="action_move" msgid="4339390619886385032">移動項目</string>
+    <string name="move_to_empty_cell_description" msgid="5254852678218206889">移至 <xliff:g id="string" example="Home screen 2 of 4">%3$s</xliff:g> 的第 <xliff:g id="number" example="1">%1$s</xliff:g> 列第 <xliff:g id="number" example="1">%2$s</xliff:g> 欄</string>
+    <string name="move_to_position" msgid="6750008980455459790">移至位置 <xliff:g id="number" example="1">%1$s</xliff:g></string>
+    <string name="move_to_hotseat_position" msgid="6295412897075147808">移至常用列位置 <xliff:g id="number" example="1">%1$s</xliff:g></string>
+    <string name="item_moved" msgid="4606538322571412879">項目已移動</string>
+    <string name="add_to_folder" msgid="9040534766770853243">新增至資料夾：<xliff:g id="name" example="Games">%1$s</xliff:g></string>
     <string name="add_to_folder_with_position" msgid="4457486890869662">"新增至<xliff:g id="NAME">%1$s</xliff:g>資料夾。「<xliff:g id="STRING">%4$s</xliff:g>」中的第 <xliff:g id="NUMBER_0">%2$s</xliff:g> 列，第 <xliff:g id="NUMBER_1">%3$s</xliff:g> 欄"</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="add_to_folder_with_app">新增至包含 <xliff:g id="name" example="Messenger">%1$s</xliff:g> 的資料夾</string>
+    <string name="add_to_folder_with_app" msgid="4534929978967147231">新增至包含 <xliff:g id="name" example="Messenger">%1$s</xliff:g> 的資料夾</string>
     <string name="add_to_folder_with_app_with_position" msgid="6670979489897093325">"新增至含有<xliff:g id="NAME">%1$s</xliff:g>的資料夾。「<xliff:g id="STRING">%4$s</xliff:g>」中的第 <xliff:g id="NUMBER_0">%2$s</xliff:g> 列，第 <xliff:g id="NUMBER_1">%3$s</xliff:g> 欄"</string>
-    <string name="added_to_folder">已將項目新增至資料夾</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="create_folder_with">與下列項目建立資料夾：<xliff:g id="name" example="Game">%1$s</xliff:g></string>
+    <string name="added_to_folder" msgid="4793259502305558003">已將項目新增至資料夾</string>
+    <string name="create_folder_with" msgid="4050141361160214248">與下列項目建立資料夾：<xliff:g id="name" example="Game">%1$s</xliff:g></string>
     <string name="create_folder_with_position" msgid="3093164349445159115">"使用<xliff:g id="NAME">%1$s</xliff:g>建立資料夾。「<xliff:g id="STRING">%4$s</xliff:g>」中的第 <xliff:g id="NUMBER_0">%2$s</xliff:g> 列，第 <xliff:g id="NUMBER_1">%3$s</xliff:g> 欄"</string>
-    <string name="folder_created">已建立資料夾</string>
-    <string name="action_move_to_workspace">移至主畫面</string>
-    <string name="action_resize">調整大小</string>
-    <string name="action_increase_width">增加寬度</string>
-    <string name="action_increase_height">增加高度</string>
-    <string name="action_decrease_width">減少寬度</string>
-    <string name="action_decrease_height">減少高度</string>
+    <string name="folder_created" msgid="6409794597405184510">已建立資料夾</string>
+    <string name="action_move_to_workspace" msgid="39528912300293768">移至主畫面</string>
+    <string name="action_resize" msgid="1802976324781771067">調整大小</string>
+    <string name="action_increase_width" msgid="8773715375078513326">增加寬度</string>
+    <string name="action_increase_height" msgid="459390020612501122">增加高度</string>
+    <string name="action_decrease_width" msgid="1374549771083094654">減少寬度</string>
+    <string name="action_decrease_height" msgid="282377193880900022">減少高度</string>
     <string name="resize_handle_start" msgid="431073846880883794">"左側大小調整控點"</string>
     <string name="resize_handle_top" msgid="280799523356834542">"頂部大小調整控點"</string>
     <string name="resize_handle_end" msgid="8411240534474246075">"右側大小調整控點"</string>
     <string name="resize_handle_bottom" msgid="4217171801060928429">"底部大小調整控點"</string>
     <string name="tap_to_show_resize_buttons" msgid="964815552123289232">"顯示大小調整按鈕"</string>
-    <string name="widget_resized">小工具已調整為寬 %1$s 高 %2$s</string>
-    <string name="action_deep_shortcut">捷徑選單</string>
-    <string xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" name="widget_frame_name"><xliff:g id="string" example="Clock">%1$s</xliff:g> 的小工具調整大小框</string>
-    <string name="action_close">關閉</string>
-    <string name="action_dismiss_notification">關閉通知</string>
-    <string name="accessibility_close">關閉</string>
-    <string name="all_apps_personal_tab">個人</string>
-    <string name="all_apps_work_tab">工作</string>
-    <string name="all_apps_personal_tab_content_description">個人應用程式標籤</string>
-    <string name="all_apps_work_tab_content_description">工作應用程式標籤</string>
-    <string name="work_profile_toggle_label">工作資料夾</string>
-    <string name="work_profile_edu_work_apps">工作應用程式會有標記，且 IT 管理員可查看這些應用程式</string>
-    <string name="work_apps_paused_title">已暫停工作應用程式</string>
-    <string name="work_apps_paused_info_body">您將不會收到來自工作應用程式的通知</string>
-    <string name="work_apps_paused_body">您的工作應用程式將無法傳送通知、耗用電池電力或存取您的位置</string>
-    <string name="work_apps_paused_telephony_unavailable_body">您將不會收到來自工作應用程式的通話、簡訊或通知</string>
-    <string name="work_apps_paused_edu_banner">工作應用程式會有標記，且 IT 管理員可查看這些應用程式</string>
-    <string name="work_apps_paused_edu_accept">我知道了</string>
-    <string name="work_apps_pause_btn_text">暫停工作應用程式</string>
-    <string name="work_apps_enable_btn_text">解除暫停</string>
-    <string name="work_scheduler_button_content_description">工作應用程式排程</string>
-    <string name="developer_options_filter_hint">篩選</string>
-    <string name="remote_action_failed">失敗：%1$s</string>
-    <string name="private_space_label">私人空間</string>
-    <string name="private_space_secondary_label">點擊以設定或開啟</string>
-    <string name="ps_container_title">私人</string>
-    <string name="ps_container_settings">私人空間設定</string>
-    <string name="ps_container_unlock_button_content_description">私人空間，已解鎖。</string>
-    <string name="ps_container_lock_button_content_description">私人空間，已鎖定。</string>
-    <string name="ps_container_lock_title">鎖定</string>
-    <string name="ps_container_transition">私人空間轉換中</string>
-    <string name="ps_add_button_label">安裝</string>
-    <string name="ps_app_label_override">新增</string>
-    <string name="ps_add_button_content_description">安裝應用程式至私人空間</string>
-    <string name="ps_app_content_description">將檔案等項目新增至私人空間</string>
-    <string name="circle_shape_title">圓形</string>
-    <string name="square_shape_title">方形</string>
-    <string name="four_sided_cookie_shape_title">四邊餅乾</string>
-    <string name="seven_sided_cookie_shape_title">七邊餅乾</string>
-    <string name="arch_shape_title">拱門</string>
+    <string name="widget_resized" msgid="9130327887929620">小工具已調整為寬 <xliff:g id="number" example="2">%1$s</xliff:g> 高 <xliff:g id="number" example="1">%2$s</xliff:g></string>
+    <string name="action_deep_shortcut" msgid="4766835855579976045">捷徑選單</string>
+    <string name="widget_frame_name" msgid="8782828448471444270"><xliff:g id="string" example="Clock">%1$s</xliff:g> 的小工具調整大小框</string>
+    <string name="action_close" msgid="1077760267194136901">關閉</string>
+    <string name="action_dismiss_notification" msgid="5909461085055959187">關閉通知</string>
+    <string name="accessibility_close" msgid="2277148124685870734">關閉</string>
+    <string name="all_apps_personal_tab" msgid="4190252696685155002">個人</string>
+    <string name="all_apps_work_tab" msgid="4884822796154055118">工作</string>
+    <string name="all_apps_personal_tab_content_description" msgid="6286808898381807242">個人應用程式標籤</string>
+    <string name="all_apps_work_tab_content_description" msgid="3835637212347968316">工作應用程式標籤</string>
+    <string name="work_profile_toggle_label" msgid="3081029915775481146">工作資料夾</string>
+    <string name="work_profile_edu_work_apps" msgid="7895468576497746520">工作應用程式會有標記，且 IT 管理員可查看這些應用程式</string>
+    <string name="work_apps_paused_title" msgid="3040901117349444598">已暫停工作應用程式</string>
+    <string name="work_apps_paused_info_body" msgid="1687828929959237477">您將不會收到來自工作應用程式的通知</string>
+    <string name="work_apps_paused_body" msgid="261634750995824906">您的工作應用程式將無法傳送通知、耗用電池電力或存取您的位置</string>
+    <string name="work_apps_paused_telephony_unavailable_body" msgid="8358872357502756790">您將不會收到來自工作應用程式的通話、簡訊或通知</string>
+    <string name="work_apps_paused_edu_banner" msgid="8872412121608402058">工作應用程式會有標記，且 IT 管理員可查看這些應用程式</string>
+    <string name="work_apps_paused_edu_accept" msgid="6377476824357318532">我知道了</string>
+    <string name="work_apps_pause_btn_text" msgid="4669288269140620646">暫停工作應用程式</string>
+    <string name="work_apps_enable_btn_text" msgid="1736198302467317371">解除暫停</string>
+    <string name="work_scheduler_button_content_description" msgid="917340740986764967">工作應用程式排程</string>
+    <string name="developer_options_filter_hint" msgid="5896817443635989056">篩選</string>
+    <string name="remote_action_failed" msgid="1383965239183576790">失敗：<xliff:g id="what" example="Pause">%1$s</xliff:g></string>
+    <string name="private_space_label" msgid="2359721649407947001">私人空間</string>
+    <string name="private_space_secondary_label" msgid="9203933341714508907">點擊以設定或開啟</string>
+    <string name="ps_container_title" msgid="4391796149519594205">私人</string>
+    <string name="ps_container_settings" msgid="6059734123353320479">私人空間設定</string>
+    <string name="ps_container_unlock_button_content_description" msgid="9181551784092204234">私人空間，已解鎖。</string>
+    <string name="ps_container_lock_button_content_description" msgid="5961993384382649530">私人空間，已鎖定。</string>
+    <string name="ps_container_lock_title" msgid="2640257399982364682">鎖定</string>
+    <string name="ps_container_transition" msgid="8667331812048014412">私人空間轉換中</string>
+    <string name="ps_add_button_label" msgid="8127988716897128773">安裝</string>
+    <string name="ps_app_label_override" msgid="6876160706011676804">新增</string>
+    <string name="ps_add_button_content_description" msgid="3254274107740952556">安裝應用程式至私人空間</string>
+    <string name="ps_app_content_description" msgid="1129133475892816226">將檔案等項目新增至私人空間</string>
+    <string name="circle_shape_title" msgid="3582075061179674565">圓形</string>
+    <string name="square_shape_title" msgid="3085320803149569308">方形</string>
+    <string name="four_sided_cookie_shape_title" msgid="3275212586290522151">四邊餅乾</string>
+    <string name="seven_sided_cookie_shape_title" msgid="4862560582029671668">七邊餅乾</string>
+    <string name="arch_shape_title" msgid="2213843822192871318">拱門</string>
     <string name="create_new_folder_button_text" msgid="4037052463794735069">"新增資料夾"</string>
     <string name="default_new_folder_name" msgid="8821062664729412079">"新資料夾"</string>
     <string name="home_screen_files_rename_dialog_clear_button" msgid="1516608063079626727">"清除"</string>
