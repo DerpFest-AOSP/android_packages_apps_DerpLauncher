@@ -393,6 +393,9 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             } else {
                 mSearchContainer.setVisibility(View.GONE);
             }
+        } else if (LauncherPrefs.APP_DRAWER_SORT_MODE.getSharedPrefKey().equals(key)) {
+            mAH.get(MAIN).mAppsList.onAppsUpdated();
+            mAH.get(WORK).mAppsList.onAppsUpdated();
         }
     }
 
