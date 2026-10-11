@@ -48,6 +48,11 @@
     <!-- Settings message explaining when the -1 screen is available on an RTL device. [CHAR LIMIT=100] -->
     <string name="msg_minus_one_on_right">從主畫面往左滑動時</string>
 
+    <string name="two_line_labels_title">兩行標籤</string>
+    <string name="two_line_labels_summary">允許應用程式抽屜中的較長名稱換行顯示為兩行</string>
+    <string name="notification_badge_counts_title">通知數量</string>
+    <string name="notification_badge_counts_summary">在應用程式圖示上顯示未讀數量，而非通知圓點</string>
+    <string name="notification_badge_counts_disabled_summary">請先啟用通知圓點</string>
     <!-- All apps themed icons -->
     <string name="pref_themed_icons_title">主題圖示</string>
     <string name="pref_themed_icons_summary">跟隨主畫面上使用的主題圖示</string>
@@ -57,6 +62,11 @@
     <string name="drawer_open_keyboard_title">滑動以開始搜尋</string>
     <string name="drawer_open_keyboard_summary">當應用程式抽屜可見時自動開啟鍵盤</string>
 
+    <string name="rename_app_label">重新命名</string>
+    <string name="rename_app_title">重新命名應用程式</string>
+    <string name="rename_app_reset">重設</string>
+    <string name="app_info_custom_icon_title">自訂圖示</string>
+    <string name="icon_picker_search_hint">搜尋圖示</string>
     <!-- Trust apps -->
     <string name="trust_apps_manager_name">隱藏的應用程式</string>
     <string name="trust_apps_auth_manager">解鎖以管理隱藏的應用程式</string>
@@ -83,6 +93,14 @@
     <string name="label_voice_search">語音搜尋</string>
     <string name="label_ai_mode">AI 模式</string>
     <string name="ai_mode_not_available">AI 功能無法使用</string>
+    <string name="first_page_pinned_item_title">資訊一覽</string>
+    <string name="first_page_pinned_item_subtitle">配套小工具會顯示在這裡</string>
+    <string name="pref_enable_smartspacer_title">在主畫面顯示 Smartspacer</string>
+    <string name="pref_enable_smartspacer_summary">以 Smartspacer 取代第一頁主畫面的狀態區域</string>
+    <string name="pref_show_at_a_glance_title">顯示資訊一覽</string>
+    <string name="pref_show_at_a_glance_summary">在第一頁主畫面頂端顯示狀態小工具</string>
+    <string name="pref_show_search_bar_title">顯示搜尋列</string>
+    <string name="pref_show_search_bar_summary">在底部固定區顯示 Google 搜尋列</string>
     <string name="dock_ai_music_search_title">音樂搜尋</string>
     <string name="dock_ai_music_search_summary">按下 AI 模式按鈕時啟動音樂搜尋</string>
     <string name="dock_search_title">Google 搜尋列</string>
@@ -105,6 +123,8 @@
     <string name="allow_wallpaper_scrolling">桌布捲動</string>
     <string name="allow_wallpaper_scrolling_summary">多頁面時的桌布捲動效果</string>
 
+    <string name="wallpaper_carousel_lockscreen_title">套用至鎖定畫面</string>
+    <string name="wallpaper_carousel_lockscreen_summary">同時將所選桌布套用至鎖定畫面</string>
     <!-- Wallpaper zooming -->
     <string name="allow_wallpaper_zooming">桌布縮放</string>
     <string name="allow_wallpaper_zooming_summary">在使用抽屜或最近應用程式時放大或縮小桌布</string>
@@ -162,6 +182,21 @@
     <string name="drawer_search_title">應用程式搜尋列</string>
     <string name="drawer_search_summary">應用程式抽屜頂部的搜尋列</string>
 
+    <string name="all_apps_dark_text_title">深色應用程式標籤</string>
+    <string name="all_apps_dark_text_summary">一律以深色文字顯示應用程式抽屜中的名稱</string>
+    <string name="drawer_style_title">應用程式抽屜樣式</string>
+    <string name="drawer_style_normal">一般（底部面板）</string>
+    <string name="drawer_style_legacy">傳統全螢幕</string>
+    <string name="drawer_style_list">清單樣式</string>
+    <string name="drawer_style_oneui">OneUI 樣式（分頁）</string>
+    <string name="app_drawer_sort_mode_title">應用程式抽屜排序</string>
+    <string name="app_drawer_sort_alphabetical">依字母順序排序</string>
+    <string name="app_drawer_sort_install_date">依安裝日期排序</string>
+    <string name="app_drawer_sort_usage">依使用量排序</string>
+    <string name="pref_app_drawer_custom_color_title">自訂背景顏色</string>
+    <string name="pref_app_drawer_custom_color_summary">為應用程式抽屜背景使用自訂顏色</string>
+    <string name="pref_app_drawer_custom_color_light_title">淺色主題顏色</string>
+    <string name="pref_app_drawer_custom_color_dark_title">深色主題顏色</string>
     <!-- Parallax -->
     <string name="short_parallax_title">允許短視差捲動</string>
     <string name="short_parallax_summary">在頁面較少時啟用完整桌布捲動效果，而非裁剪桌布</string>
