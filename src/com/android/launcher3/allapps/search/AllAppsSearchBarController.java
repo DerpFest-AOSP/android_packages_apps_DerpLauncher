@@ -118,18 +118,28 @@ public class AllAppsSearchBarController
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-        if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_GO || (
-                actionId == EditorInfo.IME_NULL && event != null
-                        && event.getAction() == KeyEvent.ACTION_DOWN)) {
+        if (isLaunchAction(actionId, event)) {
             if (actionId == EditorInfo.IME_NULL) {
                 Log.i(TAG, "User pressed ENTER key");
             } else {
                 Log.i(TAG, "User tapped ime search button");
             }
-            // selectFocusedView should return SearchTargetEvent that is passed onto onClick
+            // Launch whichever app is the first result right now, not a later search update.
             return mLauncher.getAppsView().getMainAdapterProvider().launchHighlightedItem();
         }
         return false;
+    }
+
+    private static boolean isLaunchAction(int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH
+                || actionId == EditorInfo.IME_ACTION_GO
+                || actionId == EditorInfo.IME_ACTION_DONE
+                || actionId == EditorInfo.IME_ACTION_SEND) {
+            return true;
+        }
+        // Hardware and some soft keyboards report Enter as an unspecified action.
+        return actionId == EditorInfo.IME_NULL && event != null
+                && event.getAction() == KeyEvent.ACTION_DOWN;
     }
 
     @Override
