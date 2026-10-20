@@ -51,10 +51,12 @@ public class IconPack {
 
     int getDrawableId(PackageManager pm, ComponentName name)
             throws PackageManager.NameNotFoundException, IOException, XmlPullParserException {
-        Data data = getData(pm);
-        Resources res = getResources(pm);
-        String pkg = getPackage();
-        return res.getIdentifier(data.drawables.get(name), "drawable", pkg);
+        return getDrawableId(pm, getData(pm).drawables.get(name));
+    }
+
+    int getDrawableId(PackageManager pm, String drawableName)
+            throws PackageManager.NameNotFoundException {
+        return getResources(pm).getIdentifier(drawableName, "drawable", getPackage());
     }
 
     public List<IconEntry> getAllIconEntries(PackageManager pm)
@@ -84,6 +86,8 @@ public class IconPack {
 
     static class Data {
         final Map<ComponentName, String> drawables = new HashMap<>();
+        // Matches apps whose launcher activity was renamed after the pack listed it.
+        final Map<String, String> packageDrawables = new HashMap<>();
         final Map<ComponentName, String> calendarPrefix = new HashMap<>();
         final SparseArray<Clock> clockMetadata = new SparseArray<>();
         final List<Integer> iconBacks = new ArrayList<>();

@@ -209,6 +209,17 @@ public class IconPackManager extends BroadcastReceiver {
                                 data.clockMetadata.get(drawableId));
                     }
                 }
+                String packageDrawable =
+                        data.packageDrawables.get(key.componentName.getPackageName());
+                if (packageDrawable != null
+                        && hasSingleLauncherActivity(key.componentName.getPackageName())) {
+                    int drawableId = pack.getDrawableId(mContext.getPackageManager(),
+                            packageDrawable);
+                    if (drawableId != 0) {
+                        return new IconResolverExternal(mContext.getPackageManager(), pack.getAi(),
+                                drawableId, null, data.clockMetadata.get(drawableId));
+                    }
+                }
                 if (data.hasMasking()) {
                     return new IconResolverMasked(dbContext, data, pack.getAi(), key.hashCode());
                 }
@@ -219,6 +230,17 @@ public class IconPackManager extends BroadcastReceiver {
             IconDatabase.resetForComponent(dbContext, key);
         }
         return null;
+    }
+
+    /**
+     * A pack icon can only stand in for an unlisted activity when it cannot be confused with
+     * another entry point of the same app, such as the Weather activity of the Google app.
+     */
+    private boolean hasSingleLauncherActivity(String packageName) {
+        Intent intent = new Intent(Intent.ACTION_MAIN)
+                .addCategory(Intent.CATEGORY_LAUNCHER)
+                .setPackage(packageName);
+        return mContext.getPackageManager().queryIntentActivities(intent, 0).size() == 1;
     }
 
     public List<IconPack.IconEntry> getAllIconEntries(String packPackage) {

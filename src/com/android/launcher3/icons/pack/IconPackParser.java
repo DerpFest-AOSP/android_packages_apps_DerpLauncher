@@ -135,6 +135,7 @@ class IconPackParser {
             ComponentName componentName = parseComponent(component);
             if (componentName != null) {
                 iconPack.drawables.put(componentName, drawable);
+                iconPack.packageDrawables.putIfAbsent(componentName.getPackageName(), drawable);
             }
         }
     }
