@@ -1,8 +1,11 @@
+/*
+ * SPDX-FileCopyrightText: DerpFest AOSP
+ * SPDX-License-Identifier: Apache-2.0
+ */
 package com.android.launcher3.popup
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.animation.LayoutTransition
 import android.animation.ValueAnimator
 import android.app.WallpaperManager
 import android.content.Context
@@ -13,6 +16,7 @@ import android.graphics.Outline
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewOutlineProvider
@@ -31,6 +35,7 @@ import com.android.launcher3.util.Themes
 import java.io.File
 import kotlin.math.max
 import kotlin.math.roundToInt
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -80,12 +85,6 @@ constructor(
     private var selectAnimator: ValueAnimator? = null
     private var revealView: WallpaperRevealView? = null
     private var selectionBusy = false
-    private val chipTransition =
-        LayoutTransition().apply {
-            enableTransitionType(LayoutTransition.CHANGING)
-            setDuration(resources.getInteger(android.R.integer.config_shortAnimTime).toLong())
-            setInterpolator(LayoutTransition.CHANGING, WallpaperRevealView.WIPE_INTERPOLATOR)
-        }
 
     init {
         orientation = HORIZONTAL
@@ -93,6 +92,10 @@ constructor(
         clipToPadding = true
         clipChildren = true
         addView(loadingView)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
         observeWallpapers()
     }
 
@@ -101,8 +104,14 @@ constructor(
         scope.launch {
             wallpapers =
                 withContext(Dispatchers.IO) {
-                    runCatching { WallpaperService.INSTANCE.get(context).getTopWallpapers() }
-                        .getOrDefault(emptyList())
+                    try {
+                        WallpaperService.INSTANCE.get(context).getTopWallpapers()
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Unable to load wallpaper history", e)
+                        emptyList()
+                    }
                 }
 
             if (!isAttachedToWindow) return@launch
@@ -118,7 +127,6 @@ constructor(
 
     private fun displayWallpapers(wallpapers: List<Wallpaper>) {
         selectAnimator?.cancel()
-        layoutTransition = null
         removeAllViews()
         this.wallpapers = wallpapers
 
@@ -139,7 +147,6 @@ constructor(
             loadWallpaperImage(wallpaper, chip.getChildAt(0) as ImageView)
         }
         loadingView.visibility = GONE
-        layoutTransition = chipTransition
     }
 
     /**
@@ -197,6 +204,8 @@ constructor(
                 layoutParams =
                     LayoutParams(width, height).apply { marginStart = if (index > 0) itemGap else 0 }
                 tag = wallpaper
+                contentDescription = context.getString(R.string.styles_wallpaper_button_text)
+                isSelected = selected
             }
 
         val image =
@@ -237,7 +246,7 @@ constructor(
         val nextFrame = previewBitmap(chip)
         animateSelection(previousIndex, index)
         applyJob?.cancel()
-        startReveal(chip, wallpaper, previousFrame, nextFrame, previousIndex, index)
+        startReveal(chip, previousFrame, nextFrame, previousIndex, index)
         applyWallpaper(wallpaper, previousIndex, index, revealView)
     }
 
@@ -248,7 +257,6 @@ constructor(
 
     private fun startReveal(
         chip: FrameLayout,
-        wallpaper: Wallpaper,
         previousFrame: Bitmap?,
         nextFrame: Bitmap?,
         previousIndex: Int,
@@ -261,16 +269,18 @@ constructor(
         }
         val reveal = WallpaperRevealView(context)
         revealView = reveal
-        reveal.play(chip, previousFrame, nextFrame) { success ->
-            if (revealView === reveal) {
-                revealView = null
+        val started =
+            reveal.play(chip, previousFrame, nextFrame) { success ->
+                if (revealView === reveal) {
+                    revealView = null
+                }
+                selectionBusy = false
+                if (!success && isAttachedToWindow && currentItemIndex == newIndex) {
+                    currentItemIndex = previousIndex
+                    animateSelection(newIndex, previousIndex)
+                }
             }
-            selectionBusy = false
-            if (!success && isAttachedToWindow && currentItemIndex == newIndex) {
-                currentItemIndex = previousIndex
-                animateSelection(newIndex, previousIndex)
-            }
-        }
+        if (!started) revealView = null
     }
 
     private fun applyWallpaper(
@@ -283,8 +293,23 @@ constructor(
         applyJob =
             persistScope.launch {
                 val success =
-                    WallpaperService.INSTANCE.get(context.applicationContext)
-                        .applyWallpaper(wallpaper, WallpaperManager.getInstance(context))
+                    try {
+                        WallpaperService.INSTANCE.get(context.applicationContext)
+                            .applyWallpaper(wallpaper, WallpaperManager.getInstance(context))
+                    } catch (e: CancellationException) {
+                        reveal?.cancelAndRemove()
+                        throw e
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Unable to apply wallpaper", e)
+                        false
+                    }
+                if (success) {
+                    // Keep the visible order until the menu is reopened, including on resize.
+                    wallpapers =
+                        wallpapers.mapIndexed { itemIndex, saved ->
+                            saved.copy(rank = if (itemIndex == newIndex) 0 else itemIndex + 1)
+                        }
+                }
                 if (reveal != null) {
                     reveal.onApplyFinished(success)
                 } else {
@@ -318,11 +343,6 @@ constructor(
 
         animateCheck(fromIndex, toIndex)
 
-        for (i in 0 until childCount) {
-            (getChildAt(i) as FrameLayout).layoutParams.width = toWidths[i]
-        }
-        requestLayout()
-
         selectAnimator?.cancel()
         selectAnimator =
             ValueAnimator.ofFloat(0f, 1f).apply {
@@ -333,12 +353,17 @@ constructor(
                     val t = animation.animatedValue as Float
                     for (i in 0 until childCount) {
                         val chip = getChildAt(i) as FrameLayout
+                        chip.isSelected = i == toIndex
+                        chip.layoutParams.width =
+                            Utilities.mapRange(t, fromWidths[i].toFloat(), toWidths[i].toFloat())
+                                .roundToInt()
                         chipOutline(chip)?.let { outline ->
                             outline.radius =
                                 Utilities.mapRange(t, fromRadii[i], toRadii[i])
                             chip.getChildAt(0)?.invalidateOutline()
                         }
                     }
+                    requestLayout()
                 }
                 addListener(
                     object : AnimatorListenerAdapter() {
@@ -355,6 +380,7 @@ constructor(
         val fromChip = getChildAt(fromIndex) as? FrameLayout
         val toChip = getChildAt(toIndex) as? FrameLayout
         fromChip?.findViewWithTag<View>(CHECK_TAG)?.let { check ->
+            check.animate().withEndAction(null).cancel()
             check
                 .animate()
                 .alpha(0f)
@@ -366,14 +392,15 @@ constructor(
                 .start()
         }
         toChip?.let { chip ->
-            if (chip.findViewWithTag<View>(CHECK_TAG) != null) return
             val check =
-                createCheckBadge().apply {
-                    alpha = 0f
-                    scaleX = 0.6f
-                    scaleY = 0.6f
-                }
-            chip.addView(check)
+                chip.findViewWithTag<View>(CHECK_TAG)
+                    ?: createCheckBadge().apply {
+                        alpha = 0f
+                        scaleX = 0.6f
+                        scaleY = 0.6f
+                    }
+            check.animate().withEndAction(null).cancel()
+            if (check.parent == null) chip.addView(check)
             check
                 .animate()
                 .alpha(1f)
@@ -424,7 +451,7 @@ constructor(
     private fun loadWallpaperImage(wallpaper: Wallpaper, imageView: ImageView) {
         val path = wallpaper.imagePath
         scope.launch {
-            val bitmap = decodePreview(path, inSampleSize = 2)
+            val bitmap = decodePreview(path)
             if (!isAttachedToWindow) return@launch
             if (bitmap != null) {
                 imageView.alpha = 0f
@@ -434,12 +461,24 @@ constructor(
         }
     }
 
-    private suspend fun decodePreview(path: String, inSampleSize: Int): Bitmap? =
+    private suspend fun decodePreview(path: String): Bitmap? =
         withContext(Dispatchers.IO) {
             runCatching {
                     val file = File(path)
                     if (!file.exists() || !file.canRead()) return@runCatching null
-                    val opts = BitmapFactory.Options().apply { this.inSampleSize = inSampleSize }
+                    val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+                    BitmapFactory.decodeFile(file.path, bounds)
+                    val target =
+                        max(
+                                resources.displayMetrics.widthPixels,
+                                resources.displayMetrics.heightPixels,
+                            )
+                            .coerceAtLeast(1)
+                    var sample = 1
+                    while (max(bounds.outWidth, bounds.outHeight) / sample > target) {
+                        sample *= 2
+                    }
+                    val opts = BitmapFactory.Options().apply { inSampleSize = sample }
                     BitmapFactory.decodeFile(file.path, opts)
                 }
                 .getOrNull()
@@ -462,13 +501,20 @@ constructor(
         super.onDetachedFromWindow()
         selectAnimator?.cancel()
         scope.cancel()
-        // Leave persistScope + reveal running so the wipe can cover setBitmap().
+        // Finish applying even if the menu closes; then release the independent scope.
+        val applying = applyJob
+        if (applying?.isActive == true) {
+            applying.invokeOnCompletion { persistScope.cancel() }
+        } else {
+            persistScope.cancel()
+        }
         removeAllViews()
     }
 
     private data class ChipSizes(val selectedWidth: Int, val pillWidth: Int)
 
     companion object {
+        private const val TAG = "WallpaperCarouselView"
         private const val CHECK_TAG = "wallpaper_check"
         private const val CHECK_ANIM_MS = 200L
     }
