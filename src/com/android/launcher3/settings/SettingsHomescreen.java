@@ -16,6 +16,10 @@
 
 package com.android.launcher3.settings;
 
+import static com.android.launcher3.util.Executors.MAIN_EXECUTOR;
+import static com.android.launcher3.util.Executors.MODEL_EXECUTOR;
+
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.preference.Preference;
@@ -23,6 +27,7 @@ import androidx.preference.Preference;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
+import com.android.launcher3.WorkspaceFreeMode;
 import com.android.launcher3.derpfest.DerpFestUtils;
 
 /**
@@ -50,9 +55,24 @@ public class SettingsHomescreen extends SettingsCategoryActivity {
             if (LauncherPrefs.ENABLE_MINUS_ONE.getSharedPrefKey().equals(preference.getKey())) {
                 return DerpFestUtils.isPackageEnabled(getContext(), SEARCH_PACKAGE);
             }
-            return super.initPreference(preference);
+            if (WorkspaceFreeMode.PREF_KEY.equals(preference.getKey())) {
+                preference.setOnPreferenceChangeListener((pref, newValue) -> {
+                    boolean enabled = Boolean.TRUE.equals(newValue);
+                    Context app = getContext().getApplicationContext();
+                    LauncherPrefs.get(app).putSync(
+                            LauncherPrefs.WORKSPACE_FREE_MODE.to(enabled));
+                    MODEL_EXECUTOR.execute(() -> {
+                        LauncherAppState.getInstance(app).getModel()
+                                .getModelDbController().switchActiveStore();
+                        MAIN_EXECUTOR.execute(() ->
+                                LauncherAppState.getInstance(app).getModel()
+                                        .forceReload("workspace_free_mode"));
+                    });
+                    return true;
+                });
+                return true;
+            }            return super.initPreference(preference);
         }
-
         @Override
         public void onStart() {
             super.onStart();

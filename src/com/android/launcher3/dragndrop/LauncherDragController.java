@@ -33,6 +33,7 @@ import com.android.launcher3.DropTarget;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
+import com.android.launcher3.WorkspaceFreeMode;
 import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.widget.util.WidgetDragScaleUtils;
 
@@ -69,7 +70,9 @@ public class LauncherDragController extends DragController {
 
         final Resources res = mLauncher.getResources();
         final float scalePx;
-        if (originalView.getViewType() == DraggableView.DRAGGABLE_WIDGET) {
+        if (WorkspaceFreeMode.isEnabled(mLauncher)) {
+            scalePx = 0f;
+        } else if (originalView.getViewType() == DraggableView.DRAGGABLE_WIDGET) {
             scalePx = mIsInPreDrag ? 0f : getWidgetDragScalePx(drawable, view, dragInfo);
         } else {
             scalePx = mIsInPreDrag ? res.getDimensionPixelSize(R.dimen.pre_drag_view_scale) : 0f;

@@ -37,6 +37,10 @@
     <string name="settings_lock_layout_summary_off">Icons and widgets can be added, removed and moved on the homescreen</string>
     <string name="settings_edit_widgets_error">It\'s not possible to add widgets to the home screen</string>
 
+    <!-- Free layout -->
+    <string name="workspace_free_mode_title">Free layout</string>
+    <string name="workspace_free_mode_description">Place widgets and home screen icons anywhere, without snapping to the grid</string>
+
     <!-- Two-line labels in app drawer -->
     <string name="two_line_labels_title">Two-line labels</string>
     <string name="two_line_labels_summary">Allow long app names to wrap to two lines in the drawer</string>

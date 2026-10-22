@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Free layout -->
+    <string name="workspace_free_mode_title">自由模式</string>
+    <string name="workspace_free_mode_description">開啟後，所有小工具與主畫面圖示將可以不受網格限制任意擺放</string>
+
+</resources>

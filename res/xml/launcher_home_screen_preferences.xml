@@ -30,6 +30,14 @@
             android:summaryOn="@string/settings_lock_layout_summary_on"
             android:summaryOff="@string/settings_lock_layout_summary_off" />
 
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_workspace_free_mode"
+            android:persistent="true"
+            android:title="@string/workspace_free_mode_title"
+            android:summary="@string/workspace_free_mode_description" />
+
+
         <!--
           LAUNCHER_ADD_NEW_APPS_TO_HOME_SCREEN_ENABLED(613)
           LAUNCHER_ADD_NEW_APPS_TO_HOME_SCREEN_DISABLED(614)
