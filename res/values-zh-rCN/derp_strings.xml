@@ -38,6 +38,10 @@
     <!-- Free layout -->
     <string name="workspace_free_mode_title">自由模式</string>
     <string name="workspace_free_mode_description">打开后，所有小组件与桌面图标将可以不受网格限制的任意摆放</string>
+    <string name="workspace_free_mode_clear_title">清空自由模式数据</string>
+    <string name="workspace_free_mode_clear_description">清空在自由模式下所做的所有更改，不会影响普通模式下的桌面哦</string>
+    <string name="workspace_free_mode_clear_warning">自由模式下的桌面布局将被删除，且无法恢复。普通模式的桌面不会受到影响。</string>
+    <string name="workspace_free_mode_clear_confirm">清空</string>
 
     <!-- Settings title to show Google Now at -1 screen on launcher. [CHAR LIMIT=50] -->
     <string name="title_show_google_app">滑动以访问 Google 应用程序</string>

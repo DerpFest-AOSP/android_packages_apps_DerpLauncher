@@ -37,6 +37,11 @@
             android:title="@string/workspace_free_mode_title"
             android:summary="@string/workspace_free_mode_description" />
 
+        <Preference
+            android:key="pref_clear_workspace_free_mode"
+            android:title="@string/workspace_free_mode_clear_title"
+            android:summary="@string/workspace_free_mode_clear_description"
+            android:persistent="false" />
 
         <!--
           LAUNCHER_ADD_NEW_APPS_TO_HOME_SCREEN_ENABLED(613)

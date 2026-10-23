@@ -40,6 +40,10 @@
     <!-- Free layout -->
     <string name="workspace_free_mode_title">Free layout</string>
     <string name="workspace_free_mode_description">Place widgets and home screen icons anywhere, without snapping to the grid</string>
+    <string name="workspace_free_mode_clear_title">Clear free layout data</string>
+    <string name="workspace_free_mode_clear_description">Clears every change made in free layout. The normal home screen is left as it is.</string>
+    <string name="workspace_free_mode_clear_warning">Free-layout changes will be deleted and cannot be undone. The normal home screen is not affected.</string>
+    <string name="workspace_free_mode_clear_confirm">Clear</string>
 
     <!-- Two-line labels in app drawer -->
     <string name="two_line_labels_title">Two-line labels</string>

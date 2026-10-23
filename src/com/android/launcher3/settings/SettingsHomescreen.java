@@ -19,6 +19,7 @@ package com.android.launcher3.settings;
 import static com.android.launcher3.util.Executors.MAIN_EXECUTOR;
 import static com.android.launcher3.util.Executors.MODEL_EXECUTOR;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -71,8 +72,39 @@ public class SettingsHomescreen extends SettingsCategoryActivity {
                     return true;
                 });
                 return true;
-            }            return super.initPreference(preference);
+            }
+            if (WorkspaceFreeMode.PREF_CLEAR_KEY.equals(preference.getKey())) {
+                preference.setOnPreferenceClickListener(pref -> {
+                    Context context = getContext();
+                    if (context == null) {
+                        return true;
+                    }
+                    new AlertDialog.Builder(context)
+                            .setTitle(R.string.workspace_free_mode_clear_title)
+                            .setMessage(R.string.workspace_free_mode_clear_warning)
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .setPositiveButton(R.string.workspace_free_mode_clear_confirm,
+                                    (dialog, which) -> clearFreeLayoutStore(context))
+                            .show();
+                    return true;
+                });
+                return true;
+            }
+            return super.initPreference(preference);
         }
+
+        private void clearFreeLayoutStore(Context context) {
+            Context app = context.getApplicationContext();
+            MODEL_EXECUTOR.execute(() -> {
+                LauncherAppState.getInstance(app).getModel()
+                        .getModelDbController().clearFreeStore();
+                if (WorkspaceFreeMode.isEnabled(app)) {
+                    MAIN_EXECUTOR.execute(() -> LauncherAppState.getInstance(app).getModel()
+                            .forceReload("workspace_free_mode_clear"));
+                }
+            });
+        }
+
         @Override
         public void onStart() {
             super.onStart();
