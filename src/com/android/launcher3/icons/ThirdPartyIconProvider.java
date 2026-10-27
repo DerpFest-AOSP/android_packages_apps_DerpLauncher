@@ -7,6 +7,7 @@ import android.content.pm.PackageItemInfo;
 import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
 
+import com.android.launcher3.icons.pack.IconPackDrawable;
 import com.android.launcher3.icons.pack.IconResolver;
 import com.android.launcher3.util.ComponentKey;
 
@@ -28,7 +29,7 @@ public class ThirdPartyIconProvider extends IconProvider {
             if (icon != null) {
                 Drawable wrapped = ExtendedBitmapDrawable.wrap(
                         mContext.getResources(), icon, true);
-                return wrapped != null ? wrapped : icon;
+                return new IconPackDrawable(wrapped != null ? wrapped : icon);
             }
         }
         return super.getIcon(info, appInfo, iconDpi);

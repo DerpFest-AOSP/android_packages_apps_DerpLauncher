@@ -16,6 +16,7 @@
 package com.android.launcher3.icons;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.util.ArrayMap;
@@ -78,6 +79,12 @@ public class LauncherIconProvider extends ThirdPartyIconProvider {
         mSystemState = mSystemState.withTheme(
                 iconPack.isEmpty() ? themeCode : themeCode + ":" + iconPack,
                 mThemeManager.getIconState().isCircle());
+    }
+
+    @Override
+    public PersistedItemState getStateForApp(ApplicationInfo info) {
+        // Force one refresh of rasters made before pack artwork was drawn as-is.
+        return super.getStateForApp(info).withAdditionalValues("icon-pack-artwork-v1");
     }
 
     private Map<String, ThemeData> getThemedIconMap() {

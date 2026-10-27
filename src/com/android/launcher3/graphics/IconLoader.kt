@@ -37,6 +37,7 @@ import com.android.launcher3.icons.LauncherIconProvider
 import com.android.launcher3.icons.LauncherIcons
 import com.android.launcher3.icons.cache.CacheLookupFlag
 import com.android.launcher3.icons.cache.CachedObjectCachingLogic.loadFullResIcon
+import com.android.launcher3.icons.pack.IconPackDrawable
 import com.android.launcher3.model.data.ItemInfo
 import com.android.launcher3.model.data.ItemInfoWithIcon
 import com.android.launcher3.pm.UserCache
@@ -123,6 +124,10 @@ constructor(
         }
 
         if (mainIcon == null) {
+            return null
+        }
+        // Use the cached artwork instead of adaptive layers for drag and launch animations.
+        if (mainIcon is IconPackDrawable) {
             return null
         }
         var result: AdaptiveIconDrawable =
