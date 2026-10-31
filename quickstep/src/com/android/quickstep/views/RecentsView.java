@@ -6176,6 +6176,36 @@ public abstract class RecentsView<
         return mEnableOverlap;
     }
 
+    @Nullable
+    public TaskView findTopMostTaskUnderEvent(MotionEvent event) {
+        if (isModal()) {
+            return null;
+        }
+
+        TaskView best = null;
+        float bestZ = Float.NEGATIVE_INFINITY;
+        int bestIndex = Integer.MIN_VALUE;
+        final float eps = 1e-4f;
+        for (TaskView taskView : getTaskViews()) {
+            if (!isTaskViewVisible(taskView)) {
+                continue;
+            }
+            if (!mContainer.getDragLayer().isEventOverView(taskView, event)) {
+                continue;
+            }
+            float z = taskView.getZ();
+            int index = indexOfChild(taskView);
+            if (best == null
+                    || z > bestZ + eps
+                    || (Math.abs(z - bestZ) <= eps && index > bestIndex)) {
+                best = taskView;
+                bestZ = z;
+                bestIndex = index;
+            }
+        }
+        return best;
+    }
+
     public boolean isStackRecentsStyleActive() {
         return "staple".equals(mRecentsStyle)
                 || "ios".equals(mRecentsStyle)

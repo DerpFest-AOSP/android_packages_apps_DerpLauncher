@@ -115,10 +115,7 @@ constructor(
 
     private fun onActionDown(ev: MotionEvent): Boolean {
         taskBeingDragged =
-            recentsView.taskViews
-                .firstOrNull {
-                    recentsView.isTaskViewVisible(it) && container.dragLayer.isEventOverView(it, ev)
-                }
+            recentsView.findTopMostTaskUnderEvent(ev)
                 ?.also {
                     verticalFactor =
                         recentsView.pagedOrientationHandler.getTaskDragDisplacementFactor(isRtl)
