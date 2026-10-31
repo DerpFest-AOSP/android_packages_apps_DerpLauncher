@@ -221,11 +221,17 @@ constructor(
                 val lowerIndex = max(0, centerPageIndex - 2)
                 val upperIndex = centerPageIndex + 2
 
-                recentsView.children
-                    .drop(lowerIndex)
-                    .take(upperIndex - lowerIndex + 1)
-                    .filterIsInstance<TaskView>()
-                    .toList()
+                val window =
+                    recentsView.children
+                        .drop(lowerIndex)
+                        .take(upperIndex - lowerIndex + 1)
+                        .filterIsInstance<TaskView>()
+                        .toList()
+                if (recentsView.isStackRecentsStyleActive) {
+                    (window + taskViews.filter { recentsView.isTaskViewVisible(it) }).distinct()
+                } else {
+                    window
+                }
             }
 
         return visibleTaskViews

@@ -1442,6 +1442,10 @@ public abstract class RecentsView<
     }
 
     public boolean isTaskViewVisible(TaskView tv) {
+        if (isStackRecentsStyleActive() && !showAsGrid()
+                && !mContainer.getDeviceProfile().getDeviceProperties().isLargeScreen()) {
+            return isStackTaskWithinBounds(tv);
+        }
         if (showAsGrid()) {
             int screenStart = getPagedOrientationHandler().getPrimaryScroll(this);
             int screenEnd = screenStart + getPagedOrientationHandler().getMeasuredSize(this);
@@ -1450,6 +1454,15 @@ public abstract class RecentsView<
             // For now, just check if it's the active task or an adjacent task
             return Math.abs(indexOfChild(tv) - getNextPage()) <= 1;
         }
+    }
+
+    /** A stacked card stays visible while its transformed bounds still intersect the screen. */
+    private boolean isStackTaskWithinBounds(TaskView taskView) {
+        RectF bounds = new RectF(0f, 0f, taskView.getWidth(), taskView.getHeight());
+        taskView.getMatrix().mapRect(bounds);
+        bounds.offset(taskView.getLeft() - getScrollX(), taskView.getTop() - getScrollY());
+        return bounds.right > 0f && bounds.left < getWidth()
+                && bounds.bottom > 0f && bounds.top < getHeight();
     }
 
     public boolean isTaskViewFullyVisible(TaskView tv) {
@@ -2196,6 +2209,9 @@ public abstract class RecentsView<
         }
         if (mEnableOverlap) {
             updatePageOffsets();
+            if (fullscreenProgress == 0f && isStackRecentsStyleActive()) {
+                loadVisibleTaskData();
+            }
         }
     }
 
@@ -3949,6 +3965,9 @@ public abstract class RecentsView<
         mLastComputedTaskStartPushOutDistance = null;
         mLastComputedTaskEndPushOutDistance = null;
         updatePageOffsets();
+        if (isStackRecentsStyleActive()) {
+            loadVisibleTaskData();
+        }
         runActionOnRemoteHandles(
                 remoteTargetHandle -> remoteTargetHandle.getTaskViewSimulator()
                         .setScroll(getScrollOffset()));
