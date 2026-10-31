@@ -6182,9 +6182,7 @@ public abstract class RecentsView<
         float currentTrans = taskView.getPrimaryTaskOffsetTranslationProperty().get(taskView);
         if (dist < 0 && absDist > 0f) {
             float excess = absDist;
-            float squish = Math.min(excess, (float) (Math.sqrt(excess) * 7.5f));
-            float targetVisualDist = squish;
-            float pullBack = absDist - targetVisualDist;
+            float pullBack = getOxygenVisualPullBack(absDist, childSize);
             taskView.getPrimaryTaskOffsetTranslationProperty().set(taskView,
                     currentTrans + pullBack * overlapFactor);
 
@@ -6335,11 +6333,23 @@ public abstract class RecentsView<
             if (dist >= 0 || absDist <= 0f) {
                 return 0f;
             }
-            float squish = Math.min(absDist, (float) (Math.sqrt(absDist) * 7.5f));
-            float pullBack = absDist - squish;
-            return pullBack * overlapFactor;
+            return getOxygenVisualPullBack(absDist, childSize) * overlapFactor;
         }
         return 0f;
+    }
+
+    /**
+     * Maps scroll distance to a shorter on-screen distance so Oxygen cards keep a gap as they
+     * stack.
+     */
+    private static float getOxygenVisualPullBack(float absDist, float childSize) {
+        float bend = childSize * 0.02f;
+        if (bend <= 0f || absDist <= 0f) {
+            return 0f;
+        }
+        float visualDistance = 2f * absDist
+                / ((float) Math.sqrt(1f + absDist / bend) + 1f);
+        return absDist - visualDistance;
     }
 
     /**
