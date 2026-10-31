@@ -2852,7 +2852,7 @@ public abstract class RecentsView<
 
         // Live tile fights the stack transform. Capture a screenshot and finish the
         // recents animation once the gesture has settled in overview.
-        if (mEnableOverlap) {
+        if (mEnableOverlap && mEnableDrawingLiveTile) {
             switchToScreenshot(() -> finishRecentsAnimation(
                     /* toHome= */ true, /* shouldPip= */ false, /* onFinishComplete= */ null));
         }
@@ -6176,7 +6176,7 @@ public abstract class RecentsView<
     }
 
     public boolean isOverlapStyleActive() {
-        return mEnableOverlap;
+        return mEnableOverlap && mEnableDrawingLiveTile;
     }
 
     @Nullable
