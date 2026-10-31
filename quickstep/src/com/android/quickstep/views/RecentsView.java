@@ -1142,7 +1142,10 @@ public abstract class RecentsView<
 
     public void updateOverlapState() {
         mRecentsStyle = LauncherPrefs.RECENTS_STYLE.get(getContext());
-        mEnableOverlap = isStackRecentsStyleActive();
+        // Default is the plain carousel. Scale effect and the stack styles all own the
+        // live tile, so they share the overlap path. Large screens keep the AOSP path.
+        boolean largeScreen = mContainer.getDeviceProfile().getDeviceProperties().isLargeScreen();
+        mEnableOverlap = !largeScreen && !"default".equals(mRecentsStyle);
     }
 
     @Override
@@ -2855,8 +2858,8 @@ public abstract class RecentsView<
 
         mCurrentGestureEndTarget = null;
 
-        // Live tile fights the stack transform. Capture a screenshot and finish the
-        // recents animation once the gesture has settled in overview.
+        // Live tile fights the per-card scale and stack transforms. Capture a screenshot
+        // and finish the recents animation once the gesture has settled in overview.
         if (mEnableOverlap && mEnableDrawingLiveTile) {
             switchToScreenshot(() -> finishRecentsAnimation(
                     /* toHome= */ true, /* shouldPip= */ false, /* onFinishComplete= */ null));
@@ -3943,7 +3946,7 @@ public abstract class RecentsView<
         setImportantForAccessibility(isModal() ? IMPORTANT_FOR_ACCESSIBILITY_NO
                 : IMPORTANT_FOR_ACCESSIBILITY_AUTO);
         recalculateTaskViewScreenEdgeIntersections();
-        if (!mEnableOverlap && "stock".equals(mRecentsStyle)) {
+        if ("stock".equals(mRecentsStyle)) {
             doScrollScale();
         }
     }
@@ -5843,9 +5846,8 @@ public abstract class RecentsView<
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
         dispatchScrollChanged();
-        if (mEnableOverlap) {
-            updatePageOffsets();
-        } else if ("stock".equals(mRecentsStyle)) {
+        updatePageOffsets();
+        if ("stock".equals(mRecentsStyle)) {
             doScrollScale();
         }
     }
@@ -5873,7 +5875,7 @@ public abstract class RecentsView<
         if (!isPageScrollsInitialized()) {
             return;
         }
-        if (mEnableOverlap) {
+        if (isStackRecentsStyleActive()) {
             doStackScrollScale();
             return;
         }
@@ -5912,16 +5914,22 @@ public abstract class RecentsView<
             }
             if (!(child instanceof TaskView && mRemoteTargetHandles != null)) continue;
             TaskView tv = (TaskView) child;
+            float primaryScale = getPagedOrientationHandler().getPrimaryValue(
+                    tv.getScaleX(), tv.getScaleY());
+            float primaryTranslation = getPagedOrientationHandler().getPrimaryValue(
+                    tv.getTranslationX(), tv.getTranslationY());
             for (RemoteTargetHandle rth : mRemoteTargetHandles) {
                 TransformParams params = rth.getTransformParams();
                 RemoteAnimationTargets targets = params.getTargetSet();
                 for (int id : tv.getTaskIds()) {
                     if (targets != null && targets.findTask(id) != null) {
-                        rth.getTaskViewSimulator().scrollScale.value =
-                                getPagedOrientationHandler().getPrimaryValue(
-                                    tv.getScaleX(),
-                                    tv.getScaleY()
-                                );
+                        TaskViewSimulator simulator = rth.getTaskViewSimulator();
+                        // The card scale is applied through recentsViewScale. Leaving scrollScale
+                        // set would scale the live tile a second time.
+                        simulator.scrollScale.value = 1f;
+                        simulator.recentsViewScale.value = primaryScale;
+                        simulator.taskPrimaryTranslation.value = primaryTranslation;
+                        break;
                     }
                 }
             }

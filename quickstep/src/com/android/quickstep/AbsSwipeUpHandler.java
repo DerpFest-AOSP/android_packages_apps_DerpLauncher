@@ -2763,8 +2763,8 @@ public abstract class AbsSwipeUpHandler<
         if (!moveWindowWithRecentsScroll()) {
             return;
         }
-        // Stack styles already position the live surface from doScrollScale(). Updating the
-        // shift here races that transform and snaps the entering animation.
+        // Overlap styles, including the scale effect, already position the live surface from
+        // doScrollScale(). Updating the shift here races that transform and snaps the animation.
         if (mRecentsView != null && mRecentsView.isOverlapStyleActive()) {
             return;
         }
