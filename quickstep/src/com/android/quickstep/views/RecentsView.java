@@ -29,6 +29,7 @@ import static com.android.app.animation.Interpolators.ACCELERATE_0_75;
 import static com.android.app.animation.Interpolators.ACCELERATE_DECELERATE;
 import static com.android.app.animation.Interpolators.DECELERATE_2;
 import static com.android.app.animation.Interpolators.EMPHASIZED_DECELERATE;
+import static com.android.app.animation.Interpolators.FAST_OUT_SLOW_IN;
 import static com.android.app.animation.Interpolators.LINEAR;
 import static com.android.app.animation.Interpolators.clampToProgress;
 import static com.android.internal.jank.Cuj.CUJ_LAUNCHER_RECENTS_TO_HOME;
@@ -271,6 +272,7 @@ public abstract class RecentsView<
         TaskVisualsChangeListener {
 
     protected static final String TAG = "RecentsView";
+    private static final float STACK_STYLE_FULLSCREEN_PROGRESS = 0.35f;
     private static final String PAGE_SCROLL_TAG = "RecentsPageScroll";
 
     public static final FloatProperty<RecentsView<?, ?>> CONTENT_ALPHA =
@@ -2179,6 +2181,9 @@ public abstract class RecentsView<
         mActionsView.getFullscreenAlpha().updateValue(alpha);
         if (mMemInfoView != null) {
             mMemInfoView.setAlpha(MemInfoView.ALPHA_FS_PROGRESS, alpha);
+        }
+        if (mEnableOverlap) {
+            updatePageOffsets();
         }
     }
 
@@ -6075,7 +6080,7 @@ public abstract class RecentsView<
         float currentTrans = taskView.getPrimaryTaskOffsetTranslationProperty().get(taskView);
         if (absDist > stapleDistance) {
             float excess = absDist - stapleDistance;
-            float squish = (float) (Math.log10(1 + excess) * 12f);
+            float squish = Math.min(excess, (float) (Math.log10(1 + excess) * 12f));
             float targetVisualDist = stapleDistance + squish;
             float pullBack = absDist - targetVisualDist;
             float translation = dist > 0 ? -pullBack : pullBack;
@@ -6110,7 +6115,7 @@ public abstract class RecentsView<
             float stapleDistance = childSize * 0.1f;
             if (absDist > stapleDistance) {
                 float excess = absDist - stapleDistance;
-                float squish = (float) (Math.log10(1 + excess) * 45f);
+                float squish = Math.min(excess, (float) (Math.log10(1 + excess) * 45f));
                 float targetVisualDist = stapleDistance + squish;
                 float pullBack = absDist - targetVisualDist;
                 taskView.getPrimaryTaskOffsetTranslationProperty().set(taskView,
@@ -6147,7 +6152,7 @@ public abstract class RecentsView<
         float currentTrans = taskView.getPrimaryTaskOffsetTranslationProperty().get(taskView);
         if (dist < 0 && absDist > 0f) {
             float excess = absDist;
-            float squish = (float) (Math.sqrt(excess) * 7.5f);
+            float squish = Math.min(excess, (float) (Math.sqrt(excess) * 7.5f));
             float targetVisualDist = squish;
             float pullBack = absDist - targetVisualDist;
             taskView.getPrimaryTaskOffsetTranslationProperty().set(taskView,
@@ -6216,10 +6221,12 @@ public abstract class RecentsView<
     }
 
     private float getStackStyleOverlapFactor() {
-        if (!mEnableOverlap || mFullscreenProgress > 0.01f) {
+        if (!mEnableOverlap || mFullscreenProgress >= STACK_STYLE_FULLSCREEN_PROGRESS) {
             return 0f;
         }
-        return Utilities.mapToRange(mFullscreenProgress, 0f, 0.05f, 1f, 0f, LINEAR);
+        float stackProgress = Utilities.boundToRange(
+                1f - (mFullscreenProgress / STACK_STYLE_FULLSCREEN_PROGRESS), 0f, 1f);
+        return FAST_OUT_SLOW_IN.getInterpolation(stackProgress);
     }
 
     private float getStackStyleTranslation(float dist, float childSize, float overlapFactor) {
@@ -6230,7 +6237,7 @@ public abstract class RecentsView<
                 return 0f;
             }
             float excess = absDist - stapleDistance;
-            float squish = (float) (Math.log10(1 + excess) * 12f);
+            float squish = Math.min(excess, (float) (Math.log10(1 + excess) * 12f));
             float pullBack = absDist - (stapleDistance + squish);
             float translation = dist > 0 ? -pullBack : pullBack;
             return translation * overlapFactor;
@@ -6241,7 +6248,7 @@ public abstract class RecentsView<
                 return 0f;
             }
             float excess = absDist - stapleDistance;
-            float squish = (float) (Math.log10(1 + excess) * 45f);
+            float squish = Math.min(excess, (float) (Math.log10(1 + excess) * 45f));
             float pullBack = absDist - (stapleDistance + squish);
             return pullBack * overlapFactor;
         }
