@@ -508,11 +508,18 @@ constructor(
         val neighboringTaskViewSpringAnimation =
             SpringAnimation(taskView, FloatPropertyCompat.createFloatPropertyCompat(springProperty))
                 .setSpring(createExpressiveDismissSpringForce(dampingOffsetRatio))
+        // Stack overlap is added on top of the page offset. Calling doScrollScale()
+        // directly stacks another copy every frame and the cards flicker.
         neighboringTaskViewSpringAnimation.addUpdateListener { _, _, _ ->
-            recentsView.doScrollScale()
+            recentsView.refreshScrollStyle()
         }
-        // Update live tile on spring animation.
-        if (taskView.isRunningTask && recentsView.enableDrawingLiveTile) {
+        // refreshScrollStyle() already places the live tile on the full card translation.
+        // Writing only the dismiss translation afterwards pulls the surface off the card.
+        if (
+            taskView.isRunningTask &&
+                recentsView.enableDrawingLiveTile &&
+                !recentsView.isOverlapStyleActive
+        ) {
             neighboringTaskViewSpringAnimation.addUpdateListener { _, _, _ ->
                 recentsView.runActionOnRemoteHandles { remoteTargetHandle ->
                     val taskTranslation =
@@ -736,8 +743,13 @@ constructor(
                 taskViewSpringAnimation.addUpdateListener { _, _, _ ->
                     recentsView.refreshScrollStyle()
                 }
-                // Update live tile on spring animation.
-                if (taskView.isRunningTask && recentsView.enableDrawingLiveTile) {
+                // refreshScrollStyle() already places the live tile on the full card translation.
+                // Writing only the dismiss translation afterwards pulls the surface off the card.
+                if (
+                    taskView.isRunningTask &&
+                        recentsView.enableDrawingLiveTile &&
+                        !recentsView.isOverlapStyleActive
+                ) {
                     taskViewSpringAnimation.addUpdateListener { _, _, _ ->
                         recentsView.runActionOnRemoteHandles { remoteTargetHandle ->
                             remoteTargetHandle.taskViewSimulator.taskPrimaryTranslation.value =
