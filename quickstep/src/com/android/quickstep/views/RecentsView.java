@@ -419,6 +419,15 @@ public abstract class RecentsView<
                 }
             };
 
+    /**
+     * The running card is carrying its own scroll scale, so the Recents view scale must not
+     * overwrite that live-tile scale.
+     */
+    private boolean isPerTaskScrollScaleActive() {
+        TaskView running = getRunningTaskView();
+        return running != null && Math.abs(running.getScaleX() - 1f) > 1e-3f;
+    }
+
     /** Same as normal SCALE_PROPERTY, but also updates page offsets that depend on this scale. */
     public static final FloatProperty<RecentsView<?, ?>> RECENTS_SCALE_PROPERTY =
             new FloatProperty<>("recentsScale") {
@@ -431,9 +440,9 @@ public abstract class RecentsView<
                     view.runActionOnRemoteHandles(new Consumer<RemoteTargetHandle>() {
                         @Override
                         public void accept(RemoteTargetHandle remoteTargetHandle) {
-                            // Stack styles own recentsViewScale per task. Writing the view-level
-                            // scale here races doStackScrollScale() and snaps the animation.
-                            if (!view.mEnableOverlap) {
+                            // A full-size focused card still follows the overview scale. Once that
+                            // card is scaled by the recents style, leave its live-tile scale alone.
+                            if (!view.isPerTaskScrollScaleActive()) {
                                 remoteTargetHandle.getTaskViewSimulator().recentsViewScale.value =
                                         scale;
                             }
