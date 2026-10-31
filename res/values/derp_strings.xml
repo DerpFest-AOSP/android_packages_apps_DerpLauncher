@@ -165,6 +165,13 @@
     <string name="recents_shake_clear_all_title">Shake phone to clear all tasks</string>
     <string name="restarting_launcher_changes">Restarting launcher to apply changes…</string>
 
+    <!-- Recents layout -->
+    <string name="recents_style_title">Recents layout style</string>
+    <string name="recents_style_stock">Stock</string>
+    <string name="recents_style_staple">Kami Style</string>
+    <string name="recents_style_ios">iOS Style</string>
+    <string name="recents_style_oxygen">OxygenOS Style</string>
+
     <!-- Recents icons -->
     <string name="recents_chips_title">Use compact action design</string>
     <string name="recents_chips_summary">May be required for large numbers of actions to display</string>
