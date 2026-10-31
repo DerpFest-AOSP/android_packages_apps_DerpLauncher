@@ -611,6 +611,26 @@ public abstract class RecentsView<
     private float mScrollScale = 1f;
     private boolean mEnableOverlap = false;
     private String mRecentsStyle = "stock";
+    private final android.content.SharedPreferences.OnSharedPreferenceChangeListener mPrefListener =
+            (prefs, key) -> {
+                if (!LauncherPrefs.RECENTS_STYLE.getSharedPrefKey().equals(key)) {
+                    return;
+                }
+                updateOverlapState();
+                resetTaskVisuals();
+                int count = getChildCount();
+                for (int i = 0; i < count; i++) {
+                    View child = getChildAt(i);
+                    if (child instanceof TaskView taskView) {
+                        taskView.setScaleX(1f);
+                        taskView.setScaleY(1f);
+                        taskView.setTranslationZ(0f);
+                        taskView.setRotationY(0f);
+                    }
+                }
+                requestLayout();
+            };
+
     /**
      * TODO: Call reloadIdNeeded in onTaskStackChanged.
      */
@@ -1127,6 +1147,8 @@ public abstract class RecentsView<
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         updateOverlapState();
+        LauncherPrefs.getPrefs(getContext())
+                .registerOnSharedPreferenceChangeListener(mPrefListener);
         updateTaskStackListenerState();
         if (!enableLowResThumbnailPreloading()) {
             mRecentsModel.getThumbnailCache().getHighResLoadingState().addCallback(this);
@@ -1171,6 +1193,8 @@ public abstract class RecentsView<
         }
         mTaskLaunchListener = null;
         mOnTaskLaunchCancelledRunnable = null;
+        LauncherPrefs.getPrefs(getContext())
+                .unregisterOnSharedPreferenceChangeListener(mPrefListener);
         reset();
     }
 
