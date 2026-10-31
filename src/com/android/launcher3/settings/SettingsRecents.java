@@ -18,9 +18,13 @@ package com.android.launcher3.settings;
 
 import android.content.SharedPreferences;
 
+import androidx.preference.Preference;
+
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
+import com.android.launcher3.display.DisplayController;
+import com.android.launcher3.display.LauncherDisplayInfo;
 
 /**
  * Settings activity for recents preferences.
@@ -35,9 +39,21 @@ public class SettingsRecents extends SettingsCategoryActivity {
     public static class RecentsSettingsFragment extends CategorySettingsFragment
             implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+        private static final String RECENTS_STYLE_PREF = "pref_recents_style";
+
         @Override
         protected int getPreferencesXmlResId() {
             return R.xml.launcher_recents_preferences;
+        }
+
+        @Override
+        protected boolean initPreference(Preference preference) {
+            String key = preference.getKey();
+            if (RECENTS_STYLE_PREF.equals(key)) {
+                LauncherDisplayInfo info = DisplayController.INSTANCE.get(getContext()).getInfo();
+                return !info.isLargeScreen(info.realBounds);
+            }
+            return super.initPreference(preference);
         }
 
         @Override
