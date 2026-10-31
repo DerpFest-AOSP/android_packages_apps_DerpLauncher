@@ -610,7 +610,7 @@ public abstract class RecentsView<
 
     private float mScrollScale = 1f;
     private boolean mEnableOverlap = false;
-    private String mRecentsStyle = "stock";
+    private String mRecentsStyle = "default";
     private final android.content.SharedPreferences.OnSharedPreferenceChangeListener mPrefListener =
             (prefs, key) -> {
                 if (!LauncherPrefs.RECENTS_STYLE.getSharedPrefKey().equals(key)) {
@@ -5846,6 +5846,9 @@ public abstract class RecentsView<
     }
 
     protected void doScrollScale() {
+        if ("default".equals(mRecentsStyle)) {
+            return;
+        }
         if (showAsGrid() || mContainer.getDeviceProfile().getDeviceProperties().isLargeScreen()) {
             return;
         }
@@ -5908,7 +5911,7 @@ public abstract class RecentsView<
     }
 
     public float getScrollScale(RemoteTargetHandle rth) {
-        if (rth == null
+        if (rth == null || "default".equals(mRecentsStyle)
                 || showAsGrid()
                 || mContainer.getDeviceProfile().getDeviceProperties().isLargeScreen()) {
             return 1f;
