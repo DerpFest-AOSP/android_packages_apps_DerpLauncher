@@ -698,9 +698,11 @@ constructor(
         var previousColumnDriverTarget = dismissedTaskGap
         var lastTaskViewTarget = dismissedTaskGap
         var lastColumnOffset = taskViewOffsetPairs.first().second
+        var reflowingTaskIndex = 0
         taskViewOffsetPairs
             .filter { (taskView, _) ->
-                willTaskBeVisibleAfterDismiss(taskView, dismissedTaskGap.roundToInt())
+                recentsView.isKamiRecentsStyleActive ||
+                    willTaskBeVisibleAfterDismiss(taskView, dismissedTaskGap.roundToInt())
             }
             .forEach { (taskView, column) ->
                 val startValue =
@@ -715,7 +717,11 @@ constructor(
                             else recentsView.mLastComputedTaskSize.right)
                     } else 0f
                 val taskReflowTarget =
-                    recentsView.getStackDismissReflowTarget(taskView, dismissedTaskGap)
+                    recentsView.getStackDismissReflowTarget(
+                        taskView,
+                        dismissedTaskGap,
+                        recentsView.isKamiRecentsStyleActive && reflowingTaskIndex > 0,
+                    )
                 val taskViewSpringAnimation =
                     SpringAnimation(
                             taskView,
@@ -765,6 +771,7 @@ constructor(
                 reflowSpringSet.trackSpring(taskViewSpringAnimation, taskReflowTarget)
                 recentsView.mTaskViewsDismissPrimaryTranslations[taskView] =
                     taskReflowTarget.toInt()
+                reflowingTaskIndex++
             }
         return lastTaskViewSpring
     }
@@ -1013,6 +1020,20 @@ constructor(
 
             // Page snapping and relayout to run after all animations have completed.
             val onFinishComplete = {
+                val isCustomStyle =
+                    com.android.launcher3.LauncherPrefs.RECENTS_STYLE.get(context) != "default"
+                val previousScales = mutableMapOf<Int, Float>()
+                val previousScaleYs = mutableMapOf<Int, Float>()
+                val animatedTaskViews = recentsView.taskViews
+                if (isCustomStyle) {
+                    animatedTaskViews.forEach { taskView ->
+                        if (taskView !== dismissedTaskView) {
+                            previousScales[taskView.taskViewId] = taskView.scaleX
+                            previousScaleYs[taskView.taskViewId] = taskView.scaleY
+                        }
+                    }
+                }
+
                 // Reset task translations as they may have updated via the dismiss animations.
                 resetTaskVisuals()
 
@@ -1045,6 +1066,76 @@ constructor(
 
                 // Update the UI after removal and snap to page.
                 updateUiAfterTaskRemoval(dismissedTaskView, pageToSnapTo, isDismissingHomeTask)
+
+                if (isCustomStyle) {
+                    val scaleAnimators = ArrayList<android.animation.Animator>()
+                    val currentAnimatedScalesX = mutableMapOf<Int, Float>()
+                    val currentAnimatedScalesY = mutableMapOf<Int, Float>()
+                    animatedTaskViews.forEach { taskView ->
+                        val targetScaleX = taskView.scaleX
+                        val targetScaleY = taskView.scaleY
+                        val startScaleX = previousScales[taskView.taskViewId] ?: targetScaleX
+                        val startScaleY = previousScaleYs[taskView.taskViewId] ?: targetScaleY
+                        if (startScaleX != targetScaleX || startScaleY != targetScaleY) {
+                            currentAnimatedScalesX[taskView.taskViewId] = startScaleX
+                            currentAnimatedScalesY[taskView.taskViewId] = startScaleY
+                            val animatorX =
+                                android.animation.ValueAnimator.ofFloat(startScaleX, targetScaleX)
+                            animatorX.addUpdateListener { anim ->
+                                val value = anim.animatedValue as Float
+                                currentAnimatedScalesX[taskView.taskViewId] = value
+                                taskView.scaleX = value
+                            }
+                            val animatorY =
+                                android.animation.ValueAnimator.ofFloat(startScaleY, targetScaleY)
+                            animatorY.addUpdateListener { anim ->
+                                val value = anim.animatedValue as Float
+                                currentAnimatedScalesY[taskView.taskViewId] = value
+                                taskView.scaleY = value
+                            }
+                            scaleAnimators.add(animatorX)
+                            scaleAnimators.add(animatorY)
+                        }
+                    }
+                    if (scaleAnimators.isNotEmpty()) {
+                        val animSet = android.animation.AnimatorSet()
+                        animSet.playTogether(scaleAnimators)
+                        animSet.duration = 300
+                        animSet.interpolator =
+                            android.view.animation.PathInterpolator(0.33f, 1f, 0.68f, 1f)
+                        val preDrawListener =
+                            object : android.view.ViewTreeObserver.OnPreDrawListener {
+                                override fun onPreDraw(): Boolean {
+                                    animatedTaskViews.forEach { taskView ->
+                                        currentAnimatedScalesX[taskView.taskViewId]?.let {
+                                            taskView.scaleX = it
+                                        }
+                                        currentAnimatedScalesY[taskView.taskViewId]?.let {
+                                            taskView.scaleY = it
+                                        }
+                                    }
+                                    return true
+                                }
+                            }
+                        viewTreeObserver.addOnPreDrawListener(preDrawListener)
+                        animSet.addListener(
+                            object : android.animation.AnimatorListenerAdapter() {
+                                override fun onAnimationEnd(animation: android.animation.Animator) {
+                                    viewTreeObserver.removeOnPreDrawListener(preDrawListener)
+                                    animatedTaskViews.forEach { taskView ->
+                                        currentAnimatedScalesX[taskView.taskViewId]?.let {
+                                            taskView.scaleX = it
+                                        }
+                                        currentAnimatedScalesY[taskView.taskViewId]?.let {
+                                            taskView.scaleY = it
+                                        }
+                                    }
+                                }
+                            }
+                        )
+                        animSet.start()
+                    }
+                }
 
                 if (!dismissingForSplitSelection) {
                     InteractionJankMonitorWrapper.end(Cuj.CUJ_LAUNCHER_OVERVIEW_TASK_DISMISS)
