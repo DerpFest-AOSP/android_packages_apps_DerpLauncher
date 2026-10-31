@@ -2760,9 +2760,15 @@ public abstract class AbsSwipeUpHandler<
     }
 
     private void onRecentsViewScroll() {
-        if (moveWindowWithRecentsScroll()) {
-            onCurrentShiftUpdated();
+        if (!moveWindowWithRecentsScroll()) {
+            return;
         }
+        // Stack styles already position the live surface from doScrollScale(). Updating the
+        // shift here races that transform and snaps the entering animation.
+        if (mRecentsView != null && mRecentsView.isOverlapStyleActive()) {
+            return;
+        }
+        onCurrentShiftUpdated();
     }
 
     protected void startNewTask(@Nullable TaskView taskToLaunch, Consumer<Boolean> resultCallback) {
