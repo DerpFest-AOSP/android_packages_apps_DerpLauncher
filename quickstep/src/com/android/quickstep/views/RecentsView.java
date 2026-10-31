@@ -6220,6 +6220,37 @@ public abstract class RecentsView<
                 || "oxygen".equals(mRecentsStyle);
     }
 
+    public float getStackDismissReflowTarget(TaskView taskView, float reflowTarget) {
+        if (!isStackRecentsStyleActive()) {
+            return reflowTarget;
+        }
+        float overlapFactor = getStackStyleOverlapFactor();
+        if (overlapFactor <= 0f) {
+            return reflowTarget;
+        }
+
+        boolean touchInLandscape = mOrientationState.getTouchRotation() != ROTATION_0
+                && mOrientationState.getTouchRotation() != ROTATION_180;
+        boolean layoutInLandscape = mOrientationState.getRecentsActivityRotation() != ROTATION_0
+                && mOrientationState.getRecentsActivityRotation() != ROTATION_180;
+        boolean canRotateRecents = mOrientationState.isRecentsActivityRotationAllowed();
+        boolean verticalScroll = !canRotateRecents && touchInLandscape && !layoutInLandscape;
+        int curScroll = verticalScroll ? getScrollY() : getScrollX();
+        int containerCenter = curScroll + (verticalScroll ? (getHeight() / 2) : (getWidth() / 2));
+        float childCenter = verticalScroll
+                ? (taskView.getTop() + (taskView.getHeight() / 2f))
+                : (taskView.getLeft() + (taskView.getWidth() / 2f));
+        float childSize = verticalScroll ? taskView.getHeight() : taskView.getWidth();
+        if (childSize == 0f) {
+            return reflowTarget;
+        }
+        float currentDist = childCenter - containerCenter;
+        float currentStackOffset = getStackStyleTranslation(currentDist, childSize, overlapFactor);
+        float targetStackOffset = getStackStyleTranslation(
+                currentDist + reflowTarget, childSize, overlapFactor);
+        return reflowTarget + targetStackOffset - currentStackOffset;
+    }
+
     private float getStackStyleOverlapFactor() {
         if (!mEnableOverlap || mFullscreenProgress >= STACK_STYLE_FULLSCREEN_PROGRESS) {
             return 0f;
