@@ -5850,6 +5850,19 @@ public abstract class RecentsView<
         }
     }
 
+    /**
+     * Recomputes per-card scale and stack overlap for the current scroll position.
+     * Stack styles have to go through {@link #updatePageOffsets()} first, because
+     * overlap translation is added on top of the offset written there.
+     */
+    public void refreshScrollStyle() {
+        if (mEnableOverlap) {
+            updatePageOffsets();
+        } else {
+            doScrollScale();
+        }
+    }
+
     protected void doScrollScale() {
         if ("default".equals(mRecentsStyle)) {
             return;

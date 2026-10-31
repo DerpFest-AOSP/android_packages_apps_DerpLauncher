@@ -734,7 +734,7 @@ constructor(
                 // The carousel scale is driven by distance from the centre, so it has to be
                 // recomputed as the task translates into the gap.
                 taskViewSpringAnimation.addUpdateListener { _, _, _ ->
-                    recentsView.doScrollScale()
+                    recentsView.refreshScrollStyle()
                 }
                 // Update live tile on spring animation.
                 if (taskView.isRunningTask && recentsView.enableDrawingLiveTile) {
