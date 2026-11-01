@@ -265,10 +265,8 @@ public class TaskbarAllAppsSlideInView extends AbstractSlideInView<TaskbarOverla
 
     @Override
     protected int getScrimColor(Context context) {
-        if (AppDrawerStyle.isCustomColorEnabled(context)) {
-            return AppDrawerStyle.getCustomBackgroundColorWithOpacity(context);
-        }
-        return Themes.getAttrColor(context, R.attr.allAppsScrimColor);
+        return AppDrawerStyle.getWorkspaceScrimColor(context,
+                Themes.getAttrColor(context, R.attr.allAppsScrimColor));
     }
 
     @Override
