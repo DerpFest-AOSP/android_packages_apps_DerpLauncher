@@ -31,6 +31,7 @@ import com.android.launcher3.Utilities.getNormalizedIconDrawablePadding
 import com.android.launcher3.Utilities.pxFromSp
 import com.android.launcher3.deviceprofile.WorkspaceProfile.Factory.calculateCellSize
 import com.android.launcher3.deviceprofile.WorkspaceProfile.Factory.calculateHotseatBarSizePx
+import com.android.launcher3.deviceprofile.WorkspaceProfile.Factory.calculateWidgetPadding
 import com.android.launcher3.deviceprofile.WorkspaceProfile.Factory.insetPadding
 import com.android.launcher3.testing.shared.ResourceUtils.INVALID_RESOURCE_HANDLE
 import com.android.launcher3.testing.shared.ResourceUtils.pxFromDp
@@ -685,6 +686,8 @@ object WorkspaceProfileNonResponsiveFactory {
                         )
                     }
                     .let { hideWorkspaceLabelsIfNotEnoughSpace(isVerticalLayout, it, inv) }
+        }.let {
+            it.copy(widgetPadding = calculateWidgetPadding(it.cellLayoutBorderSpacePx, metrics))
         }
     }
 
