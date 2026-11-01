@@ -385,7 +385,9 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         if (LauncherPrefs.APP_DRAWER_OPACITY.getSharedPrefKey().equals(key)) {
             updateAllAppsBackgroundColors();
             refreshCustomBackgroundColor();
-            invalidateHeader();
+            AllAppsRecyclerView activeRecyclerView = getActiveRecyclerView();
+            updateHeaderScroll(activeRecyclerView == null
+                    ? 0 : activeRecyclerView.computeVerticalScrollOffset());
             invalidate();
         } else if (LauncherPrefs.DRAWER_SEARCH.getSharedPrefKey().equals(key)) {
             if (LauncherPrefs.DRAWER_SEARCH.get(getContext())) {
@@ -957,9 +959,15 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     }
 
     protected int getHeaderColor(float blendRatio) {
-        return isBackgroundBlurEnabled()
-                ? ColorUtils.setAlphaComponent(mHeaderProtectionColor, (int) (blendRatio * 255))
-                : ColorUtils.blendARGB(getBackgroundColor(), mHeaderProtectionColor, blendRatio);
+        float drawerOpacity = Utilities.getAllAppsAlpha(getContext()) / 255f;
+        if (isBackgroundBlurEnabled()) {
+            // Scroll still replaces the protection alpha. Drawer opacity then scales that.
+            int scrolledProtection = ColorUtils.setAlphaComponent(mHeaderProtectionColor,
+                    Math.round(blendRatio * 255));
+            return AppDrawerStyle.applyOpacity(scrolledProtection, drawerOpacity);
+        }
+        int protectionColor = AppDrawerStyle.applyOpacity(mHeaderProtectionColor, drawerOpacity);
+        return ColorUtils.blendARGB(getBackgroundColor(), protectionColor, blendRatio);
     }
 
     int getBackgroundColor() {
@@ -1829,7 +1837,8 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             return;
         }
 
-        mHeaderPaint.setAlpha((int) (mHeaderPaint.getAlpha() * backgroundAlpha));
+        // Header color already includes drawer opacity, which is also the sheet alpha.
+        // Scaling by the sheet alpha again would fade the bar twice.
 
         // Draw header on background panel
         final float headerBottomNoScale =

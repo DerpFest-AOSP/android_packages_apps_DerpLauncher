@@ -96,6 +96,13 @@ public final class AppDrawerStyle {
         return ColorUtils.setAlphaComponent(color, Utilities.getAllAppsAlpha(context));
     }
 
+    /** Scales {@code color}'s existing alpha by {@code opacity} in {@code [0, 1]}. */
+    @ColorInt
+    public static int applyOpacity(@ColorInt int color, float opacity) {
+        float clamped = Math.max(0f, Math.min(1f, opacity));
+        return ColorUtils.setAlphaComponent(color, Math.round(Color.alpha(color) * clamped));
+    }
+
     /** Custom drawer background with the user-selected opacity applied. */
     @ColorInt
     public static int getCustomBackgroundColorWithOpacity(Context context) {
