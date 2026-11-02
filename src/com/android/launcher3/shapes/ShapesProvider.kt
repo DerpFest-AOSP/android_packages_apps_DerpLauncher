@@ -23,6 +23,9 @@ object ShapesProvider {
     private const val CIRCLE_PATH = "M50 0A50 50,0,1,1,50 100A50 50,0,1,1,50 0"
     private const val SQUARE_PATH =
         "M53.689 0.82 L53.689 .82 C67.434 .82 74.306 .82 79.758 2.978 87.649 6.103 93.897 12.351 97.022 20.242 99.18 25.694 99.18 32.566 99.18 46.311 V53.689 C99.18 67.434 99.18 74.306 97.022 79.758 93.897 87.649 87.649 93.897 79.758 97.022 74.306 99.18 67.434 99.18 53.689 99.18 H46.311 C32.566 99.18 25.694 99.18 20.242 97.022 12.351 93.897 6.103 87.649 2.978 79.758 .82 74.306 .82 67.434 .82 53.689 L.82 46.311 C.82 32.566 .82 25.694 2.978 20.242 6.103 12.351 12.351 6.103 20.242 2.978 25.694 .82 32.566 .82 46.311 .82Z"
+    // MeeGo Harmattan icon outline: https://github.com/yeyebbc/MeeGo-Adaptive-Icon-Shape-Magisk-Module/blob/master/assets/meego.svg
+    private const val SUPERELLIPSE_PATH =
+        "M1 50 C1 86.301 13.697 99 50 99 C86.303 99 99 86.301 99 50 C99 13.698 86.303 1 50 1 C13.697 1 1 13.698 1 50Z"
     private const val FOUR_SIDED_COOKIE_PATH =
         "M39.888,4.517C46.338 7.319 53.662 7.319 60.112 4.517L63.605 3C84.733 -6.176 106.176 15.268 97 36.395L95.483 39.888C92.681 46.338 92.681 53.662 95.483 60.112L97 63.605C106.176 84.732 84.733 106.176 63.605 97L60.112 95.483C53.662 92.681 46.338 92.681 39.888 95.483L36.395 97C15.267 106.176 -6.176 84.732 3 63.605L4.517 60.112C7.319 53.662 7.319 46.338 4.517 39.888L3 36.395C -6.176 15.268 15.267 -6.176 36.395 3Z"
     private const val SEVEN_SIDED_COOKIE_PATH =
@@ -65,6 +68,7 @@ object ShapesProvider {
         "M4.8 33V67c0 5.8 3 11 8 13.7l29.4 17c4.9 2.7 11 2.7 15.9 0l29.4 -17c4.9 -2.7 8 -8 8 -13.7V33c0 -5.8 -3 -11 -8 -13.7l-29.4 -17c-4.9 -2.7 -11 -2.7 -15.9 0l-29.7 17C7.8 22.2 4.8 27.5 4.8 33z"
     const val CIRCLE_KEY = "circle"
     const val SQUARE_KEY = "square"
+    const val SUPERELLIPSE_KEY = "superellipse"
     const val FOUR_SIDED_COOKIE_KEY = "four_sided_cookie"
     const val SEVEN_SIDED_COOKIE_KEY = "seven_sided_cookie"
     const val ARCH_KEY = "arch"
@@ -101,6 +105,13 @@ object ShapesProvider {
                     pathString = SQUARE_PATH,
                     folderRadiusRatio = 1 / 3f,
                     shapeRadius = 17.33f,
+                ),
+                IconShapeModel(
+                    key = SUPERELLIPSE_KEY,
+                    titleId = R.string.superellipse_shape_title,
+                    pathString = SUPERELLIPSE_PATH,
+                    folderRadiusRatio = 1 / 3f,
+                    shapeRadius = 13.5f,
                 ),
                 IconShapeModel(
                     key = FOUR_SIDED_COOKIE_KEY,
