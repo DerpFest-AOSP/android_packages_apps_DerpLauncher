@@ -2589,7 +2589,9 @@ public class Launcher extends StatefulActivity<LauncherState>
     /**
      * Called while a workspace or hotseat item is still attached, immediately before it is detached.
      */
-    public void onWorkspaceItemRemoving(@Nullable View view) {}
+    public void onWorkspaceItemRemoving(@Nullable View view) {
+        IconShatterOverlay.shatterItem(this, view);
+    }
 
     /**
      * Optionally replace the drop-target shrink animation when an item is removed from the
@@ -2597,7 +2599,7 @@ public class Launcher extends StatefulActivity<LauncherState>
      * will be invoked when it finishes.
      */
     public boolean animateDragViewRemoval(DragView dragView, Runnable endCallback) {
-        return false;
+        return IconShatterOverlay.shatterDragView(this, dragView, endCallback);
     }
 
     /**
