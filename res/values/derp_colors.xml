@@ -26,4 +26,10 @@
     <color name="all_apps_label_color_dark_forced">#FF212121</color>
 
     <color name="mid_clear_all_background_color">@*android:color/system_neutral2_50</color>
+
+    <!-- Light mark on a darkened wallpaper in both themes. -->
+    <color name="settings_header_mark">#FFFFFFFF</color>
+    <color name="settings_header_scrim_start">#33000000</color>
+    <color name="settings_header_scrim_center">#14000000</color>
+    <color name="settings_header_scrim_end">#24000000</color>
 </resources>

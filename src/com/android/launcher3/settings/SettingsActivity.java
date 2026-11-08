@@ -230,6 +230,7 @@ public class SettingsActivity extends CollapsingToolbarBaseActivity
         @Override
         public void onResume() {
             super.onResume();
+            updateHeaderWallpaper(true);
 
             if (isAdded() && !mPreferenceHighlighted) {
                 PreferenceHighlighter highlighter = createHighlighter();
@@ -245,7 +246,14 @@ public class SettingsActivity extends CollapsingToolbarBaseActivity
         }
 
         @Override
+        public void onPause() {
+            updateHeaderWallpaper(false);
+            super.onPause();
+        }
+
+        @Override
         public void onDestroy() {
+            updateHeaderWallpaper(false);
             super.onDestroy();
             if (mSettingCacheSafeCloseable != null) {
                 mSettingCacheSafeCloseable.close();
@@ -268,6 +276,22 @@ public class SettingsActivity extends CollapsingToolbarBaseActivity
             Activity activity = getActivity();
             if (activity != null) {
                 activity.recreate();
+            }
+        }
+
+        private void updateHeaderWallpaper(boolean active) {
+            if (getPreferenceScreen() == null) {
+                return;
+            }
+            Preference preference = findPreference(SettingsHeaderPreference.KEY);
+            if (!(preference instanceof SettingsHeaderPreference)) {
+                return;
+            }
+            SettingsHeaderPreference header = (SettingsHeaderPreference) preference;
+            if (active) {
+                header.onHostResume();
+            } else {
+                header.onHostPause();
             }
         }
 

@@ -14,5 +14,6 @@
         <permission name="android.permission.ACCESS_CONTEXTUAL_SEARCH" />
         <permission name="android.permission.REGISTER_STATS_PULL_ATOM"/>
         <permission name="android.permission.MANAGE_USERS"/>
+        <permission name="android.permission.READ_WALLPAPER_INTERNAL"/>
     </privapp-permissions>
 </permissions>
