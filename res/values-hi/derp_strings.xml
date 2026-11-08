@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">होम स्क्रीन</string>
+    <string name="home_category_summary">गूगल नाउ पैनल तथा अन्य सेट करें</string>
+    <string name="icons_category_title">ऑयकोन्स</string>
+    <string name="icons_category_summary">आइकॉन आकार, आकृति तथा अन्य सेट करें</string>
+    <string name="app_drawer_category_title">एप्लिकेशन दराज</string>
+    <string name="app_drawer_category_summary">अपना एप्लिकेशन ड्रॉअर कस्टमाइज़ करें</string>
+    <string name="recents_category_title">हाल ही के</string>
+    <string name="recents_category_summary">अवलोकन स्क्रीन में सुधार करें</string>
+    <string name="misc_category_title">अन्य तरह का</string>
+    <string name="misc_category_summary">अन्य विकल्प</string>
+    <string name="general_category_title">आम</string>
+    <string name="interface_category_title">इंटरफेस</string>
+    <string name="search_bar_category_title">खोज पट्टी</string>
+    <string name="actions_category_title">त्वरित क्रियाएं</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">विकासक के विकल्प</string>
+    <string name="dev_options_summary">अपने स्वयं के जोखिम पर कुछ छिपी हुई विशेषताएं सक्षम करें</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">लॉक लेआउट</string>
+    <string name="settings_lock_layout_summary_on">आइकंस और विजेट्स को होमस्क्रीन पर जोड़ा, हटाया और हिलाया नहीं जा सकता है</string>
+    <string name="settings_lock_layout_summary_off">आइकंस और विजेट्स को होमस्क्रीन पर जोड़ा, हटाया और हिलाया जा सकता है</string>
+    <string name="settings_edit_widgets_error">होमस्क्रीन पर विजेट्स जोड़ना संभव नहीं है</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Google ऐप एक्सेस करने के लिए स्वाइप करें</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">सुझाव</string>
+    <string name="suggestion_pref_screen_desc">सभी ऐप्स के लिए &amp; होम स्क्रीन सुझाव</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">खोजें</string>
+    <string name="label_voice_search">बोलकर खोजें</string>
+    <string name="label_lens">गूगल लेंस</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_summary">अनुप्रयोग डॉक में पारदर्शी पृष्ठभूमि जोड़ें</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">वॉलपेपर स्क्रॉल</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">स्थिति पट्टी</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">डिफॉल्ट</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">‎आइकन ‎माप</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">फ़ॉन्ट परिमाण</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">mar</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_default">डिफॉल्ट</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">स्क्रीनशॉट</string>
+    <string name="recents_clear_all_title">सब कुछ मिटाएं</string>
+    <string name="recents_lens_title">लेंस</string>
+
+    <!-- Memory info -->
+    <string name="recents_meminfo_title">मेमोरी जानकारी</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">बैकग्राउंड अपारदर्शिता</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">छिपा हुआ &amp; संरक्षित ऐप्स</string>
+    <string name="trust_apps_auth_manager">छिपे हुए और संरक्षित ऐप्स को प्रबंधित करने के लिए अनलॉक करें</string>
+    <string name="trust_apps_loading">लोड हो रहा है \u2026</string>
+    <string name="trust_apps_no_lock_error">एप्लिकेशन एक्सेस को प्रतिबंधित करने के लिए कृपया एक सुरक्षित लॉक स्क्रीन सेट करें</string>
+    <string name="trust_apps_help">सहायता</string>
+    <string name="trust_apps_info_hidden">छिपे हुए एप्लिकेशन और उनके विजेट दराज से छिपे हुए हैं</string>
+</resources>

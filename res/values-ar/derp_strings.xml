@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">الشاشة الرئيسية</string>
+    <string name="home_category_summary">تعيين لوحة Google Now والمزيد</string>
+    <string name="icons_category_title">أيقونات</string>
+    <string name="icons_category_summary">تعيين شكل الأيقونات والمزيد</string>
+    <string name="app_drawer_category_title">قائمة التطبيقات</string>
+    <string name="app_drawer_category_summary">تخصيص قائمة التطبيقات الخاصة بك</string>
+    <string name="recents_category_title">تطبيقات الأخيرة</string>
+    <string name="recents_category_summary">تجديد شاشة العرض العام</string>
+    <string name="misc_category_title">خيارات متنوعة</string>
+    <string name="misc_category_summary">خيارات أخرى</string>
+    <string name="general_category_title">العامة</string>
+    <string name="interface_category_title">واجهة المستخدم</string>
+    <string name="search_bar_category_title">شريط البحث</string>
+    <string name="actions_category_title">الإختصارات السريعة</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">خيارات المطور</string>
+    <string name="dev_options_summary">تمكين بعض الميزات المخفية على مسؤوليتك الخاصة</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">تخطيط القفل</string>
+    <string name="settings_lock_layout_summary_on">لا يمكن إضافة الرموز والأدوات وإزالتها ونقلها على الشاشة الرئيسية</string>
+    <string name="settings_lock_layout_summary_off">يمكن إضافة, حذف و نقل الأيقونات و الويدجتس على الشاشة الرئيسية</string>
+    <string name="settings_edit_widgets_error">لا يمكن إضافة الويدجت إلى الشاشة الرئيسية</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">اسحب لبدء البحث</string>
+    <string name="drawer_open_keyboard_summary">فتح لوحة المفاتيح كلما أصبح درج التطبيقات مرئيًا</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">اسحب للوصول إلى تطبيق جوجل</string>
+    <string name="msg_minus_one_on_left">عند التمرير يساراً من الشاشة الرئيسية</string>
+    <string name="msg_minus_one_on_right">عندما التمرير يميناً من الشاشة الرئيسية</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">الإقتراحات</string>
+    <string name="suggestion_pref_screen_desc">لجميع التطبيقات &amp; اقتراحات الشاشة الرئيسية</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">البحث</string>
+    <string name="label_voice_search">البحث الصوتي</string>
+    <string name="label_lens">عدسة جوجل</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">شفافية الطبقة الخارجية</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">خلفية اللوحة السفلية</string>
+    <string name="hotseat_bg_summary">إضافة خلفية شفافة إلى قائمة التطبيقات</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">تمرير خلفية الشاشة</string>
+    <string name="allow_wallpaper_scrolling_summary">تأثير تمرير خلفية الشاشة للشاشات المتعددة</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">تطبيق على شاشة القفل</string>
+    <string name="wallpaper_carousel_lockscreen_summary">تعيين نفس الخلفية على شاشة القفل</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">تكبير خلفية الشاشة</string>
+    <string name="allow_wallpaper_zooming_summary">تكبير الخلفية أو تصغيرها عند استخدام درج التطبيقات أو التطبيقات الحديثة</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">شريط الحالة</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">الإفتراضي</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">حجم الأيقونة</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">حجم الخط</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">إيقاف</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">إعادة تشغيل المشغل لتطبيق التغييرات...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">نمط تخطيط التطبيقات الحديثة</string>
+    <string name="recents_style_default">افتراضي</string>
+    <string name="recents_style_stock">تأثير المقياس</string>
+    <string name="recents_style_staple">نمط الكامي</string>
+    <string name="recents_style_ios">نمط iOS</string>
+    <string name="recents_style_oxygen">نمط OxygenOS</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">لقطة شاشة</string>
+    <string name="recents_clear_all_title">إزالة الكل</string>
+    <string name="recents_lens_title">العدسة</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s متاحة / %2$s كإجمالي</string>
+    <string name="recents_meminfo_title">معلومات الذاكرة</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">موقع شريط البحث للتطبيق</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">تسميات التطبيق المظلمة</string>
+    <string name="all_apps_dark_text_summary">استخدام النص الداكن دائما لتسميات التطبيق في درج التطبيق</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">نمط درج التطبيقات</string>
+    <string name="drawer_style_normal">عادي (ورقة أسفل)</string>
+    <string name="drawer_style_legacy">ملء الشاشة القديمة</string>
+    <string name="drawer_style_list">نمط القائمة</string>
+    <string name="drawer_style_oneui">نمط OneUI (الصفحة)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">فرز درج التطبيقات</string>
+    <string name="app_drawer_sort_alphabetical">ترتيب أبجدي</string>
+    <string name="app_drawer_sort_install_date">الترتيب حسب تاريخ التثبيت</string>
+    <string name="app_drawer_sort_usage">ترتيب حسب الإستخدام</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">لون الخلفية المخصصة</string>
+    <string name="pref_app_drawer_custom_color_summary">استخدام لون مخصص لخلفية درج التطبيق</string>
+    <string name="pref_app_drawer_custom_color_light_title">لون الوضع الفاتح</string>
+    <string name="pref_app_drawer_custom_color_dark_title">لون الوضع المظلم</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">السماح بالمبرالية القصيرة</string>
+    <string name="short_parallax_summary">تمكين تأثير التمرير الكامل للخلفية على عدد أصغر من الصفحات بدلاً من اقتطاع الخلفية</string>
+    <string name="single_page_center_title">مركز صفحة واحدة</string>
+    <string name="single_page_center_summary">وسِّط الخلفية إن كانت هناك صفحة واحدة فقط</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">شريط الحالة المُظلم</string>
+    <string name="perf_dark_status_bar_summary">استخدم الوضع المُظلم دائماً في شريط الحالة في الشاشة الرئيسة</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">مستوي ضبابية الخلفية</string>
+    <string name="background_blur_summary">تعيين مستوى الضباب للتطبيقات الحديثة ودرج التطبيقات</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">تعتيم الخلفية</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">مواء</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">زهرة</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">قلب</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">سداسي</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">ورقة الشجر</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">غائم</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">أسطوانة</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">ممتد</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">حصاة</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">مربع صافي</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">مستطيل ذو زوايا مستديرة</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">مربع دائري</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">مستطيل مدبّب</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">دمعة</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">وعاء</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">سداسي مدور</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">إخفاء تلقائي لمؤشر الصفحة</string>
+    <string name="auto_hide_dots_summary">إخفاء نقاط مؤشر الصفحة تلقائياً</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">إعادة التسمية</string>
+    <string name="rename_app_title">أدخل اسم التطبيق</string>
+    <string name="rename_app_reset">إعادة التعيين</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">أيقونة مخصصة</string>
+    <string name="icon_picker_search_hint">البحث في الأيقونات</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">إخفاء &amp; تطبيقات محمية</string>
+    <string name="trust_apps_auth_manager">افتح لإدارة التطبيقات المخفية والمحمية</string>
+    <string name="trust_apps_loading">جارٍ التحميل…\u2026</string>
+    <string name="trust_apps_no_lock_error">يرجى إعداد فقل شاشة الجهاز لتقييد الوصول إلى التطبيق</string>
+    <string name="trust_apps_help">مساعدة</string>
+    <string name="trust_apps_info_hidden">التطبيقات المخفية و الأدوات الخاصة بها ستكون مخفية أيضاً من واجهة التشغيل</string>
+</resources>

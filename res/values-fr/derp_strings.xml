@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Écran d’accueil</string>
+    <string name="home_category_summary">Activer Google Now et autres</string>
+    <string name="icons_category_title">Icônes</string>
+    <string name="icons_category_summary">Définir la taille des icônes et plus</string>
+    <string name="app_drawer_category_title">Tiroir d\'applications</string>
+    <string name="app_drawer_category_summary">Personnaliser votre tiroir d\'applications</string>
+    <string name="recents_category_title">Récents</string>
+    <string name="recents_category_summary">Personnaliser le menu récent</string>
+    <string name="misc_category_title">Divers</string>
+    <string name="misc_category_summary">Autres options</string>
+    <string name="general_category_title">Général</string>
+    <string name="search_bar_category_title">Barre de recherche</string>
+    <string name="actions_category_title">Actions rapides</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Options pour les développeurs</string>
+    <string name="dev_options_summary">Activez certaines fonctionnalités cachées à vos risques et périls</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Verrouiller la mise en page</string>
+    <string name="settings_lock_layout_summary_on">Les icônes et widgets ne peuvent pas être ajoutés, supprimés ou déplacés sur l\'écran d\'accueil</string>
+    <string name="settings_lock_layout_summary_off">Les icônes et widgets peuvent être ajoutés, supprimés ou déplacés sur l\'écran d\'accueil</string>
+    <string name="settings_edit_widgets_error">Il n\'est pas possible d\'ajouter des widgets à l\'écran d\'accueil</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Glisser pour lancer la recherche</string>
+    <string name="drawer_open_keyboard_summary">Ouvrir le clavier chaque fois que le tiroir d\'applications devient visible</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Glisser pour accéder à l\'application Google</string>
+    <string name="msg_minus_one_on_left">Lorsque vous faites glisser vers la gauche depuis l\'écran d\'accueil principal</string>
+    <string name="msg_minus_one_on_right">Lorsque vous faites glisser depuis la gauche sur l\'écran d\'accueil principal</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_desc">Pour toutes les applications &amp; ajout à l\'écran d\'accueil</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Rechercher</string>
+    <string name="label_voice_search">Recherche vocale</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">Opacité de la couche extérieure</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Arrière plan</string>
+    <string name="hotseat_bg_summary">Ajouter un arrière-plan translucide au tiroir d\'applications</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Défilement du fond d\'écran</string>
+    <string name="allow_wallpaper_scrolling_summary">Effet de défilement du fond d\'écran pour plusieurs écrans</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">Appliquer à l\'écran de verrouillage</string>
+    <string name="wallpaper_carousel_lockscreen_summary">Définir le même fond d\'écran sur l\'écran de verrouillage</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Zoom sur le fond d\'écran</string>
+    <string name="allow_wallpaper_zooming_summary">Zoomer ou dézoomer sur le fond d\'écran à l\'ouverture du tiroir ou des applications récentes</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Barre d\'état</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Par défaut</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Taille des icônes</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Taille de police</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Terminer</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Redémarrage du lanceur pour appliquer les modifications...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">Style de mise en page des applications récentes</string>
+    <string name="recents_style_default">Par défaut</string>
+    <string name="recents_style_stock">Effet d\'écailles</string>
+    <string name="recents_style_staple">Style Kami</string>
+    <string name="recents_style_ios">Style iOS</string>
+    <string name="recents_style_oxygen">Style OxygenOS</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Capture d\'écran</string>
+    <string name="recents_clear_all_title">Tout effacer</string>
+    <string name="recents_lens_title">Lentille d\'objectif </string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s Disponible | %2$s Total</string>
+    <string name="recents_meminfo_title">Information sur la RAM</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">Emplacement de la barre de recherche d\'applications</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Libellés des applications sombres</string>
+    <string name="all_apps_dark_text_summary">Toujours utiliser le texte foncé pour les libellés des applications dans le tiroir d\'applications</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">Style du tiroir d\'applications</string>
+    <string name="drawer_style_normal">Normal (feuille du bas)</string>
+    <string name="drawer_style_legacy">Plein écran d\'héritage</string>
+    <string name="drawer_style_list">Style de la liste</string>
+    <string name="drawer_style_oneui">Style OneUI (paginé)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">Tri du tiroir d\'applications</string>
+    <string name="app_drawer_sort_alphabetical">Trier par ordre alphabétique</string>
+    <string name="app_drawer_sort_install_date">Trier par date d\'installation</string>
+    <string name="app_drawer_sort_usage">Trier par utilisation</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">Couleur d\'arrière-plan personnalisée</string>
+    <string name="pref_app_drawer_custom_color_summary">Utiliser une couleur personnalisée pour le fond du tiroir d\'applications</string>
+    <string name="pref_app_drawer_custom_color_light_title">Couleur du mode clair</string>
+    <string name="pref_app_drawer_custom_color_dark_title">Couleur du mode foncé</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Autoriser la parallaxe courte</string>
+    <string name="short_parallax_summary">Activer l\'effet de défilement complet du fond d\'écran sur un nombre réduit de pages au lieu de le recadrer</string>
+    <string name="single_page_center_title">Centre de page unique</string>
+    <string name="single_page_center_summary">Centrer le fond d\'écran si une seule page est utilisée</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">Barre d\'état sombre</string>
+    <string name="perf_dark_status_bar_summary">Toujours utiliser la barre d\'état sombre sur l\'écran d\'accueil</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Niveau de flou</string>
+    <string name="background_blur_summary">Définir le niveau de flou pour le tiroir et récent</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Opacité de l\'arrière-plan</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">Fleur</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">Cœur</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">Hexagone</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">Feuille</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Nuageux</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">Cylindrique</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">Étiré</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">Caillou</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">Carré parfait</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">Rectangle arrondi</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">Carrecle</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">Rectangle conique</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">Larme</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">Navire</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">Hexagone arrondi</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Masquage automatique de l\'indicateur de page</string>
+    <string name="auto_hide_dots_summary">Masquer automatiquement les points indicateurs de page</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">Renommer</string>
+    <string name="rename_app_title">Saisir le nom de l\'application</string>
+    <string name="rename_app_reset">Réinitialiser</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">Icône personnalisée</string>
+    <string name="icon_picker_search_hint">Rechercher des icônes</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Applications cachées &amp; protégées</string>
+    <string name="trust_apps_auth_manager">Déverrouiller pour gérer les applications cachées et protégées</string>
+    <string name="trust_apps_loading">Chargement\u2026</string>
+    <string name="trust_apps_no_lock_error">Veuillez configurer un écran de verrouillage pour restreindre l\'accès aux applications</string>
+    <string name="trust_apps_help">Aide</string>
+    <string name="trust_apps_info_hidden">Les applications cachées et leurs widgets sont cachés du tiroir d\'applications</string>
+</resources>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Начален екран</string>
+    <string name="home_category_summary">Приложи Google now панела и още</string>
+    <string name="icons_category_title">Икони</string>
+    <string name="icons_category_summary">Задай размер на икона и още</string>
+    <string name="app_drawer_category_title">Списък с приложения</string>
+    <string name="app_drawer_category_summary">Персонализиране на менюто с приложения</string>
+    <string name="recents_category_title">Скорошни</string>
+    <string name="recents_category_summary">Промени екрана за преглеждания</string>
+    <string name="misc_category_title">Разни</string>
+    <string name="misc_category_summary">Други опции</string>
+    <string name="general_category_title">Основни</string>
+    <string name="interface_category_title">Интерфейс</string>
+    <string name="search_bar_category_title">Лента за търсене</string>
+    <string name="actions_category_title">Бързи действия</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Опции за разработчици</string>
+    <string name="dev_options_summary">Активирайте някои скрити функции на собствен риск</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Оформление на заключването</string>
+    <string name="settings_lock_layout_summary_on">Икони и джаджи не могат да бъдат добавяни, премахвани и местени на началния екран</string>
+    <string name="settings_lock_layout_summary_off">Икони и джаджи могат да бъдат добавяни, премахвани и местени на началния екран</string>
+    <string name="settings_edit_widgets_error">Невъзможно е да се добавят джаджи към началния екран</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Плъзни, за да започнеш търсене</string>
+    <string name="drawer_open_keyboard_summary">Показвай клавиатурата винаги когато списъкът с приложения е видим</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Плъзнете за достъп до Google</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Предложения</string>
+    <string name="suggestion_pref_screen_desc">За всички приложения &amp; Предложения на началния екран</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Търсене</string>
+    <string name="label_voice_search">Гласово търсене</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">Видимостта на външния слой</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Фон на лентата с любими приложения</string>
+    <string name="hotseat_bg_summary">Добавяне на прозрачен фон към лентата с любими приложения</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Превъртане на тапета</string>
+    <string name="allow_wallpaper_scrolling_summary">Ефект на превъртане на тапета за няколко екрана</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">Приложи на закл. екран</string>
+    <string name="wallpaper_carousel_lockscreen_summary">Приложи същия тапет на закл. екран</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Увеличаване на тапет</string>
+    <string name="allow_wallpaper_zooming_summary">Увеличаване или намаляване на изображението по време на използване на менюто с приложения или скорошни приложения</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Лента на състоянието</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">По подразбиране</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Размер на иконата</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Размер на шрифта</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Спри</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Рестартиране на launcher-a за прилагане на промените...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">Стил на скорошните</string>
+    <string name="recents_style_default">По подразбиране</string>
+    <string name="recents_style_stock">Ефект на разширяване</string>
+    <string name="recents_style_staple">Kami стил</string>
+    <string name="recents_style_ios">стил по iOS</string>
+    <string name="recents_style_oxygen">Стил по OxygenOS</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Екранна снимка</string>
+    <string name="recents_clear_all_title">Изчистване на всичко</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s налични | %2$s</string>
+    <string name="recents_meminfo_title">Информация за паметта</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">Местоположение на търсачката</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Тъмни етикети на приложения</string>
+    <string name="all_apps_dark_text_summary">Винаги използвай тъмен текст за етикети на приложения в шкафчето</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">Стил на шкафчето на приложения</string>
+    <string name="drawer_style_normal">Нормално (долен лист)</string>
+    <string name="drawer_style_legacy">Стар вид на пълния екран</string>
+    <string name="drawer_style_list">Стил на списъка</string>
+    <string name="drawer_style_oneui">Стил по OneUI (страници)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">Подреждане на шкафчето с приложения</string>
+    <string name="app_drawer_sort_alphabetical">Подреди по азбучен ред</string>
+    <string name="app_drawer_sort_install_date">Подреди по време на инсталация</string>
+    <string name="app_drawer_sort_usage">Подреди по използване</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">Персонализиран фонов цвят</string>
+    <string name="pref_app_drawer_custom_color_summary">Използвай собствен цвят за фона на шкафчето</string>
+    <string name="pref_app_drawer_custom_color_light_title">Цвят по светъл режим</string>
+    <string name="pref_app_drawer_custom_color_dark_title">Цвят по тъмен режим</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Позволи къс паралакс</string>
+    <string name="short_parallax_summary">Активирайте ефекта на пълно превъртане на тапета върху по-малък брой страници, вместо да се изрязва</string>
+    <string name="single_page_center_title">Центрирана единствена страница</string>
+    <string name="single_page_center_summary">Центрирай тапета ако се използва само една страница</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">Тъмна лента на състоянието</string>
+    <string name="perf_dark_status_bar_summary">Винаги използвай тъмна лента на състоянието на началния екран</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Замъгленост на тапета</string>
+    <string name="background_blur_summary">Задаване на ниво на замъгляване за скорошни приложения и чекмедже с приложения</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Прозрачност на фона</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">Мяу</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">Цвете</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">Сърце</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">Шестоъгълник</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">Листо</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Облачно</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">Цилиндрично</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">Разтегнато</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">Камъче</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">Остър квадрат</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">Закръглен правоъгълник</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">Комбинация от кръг и квадрат</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">Скосен правоъгълник</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">Сълза</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">Съд</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">Заоблен шестоъгълник</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Индикатор за автоматично скриване на страницата</string>
+    <string name="auto_hide_dots_summary">Скрий точките на индикатор за на страницата автоматично</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Скрити &amp; Защитени приложения</string>
+    <string name="trust_apps_auth_manager">Отключете за да управлявате скритите и защитените приложения</string>
+    <string name="trust_apps_loading">Зарежда се\u2026</string>
+    <string name="trust_apps_no_lock_error">Моля, задайте сигурно заключване на екрана за да ограничи достъпа до дадено приложение</string>
+    <string name="trust_apps_help">Помощ</string>
+    <string name="trust_apps_info_hidden">Скритите приложения и техните приспособления са скрити от менюто с приложения</string>
+</resources>

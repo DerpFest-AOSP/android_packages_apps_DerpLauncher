@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Pantalla de Inicio</string>
+    <string name="home_category_summary">Configura el panel de Google Now y más</string>
+    <string name="icons_category_title">Iconos</string>
+    <string name="icons_category_summary">Configura el tamaño de los iconos y más</string>
+    <string name="app_drawer_category_title">Cajón de aplicaciones</string>
+    <string name="app_drawer_category_summary">Personaliza tu cajón de aplicaciones</string>
+    <string name="recents_category_title">Recientes</string>
+    <string name="recents_category_summary">Personaliza tu pantalla de recientes</string>
+    <string name="misc_category_title">Varios</string>
+    <string name="misc_category_summary">Otras opciones</string>
+    <string name="interface_category_title">Interfaz</string>
+    <string name="search_bar_category_title">Barra de búsqueda</string>
+    <string name="actions_category_title">Acciones rápidas</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Opciones para desarrolladores</string>
+    <string name="dev_options_summary">Activar algunas características ocultas bajo su propio riesgo</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Diseño de pantalla de bloqueo</string>
+    <string name="settings_lock_layout_summary_on">Iconos y widgets no pueden ser añadidos, eliminados o movidos en la pantalla de inicio</string>
+    <string name="settings_lock_layout_summary_off">Iconos y widgets pueden ser añadidos, eliminados o movidos en la pantalla de inicio</string>
+    <string name="settings_edit_widgets_error">No es posible añadir widgets a la pantalla de inicio</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Desliza para comenzar la búsqueda</string>
+    <string name="drawer_open_keyboard_summary">Abrir el teclado cada vez que el cajón de aplicaciones se vuelva visible</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Deslizar para acceder a la aplicación de Google</string>
+    <string name="msg_minus_one_on_left">Cuando deslizas a la izquierda desde la pantalla principal</string>
+    <string name="msg_minus_one_on_right">Cuando deslizas a la derecha desde la pantalla de Inicio</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Sugerencias</string>
+    <string name="suggestion_pref_screen_desc">Para todas las aplicaciones y sugerencias de la pantalla de inicio</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Buscar</string>
+    <string name="label_voice_search">Búsqueda por voz</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">Opacidad de la capa exterior</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Fondo del dock</string>
+    <string name="hotseat_bg_summary">Añadir fondo translúcido al dock de aplicaciones</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Desplazamiento de fondo de pantalla</string>
+    <string name="allow_wallpaper_scrolling_summary">Efecto de desplazamiento de fondo de pantalla para múltiples pantallas</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">Aplicar a la pantalla de bloqueo</string>
+    <string name="wallpaper_carousel_lockscreen_summary">Establecer el mismo fondo de pantalla en la pantalla de bloqueo</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Zoom del fondo de pantalla</string>
+    <string name="allow_wallpaper_zooming_summary">Acercar o alejar el fondo de pantalla al usar el cajón o aplicaciones recientes</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Barra de Estado</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Predeterminado</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Tamaño del icono</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Tamaño de la fuente</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Terminar proceso</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Reiniciando launcher para aplicar cambios...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">Estilo de diseño de recientes</string>
+    <string name="recents_style_default">Predeterminado</string>
+    <string name="recents_style_stock">Efecto de escala</string>
+    <string name="recents_style_staple">Estilo Kami</string>
+    <string name="recents_style_ios">Estilo iOS</string>
+    <string name="recents_style_oxygen">Estilo OxygenOS</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Captura de pantalla</string>
+    <string name="recents_clear_all_title">Borrar todo</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s Disponibles | %2$s Total</string>
+    <string name="recents_meminfo_title">Información de memoria</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">Ubicación de la barra de búsqueda de aplicaciones</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Etiquetas de aplicaciones oscuras</string>
+    <string name="all_apps_dark_text_summary">Usar siempre texto oscuro en las etiquetas de apps en el cajón de aplicaciones</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">Estilo del cajón de aplicaciones</string>
+    <string name="drawer_style_normal">Normal (panel inferior)</string>
+    <string name="drawer_style_legacy">Pantalla completa clásica</string>
+    <string name="drawer_style_list">Estilo de lista</string>
+    <string name="drawer_style_oneui">Estilo OneUI (paginado)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">Orden del cajón de aplicaciones</string>
+    <string name="app_drawer_sort_alphabetical">Ordenar alfabéticamente</string>
+    <string name="app_drawer_sort_install_date">Ordenar por fecha de instalación</string>
+    <string name="app_drawer_sort_usage">Ordenar por uso</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">Color de fondo personalizado</string>
+    <string name="pref_app_drawer_custom_color_summary">Usar un color personalizado para el fondo del cajón de aplicaciones</string>
+    <string name="pref_app_drawer_custom_color_light_title">Color del modo claro</string>
+    <string name="pref_app_drawer_custom_color_dark_title">Color del modo oscuro</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Permitir paralax corto</string>
+    <string name="short_parallax_summary">Activar efecto de desplazamiento del fondo de pantalla completo en un número menor de páginas en lugar de recortar el fondo de pantalla</string>
+    <string name="single_page_center_title">Título de página única centrado</string>
+    <string name="single_page_center_summary">Centrar fondo de pantalla si hay una sola página</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">Barra de estado oscura</string>
+    <string name="perf_dark_status_bar_summary">Usar siempre la barra de estado oscura en la pantalla de inicio</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Desenfoque de fondo</string>
+    <string name="background_blur_summary">Establecer nivel de profundidad de desenfoque para recientes y cajón de aplicaciones</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Opacidad del fondo</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">Michi</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">Flor</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">Corazón</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">Hexágono</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">Hoja</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Nublado</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">Cilíndrico</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">Estirado</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">Piedrita</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">Cuadrado puro</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">Rectángulo redondeado</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">Cuadrado redondeado</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">Rectángulo cónico</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">Lágrima</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">Vasija</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">Hexágono redondeado</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Ocultar automáticamente el indicador de página</string>
+    <string name="auto_hide_dots_summary">Ocultar automáticamente los puntos del indicador de página</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">Renombrar</string>
+    <string name="rename_app_title">Introduzca el nombre de la aplicación</string>
+    <string name="rename_app_reset">Restablecer</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">Icono personalizado</string>
+    <string name="icon_picker_search_hint">Buscar iconos</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Aplicaciones ocultas y protegidas</string>
+    <string name="trust_apps_auth_manager">Desbloquea para gestionar las aplicaciones ocultas y protegidas</string>
+    <string name="trust_apps_loading">Cargando\u2026</string>
+    <string name="trust_apps_no_lock_error">Por favor, configura un bloqueo de pantalla seguro para restringir el acceso a las aplicaciones</string>
+    <string name="trust_apps_help">Ayuda</string>
+    <string name="trust_apps_info_hidden">Las aplicaciones ocultas y sus widgets están ocultos del cajón</string>
+</resources>

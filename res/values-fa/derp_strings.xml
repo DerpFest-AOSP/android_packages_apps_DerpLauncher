@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">صفحه اصلی</string>
+    <string name="home_category_summary">تنظیم پنل گوگل نَـو و بیشتر</string>
+    <string name="icons_category_title">نشان‌ها</string>
+    <string name="icons_category_summary">تنظیم شکل آیکون و بیشتر</string>
+    <string name="app_drawer_category_title">منوی برنامه ها</string>
+    <string name="app_drawer_category_summary">شخصی سازی منوی برنامه ها</string>
+    <string name="recents_category_title">اخیر</string>
+    <string name="recents_category_summary">صفحه نمای کلی را نو نما کنید</string>
+    <string name="misc_category_title">متفرقه</string>
+    <string name="misc_category_summary">گزینه های دیگر</string>
+    <string name="general_category_title">عمومی</string>
+    <string name="interface_category_title">رابط کاربری</string>
+    <string name="search_bar_category_title">نوار جستجو</string>
+    <string name="actions_category_title">اقدامات سریع</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">گزینه های برنامه نویس</string>
+    <string name="dev_options_summary">ویژگی های مخفی بیشتری را با مسئولیت خود فعال کنید</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">قفل کردن طرح چیدمان</string>
+    <string name="settings_lock_layout_summary_on">نمادها و ویجت ها را نمی توان اضافه، حذف و در صفحه اصلی منتقل کرد</string>
+    <string name="settings_lock_layout_summary_off">آیکون ها و ویجت ها را می توان در صفحه اصلی اضافه، حذف و منتقل کرد</string>
+    <string name="settings_edit_widgets_error">امکان افزودن ویجت ها به صفحه اصلی وجود ندارد</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">برای جستجو انگشت خود را بکشید</string>
+    <string name="drawer_open_keyboard_summary">هر زمان که کشوی برنامه نمایان شد، صفحه کلید را باز کنید</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">کشیدن برای دسترسی به برنامه گوگل</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">پیشنهادها</string>
+    <string name="suggestion_pref_screen_desc">پیشنهاد‌ها در صفحه خانه &amp; برای همه برنامه‌ها</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">جستجو</string>
+    <string name="label_voice_search">جستجو صوتی</string>
+    <string name="label_lens">لنز Google</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">شفافیت لایه بیرونی</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">پس زمینه صندلی داغ</string>
+    <string name="hotseat_bg_summary">پس زمینه شفاف را به داک برنامه اضافه کنید</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">چرخش کاغذ دیواری</string>
+    <string name="allow_wallpaper_scrolling_summary">جلوه چرخش کاغذ دیواری برای چندین صفحه</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">اعمال روی صفحه قفل</string>
+    <string name="wallpaper_carousel_lockscreen_summary">تنظیم تصویر زمینه یکسان روی صفحه قفل</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">بزرگنمایی شدن کاغذ دیواری</string>
+    <string name="allow_wallpaper_zooming_summary">هنگام استفاده از کشو یا برنامه های اخیر، کاغذ دیواری را بزرگ یا کوچک کنید</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">نوار وضعیت</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">پیش‌فرض</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">اندازه آیکون</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">اندازه قلم</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">توقف</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">راه‌اندازی مجدد لانچر برای اعمال تغییرات...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">سبک چیدمان برنامه‌های اخیر</string>
+    <string name="recents_style_default">پیش‌فرض</string>
+    <string name="recents_style_stock">افکت مقیاس</string>
+    <string name="recents_style_staple">سبک Kami</string>
+    <string name="recents_style_ios">سبک ios</string>
+    <string name="recents_style_oxygen">سبک oxygenos </string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">عکس گرفتن از صفحه</string>
+    <string name="recents_clear_all_title">پاک کردن همه موارد</string>
+    <string name="recents_lens_title">لنز</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s در دسترس | %2$s</string>
+    <string name="recents_meminfo_title">اطلاعات حافظه</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">موقعیت نوار جستجوی برنامه</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">برچسب‌های برنامه تیره</string>
+    <string name="all_apps_dark_text_summary">همیشه از متن تیره برای برچسب برنامه‌ها در کشوی برنامه استفاده کنید</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">سبک کشوی برنامه</string>
+    <string name="drawer_style_normal">عادی (پنجره پایینی)</string>
+    <string name="drawer_style_legacy">تمام‌صفحه قدیمی</string>
+    <string name="drawer_style_list">سبک لیستی</string>
+    <string name="drawer_style_oneui">سبک OneUI (صفحه‌بندی شده)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">مرتب‌سازی کشوی برنامه</string>
+    <string name="app_drawer_sort_alphabetical">مرتب‌سازی الفبایی</string>
+    <string name="app_drawer_sort_install_date">مرتب‌سازی بر اساس تاریخ نصب</string>
+    <string name="app_drawer_sort_usage">مرتب‌سازی بر اساس میزان استفاده</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">رنگ پس‌زمینه سفارشی</string>
+    <string name="pref_app_drawer_custom_color_summary">استفاده از رنگ سفارشی برای پس‌زمینه کشوی برنامه</string>
+    <string name="pref_app_drawer_custom_color_light_title">رنگ حالت روشن</string>
+    <string name="pref_app_drawer_custom_color_dark_title">رنگ حالت تاریک</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">منظر کوتاه را مجاز کنید</string>
+    <string name="short_parallax_summary">به جای برش دادن کاغذدیواری، جلوه اسکرول کامل تصویر زمینه را در تعداد صفحات کمتری فعال کنید</string>
+    <string name="single_page_center_title">تک صفحه مرکز</string>
+    <string name="single_page_center_summary">تصویر زمینه در مرکز اگر شما فقط یک صفحه دارید</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">نوار وضعیت تاریک</string>
+    <string name="perf_dark_status_bar_summary">همیشه از نوار وضعیت تیره در صفحه اصلی استفاده کنید</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">عمق تاری پس زمینه</string>
+    <string name="background_blur_summary">سطح عمق تاری را برای موارد اخیر و کشوی برنامه تنظیم کنید</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">شفافیت پس‌زمینه</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">میو</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">گل</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">قلب</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">شش‌ضلعی</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">برگ</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">ابری</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">استوانه‌ای</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">کشیده</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">سنگی</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">مربع خالص</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">مستطیل گرد</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">مربع گوشه‌گرد</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">مستطیل مخروطی</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">قطره اشک</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">کشتی</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">شش‌ضلعی گوشه‌گرد</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">نشانگر پنهان شدن خودکار صفحه</string>
+    <string name="auto_hide_dots_summary">نقاط نشانگر صفحه را به طور خودکار پنهان کنید</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">تغییرنام</string>
+    <string name="rename_app_title">نام برنامه را وارد کنید</string>
+    <string name="rename_app_reset">بازنشانی</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">آیکون سفارشی</string>
+    <string name="icon_picker_search_hint">جستجوی آیکون‌ها</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">برنامه‌های پنهان &amp; محافظت شده</string>
+    <string name="trust_apps_auth_manager">برای مدیریت برنامه‌های پنهان و محافظت شده قفل را باز کنید</string>
+    <string name="trust_apps_loading">در حال بارگزاری\u2026</string>
+    <string name="trust_apps_no_lock_error">لطفا یک قفل برای کنترل برنامه‌های پنهان و محافظت شده، تنظیم کنید</string>
+    <string name="trust_apps_help">کمک</string>
+    <string name="trust_apps_info_hidden">برنامه‌های مخفی و ویجت‌هایشان از فهرست برنامه ها پنهان هستند</string>
+</resources>

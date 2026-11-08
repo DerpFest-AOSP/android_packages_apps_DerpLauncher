@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Domovská obrazovka</string>
+    <string name="home_category_summary">Nastavenie panelu Google Teraz a ďalších funkcií</string>
+    <string name="icons_category_title">Ikony</string>
+    <string name="icons_category_summary">Nastaviť veľkosť ikon a ďalšie parametre</string>
+    <string name="app_drawer_category_title">Zoznam aplikácií</string>
+    <string name="app_drawer_category_summary">Prispôsobiť zoznam aplikácií</string>
+    <string name="recents_category_title">Nedávne aplikácie</string>
+    <string name="recents_category_summary">Zmeniť štýl obrazovky nedávnych aplikácií</string>
+    <string name="misc_category_title">Rôzne</string>
+    <string name="misc_category_summary">Ďalšie možnosti</string>
+    <string name="general_category_title">Všeobecné</string>
+    <string name="interface_category_title">Rozhranie</string>
+    <string name="search_bar_category_title">Vyhľadávací panel</string>
+    <string name="actions_category_title">Rýchle akcie</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Možnosti pre vývojárov</string>
+    <string name="dev_options_summary">Povoliť niektoré skryté funkcie na svoje vlastné riziko</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Zamknúť rozloženie</string>
+    <string name="settings_lock_layout_summary_on">Ikony a miniaplikácie nie je možné pridať, odstrániť a presunúť na domovskú obrazovku</string>
+    <string name="settings_lock_layout_summary_off">Ikony a miniaplikácie je možné pridať, odstrániť a presunúť na domovskú obrazovku</string>
+    <string name="settings_edit_widgets_error">Nie je možné pridať miniaplikácie na domovskú obrazovku</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Potiahnite prstom pre spustenie vyhľadávania</string>
+    <string name="drawer_open_keyboard_summary">Vždy otvárať klávesnicu, keď je zoznam aplikácií viditeľný</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Prijatím prejsť do aplikácie Google</string>
+    <string name="msg_minus_one_on_left">Pri potiahnutí prstom vľavo na hlavnej obrazovke</string>
+    <string name="msg_minus_one_on_right">Pri potiahnutí prstom vpravo na hlavnej obrazovke</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Návrhy</string>
+    <string name="suggestion_pref_screen_desc">Pre všetky aplikácie &amp; návrhy dna ploche</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Vyhľadať</string>
+    <string name="label_voice_search">Hlasové vyhľadávanie</string>
+    <string name="label_lens">Dokumenty Google</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Hotseat pozadie</string>
+    <string name="hotseat_bg_summary">Pridať priesvitné pozadie do doku aplikácie</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Posúvanie tapety</string>
+    <string name="allow_wallpaper_scrolling_summary">Efekt posúvania tapety pre viacero obrazoviek</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Priblíženie tapety</string>
+    <string name="allow_wallpaper_zooming_summary">Priblížiť alebo oddialiť tapetu pri použití ponuky aplikácií alebo nedávnych aplikácií</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Stavový riadok</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Predvolené</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Veľkosť ikony</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Veľkosť písma</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Ukončiť</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Aplikujú sa zmeny, launcher sa reštartuje...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_default">Predvolené</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Snímka obrazovky</string>
+    <string name="recents_clear_all_title">Vymazať všetko</string>
+    <string name="recents_lens_title">Objektív</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s Dostupných | %2$s Celkovo</string>
+    <string name="recents_meminfo_title">Informácie o pamäti</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Povoliť krátku paralaxu</string>
+    <string name="short_parallax_summary">Namiesto odstrihnutia pozadia povoliť pri menšom počte stránok skrolovanie celého pozadia</string>
+    <string name="single_page_center_title">Vycentrovať jedinú stránku</string>
+    <string name="single_page_center_summary">Vycentrovať pozadie len pri použití jednej stránky</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">Tmavý stavový riadok</string>
+    <string name="perf_dark_status_bar_summary">Vždy použiť tmavý stavový riadok na ploche</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Sila rozmazania pozadia</string>
+    <string name="background_blur_summary">Nastaviť úroveň hĺbky rozmazania pre nedávne aplikácie a ponuku aplikácií</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Priehľadnosť pozadia</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Zamračené</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Automaticky skryť indikátor stránky</string>
+    <string name="auto_hide_dots_summary">Automaticky skryť bodky indikátora stránky</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Skryté a chránené aplikácie</string>
+    <string name="trust_apps_auth_manager">Odomknite pre správu skrytých a chránených aplikácií</string>
+    <string name="trust_apps_loading">Načítavanie\u2026</string>
+    <string name="trust_apps_no_lock_error">Pre obmedzenie prístupu k aplikácii prosím nastavte zabezpečenú obrazovku uzamknutia</string>
+    <string name="trust_apps_help">Nápoveda</string>
+    <string name="trust_apps_info_hidden">Skryté aplikácie a ich widgety se nezobrazujú v zozname aplikácií</string>
+</resources>

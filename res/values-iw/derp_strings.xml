@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">דף הבית</string>
+    <string name="home_category_summary">הגדר את פאנל Google now כעת ועוד</string>
+    <string name="icons_category_title">סמלים</string>
+    <string name="icons_category_summary">הגדרת גודל הסמל ועוד</string>
+    <string name="app_drawer_category_title">מגירת היישומים</string>
+    <string name="app_drawer_category_summary">התאמה אישית של מגירת היישומים</string>
+    <string name="recents_category_title">מהזמן האחרון</string>
+    <string name="recents_category_summary">ארגון מחדש של מסך התצוגה המסכמת</string>
+    <string name="misc_category_title">שונות</string>
+    <string name="misc_category_summary">אפשרויות נוספות</string>
+    <string name="general_category_title">כללי</string>
+    <string name="interface_category_title">ממשק</string>
+    <string name="search_bar_category_title">סרגל החיפוש</string>
+    <string name="actions_category_title">פעולות מהירות</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">אפשרויות מפתחים</string>
+    <string name="dev_options_summary">אפשר כמה תכונות נסתרות על אחריותך בלבד</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">נעילת פריסת התצוגה</string>
+    <string name="settings_lock_layout_summary_on">לא ניתן להוסיף, להסיר ולהזיז סמלים ויישומונים על מסך הבית</string>
+    <string name="settings_lock_layout_summary_off">ניתן להוסיף, להסיר ולהזיז סמלים ויישומונים על מסך הבית</string>
+    <string name="settings_edit_widgets_error">אין אפשרות להוסיף יישומונים למסך הבית</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">החלק כדי לגשת לאפליקציה גוגל</string>
+    <string name="msg_minus_one_on_left">בעת החלקה שמאלה ממסך הבית</string>
+    <string name="msg_minus_one_on_right">בעת החלקה ימינה ממסך הבית</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">הצעות</string>
+    <string name="suggestion_pref_screen_desc">עבור כל היישומים &amp; הצעות למסך הבית</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">חיפוש</string>
+    <string name="label_voice_search">חיפוש קולי</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">רקע המושב החם</string>
+    <string name="hotseat_bg_summary">הוספת רקע שקוף לסרגל היישומים</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">גלילת הטפט</string>
+    <string name="allow_wallpaper_scrolling_summary">אפקט גלילה לטפט עבור מסכים מרובים</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">שינוי מרחק לטפט</string>
+    <string name="allow_wallpaper_zooming_summary">התקרבות או התרחקות הטפט בעת השימוש במגירת היישומים או היישומים האחרונים</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">שורת מצב</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">ברירת המחדל</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">גודל הסמל</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">גודל גופן</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">כפיית הפסקת היישום</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">הפעלה מחדש של הלאונצ\'ר להחלת השינויים...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_default">ברירת המחדל</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">צילום המסך</string>
+    <string name="recents_clear_all_title">ניקוי הכל</string>
+    <string name="recents_lens_title">עדשה</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s זמין /%2$s בסך הכל</string>
+    <string name="recents_meminfo_title">מידע אודות הזכרון</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">התרת היסט (פרלקסה) קצר</string>
+    <string name="short_parallax_summary">הפעלת אפקט גלילה מלא לטפט על פני מספר קטן יותר של דפים במקום חיתוך הטפט</string>
+    <string name="single_page_center_title">מירכוז בדף יחיד</string>
+    <string name="single_page_center_summary">התמקדות הטפט במרכז בשימוש בדף יחיד </string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">שורת המצב כהה</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">עומק טשטוש הרקע</string>
+    <string name="background_blur_summary">הגדרת עומק הטשטוש למגירת היישומים וליישומים האחרונים</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">שקיפות הרקע</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">מעונן</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">&amp; יישומים מוגנים מוסתרים</string>
+    <string name="trust_apps_auth_manager">ביטול נעילה כדי לנהל את היישומים המוסתרים והמוגנים</string>
+    <string name="trust_apps_loading">טעינת \u2026</string>
+    <string name="trust_apps_no_lock_error">נדרש להגדיר מסך נעילה מאובטח להגבלת גישה ליישומים</string>
+    <string name="trust_apps_help">עזרה</string>
+    <string name="trust_apps_info_hidden">יישומים מוסתרים והווידג\'טים שלהם אינם מוצגים במגירת היישומים</string>
+</resources>

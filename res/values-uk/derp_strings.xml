@@ -396,4 +396,96 @@
     <string name="work_apps_paused_info_body_custom">Ваші робочі додатки не можуть надсилати вам сповіщення, використовувати заряд акумулятора або отримувати доступ до вашого місцезнаходження.</string>
     <string name="work_apps_paused_telephony_unavailable_body_custom">Ваші робочі додатки не можуть приймати телефонні дзвінки чи текстові повідомлення, надсилати вам сповіщення, використовувати заряд акумулятора або отримувати доступ до вашого місцезнаходження.</string>
     <string name="work_apps_paused_title_custom">Робочі додатки вимкнено</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">Застосувати до екрана блокування</string>
+    <string name="wallpaper_carousel_lockscreen_summary">Встановити однакові шпалери на екран блокування</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">Стиль макета нещодавніх</string>
+    <string name="recents_style_default">За замовчанням</string>
+    <string name="recents_style_stock">Ефект масштабу</string>
+    <string name="recents_style_staple">Стиль Kami</string>
+    <string name="recents_style_ios">Стиль iOS</string>
+    <string name="recents_style_oxygen">Стиль OxygenOS</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Темні мітки додатків</string>
+    <string name="all_apps_dark_text_summary">Завжди використовувати темний текст для підписів додатків у меню додатків</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">Стиль меню програм</string>
+    <string name="drawer_style_normal">Звичайний (нижній простил)</string>
+    <string name="drawer_style_legacy">Застарілий повноекранний режим</string>
+    <string name="drawer_style_list">Стиль списку</string>
+    <string name="drawer_style_oneui">Стиль OneUI (сторінково)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">Сортування додатків</string>
+    <string name="app_drawer_sort_alphabetical">Сортувати за алфавітом</string>
+    <string name="app_drawer_sort_install_date">Сортувати за датою встановлення</string>
+    <string name="app_drawer_sort_usage">Сортувати за використанням</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">Власний колір тла</string>
+    <string name="pref_app_drawer_custom_color_summary">Використовувати свій колір для тла меню програм</string>
+    <string name="pref_app_drawer_custom_color_light_title">Колір світлого режиму</string>
+    <string name="pref_app_drawer_custom_color_dark_title">Колір темного режиму</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">Нявчати</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">Квітка</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">Серце</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">Шестикутник</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">Листок</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Хмарно</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">Циліндричний</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">Розтягнутий</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">Камінець</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">Чистий квадрат</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">Округлений прямокутник</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">Квадрат із заокругленими кутами</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">Звужений прямокутник</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">Крапля</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">Глечик</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">Закруглений шестикутник</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">Перейменувати</string>
+    <string name="rename_app_title">Введіть назву програми</string>
+    <string name="rename_app_reset">Скинути</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">Користувацька піктограма</string>
+    <string name="icon_picker_search_hint">Пошук значків</string>
 </resources>

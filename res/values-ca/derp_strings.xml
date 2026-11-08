@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Pàgina d\'inici</string>
+    <string name="home_category_summary">Configura el panel de Google Now i altres</string>
+    <string name="icons_category_title">Icones</string>
+    <string name="icons_category_summary">Configura la mida i altres opcions de les icones</string>
+    <string name="app_drawer_category_title">Calaix d\'aplicacions</string>
+    <string name="app_drawer_category_summary">Personalitzeu el calaix d\'aplicacions</string>
+    <string name="misc_category_title">Miscel·lània</string>
+    <string name="misc_category_summary">Altres opcions</string>
+    <string name="interface_category_title">Interfície</string>
+    <string name="search_bar_category_title">Barra de cerca</string>
+    <string name="actions_category_title">Accions ràpides</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Opcions de desenvolupament</string>
+    <string name="dev_options_summary">Activa algunes característiques ocultes baix la teva responsabilitat</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Bloqueja la disposició</string>
+    <string name="settings_lock_layout_summary_on">Icones i widgets no poden ser afegits, eliminats o moguts en la pantalla d\'inici</string>
+    <string name="settings_lock_layout_summary_off">Icones i widgets poden ser afegits, eliminats o moguts en la pantalla d\'inici</string>
+    <string name="settings_edit_widgets_error">No és possible afegir widgets a la pantalla d\'inici</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Fes lliscar el dit per accedir a l\'app de Google</string>
+    <string name="msg_minus_one_on_left">Quan feu lliscar el dit cap a l\'esquerra des de la pantalla principal d\'inici</string>
+    <string name="msg_minus_one_on_right">Quan feu lliscar el dit cap a la dreta des de la pantalla principal d\'inici</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Suggeriments</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Cerca</string>
+    <string name="label_voice_search">Cerca per veu</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_summary">Afegeix fons translúcid al dock d\'aplicacions</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Desplaçament de fons de pantalla</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Zoom del fons de pantalla</string>
+    <string name="allow_wallpaper_zooming_summary">Fer zoom in o zoom out al fons de pantalla al utilitzar el caixó o les aplicacions recents</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Barra d\'estat</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Per defecte</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Mida de les icones</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Mida de la lletra</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Atura</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Reiniciant el llançador per aplicar els canvis...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_default">Per defecte</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Captura de pantalla</string>
+    <string name="recents_clear_all_title">Esborra-ho tot</string>
+    <string name="recents_lens_title">Lent</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s Disponible | %2$s Total</string>
+    <string name="recents_meminfo_title">Informació de la memòria</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Desenfocament de fons</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Opacitat del fons</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Aplicacions amagades i protegides</string>
+    <string name="trust_apps_auth_manager">Desbloqueja per gestionar les aplicacions amagades i protegides</string>
+    <string name="trust_apps_loading">S\'està carregant\u2026</string>
+    <string name="trust_apps_no_lock_error">Si us plau, configura un bloqueig de pantalla segur per a restringir l\'accés a aplicacions</string>
+    <string name="trust_apps_help">Ajuda</string>
+    <string name="trust_apps_info_hidden">Les aplicacions amagades i els seus widgets estan amagades del calaix</string>
+</resources>

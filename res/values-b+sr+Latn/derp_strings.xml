@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Početni ekran</string>
+    <string name="home_category_summary">Postavi Google now panel i više</string>
+    <string name="icons_category_title">Ikone</string>
+    <string name="app_drawer_category_title">Ladica sa aplikacijama</string>
+    <string name="app_drawer_category_summary">Prilagodite ladicu aplikacija</string>
+    <string name="recents_category_title">Nedavne aplikacije</string>
+    <string name="misc_category_title">Razno</string>
+    <string name="misc_category_summary">Druge opcije</string>
+    <string name="general_category_title">Opšte</string>
+    <string name="interface_category_title">Interfejs</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Pretraga</string>
+    <string name="label_voice_search">Glasovna pretraga</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Statusna trka</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Podrazumevano</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Veličina fonta</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Prisilno zatvori aplikaciju</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_default">Podrazumevano</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Slika ekrana</string>
+    <string name="recents_clear_all_title">Počisti</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Prozirnost pozadine</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_help">Pomoć</string>
+</resources>

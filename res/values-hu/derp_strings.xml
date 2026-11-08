@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Kezdőképernyő</string>
+    <string name="home_category_summary">A \'Google Now\' panel és egyebek beállítása</string>
+    <string name="icons_category_title">Ikonok</string>
+    <string name="icons_category_summary">Ikonméret-beállítás és egyebek</string>
+    <string name="app_drawer_category_title">Alkalmazásfiók</string>
+    <string name="app_drawer_category_summary">Testreszabhatja az Alkalmazásfiókját</string>
+    <string name="recents_category_title">Előzmények</string>
+    <string name="recents_category_summary">Az áttekintési nézet újraformálása</string>
+    <string name="misc_category_title">Különlegességek</string>
+    <string name="misc_category_summary">Minden, ami egyedivé tesz</string>
+    <string name="general_category_title">Általános</string>
+    <string name="interface_category_title">Felület</string>
+    <string name="search_bar_category_title">Keresési sáv</string>
+    <string name="actions_category_title">Azonnali műveletek</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Fejlesztői beállítások</string>
+    <string name="dev_options_summary">Saját felelősségére rejtett beállításokat engedélyezhet</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Elrendezés-zárolás</string>
+    <string name="settings_lock_layout_summary_on">A kezdőképernyőn nem engedélyezett az ikon- és modulhozzáadás, eltávolítás és mozgatás</string>
+    <string name="settings_lock_layout_summary_off">A kezdőképernyőn engedélyezett az ikon- és modulhozzáadás, eltávolítás és mozgatás</string>
+    <string name="settings_edit_widgets_error">Nem lehet kisalkalmazásokat hozzáadni a kezdőképernyőhöz</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Csúsztatás a kereséshez</string>
+    <string name="drawer_open_keyboard_summary">Nyíljon meg a billentyűzet, amikor az alkalmazásfiók láthatóvá válik</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Google-alkalmazás csúsztatással</string>
+    <string name="msg_minus_one_on_left">Amikor a fő Kezdőképernyőn balra csúsztat</string>
+    <string name="msg_minus_one_on_right">Amikor a fő Kezdőképernyőn jobbra csúsztat</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Javaslatok</string>
+    <string name="suggestion_pref_screen_desc">Javaslatok a Kezdőképernyőhöz és minden alkalmazáshoz</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Keresés</string>
+    <string name="label_voice_search">Hangalapú keresés</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">A külső réteg átlátszósága</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Hotseat háttér</string>
+    <string name="hotseat_bg_summary">Áttetsző háttereket adhat az alkalmazásfiókhoz</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Háttérkép-görgetés</string>
+    <string name="allow_wallpaper_scrolling_summary">Háttérképgörgetési effekt több képernyőre</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">Alkalmazás a záróképernyőre</string>
+    <string name="wallpaper_carousel_lockscreen_summary">Ugyanazt a háttérképet állítsa be a zárolási képernyőre</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Háttérkép-zoomolás</string>
+    <string name="allow_wallpaper_zooming_summary">Nagyítsa vagy kicsinyítse a háttérképet az alkalmazásfiók vagy az előzmények használatakor</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Értesítési sáv</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Alapértelmezett</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Ikonméret</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Betűméret</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Leállítás</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">A változások miatti újraindulás...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">Az Előzmények elrendezési stílusa</string>
+    <string name="recents_style_default">Alapértelmezett</string>
+    <string name="recents_style_stock">Skálázott</string>
+    <string name="recents_style_staple">Kami</string>
+    <string name="recents_style_ios">iOS</string>
+    <string name="recents_style_oxygen">OxigenOS</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Képernyőkép</string>
+    <string name="recents_clear_all_title">Az összes törlése</string>
+    <string name="recents_lens_title">Objektív</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%2$s memóból %1$s érhető el</string>
+    <string name="recents_meminfo_title">Memória-információ</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">Az alkalmazás-keresősáv helyzete</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Sötét alkalmazásnevek</string>
+    <string name="all_apps_dark_text_summary">Az alkalmazásfiókban mindig sötét betűkkel írja ki az alkalmazások neveit</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">Az alkalmazásfiók stílusa</string>
+    <string name="drawer_style_normal">Megszokott (alsó lap)</string>
+    <string name="drawer_style_legacy">Örökölt fullképernyős</string>
+    <string name="drawer_style_list">Lista stílusú</string>
+    <string name="drawer_style_oneui">OneUI stílusú (oldalas)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">Rendezés az alkalmazásfiókban</string>
+    <string name="app_drawer_sort_alphabetical">A-B-C sorrend</string>
+    <string name="app_drawer_sort_install_date">Dátum szerinti sorrend</string>
+    <string name="app_drawer_sort_usage">Használat szerinti sorrend</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">Egyéni háttérszín</string>
+    <string name="pref_app_drawer_custom_color_summary">Egyéni szín használata az alkalmazásfiók hátteréhez</string>
+    <string name="pref_app_drawer_custom_color_light_title">A \'Világos mód\' színe</string>
+    <string name="pref_app_drawer_custom_color_dark_title">A \'Sötét mód\' színe</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Rövid paralaxis engedélyezése</string>
+    <string name="short_parallax_summary">Engedélyezze a teljes háttérképgörgetési hatását kisebb oldalszámon a háttérkép levágása helyett</string>
+    <string name="single_page_center_title">Centerezett egyoldalas</string>
+    <string name="single_page_center_summary">Helyezze középre a háttérképet, ha csak egyetlen oldalt használ</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">Sötét állapotsor</string>
+    <string name="perf_dark_status_bar_summary">Mindig használja a sötét állapotsort a kezdőképernyőn</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">A háttér-elmosás mélysége</string>
+    <string name="background_blur_summary">Az előzmények és az alkalmazásfiók elmosási értéke állítható itt</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Háttérátlátszóság</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">Miau</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">Virág</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">Szív</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">Hatszög</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">Falevél</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Felhő</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">Henger-szerű</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">Nyújtott</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">Kavics</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">Tökéletes négyzet</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">Kerekített téglalap</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">Négyzetes kör</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">Trapéz-szerű</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">Könnycsepp</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">Váza</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">Kerekített hatszög</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Oldaljelző automatikus rejtése</string>
+    <string name="auto_hide_dots_summary">Automatikusan eltünteti az oldaljező pontokat</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">Átnevezés</string>
+    <string name="rename_app_title">Írja be az alkalmazás nevét</string>
+    <string name="rename_app_reset">Visszaállítás</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">Egyéni ikon</string>
+    <string name="icon_picker_search_hint">Ikonok keresése</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Rejtett és védett alkalmazások</string>
+    <string name="trust_apps_auth_manager">Feloldás a rejtett és védett alkalmazások kezeléséhez</string>
+    <string name="trust_apps_loading">Betöltés\u2026</string>
+    <string name="trust_apps_no_lock_error">Kérjük, állítson be biztonságos (védett) képernyőzárat az alkalmazás-hozzáférések korlátozására</string>
+    <string name="trust_apps_help">Súgó</string>
+    <string name="trust_apps_info_hidden">A rejtett alkalmazások és kisalkalmazásaik az alkalmazásfiókban sem láthatóak</string>
+</resources>

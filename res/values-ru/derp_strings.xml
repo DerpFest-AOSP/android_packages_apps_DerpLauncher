@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Рабочий стол</string>
+    <string name="home_category_summary">Панель Google now и другое</string>
+    <string name="icons_category_title">Значки</string>
+    <string name="icons_category_summary">Установить размер значков и прочее</string>
+    <string name="app_drawer_category_title">Меню приложений</string>
+    <string name="app_drawer_category_summary">Настроить меню приложений</string>
+    <string name="recents_category_title">Недавние</string>
+    <string name="recents_category_summary">Настройки экрана недавних приложений</string>
+    <string name="misc_category_title">Разное</string>
+    <string name="misc_category_summary">Прочие настройки</string>
+    <string name="general_category_title">Общие</string>
+    <string name="interface_category_title">Интерфейс</string>
+    <string name="search_bar_category_title">Панель поиска</string>
+    <string name="actions_category_title">Быстрые действия</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Параметры разработчика</string>
+    <string name="dev_options_summary">Включить некоторые скрытые функции на свой страх и риск</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Блокировка изменений</string>
+    <string name="settings_lock_layout_summary_on">Значки и виджеты не могут быть добавлены, удалены или перемещены на рабочий стол</string>
+    <string name="settings_lock_layout_summary_off">Значки и виджеты могут быть добавлены, удалены и перемещены на рабочем столе</string>
+    <string name="settings_edit_widgets_error">Невозможно добавить виджеты на рабочий стол</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Автоматическая клавиатура</string>
+    <string name="drawer_open_keyboard_summary">Показать клавиатуру, при открытии меню приложений</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Смахивание вправо - Google</string>
+    <string name="msg_minus_one_on_left">Когда открываете рабочий стол слева</string>
+    <string name="msg_minus_one_on_right">Когда открываете рабочий стол справа</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Рекомендации</string>
+    <string name="suggestion_pref_screen_desc">Рекомендации в меню приложений и на рабочем столе</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Поиск</string>
+    <string name="label_voice_search">Голосовой поиск</string>
+    <string name="label_lens">Google Объектив</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">Прозрачность внешнего слоя</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Фон нижней панели</string>
+    <string name="hotseat_bg_summary">Полупрозрачный фон нижней панели приложений</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Прокрутка обоев</string>
+    <string name="allow_wallpaper_scrolling_summary">Эффект прокрутки обоев для нескольких экранов</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">Применять к экрану блокировки</string>
+    <string name="wallpaper_carousel_lockscreen_summary">Устанавливать те же обои на экран блокировки</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Масштабирование обоев</string>
+    <string name="allow_wallpaper_zooming_summary">Увеличение или уменьшение обоев в меню приложений или в списке недавних приложений</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Строка состояния</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">По умолчанию</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Размер значка</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Размер шрифта</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Завершить</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Перезапуск главного экрана для применения изменений...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">Стиль недавних приложений</string>
+    <string name="recents_style_default">По умолчанию</string>
+    <string name="recents_style_stock">Эффект масштабирования</string>
+    <string name="recents_style_staple">Ками стиль</string>
+    <string name="recents_style_ios">iOS стиль</string>
+    <string name="recents_style_oxygen">Стиль OxygenOS</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Снимок экрана</string>
+    <string name="recents_clear_all_title">Очистить всё</string>
+    <string name="recents_lens_title">Объектив</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">Доступно: %1$s | Всего: %2$s</string>
+    <string name="recents_meminfo_title">Информация о памяти</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">Положение строки поиска</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Тёмные названия приложений</string>
+    <string name="all_apps_dark_text_summary">Использовать тёмный текст для названия приложений</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">Стиль меню приложений</string>
+    <string name="drawer_style_normal">Нормальный (нижний лист)</string>
+    <string name="drawer_style_legacy">Устаревший полноэкранный</string>
+    <string name="drawer_style_list">В виде списка</string>
+    <string name="drawer_style_oneui">Стиль OneUI (страничный)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">Сортировка меню приложений</string>
+    <string name="app_drawer_sort_alphabetical">Сортировать по алфавиту</string>
+    <string name="app_drawer_sort_install_date">Сортировать по дате установки</string>
+    <string name="app_drawer_sort_usage">По частоте использования</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">Свой цвет фона</string>
+    <string name="pref_app_drawer_custom_color_summary">Использовать свой цвет фона для меню приложений</string>
+    <string name="pref_app_drawer_custom_color_light_title">Цвет светлого режима</string>
+    <string name="pref_app_drawer_custom_color_dark_title">Цвет тёмного режима</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Разрешить короткое смещение</string>
+    <string name="short_parallax_summary">Включить эффект полной прокрутки обоев на меньшем количестве страниц вместо обрезки обоев</string>
+    <string name="single_page_center_title">Центр, если одна страница</string>
+    <string name="single_page_center_summary">Центрировать обои, если используется только одна страница</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">Тёмная строка состояния</string>
+    <string name="perf_dark_status_bar_summary">Использовать тёмную строку состояния на главном экране</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Глубина размытия фона</string>
+    <string name="background_blur_summary">Установка глубины размытия фона для недавних и меню приложений</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Прозрачность фона</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">Мяу</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">Цветок</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">Сердце</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">Шестиугольник</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">Лист</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Пасмурно</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">Цилиндр</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">Растянутый</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">Галька</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">Чистый квадрат</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">Скруглённый прямоугольник</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">Квадрокруг</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">Заострённый прямоугольник</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">Капля</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">Ёмкость</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">Скруглённый шестиугольник</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Автоскрытие индикатора страницы</string>
+    <string name="auto_hide_dots_summary">Автоматически скрывать точки индикатора страницы</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">Переименовать</string>
+    <string name="rename_app_title">Введите название приложения</string>
+    <string name="rename_app_reset">Сброс</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">Свой значок</string>
+    <string name="icon_picker_search_hint">Поиск значков</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Скрыть и защитить приложения</string>
+    <string name="trust_apps_auth_manager">Разблокируйте, чтобы управлять скрытыми и защищёнными приложениями</string>
+    <string name="trust_apps_loading">Загрузка\u2026</string>
+    <string name="trust_apps_no_lock_error">Пожалуйста, настройте блокировку экрана, чтобы ограничить доступ к приложениям</string>
+    <string name="trust_apps_help">Помощь</string>
+    <string name="trust_apps_info_hidden">Не показывать скрытые приложения и их виджеты в меню приложений</string>
+</resources>

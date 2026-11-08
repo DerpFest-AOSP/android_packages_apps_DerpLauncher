@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Layar utama</string>
+    <string name="home_category_summary">Atur panel Google Now dan lainnya</string>
+    <string name="icons_category_title">Ikon</string>
+    <string name="icons_category_summary">Atur ukuran ikon dan lainnya</string>
+    <string name="app_drawer_category_title">Semua aplikasi</string>
+    <string name="app_drawer_category_summary">Kustomisasi tampilan aplikasi anda</string>
+    <string name="recents_category_title">Baru-baru ini</string>
+    <string name="recents_category_summary">Mengubah tampilan layar</string>
+    <string name="misc_category_title">Lain-lain</string>
+    <string name="misc_category_summary">Opsi lainnya</string>
+    <string name="general_category_title">Umum</string>
+    <string name="interface_category_title">Antarmuka</string>
+    <string name="search_bar_category_title">Bilah penelusuran</string>
+    <string name="actions_category_title">Aksi cepat</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Opsi pengembang</string>
+    <string name="dev_options_summary">Mengaktifkan fitur tersembunyi dengan risiko</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Kunci tata letak</string>
+    <string name="settings_lock_layout_summary_on">Ikon dan widget tidak dapat ditambahkan, dihapus dan dipindahkan pada layar beranda</string>
+    <string name="settings_lock_layout_summary_off">Ikon dan widget dapat ditambahkan, dihapus dan dipindahkan pada layar beranda</string>
+    <string name="settings_edit_widgets_error">Hal ini tidak mungkin untuk menambahkan widget ke layar beranda</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Geser untuk mulai mencari</string>
+    <string name="drawer_open_keyboard_summary">Buka keyboard setiap kali laci aplikasi terlihat</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Geser untuk mengakses aplikasi Google</string>
+    <string name="msg_minus_one_on_left">Saat Anda menggeser ke kanan dari Layar Beranda</string>
+    <string name="msg_minus_one_on_right">Saat Anda menggeser ke kanan dari Layar Beranda</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Saran</string>
+    <string name="suggestion_pref_screen_desc">Untuk Semua Aplikasi &amp; saran Layar Utama</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Pencarian</string>
+    <string name="label_voice_search">Pencarian suara</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">Opasitas lapisan luar</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Latar belakang hotseat</string>
+    <string name="hotseat_bg_summary">Tambahkan latar belakang tembus pandang di dok aplikasi</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Menggulir wallpaper</string>
+    <string name="allow_wallpaper_scrolling_summary">Efek pengguliran wallpaper untuk beberapa tampilan</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">Terapkan ke layar kunci</string>
+    <string name="wallpaper_carousel_lockscreen_summary">Atur wallpaper yang sama di layar kunci</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Pembesaran wallpaper</string>
+    <string name="allow_wallpaper_zooming_summary">Perbesar atau perkecil wallpaper saat menggunakan laci atau aplikasi terbaru</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Bilah Status</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Bawaan</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Ukuran ikon</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Ukuran huruf</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Matikan</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Memulai ulang peluncur untuk menerapkan perubahan...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">Gaya tata letak Terkini</string>
+    <string name="recents_style_default">Bawaan</string>
+    <string name="recents_style_stock">Efek skala</string>
+    <string name="recents_style_staple">Gaya pokok</string>
+    <string name="recents_style_ios">Gaya iOS</string>
+    <string name="recents_style_oxygen">Gaya OxygenOS</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Tangkapan layar</string>
+    <string name="recents_clear_all_title">Bersihkan semua</string>
+    <string name="recents_lens_title">Lensa</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s Tersedia | %2$s Total</string>
+    <string name="recents_meminfo_title">Info memori</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">Lokasi bilah pencarian aplikasi</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Label aplikasi gelap</string>
+    <string name="all_apps_dark_text_summary">Selalu gunakan teks gelap untuk label aplikasi di laci aplikasi</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">Gaya laci aplikasi</string>
+    <string name="drawer_style_normal">Normal (lembaran bawah)</string>
+    <string name="drawer_style_legacy">Layar penuh</string>
+    <string name="drawer_style_list">Gaya daftar</string>
+    <string name="drawer_style_oneui">Gaya OneUI (berhalaman)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">Pengurutan laci aplikasi</string>
+    <string name="app_drawer_sort_alphabetical">Urutkan berdasarkan abjad</string>
+    <string name="app_drawer_sort_install_date">Urutkan berdasarkan tanggal pemasangan</string>
+    <string name="app_drawer_sort_usage">Urutkan berdasarkan penggunaan</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">Warna latar belakang kustom</string>
+    <string name="pref_app_drawer_custom_color_summary">Gunakan warna kustom untuk latar belakang laci aplikasi</string>
+    <string name="pref_app_drawer_custom_color_light_title">Warna mode terang</string>
+    <string name="pref_app_drawer_custom_color_dark_title">Warna mode gelap</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Izinkan paralaks pendek</string>
+    <string name="short_parallax_summary">Aktifkan efek gulir wallpaper penuh pada sejumlah kecil halaman alih-alih memotong wallpaper</string>
+    <string name="single_page_center_title">Pusat satu halaman</string>
+    <string name="single_page_center_summary">Tengahkan wallpaper jika hanya menggunakan satu halaman</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">Bilah status gelap</string>
+    <string name="perf_dark_status_bar_summary">Selalu gunakan bilah status gelap di layar beranda</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Kedalaman blur latar belakang</string>
+    <string name="background_blur_summary">Setel tingkat kedalaman blur untuk baru-baru ini dan laci aplikasi</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Transparansi latar Belakang</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">Meong</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">Bunga</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">Hati</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">Segi enam</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">Daun</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Berawan</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">Berbentuk silinder</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">Diregangkan</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">Kerikil</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">Persegi murni</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">Persegi panjang membulat</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">Kotak melengkung</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">Persegi panjang meruncing</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">Tetesan Air</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">Kapal</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">Segi enam membulat</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Indikator sembunyikan halaman secara otomatis</string>
+    <string name="auto_hide_dots_summary">Sembunyikan titik indikator halaman secara otomatis</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">Ubah nama</string>
+    <string name="rename_app_title">Masukkan nama aplikasi</string>
+    <string name="rename_app_reset">Atur ulang</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">Sesuaikan ikon</string>
+    <string name="icon_picker_search_hint">Cari simbol</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Tersembunyi &amp; Aplikasi dilindungi</string>
+    <string name="trust_apps_auth_manager">Buka kunci untuk mengelola aplikasi yang disembunyikan dan dilindungi</string>
+    <string name="trust_apps_loading">Memuat\u2026</string>
+    <string name="trust_apps_no_lock_error">Silakan mengatur kunci layar untuk membatasi akses aplikasi</string>
+    <string name="trust_apps_help">Bantuan</string>
+    <string name="trust_apps_info_hidden">Aplikasi tersembunyi beserta widgetnya akan disembunyikan dari laci aplikasi</string>
+</resources>

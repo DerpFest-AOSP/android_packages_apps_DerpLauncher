@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">ホーム画面</string>
+    <string name="home_category_summary">Google Now パネルとその他の設定をします</string>
+    <string name="icons_category_title">アイコン</string>
+    <string name="icons_category_summary">アイコンサイズとその他を設定します</string>
+    <string name="app_drawer_category_title">アプリドロワー</string>
+    <string name="app_drawer_category_summary">アプリドロワーのカスタマイズが行えます</string>
+    <string name="recents_category_title">最近</string>
+    <string name="recents_category_summary">概要画面を更新します</string>
+    <string name="misc_category_title">その他</string>
+    <string name="misc_category_summary">その他のオプション</string>
+    <string name="general_category_title">一般</string>
+    <string name="interface_category_title">インターフェース</string>
+    <string name="search_bar_category_title">検索バー</string>
+    <string name="actions_category_title">クイックアクション</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">開発者オプション</string>
+    <string name="dev_options_summary">隠された機能を有効化 (自己責任)</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">レイアウトをロック</string>
+    <string name="settings_lock_layout_summary_on">アイコンやウィジェットの追加、削除、移動を許可しない</string>
+    <string name="settings_lock_layout_summary_off">アイコンやウィジェットの追加、削除、移動を許可します</string>
+    <string name="settings_edit_widgets_error">ホーム画面にウィジェットを追加することはできません</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">上にスワイプして検索を開始</string>
+    <string name="drawer_open_keyboard_summary">ドロワーを表示する際にキーボードを表示し素早く検索します</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">スワイプしてGoogleアプリを開く</string>
+    <string name="msg_minus_one_on_left">メインホーム画面から右にスワイプして表示</string>
+    <string name="msg_minus_one_on_right">メインホーム画面から左にスワイプして表示</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">提案</string>
+    <string name="suggestion_pref_screen_desc">全てのアプリとホーム画面の候補</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">検索</string>
+    <string name="label_voice_search">音声検索</string>
+    <string name="label_lens">Google レンズ</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">外側のレイヤーの透明度</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">ホットシートの背景</string>
+    <string name="hotseat_bg_summary">アプリドックに半透明の背景を追加する</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">壁紙をスクロール</string>
+    <string name="allow_wallpaper_scrolling_summary">複数ページでの壁紙のスクロール効果</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">ロック画面にも適用</string>
+    <string name="wallpaper_carousel_lockscreen_summary">ロック画面にも同じ壁紙を適用します</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">壁紙の拡大</string>
+    <string name="allow_wallpaper_zooming_summary">ドロワーやアプリ履歴を使用時に壁紙をズームインやズームアウトをします</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">ステータスバー</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">デフォルト</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">アイコンのサイズ</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">フォントのサイズ</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">強制停止</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">変更を適用するためにランチャーを再起動しています...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">レイアウトスタイル</string>
+    <string name="recents_style_default">デフォルト</string>
+    <string name="recents_style_stock">スケール効果</string>
+    <string name="recents_style_staple">カードスタイル</string>
+    <string name="recents_style_ios">iOSスタイル</string>
+    <string name="recents_style_oxygen">OxygenOSスタイル</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">スクリーンショット</string>
+    <string name="recents_clear_all_title">すべてクリア</string>
+    <string name="recents_lens_title">レンズ</string>
+
+    <!-- Memory info -->
+    <string name="recents_meminfo_title">メモリ情報</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">アプリ検索バーの位置</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">暗いアプリラベル</string>
+    <string name="all_apps_dark_text_summary">アプリドロワーのアプリラベルには常に暗いテキストを使用します</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">アプリドロワーのスタイル</string>
+    <string name="drawer_style_normal">標準 (下部シート)</string>
+    <string name="drawer_style_legacy">従来の全画面</string>
+    <string name="drawer_style_list">リスト</string>
+    <string name="drawer_style_oneui">OneUIスタイル（ページに分ける）</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">アプリドロワーの並び替え</string>
+    <string name="app_drawer_sort_alphabetical">アルファベット順に並べ替え</string>
+    <string name="app_drawer_sort_install_date">インストール日付順</string>
+    <string name="app_drawer_sort_usage">使用頻度順</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">カスタム背景色</string>
+    <string name="pref_app_drawer_custom_color_summary">アプリドロワーの背景にカスタム色を使用する</string>
+    <string name="pref_app_drawer_custom_color_light_title">ライトモードの色</string>
+    <string name="pref_app_drawer_custom_color_dark_title">ダークモードの色</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">短い視差を許可</string>
+    <string name="short_parallax_summary">壁紙をトリミングする代わりにページ数の少ない場合は壁紙全体のスクロール効果を有効にする</string>
+    <string name="single_page_center_title">単一ページを中央にする</string>
+    <string name="single_page_center_summary">ホーム画面が単一ページの場合は壁紙を中央に表示します</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">暗いステータスバー</string>
+    <string name="perf_dark_status_bar_summary">ドロワーのアプリラベルに常に暗いテキストを使用する</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">背景のぼかし度合い</string>
+    <string name="background_blur_summary">アプリ履歴とアプリドロワーのぼかし度合いを設定する</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">背景の透明度</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">ニャー🐈</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">花</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">ハート</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">六角形</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">葉っぱ</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">曇り</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">円筒</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">ストレッチ</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">小石</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">正方形</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">角丸長方形</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">角丸四角形</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">先が細い長方形</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">涙</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">容器</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">角丸六角形</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">ページインジケーターの自動非表示</string>
+    <string name="auto_hide_dots_summary">ページインジケーターの点を自動的に隠す</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">名前を変更</string>
+    <string name="rename_app_title">アプリ名を入力</string>
+    <string name="rename_app_reset">リセット</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">カスタム アイコン</string>
+    <string name="icon_picker_search_hint">アイコンを検索</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">非表示 &amp; 保護アプリ</string>
+    <string name="trust_apps_auth_manager">ロック解除して非表示と保護されたアプリを管理する</string>
+    <string name="trust_apps_loading">\u2026 を読み込み中...</string>
+    <string name="trust_apps_no_lock_error">アプリのアクセス制限をするには画面ロックの設定をしてください</string>
+    <string name="trust_apps_help">ヘルプ</string>
+    <string name="trust_apps_info_hidden">非表示アプリとそのウィジェットはドロワー内で非表示になります</string>
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">ᱚᱲᱟᱜ ᱥᱠᱨᱤᱱ</string>
+    <string name="home_category_summary">ᱜᱩᱜᱟᱹᱞ ᱯᱮᱱᱟᱞ ᱟᱨ ᱟᱭᱢᱟ ᱡᱤᱱᱤᱥ ᱥᱮᱴ ᱢᱮ</string>
+    <string name="icons_category_title">ᱟᱭᱠᱚᱱᱠᱚ</string>
+    <string name="app_drawer_category_title">ᱮᱯ ᱰᱨᱚᱣᱟᱹᱨ</string>
+    <string name="app_drawer_category_summary">ᱟᱢᱟᱜ ᱮᱯ ᱰᱨᱚᱣᱟᱹᱨ ᱠᱚᱥᱴᱚᱢᱟᱭᱤᱡᱽ ᱢᱮ</string>
+    <string name="recents_category_title">ᱱᱮᱛᱟᱨᱟᱜᱠᱚ</string>
+    <string name="misc_category_title">ᱢᱤᱥᱮᱞᱟᱱᱤᱭᱟᱹᱥ</string>
+    <string name="misc_category_summary">ᱚᱞᱜᱟ ᱚᱯᱥᱚᱱᱠᱚ</string>
+    <string name="interface_category_title">ᱤᱱᱴᱚᱨᱯᱷᱮᱥ</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">ᱰᱮᱵᱽᱷᱞᱚᱯᱟᱹᱨ ᱚᱯᱥᱚᱱ ᱠᱚ</string>
+    <string name="dev_options_summary">ᱟᱢᱟᱜ ᱨᱤᱥᱠ ᱛᱮ ᱡᱟᱦᱟᱱᱟᱜ ᱩᱠᱩ ᱯᱷᱤᱪᱚᱨᱠᱚ ᱮᱢ ᱪᱷᱚᱭ ᱢᱮ</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">ᱥᱮᱸᱫᱽᱨᱟ</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">ᱥᱴᱟᱴᱟᱹᱥ ᱵᱟᱨ</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">ᱢᱩᱞ ᱯᱷᱮᱲᱟᱛ</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">ᱜᱚᱡᱽ</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_default">ᱢᱩᱞ ᱯᱷᱮᱲᱟᱛ</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">ᱥᱠᱨᱤᱱᱥᱷᱚᱴ</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">ᱵᱮᱠᱜᱽᱨᱟᱩᱸᱰ ᱚᱯᱟᱥᱤᱴᱭ</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_help">ᱜᱚᱲᱚ</string>
+</resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">முகப்புத்திரை</string>
+    <string name="home_category_summary">கூகுள் நவ் பேனல் மற்றும் பல</string>
+    <string name="icons_category_title">சின்னங்கள்</string>
+    <string name="app_drawer_category_title">பயன்பாட்டு அலமாரி</string>
+    <string name="app_drawer_category_summary">உங்கள் பயன்பாடு தட்டு தனிப்பயனாக்கு</string>
+    <string name="recents_category_title">சமீபத்திய</string>
+    <string name="misc_category_title">இதர அமைப்பு</string>
+    <string name="misc_category_summary">மற்ற தேர்வுகள்</string>
+    <string name="general_category_title">பொது</string>
+    <string name="interface_category_title">இடைமுகம்</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">தேடு</string>
+    <string name="label_voice_search">குரல் தேடல்</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">நிலைமை பட்டை</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">இயல்புநிலை</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">எழுத்துரு அளவு</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">கொல்</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_default">இயல்புநிலை</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">திரைப்பிடிப்பு</string>
+    <string name="recents_clear_all_title">அனைத்தையும் அழி</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">பின்னணி ஒளிபுகாத்தன்மை</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_loading">ஏற்றுகிறது...</string>
+    <string name="trust_apps_help">உதவி</string>
+</resources>

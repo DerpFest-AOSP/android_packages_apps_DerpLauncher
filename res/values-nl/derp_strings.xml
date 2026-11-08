@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Startscherm</string>
+    <string name="home_category_summary">Stel Google Now in en meer</string>
+    <string name="icons_category_title">Pictogrammen</string>
+    <string name="icons_category_summary">Stel icoon formaat in en meer</string>
+    <string name="app_drawer_category_title">App lade</string>
+    <string name="app_drawer_category_summary">Personaliseer je app overzicht</string>
+    <string name="recents_category_title">Recente apps</string>
+    <string name="recents_category_summary">Herzie het overzichtsscherm</string>
+    <string name="misc_category_title">Overige</string>
+    <string name="misc_category_summary">Overige opties</string>
+    <string name="general_category_title">Algemeen</string>
+    <string name="search_bar_category_title">Zoekbalk</string>
+    <string name="actions_category_title">Snelle acties</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Opties voor ontwikkelaars</string>
+    <string name="dev_options_summary">Schakel enkele verborgen functies in op eigen risico</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Leg lay-out vast</string>
+    <string name="settings_lock_layout_summary_on">Iconen en widgets kunnen niet worden toegevoegd, verwijderd en verplaatst op het startscherm</string>
+    <string name="settings_lock_layout_summary_off">Iconen en widgets kunnen worden toegevoegd, verwijderd en verplaatst op het startscherm</string>
+    <string name="settings_edit_widgets_error">Het is niet mogelijk om widgets toe te voegen aan het startscherm</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Veeg om zoeken te starten</string>
+    <string name="drawer_open_keyboard_summary">Open toetsenbord wanneer app drawer zichtbaar wordt</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Veeg voor toegang tot de Google app</string>
+    <string name="msg_minus_one_on_left">Wanneer je naar links veegt vanuit het startscherm</string>
+    <string name="msg_minus_one_on_right">Wanneer je naar rechts veegt vanuit het startscherm</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Suggesties</string>
+    <string name="suggestion_pref_screen_desc">Voor alle apps &amp; startscherm suggesties</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Zoeken</string>
+    <string name="label_voice_search">Spraakgestuurd zoeken</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">Transparantie buitenste laag</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Hotseat achtergrond</string>
+    <string name="hotseat_bg_summary">Voeg doorschijnende achtergrond toe aan het app dock</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Wallpaper scrollen</string>
+    <string name="allow_wallpaper_scrolling_summary">Wallpaper scrolleffect voor meerdere schermen</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">Toepassen op vergrendelingsscherm</string>
+    <string name="wallpaper_carousel_lockscreen_summary">Stel dezelfde achtergrond in op het vergrendelingsscherm</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Achtergrond zoomen</string>
+    <string name="allow_wallpaper_zooming_summary">Zoom de achtergrond in of uit bij gebruik van drawer of recente apps</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Statusbalk</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Standaard</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Pictogram grootte</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Leterrtype grootte</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Sluit af</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Launcher opnieuw opstarten om wijzigingen toe te passen...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">Recente lay-out stijl</string>
+    <string name="recents_style_default">Standaard</string>
+    <string name="recents_style_stock">Schaal effect</string>
+    <string name="recents_style_staple">Kami stijl</string>
+    <string name="recents_style_ios">iOS stijl</string>
+    <string name="recents_style_oxygen">OxygenOS stijl</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Schermafbeelding</string>
+    <string name="recents_clear_all_title">Alles wissen</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s beschikbaar | %2$s</string>
+    <string name="recents_meminfo_title">Geheugen informatie</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">App zoekbalk locatie</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Donkere app labels</string>
+    <string name="all_apps_dark_text_summary">Gebruik altijd donkere tekst voor app labels in het app-overzicht</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">App drawer stijl</string>
+    <string name="drawer_style_normal">Normaal (ondervel)</string>
+    <string name="drawer_style_legacy">Legacy volledig scherm</string>
+    <string name="drawer_style_list">Lijst stijl</string>
+    <string name="drawer_style_oneui">OneUI stijl (paged)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">App lade sortering</string>
+    <string name="app_drawer_sort_alphabetical">Alfabetisch sorteren</string>
+    <string name="app_drawer_sort_install_date">Sorteren op installatiedatum</string>
+    <string name="app_drawer_sort_usage">Sorteren op gebruik</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">Aangepaste achtergrondkleur</string>
+    <string name="pref_app_drawer_custom_color_summary">Gebruik een aangepaste kleur voor de achtergrond van de app drawer</string>
+    <string name="pref_app_drawer_custom_color_light_title">Lichte modus kleur</string>
+    <string name="pref_app_drawer_custom_color_dark_title">Donkere modus kleur</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Korte parallax toestaan</string>
+    <string name="short_parallax_summary">Schakel volledige achtergrond scroll effect in op kleinere aantallen pagina\'s in plaats van de achtergrond bij te snijden</string>
+    <string name="single_page_center_title">Enkele pagina midden</string>
+    <string name="single_page_center_summary">Achtergrond centreren bij gebruik van één pagina</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">Donkere statusbalk</string>
+    <string name="perf_dark_status_bar_summary">Gebruik altijd donkere statusbalk op het startscherm</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Achtergrond vervagen diepte</string>
+    <string name="background_blur_summary">Stel vervaging diepte in voor recente apps en app drawer</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Achtergrond transparantie</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">Miauw</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">Bloem</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">Hart</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">Zeskant</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">Blad</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Bewolkt</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">Cilindervormig</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">Uitgerekt</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">Kiezel</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">Pure vierkant</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">Afgeronde rect</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">Traan</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">Schip</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">Afgeronde zeshoek</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Pagina-indicator automatisch verbergen</string>
+    <string name="auto_hide_dots_summary">Verberg automatisch de pagina indicator stippen</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">Hernoemen</string>
+    <string name="rename_app_title">Voer app naam in</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">Aangepast icoon</string>
+    <string name="icon_picker_search_hint">Zoek pictogrammen</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Verborgen &amp; Beschermde apps</string>
+    <string name="trust_apps_auth_manager">Deblokkeer om de verborgen en beschermde apps te beheren</string>
+    <string name="trust_apps_loading">Laadt\u2026</string>
+    <string name="trust_apps_no_lock_error">Stel een beveiligd vergrendelscherm in om de toegang van apps te beperken</string>
+    <string name="trust_apps_help">Hulp</string>
+    <string name="trust_apps_info_hidden">Verborgen apps en hun widgets zijn verborgen van de lade</string>
+</resources>

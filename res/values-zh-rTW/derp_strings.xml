@@ -531,4 +531,12 @@
 
     <!-- Shake Clear Recents -->
     <string name="recents_shake_clear_all_title">搖晃手機以清除所有任務</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">最近應用程式樣式</string>
+    <string name="recents_style_default">預設</string>
+    <string name="recents_style_stock">縮放效果</string>
+    <string name="recents_style_staple">卡片堆疊樣式</string>
+    <string name="recents_style_ios">iOS 樣式</string>
+    <string name="recents_style_oxygen">OxygenOS 樣式</string>
 </resources>

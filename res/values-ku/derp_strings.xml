@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">ڕوونمای ماڵەوە</string>
+    <string name="home_category_summary">دانانی تەختەی گوگڵ ناو و زیاتر</string>
+    <string name="icons_category_title">ئایکۆنەکان</string>
+    <string name="icons_category_summary">Mezinahiya îkonê û hêj bêtir bicîh bikin</string>
+    <string name="app_drawer_category_title">پلیکانەی ئەپ</string>
+    <string name="app_drawer_category_summary">سازدانی پلیکانەی ئەپەکانت</string>
+    <string name="recents_category_title">Demek berê</string>
+    <string name="recents_category_summary">Dîmena pêşandanê ji nû ve nûve bikin</string>
+    <string name="misc_category_title">هەمەجۆر</string>
+    <string name="misc_category_summary">بژاردەکانی تر</string>
+    <string name="general_category_title">Giştî</string>
+    <string name="search_bar_category_title">Barê lêgerînê</string>
+    <string name="actions_category_title">Çalakiyên bilez</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">بژاردەکانی گەشەپێدەر</string>
+    <string name="dev_options_summary">هەنێ تایبەتمەندی شاراوە کارابکە لەسەر بەرپرسیاریەتی خۆت</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Swipe ji bo gihîştina sepana Google</string>
+    <string name="msg_minus_one_on_left">Gava ku hûn ji ekrana malê ya sereke rast bişopînin</string>
+    <string name="msg_minus_one_on_right">Gava ku hûn ji dîmendera malê ya sereke çepê bizivirînin</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Pêşniyarên</string>
+    <string name="suggestion_pref_screen_desc">Ji bo Hemû Apps &amp; Pêşniyarên ekrana malê</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Gerr</string>
+    <string name="label_voice_search">Lêgerîna deng</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Paşxaneya Hotseat</string>
+    <string name="hotseat_bg_summary">Paşnava şefaf li qereqola sepanê zêde bikin</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling_summary">Ji bo gelek ekranan bandorek gerandina dîwaran</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming_summary">Dema ku kêşan an serîlêdanên dawîn bikar tînin dîwarê dîwarê mezin bikin an jê bikin</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Bara Rewşê</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Destçûnî</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Mezinahiya îkonê</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Mezinahiya tîpan</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">داخستن</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_default">Destçûnî</string>
+
+    <!-- Recents icons -->
+    <string name="recents_clear_all_title">Hemî paqij bike</string>
+
+    <!-- Memory info -->
+    <string name="recents_meminfo_title">Agahdariya bîranînê</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Kûrahiya paşîn</string>
+    <string name="background_blur_summary">Ji bo dawîn û berkêşana sepanê asta kûrahiya şengiyê bicîh bikin</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Nerazîbûna paşperdeyê</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Veşartî &amp; Serlêdanên parastî</string>
+    <string name="trust_apps_auth_manager">Ji bo birêvebirina sepanên veşartî û parastî vekin</string>
+    <string name="trust_apps_loading">Barkirin\u2026</string>
+    <string name="trust_apps_no_lock_error">Ji kerema xwe ekranek kilîtkirî ya ewledar saz bikin da ku gihîştina sepanê sînordar bikin</string>
+    <string name="trust_apps_help">Alîkarî</string>
+    <string name="trust_apps_info_hidden">Serlêdanên veşartî û widgetên wan ji berkêşkê têne veşartin</string>
+</resources>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Domovská obrazovka</string>
+    <string name="home_category_summary">Nastavení panelu Google\u00a0Now a\u00a0dalších funkcí</string>
+    <string name="icons_category_title">Ikony</string>
+    <string name="icons_category_summary">Nastavit velikost ikon a\u00a0další parametry</string>
+    <string name="app_drawer_category_title">Seznam aplikací</string>
+    <string name="app_drawer_category_summary">Přizpůsobte si svůj seznam aplikací</string>
+    <string name="recents_category_title">Nedávné aplikace</string>
+    <string name="recents_category_summary">Změnit styl obrazovky nedávných aplikací</string>
+    <string name="misc_category_title">Různé</string>
+    <string name="misc_category_summary">Další možnosti</string>
+    <string name="general_category_title">Obecné</string>
+    <string name="interface_category_title">Rozhraní</string>
+    <string name="search_bar_category_title">Vyhledávací panel</string>
+    <string name="actions_category_title">Rychlé akce</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Možnosti pro vývojáře</string>
+    <string name="dev_options_summary">Zde můžete na vlastní riziko povolit některé skryté funkce</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Zamknout rozložení</string>
+    <string name="settings_lock_layout_summary_on">Ikony a widgety nelze přidat, odebrat a přesunout na domovské obrazovce</string>
+    <string name="settings_lock_layout_summary_off">Ikony a widgety lze přidat, odebrat a přesunout na domovské obrazovce</string>
+    <string name="settings_edit_widgets_error">Nelze přidat widgety na domovskou obrazovku</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Přejetím začít vyhledávat</string>
+    <string name="drawer_open_keyboard_summary">Otevřít klávesnici pokaždé, když je zobrazen seznam aplikací</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Přejetím přejít do aplikace Google</string>
+    <string name="msg_minus_one_on_left">Při gestu přejetím vlevo z\u00a0domovské obrazovky</string>
+    <string name="msg_minus_one_on_right">Při gestu přejetím vpravo z\u00a0domovské obrazovky</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Návrhy</string>
+    <string name="suggestion_pref_screen_desc">Pro všechny aplikace a\u00a0návrhy na domácí obrazovce</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Vyhledat</string>
+    <string name="label_voice_search">Hlasové vyhledávání</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">Neprůhlednost vnější vrstvy</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Pozadí Hotseat</string>
+    <string name="hotseat_bg_summary">Přidat průsvitné pozadí do doku aplikace</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Posuv tapety</string>
+    <string name="allow_wallpaper_scrolling_summary">Efekt posunu tapety pro více obrazovek</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">Použít na zamykací obrazovku</string>
+    <string name="wallpaper_carousel_lockscreen_summary">Nastavit stejnou tapetu na zamykací obrazovce</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Přiblížení tapety</string>
+    <string name="allow_wallpaper_zooming_summary">Přiblížit nebo oddálit tapetu při použití seznamu aplikací nebo nedávných aplikací</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Stavový řádek</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Výchozí</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Velikost ikon</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Velikost písma</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Ukončit</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Restartování spouštěče pro použití změn…</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">Styl rozložení nedávných aplikací</string>
+    <string name="recents_style_default">Výchozí</string>
+    <string name="recents_style_stock">Efekt měřítka</string>
+    <string name="recents_style_staple">Styl Kami</string>
+    <string name="recents_style_ios">Styl iOS</string>
+    <string name="recents_style_oxygen">Styl OxygenOS</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Snímek obrazovky</string>
+    <string name="recents_clear_all_title">Vymazat vše</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s k dispozici | %2$s</string>
+    <string name="recents_meminfo_title">Informace o\u00a0paměti</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">Umístění vyhledávacího panelu aplikace</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Tmavé popisky aplikací</string>
+    <string name="all_apps_dark_text_summary">Vždy používat v seznamu aplikací tmavý text pro popisky aplikací</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">Styl seznamu aplikací</string>
+    <string name="drawer_style_normal">Normální (spodní list)</string>
+    <string name="drawer_style_legacy">Legacy celá obrazovka</string>
+    <string name="drawer_style_list">Styl seznamu</string>
+    <string name="drawer_style_oneui">Styl OneUI (stránkový)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">Řazení v seznamu aplikací</string>
+    <string name="app_drawer_sort_alphabetical">Seřadit podle abecedy</string>
+    <string name="app_drawer_sort_install_date">Seřadit podle data instalace</string>
+    <string name="app_drawer_sort_usage">Seřadit podle využití</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">Vlastní barva pozadí</string>
+    <string name="pref_app_drawer_custom_color_summary">Použít vlastní barvu pro pozadí seznamu aplikací</string>
+    <string name="pref_app_drawer_custom_color_light_title">Barva při použití světlého motivu</string>
+    <string name="pref_app_drawer_custom_color_dark_title">Barva při použití tmavého motivu</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Povolit krátkou paralaxu</string>
+    <string name="short_parallax_summary">Povolit efekt posouvání celé tapety na menším počtu stránek namísto oříznutí tapety</string>
+    <string name="single_page_center_title">Vycentrovat jedinou stránku</string>
+    <string name="single_page_center_summary">Vycentrovat tapetu pouze při použití jedné stránky</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">Tmavý stavový řádek</string>
+    <string name="perf_dark_status_bar_summary">Na domovské obrazovce vždy používat tmavý stavový řádek</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Hloubka rozostření pozadí</string>
+    <string name="background_blur_summary">Nastavit úroveň hloubky rozostření nedávných aplikací a\u00a0seznamu aplikací</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Neprůhlednost pozadí</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">Mňau</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">Květina</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">Srdce</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">Šestiúhelník</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">List</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Oblačno</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">Válcový</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">Natažený</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">Oblázek</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">Čtverec</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">Zaoblený čtverec</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">Superelipsa</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">Zúžený obdélník</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">Slza</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">Nádoba</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">Zaoblený šestiúhelník</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Automaticky skrýt ukazatel stránky</string>
+    <string name="auto_hide_dots_summary">Automaticky skrývat tečky ukazatele stránky</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">Přejmenovat</string>
+    <string name="rename_app_title">Zadejte název aplikace</string>
+    <string name="rename_app_reset">Obnovit</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">Vlastní ikona</string>
+    <string name="icon_picker_search_hint">Vyhledat ikony</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Skryté a\u00a0zabezpečené aplikace</string>
+    <string name="trust_apps_auth_manager">Pro správu skrytých a\u00a0zabezpečených aplikací nejdříve odemkněte obrazovku</string>
+    <string name="trust_apps_loading">Načítání\u2026</string>
+    <string name="trust_apps_no_lock_error">Pro omezení přístupu k\u00a0aplikaci prosím nastavte zabezpečenou obrazovku uzamčení</string>
+    <string name="trust_apps_help">Nápověda</string>
+    <string name="trust_apps_info_hidden">Skryté aplikace, včetně jejich widgetů, jsou skryty ze seznamu aplikací</string>
+</resources>

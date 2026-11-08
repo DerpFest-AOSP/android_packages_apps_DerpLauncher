@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Ekran główny</string>
+    <string name="home_category_summary">Ustaw panel Google Now i inne</string>
+    <string name="icons_category_title">Ikony</string>
+    <string name="icons_category_summary">Ustaw rozmiar ikon i inne</string>
+    <string name="app_drawer_category_title">Szuflada aplikacji</string>
+    <string name="app_drawer_category_summary">Dostosuj szufladę aplikacji</string>
+    <string name="recents_category_title">Ostatnio używane</string>
+    <string name="recents_category_summary">Dostosuj ekran ostatnich aplikacji</string>
+    <string name="misc_category_title">Pozostałe</string>
+    <string name="misc_category_summary">Inne opcje</string>
+    <string name="general_category_title">Ogólne</string>
+    <string name="interface_category_title">Interfejs</string>
+    <string name="search_bar_category_title">Pasek wyszukiwania</string>
+    <string name="actions_category_title">Szybkie akcje</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Opcje programistyczne</string>
+    <string name="dev_options_summary">Włącz niektóre ukryte funkcje na własne ryzyko</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Blokada układu ekranu głównego</string>
+    <string name="settings_lock_layout_summary_on">Ikony i widżety nie mogą być dodawane, usuwane ani przenoszone na ekranie głównym</string>
+    <string name="settings_lock_layout_summary_off">Ikony i widżety mogą być dodawane, usuwane oraz przenoszone na ekranie głównym</string>
+    <string name="settings_edit_widgets_error">Nie można dodawać widżetów do ekranu głównego</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Przesuń, aby rozpocząć wyszukiwanie</string>
+    <string name="drawer_open_keyboard_summary">Otwieraj klawiaturę, gdy szuflada aplikacji staje się widoczna</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Przesuń, aby uzyskać dostęp do aplikacji Google</string>
+    <string name="msg_minus_one_on_left">Kiedy przesuniesz w lewo od ekranu głównego</string>
+    <string name="msg_minus_one_on_right">Kiedy przesuniesz w prawo od ekranu głównego</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Propozycje</string>
+    <string name="suggestion_pref_screen_desc">Propozycje dotyczące wszystkich aplikacji i ekranu głównego</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Szukaj</string>
+    <string name="label_voice_search">Wyszukiwanie głosowe</string>
+    <string name="label_lens">Obiektyw Google</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">Przezroczystość warstwy zewnętrznej</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Tło dolnego panelu</string>
+    <string name="hotseat_bg_summary">Dodaje przezroczyste tło dla panelu aplikacji</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Przewijane tapety</string>
+    <string name="allow_wallpaper_scrolling_summary">Efekt przewijania tapety dla wielu ekranów</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">Zastosuj do ekranu blokady</string>
+    <string name="wallpaper_carousel_lockscreen_summary">Ustaw tę samą tapetę na ekranie blokady</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Powiększanie tapety</string>
+    <string name="allow_wallpaper_zooming_summary">Powiększaj, pomniejszaj tapetę podczas używania szuflady aplikacji lub widoku ostatnio używanych aplikacji</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Pasek stanu</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Domyślny</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Rozmiar ikon</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Rozmiar czcionki</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Zatrzymaj</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Ponowne uruchamianie launchera, aby zastosować zmiany...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">Styl układu ostatnich aplikacji</string>
+    <string name="recents_style_default">Domyślny</string>
+    <string name="recents_style_stock">Efekt skali</string>
+    <string name="recents_style_staple">Styl Kami</string>
+    <string name="recents_style_ios">Styl iOS</string>
+    <string name="recents_style_oxygen">Styl OxygenOS</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Zrzut ekranu</string>
+    <string name="recents_clear_all_title">Wyczyść wszystko</string>
+    <string name="recents_lens_title">Obiektyw</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s dostępne | %2$s</string>
+    <string name="recents_meminfo_title">Informacje o pamięci</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">Lokalizacja paska wyszukiwania aplikacji</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Ciemne etykiety aplikacji</string>
+    <string name="all_apps_dark_text_summary">W szufladzie aplikacji zawsze używaj ciemnego tekstu dla etykiet aplikacji</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">Styl szuflady aplikacji</string>
+    <string name="drawer_style_normal">Normalny (dolny arkusz)</string>
+    <string name="drawer_style_legacy">Klasyczny tryb pełnoekranowy</string>
+    <string name="drawer_style_list">Styl listy</string>
+    <string name="drawer_style_oneui">Styl OneUI (stronicowy)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">Sortowanie szuflady aplikacji</string>
+    <string name="app_drawer_sort_alphabetical">Sortuj alfabetycznie</string>
+    <string name="app_drawer_sort_install_date">Sortuj według daty instalacji</string>
+    <string name="app_drawer_sort_usage">Sortuj według użycia</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">Własny kolor tła</string>
+    <string name="pref_app_drawer_custom_color_summary">Używaj własnego koloru dla tła szuflady aplikacji</string>
+    <string name="pref_app_drawer_custom_color_light_title">Kolor trybu jasnego</string>
+    <string name="pref_app_drawer_custom_color_dark_title">Kolor trybu ciemnego</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Zezwalaj na krótki paralaks</string>
+    <string name="short_parallax_summary">Włącz efekt przewijania całej tapety na mniejszej liczbie stron, zamiast przycinać tapetę</string>
+    <string name="single_page_center_title">Widok pojedynczej strony</string>
+    <string name="single_page_center_summary">Wyśrodkuj tapetę, jeśli używasz tylko jednej strony</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">Ciemny pasek stanu</string>
+    <string name="perf_dark_status_bar_summary">Zawsze używaj ciemnego paska stanu na ekranie głównym</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Głębia rozmycia tła</string>
+    <string name="background_blur_summary">Ustawienie poziomu głębi rozmycia dla przypomnień i szuflady aplikacji</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Nieprzezroczystość tła</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">Miau</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">Kwiat</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">Serce</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">Sześciokąt</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">Liść</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Obłok</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">Cylindryczny</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">Rozciągnięty</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">Kamyk</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">Czysty kwadrat</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">Zaokrąglony kwadrat</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">Kwadratokrąg</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">Przycięty kwadrat</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">Łza</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">Kadź</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">Zaokrąglony sześciokąt</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Automatyczne ukrywanie wskaźnika strony</string>
+    <string name="auto_hide_dots_summary">Automatycznie ukrywaj kropki wskaźnika strony</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">Zmień nazwę</string>
+    <string name="rename_app_title">Wprowadź nazwę aplikacji</string>
+    <string name="rename_app_reset">Zresetuj</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">Własna ikona</string>
+    <string name="icon_picker_search_hint">Szukaj ikon</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Ukryte i chronione aplikacje</string>
+    <string name="trust_apps_auth_manager">Odblokuj, aby zarządzać ukrytymi i chronionymi aplikacjami</string>
+    <string name="trust_apps_loading">Wczytywanie\u2026</string>
+    <string name="trust_apps_no_lock_error">Ustaw bezpieczny ekran blokady, aby ograniczyć dostęp do aplikacji</string>
+    <string name="trust_apps_help">Pomoc</string>
+    <string name="trust_apps_info_hidden">Ukryte aplikacje oraz ich widżety są ukryte również w szufladzie aplikacji</string>
+</resources>

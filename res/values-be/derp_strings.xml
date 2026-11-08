@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Галоўны экран</string>
+    <string name="home_category_summary">Усталяваць панэль Google Now і іншае</string>
+    <string name="icons_category_title">Значкі</string>
+    <string name="icons_category_summary">Усталюйце памер значка і многае іншае</string>
+    <string name="app_drawer_category_title">Спіс праграм</string>
+    <string name="app_drawer_category_summary">Налада свайго спісу праграм</string>
+    <string name="recents_category_title">Нядаўнія</string>
+    <string name="recents_category_summary">Налады экрана нядаўніх праграм</string>
+    <string name="misc_category_title">Рознае</string>
+    <string name="misc_category_summary">Іншыя налады</string>
+    <string name="general_category_title">Агульныя</string>
+    <string name="interface_category_title">Інтэрфейс</string>
+    <string name="search_bar_category_title">Радок пошуку</string>
+    <string name="actions_category_title">Хуткія дзеянні</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Опцыі распрацоўшчыка</string>
+    <string name="dev_options_summary">Уключыце некаторыя схаваныя функцыі на свой страх і рызыку</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Забараніць рэдагаванне</string>
+    <string name="settings_lock_layout_summary_on">Значкі і віджэты немагчыма дадаваць, выдаляць і перамяшчаць па галоўным экране</string>
+    <string name="settings_lock_layout_summary_off">Значкі і віджэты можна дадаваць, выдаляць і перамяшчаць па галоўным экране</string>
+    <string name="settings_edit_widgets_error">Немагчыма дадаваць віджэты на галоўны экран</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Правядзіце пальцам для доступу да праграмы Google</string>
+    <string name="msg_minus_one_on_left">Пры правядзенні пальцам налева ад галоўнага галоўнага экрана</string>
+    <string name="msg_minus_one_on_right">Пры правядзенні пальцам направа ад галоўнага галоўнага экрана</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Прапановы</string>
+    <string name="suggestion_pref_screen_desc">Для прапаноў ўсіх праграм і галоўнага экрана</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Пошук</string>
+    <string name="label_voice_search">Галасавы пошук</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Фон віджэта</string>
+    <string name="hotseat_bg_summary">Напаўпразрысты фон ніжняй панэлі праграм</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Пракрутка шпалер</string>
+    <string name="allow_wallpaper_scrolling_summary">Эфект пракруткі шпалер для некалькіх экранаў</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Маштабаванне шпалер</string>
+    <string name="allow_wallpaper_zooming_summary">Павелічэнне або памяншэнне шпалер у меню праграм і ў спісе нядаўніх праграм</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Радок стану</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Па змаўчанні</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Памер значка</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Памер шрыфта</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Спыніць</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Перазапуск праграмы запуску для ўжыцця змяненняў...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_default">Па змаўчанні</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Здымак экрана</string>
+    <string name="recents_clear_all_title">Ачысціць усё</string>
+    <string name="recents_lens_title">Аб’ектыў</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s Даступна | %2$s Усяго</string>
+    <string name="recents_meminfo_title">Інфармацыя аб памяці</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Дазволіць кароткі паралакс</string>
+    <string name="short_parallax_summary">Уключыце эфект поўнай пракруткі шпалер на меншай колькасці старонак замест абразання шпалер</string>
+    <string name="single_page_center_title">Па цэнтры адной старонкі</string>
+    <string name="single_page_center_summary">Размясціць шпалеры па цэнтры, калі выкарыстоўваецца толькі адна старонка</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Глыбіня размыцця фону</string>
+    <string name="background_blur_summary">Усталюйце ўзровень глыбіні размыцця для апошніх і меню праграм</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Фон непразрыстасці</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Воблачна</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Схаваныя і абароненыя праграмы</string>
+    <string name="trust_apps_auth_manager">Разблакуйце для кіравання ўтоенымі і абароненымі праграмамі</string>
+    <string name="trust_apps_loading">Загрузка\u2026</string>
+    <string name="trust_apps_no_lock_error">Калі ласка, усталюйце блакаванне экрана для абмежавання доступу да праграм</string>
+    <string name="trust_apps_help">Дапамога</string>
+    <string name="trust_apps_info_hidden">Схаваныя праграмы і іх віджэты схаваны з меню</string>
+</resources>

@@ -322,4 +322,12 @@
     <!-- App pinning -->
     <string name="task_menu_item_unlock">Anheftung aufheben</string>
     <string name="task_menu_item_lock">App anheften</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">Stil des Anwendungsverlaufslayouts</string>
+    <string name="recents_style_default">Standard</string>
+    <string name="recents_style_stock">Skalierungseffekt</string>
+    <string name="recents_style_staple">Kami-Stil</string>
+    <string name="recents_style_ios">iOS-Stil</string>
+    <string name="recents_style_oxygen">OxygenOS-Stil</string>
 </resources>

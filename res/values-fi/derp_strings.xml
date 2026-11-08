@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Aloitusnäyttö</string>
+    <string name="home_category_summary">Säädä Google Now paneelin asetukset</string>
+    <string name="icons_category_title">Ikonit</string>
+    <string name="icons_category_summary">Aseta kuvakkeen koko ja paljon muuta</string>
+    <string name="app_drawer_category_title">Sovellusvalitisin</string>
+    <string name="app_drawer_category_summary">Muokkaa sovellusvalitsintasi</string>
+    <string name="recents_category_title">Viimeaikaiset</string>
+    <string name="recents_category_summary">Määritä yleisnäkymä</string>
+    <string name="misc_category_title">Sekalaiset</string>
+    <string name="misc_category_summary">Muut valinnat</string>
+    <string name="general_category_title">Yleiset</string>
+    <string name="interface_category_title">Käyttöliittymä</string>
+    <string name="search_bar_category_title">Hakupalkki</string>
+    <string name="actions_category_title">Pikatoiminnot</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Kehittäjäasetukset</string>
+    <string name="dev_options_summary">Voit ottaa joitakin piilotettuja ominaisuuksia käyttöön omalla vastuullasi</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Lukitse asettelu</string>
+    <string name="settings_lock_layout_summary_on">Kuvakkeita ja widgettejä ei voi lisätä, poistaa tai siirtää aloitusnäytöllä</string>
+    <string name="settings_lock_layout_summary_off">Kuvakkeita ja widgettejä voi lisätä, poistaa ja siirtää aloitusnäytöllä</string>
+    <string name="settings_edit_widgets_error">Aloitusnäytölle ei ole mahdollista lisätä widgettejä</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Pyyhkäise käyttääksesi Google-sovellusta</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Ehdotukset</string>
+    <string name="suggestion_pref_screen_desc">Kaikille sovelluksille &amp; aloitusnäytön ehdotuksille</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Haku</string>
+    <string name="label_voice_search">Puhehaku</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Sovellustelakan tausta</string>
+    <string name="hotseat_bg_summary">Lisää läpikuultava tausta sovellustelakkaan</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Taustakuvan vieritys</string>
+    <string name="allow_wallpaper_scrolling_summary">Taustakuvan vierintäefekti usealle näytölle</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Taustakuvan zoomaus</string>
+    <string name="allow_wallpaper_zooming_summary">Suurenna tai loitonna taustakuvaa käyttäessäsi sovellusvalikkoa tai viimeaikaisia sovelluksia</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Tilapalkki</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Oletus</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Kuvakkeen koko</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Tekstin koko</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Tapa</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Käynnistetään käynnistysohjelma uudelleen, jotta muutokset otetaan käyttöön...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_default">Oletus</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Kuvakaappaus</string>
+    <string name="recents_clear_all_title">Tyhjennä kaikki</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s Käytettävissä | %2$s Yhteensä</string>
+    <string name="recents_meminfo_title">Muistin tiedot</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Salli lyhyt parallaksi</string>
+    <string name="short_parallax_summary">Ota käyttöön koko taustakuvan vierintätehoste pienimmillä sivumäärillä taustakuvan rajaamisen sijaan</string>
+    <string name="single_page_center_title">Yhden sivun keskitys</string>
+    <string name="single_page_center_summary">Keskitä taustakuva jos vain yksi sivu on käytössä</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Taustan sumennuksen syvyys</string>
+    <string name="background_blur_summary">Aseta sumennuksen syvyys viimeaikaisille ja sovellusvalikolle</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Taustan läpinäkyvyys</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Pilvinen</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Piilotetut &amp; Suojatut sovellukset</string>
+    <string name="trust_apps_auth_manager">Avaa hallitaksesi piilotettuja ja suojattuja sovelluksia</string>
+    <string name="trust_apps_loading">Ladataan\u2026</string>
+    <string name="trust_apps_no_lock_error">Aseta turvallinen näytön lukitus rajataksesi pääsyä sovelluksiin</string>
+    <string name="trust_apps_help">Ohje</string>
+    <string name="trust_apps_info_hidden">Piilotetut sovellukset ja niiden widgetit piilotetaan sovellusvalikosta</string>
+</resources>

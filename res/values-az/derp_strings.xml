@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Ana ekran</string>
+    <string name="home_category_summary">Google Now panelini və digərlərini tənzimlə</string>
+    <string name="icons_category_title">İkonlar</string>
+    <string name="app_drawer_category_title">Proqram çəkməcəsi</string>
+    <string name="app_drawer_category_summary">Program çəkməcəsini fərdiləşdirin</string>
+    <string name="recents_category_title">Son elementlər</string>
+    <string name="misc_category_title">Qarışıq</string>
+    <string name="misc_category_summary">Digər seçimlər</string>
+    <string name="general_category_title">Ümumi parametrlər</string>
+    <string name="interface_category_title">İnterfeys</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Tərtibatçı seçimləri</string>
+    <string name="dev_options_summary">Risk alaraq bəzi gizli özəllikləri aktivləşdirin</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_desc">Bütün Proqramlar üçün &amp;  Əsas ekran təklifləri</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Axtarış</string>
+    <string name="label_voice_search">Səsli axtarış</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Status paneli</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Susmaya görə</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Nişan ölçüsü</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Yazı tipi ölçüsü</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Bağla</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_default">Susmaya görə</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Ekran görüntüsü</string>
+    <string name="recents_clear_all_title">Hamısını təmizlə</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Arxa plan tutqunluğu</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_help">Yardım</string>
+</resources>

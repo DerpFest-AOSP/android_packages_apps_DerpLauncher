@@ -457,4 +457,96 @@
 
     <!-- Shake Clear Recents -->
     <string name="recents_shake_clear_all_title">摇动手机清理全部任务</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">应用到锁屏</string>
+    <string name="wallpaper_carousel_lockscreen_summary">在锁屏界面设置相同的壁纸</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">最近任务样式</string>
+    <string name="recents_style_default">默认</string>
+    <string name="recents_style_stock">缩放效果</string>
+    <string name="recents_style_staple">Kami 样式</string>
+    <string name="recents_style_ios">iOS 样式</string>
+    <string name="recents_style_oxygen">OxygenOS 样式</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">暗色应用标签</string>
+    <string name="all_apps_dark_text_summary">应用抽屉里的应用标签总是使用暗色文本</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">应用抽屉样式</string>
+    <string name="drawer_style_normal">正常(底部)</string>
+    <string name="drawer_style_legacy">传统全屏</string>
+    <string name="drawer_style_list">列表样式</string>
+    <string name="drawer_style_oneui">OneUI 样式(页面)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">应用抽屉排序</string>
+    <string name="app_drawer_sort_alphabetical">按字母顺序排序</string>
+    <string name="app_drawer_sort_install_date">按安装日期排序</string>
+    <string name="app_drawer_sort_usage">按使用情况排序</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">自定义背景颜色</string>
+    <string name="pref_app_drawer_custom_color_summary">为应用抽屉背景使用自定义颜色</string>
+    <string name="pref_app_drawer_custom_color_light_title">亮色模式颜色</string>
+    <string name="pref_app_drawer_custom_color_dark_title">暗色模式颜色</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">喵喵</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">花形</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">心形</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">六边形</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">叶形</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">云彩</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">圆柱形</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">拉伸</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">鹅卵石</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">纯正方形</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">圆角矩形</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">方圆形</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">八边形</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">泪滴形</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">船</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">圆角六边形</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">重命名</string>
+    <string name="rename_app_title">输入应用名称</string>
+    <string name="rename_app_reset">重置</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">自定义图标</string>
+    <string name="icon_picker_search_hint">搜索图标</string>
 </resources>

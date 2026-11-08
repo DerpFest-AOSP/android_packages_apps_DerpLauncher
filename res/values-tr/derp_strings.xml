@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">Ana ekran</string>
+    <string name="home_category_summary">Google now panelini ve daha fazlasını ayarlayın</string>
+    <string name="icons_category_title">Simgeler</string>
+    <string name="icons_category_summary">Simge boyutunu ve daha fazlasını ayarlayın</string>
+    <string name="app_drawer_category_title">Uygulama menüsü</string>
+    <string name="app_drawer_category_summary">Uygulama menünüzü özelleştirin</string>
+    <string name="recents_category_title">Son uygulamalar</string>
+    <string name="recents_category_summary">Son uygulamalar ekranını yenileyin</string>
+    <string name="misc_category_title">Çeşitli</string>
+    <string name="misc_category_summary">Diğer seçenekler</string>
+    <string name="general_category_title">Genel</string>
+    <string name="interface_category_title">Arayüz</string>
+    <string name="search_bar_category_title">Arama çubuğu</string>
+    <string name="actions_category_title">Hızlı eylemler</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">Geliştirici seçenekleri</string>
+    <string name="dev_options_summary">Bazı gizli özellikleri kendi sorumluluğunuzda etkinleştirin</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">Düzeni kilitle</string>
+    <string name="settings_lock_layout_summary_on">Simgeler ve widget\'lar ana ekrana eklenemez, kaldırılamaz ve taşınamaz</string>
+    <string name="settings_lock_layout_summary_off">Simgeler ve widget\'lar ana ekrana eklenebilir, kaldırılabilir ve taşınabilir</string>
+    <string name="settings_edit_widgets_error">Ana ekrana widget eklemek mümkün değil</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">Aramaya başlamak için kaydır</string>
+    <string name="drawer_open_keyboard_summary">Uygulama çekmecesi göründüğünde klavye açılsın</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">Google uygulamasına erişmek için kaydırın</string>
+    <string name="msg_minus_one_on_left">Ana sayfadan sola kaydırdığınızda</string>
+    <string name="msg_minus_one_on_right">Ana sayfadan sağa kaydırdığınızda</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">Öneriler</string>
+    <string name="suggestion_pref_screen_desc">Tüm uygulamalar &amp; Ana ekran önerileri için</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">Ara</string>
+    <string name="label_voice_search">Sesli arama</string>
+    <string name="label_lens">Google lens</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">Dış katman opaklığı</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">Hotseat arka planı</string>
+    <string name="hotseat_bg_summary">Uygulama yuvasına yarı şeffaf bir arka plan ekleyin</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">Duvar kağıdı kaydırma</string>
+    <string name="allow_wallpaper_scrolling_summary">Birden çok ekran için duvar kağıdı kaydırma efekti</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">Kilit ekranına uygula</string>
+    <string name="wallpaper_carousel_lockscreen_summary">Aynı duvar kağıdını kilit ekranına uygula</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">Duvar kağıdı yakınlaştırma</string>
+    <string name="allow_wallpaper_zooming_summary">Çekmeceyi veya son uygulamaları kullanırken duvar kağıdını yakınlaştırın veya uzaklaştırın</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">Durum çubuğu</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">Varsayılan</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">Simge boyutu</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">Yazı tipi boyutu</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">Sonlandır</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">Değişiklikleri uygulamak için yeniden başlatılıyor...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">Son kullanılanlar düzeni stili</string>
+    <string name="recents_style_default">Varsayılan</string>
+    <string name="recents_style_stock">Ölçek etkisi</string>
+    <string name="recents_style_staple">Kami stili</string>
+    <string name="recents_style_ios">iOS stili</string>
+    <string name="recents_style_oxygen">OxygenOS stili</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">Ekran görüntüsü</string>
+    <string name="recents_clear_all_title">Tümünü temizle</string>
+
+    <!-- Memory info -->
+    <string name="meminfo_text">%1$s Mevcut | %2$s Toplam</string>
+    <string name="recents_meminfo_title">Bellek bilgisi</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">Uygulama arama çubuğu konumu</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">Koyu uygulama etiketleri</string>
+    <string name="all_apps_dark_text_summary">Uygulama çekmecesindeki uygulama etiketleri için her zaman karanlık renkte metin kullan</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">Uygulama çekmecesi stili</string>
+    <string name="drawer_style_normal">Normal (alttan sayfa)</string>
+    <string name="drawer_style_legacy">Eski tam ekran</string>
+    <string name="drawer_style_list">Liste stili</string>
+    <string name="drawer_style_oneui">OneUI stili (sayfalandırılmış)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">Uygulama çekmecesi sıralaması</string>
+    <string name="app_drawer_sort_alphabetical">Alfabe sırası</string>
+    <string name="app_drawer_sort_install_date">Kurulum tarihine göre sırala</string>
+    <string name="app_drawer_sort_usage">Kullanıma göre sırala</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">Özel arka plan rengi</string>
+    <string name="pref_app_drawer_custom_color_summary">Uygulama çekmecesinin arka planında özel bir renk kullan</string>
+    <string name="pref_app_drawer_custom_color_light_title">Aydınlık mod rengi</string>
+    <string name="pref_app_drawer_custom_color_dark_title">Karanlık mod rengi</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">Kısa paralaksa izin ver</string>
+    <string name="short_parallax_summary">Duvar kağıdını kırpmak yerine daha az sayıda sayfada tam duvar kağıdı kaydırma efektini etkinleştirin</string>
+    <string name="single_page_center_title">Tek sayfayı ortalayın</string>
+    <string name="single_page_center_summary">Yalnızca tek bir sayfa kullanılıyorsa duvar kağıdını ortalayın</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">Koyu durum çubuğu</string>
+    <string name="perf_dark_status_bar_summary">Her zaman ana ekranda koyu durum çubuğunu kullan</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">Arka plan bulanıklık derinliği</string>
+    <string name="background_blur_summary">Son uygulamalar ve uygulama çekmecesi için bulanıklık derinliği seviyesini ayarlayın</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">Arka plan şeffaflığı</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">Miyav</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">Çiçek</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">Kalp</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">Altıgen</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">Yaprak</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">Bulutlu</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">Silindirik</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">Esnetilmiş</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">Çakıl</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">Düz kare</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">Yuvarlak dikdörtgen</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">Karemsi</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">Konik dikdörtgen</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">Damla</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">Gemi</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">Yuvarlak altıgen</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">Sayfa işaretini otomatik gizle</string>
+    <string name="auto_hide_dots_summary">Sayfa işareti için kullanılan noktaları otomatikman gizle</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">Adını değiştir</string>
+    <string name="rename_app_title">Uygulama adı girin</string>
+    <string name="rename_app_reset">Sıfırla</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">Özel simge</string>
+    <string name="icon_picker_search_hint">Simge ara</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">Gizli ve Korunan Uygulamalar</string>
+    <string name="trust_apps_auth_manager">Gizli ve korunan uygulamaları yönetmek için kilidi açın</string>
+    <string name="trust_apps_loading">Yükleniyor\u2026</string>
+    <string name="trust_apps_no_lock_error">Uygulama erişimini kısıtlamak için lütfen güvenli bir kilit ekranı ayarlayın</string>
+    <string name="trust_apps_help">Yardım</string>
+    <string name="trust_apps_info_hidden">Gizli uygulamalar ve widget\'ları uygulama menüsünde gizlidir</string>
+</resources>

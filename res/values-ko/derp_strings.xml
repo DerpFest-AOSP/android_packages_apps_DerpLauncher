@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: DerpFest AOSP
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Categories -->
+    <string name="home_category_title">홈 화면</string>
+    <string name="home_category_summary">구글 나우 패널 및 관련 설정</string>
+    <string name="icons_category_title">아이콘</string>
+    <string name="icons_category_summary">아이콘 크기 및 관련 설정</string>
+    <string name="app_drawer_category_title">앱 서랍</string>
+    <string name="app_drawer_category_summary">앱 서랍 맞춤 설정</string>
+    <string name="recents_category_title">최근 앱</string>
+    <string name="recents_category_summary">오버뷰 화면 개량</string>
+    <string name="misc_category_title">기타 설정</string>
+    <string name="misc_category_summary">기타 옵션</string>
+    <string name="general_category_title">일반</string>
+    <string name="interface_category_title">인터페이스</string>
+    <string name="search_bar_category_title">검색 바</string>
+    <string name="actions_category_title">빠른 동작</string>
+
+    <!-- Developer options -->
+    <string name="dev_options_title">개발자 옵션</string>
+    <string name="dev_options_summary">위험할 수 있는 숨겨진 기능들을 허용합니다</string>
+
+    <!-- Edit workspace -->
+    <string name="settings_lock_layout_title">레이아웃 잠금</string>
+    <string name="settings_lock_layout_summary_on">아이콘과 위젯을 홈 화면에 추가하거나 제거, 이동할 수 없습니다</string>
+    <string name="settings_lock_layout_summary_off">아이콘 및 위젯을 홈 화면에 추가, 제거, 이동할 수 있습니다</string>
+    <string name="settings_edit_widgets_error">홈 화면에 위젯을 추가할 수 없습니다</string>
+
+    <!-- Open keyboard -->
+    <string name="drawer_open_keyboard_title">스와이프하여 검색 시작</string>
+    <string name="drawer_open_keyboard_summary">앱 서랍이 열리면 키보드 표시</string>
+
+    <!-- Google Feed -->
+    <string name="title_show_google_app">스와이프하여 Google 앱에 액세스</string>
+    <string name="msg_minus_one_on_left">메인 홈 화면에서 왼쪽으로 스와이프할 때</string>
+    <string name="msg_minus_one_on_right">메인 홈 화면에서 오른쪽으로 스와이프할 때</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_pref_screen_title">제안</string>
+    <string name="suggestion_pref_screen_desc">모든 앱 &amp; 홈 화면 제안</string>
+
+    <!-- Hotseat QSB -->
+    <string name="label_search">검색</string>
+    <string name="label_voice_search">음성 검색</string>
+    <string name="label_lens">구글 렌즈</string>
+
+    <!-- At a Glance / search bar -->
+    <string name="qsb_outer_opacity_title">외부층 불투명도</string>
+
+    <!-- Hotseat Background -->
+    <string name="hotseat_bg_title">독 영역 배경</string>
+    <string name="hotseat_bg_summary">앱 서랍에 반투명 배경 추가</string>
+
+    <!-- Wallpaper scrolling -->
+    <string name="allow_wallpaper_scrolling">배경화면 스크롤</string>
+    <string name="allow_wallpaper_scrolling_summary">여러개의 화면을 위한 배경화면 스크롤링 효과</string>
+
+    <!-- Wallpaper carousel -->
+    <string name="wallpaper_carousel_lockscreen_title">잠금화면에 적용</string>
+    <string name="wallpaper_carousel_lockscreen_summary">잠금 화면에 동일한 배경화면 설정</string>
+
+    <!-- Wallpaper zooming -->
+    <string name="allow_wallpaper_zooming">배경화면 줌</string>
+    <string name="allow_wallpaper_zooming_summary">앱 서랍이나 최근 앱을 사용할 때 배경화면을 줌인하거나 줌아웃</string>
+
+    <!-- Homescreen Statusbar -->
+    <string name="show_statusbar_title">상태 표시줄</string>
+
+    <!-- Icon pack -->
+    <string name="icon_pack_default_label">기본값</string>
+
+    <!-- Icon size -->
+    <string name="icon_size_title">아이콘 크기</string>
+
+    <!-- Font size -->
+    <string name="font_size_title">글꼴 크기</string>
+
+    <!-- Kill App recents action shortcut -->
+    <string name="recent_task_option_kill_app">작업 지우기</string>
+
+    <!-- Gestures -->
+    <string name="restarting_launcher_changes">변경 사항을 적용하기 위해 런처 재시작 중...</string>
+
+    <!-- Recents layout -->
+    <string name="recents_style_title">최근 앱 레이아웃 스타일</string>
+    <string name="recents_style_default">기본값</string>
+    <string name="recents_style_stock">스케일 효과</string>
+    <string name="recents_style_staple">Kami 스타일</string>
+    <string name="recents_style_ios">iOS 스타일</string>
+    <string name="recents_style_oxygen">OxygenOS 스타일</string>
+
+    <!-- Recents icons -->
+    <string name="recents_screenshot_title">스크린샷</string>
+    <string name="recents_clear_all_title">모두 지우기</string>
+    <string name="recents_lens_title">렌즈</string>
+
+    <!-- Memory info -->
+    <string name="recents_meminfo_title">메모리 정보</string>
+
+    <!-- App drawer searchbar -->
+    <string name="drawer_search_title">애플리케이션 검색창 위치</string>
+
+    <!-- Dark app drawer text -->
+    <string name="all_apps_dark_text_title">어두운 앱 라벨</string>
+    <string name="all_apps_dark_text_summary">앱 서랍의 앱 라벨에 항상 어두운 색 글씨 사용</string>
+
+    <!-- App drawer styles -->
+    <string name="drawer_style_title">앱 서랍 스타일</string>
+    <string name="drawer_style_normal">일반 (하단 시트)</string>
+    <string name="drawer_style_legacy">레거시 전체 화면</string>
+    <string name="drawer_style_list">목록 스타일</string>
+    <string name="drawer_style_oneui">OneUI 스타일(페이지)</string>
+
+    <!-- App drawer sorting -->
+    <string name="app_drawer_sort_mode_title">앱 서랍 정렬</string>
+    <string name="app_drawer_sort_alphabetical">알파벳순으로 정렬</string>
+    <string name="app_drawer_sort_install_date">설치 날짜순으로 정렬</string>
+    <string name="app_drawer_sort_usage">사용량 순으로 정렬</string>
+
+    <!-- App drawer background color -->
+    <string name="pref_app_drawer_custom_color_title">배경 색 사용자 지정</string>
+    <string name="pref_app_drawer_custom_color_summary">앱 서랍 배경에 사용자 지정 색상 사용</string>
+    <string name="pref_app_drawer_custom_color_light_title">밝은 모드 색</string>
+    <string name="pref_app_drawer_custom_color_dark_title">어두운 모드 색</string>
+
+    <!-- Parallax -->
+    <string name="short_parallax_title">짧은 패럴랙스 허용</string>
+    <string name="short_parallax_summary">적은 수의 페이지일 때 배경을 자르기보다 전체 배경을 스크롤하기</string>
+    <string name="single_page_center_title">단일 페이지 중앙</string>
+    <string name="single_page_center_summary">단일 페이지만 사용할 때 배경을 가운데 정렬하기</string>
+
+    <!-- Dark Status Bar -->
+    <string name="perf_dark_status_bar_title">어두운 상태바</string>
+    <string name="perf_dark_status_bar_summary">홈 화면에서 항상 어두운 상태 표시줄 사용</string>
+
+    <!-- Background blur -->
+    <string name="background_blur_title">배경 흐림</string>
+    <string name="background_blur_summary">최근 앱과 앱 서랍에서 블러 깊이 레벨 설정</string>
+
+    <!-- Background opacity -->
+    <string name="background_opacity_title">배경 불투명도</string>
+
+    <!-- label for Meow shape option in customization picker -->
+    <string name="meow_shape_title">야옹</string>
+
+    <!-- label for Flower shape option in customization picker -->
+    <string name="flower_shape_title">꽃</string>
+
+    <!-- label for Heart shape option in customization picker -->
+    <string name="heart_shape_title">하트</string>
+
+    <!-- label for Hexagon shape option in customization picker -->
+    <string name="hexagon_shape_title">육각형</string>
+
+    <!-- label for Leaf shape option in customization picker -->
+    <string name="leaf_shape_title">잎사귀</string>
+
+    <!-- label for Cloudy shape option in customization picker -->
+    <string name="cloudy_shape_title">흐림</string>
+
+    <!-- label for Cylindrical shape option in customization picker -->
+    <string name="cylindrical_shape_title">원통형</string>
+
+    <!-- label for Stretched shape option in customization picker -->
+    <string name="stretched_shape_title">늘인 모양</string>
+
+    <!-- label for Pebble shape option in customization picker -->
+    <string name="pebble_shape_title">조약돌</string>
+
+    <!-- label for Pure square shape option in customization picker -->
+    <string name="pure_square_shape_title">정사각형</string>
+
+    <!-- label for Rounded Rectangle shape option in customization picker -->
+    <string name="rounded_rect_shape_title">모서리가 둥근 직사각형</string>
+
+    <!-- label for Squircle shape option in customization picker -->
+    <string name="squircle_shape_title">모서리가 둥근 정사각형</string>
+
+    <!-- label for Tapered Rect shape option in customization picker -->
+    <string name="tapered_rect_shape_title">사다리꼴 사각형</string>
+
+    <!-- label for Teardrop shape option in customization picker -->
+    <string name="teardrop_shape_title">물방울</string>
+
+    <!-- label for Vessel shape option in customization picker -->
+    <string name="vessel_shape_title">항아리</string>
+
+    <!-- label for Rounded Hexagon shape option in customization picker -->
+    <string name="rounded_hexagon_shape_title">모서리가 둥근 육각형</string>
+
+    <!-- Auto-hide page indicator dots -->
+    <string name="auto_hide_dots">페이지 표시 자동 숨깁</string>
+    <string name="auto_hide_dots_summary">알림 표시 점 자동 숨기기</string>
+
+    <!-- Rename app shortcut -->
+    <string name="rename_app_label">이름 변경</string>
+    <string name="rename_app_title">앱 이름 입력</string>
+    <string name="rename_app_reset">초기화</string>
+
+    <!-- Custom icon -->
+    <string name="app_info_custom_icon_title">커스텀 아이콘</string>
+    <string name="icon_picker_search_hint">아이콘 검색</string>
+
+    <!-- Hidden apps -->
+    <string name="trust_apps_manager_name">숨겨지거나 보호된 앱</string>
+    <string name="trust_apps_auth_manager">숨겨지거나 보호된 앱을 관리하려면 잠금을 해제하세요.</string>
+    <string name="trust_apps_loading">로드 중\u2026</string>
+    <string name="trust_apps_no_lock_error">앱 접근을 제한하려면 잠금 화면 보안을 설정하세요</string>
+    <string name="trust_apps_help">도움말</string>
+    <string name="trust_apps_info_hidden">숨겨진 앱과 해당 앱의 위젯은 앱 서랍에서 숨겨집니다.</string>
+</resources>
