@@ -600,7 +600,7 @@ public interface TaskShortcutFactory {
             // Force stop the package
             IActivityManager iam = ActivityManagerNative.getDefault();
             try {
-                iam.forceStopPackage(packageName, UserHandle.USER_CURRENT);
+                iam.forceStopPackage(packageName, task.key.userId);
                 String title = TaskUtils.INSTANCE.getTitle(
                         taskView.getContext(), mTaskContainer.getTask()).toString();
                 String text = String.format(
