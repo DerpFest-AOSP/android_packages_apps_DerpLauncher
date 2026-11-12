@@ -31,6 +31,14 @@
     <string name="settings_lock_layout_summary_off">Symbole und Widgets können auf dem Startbildschirm hinzugefügt, entfernt und verschoben werden</string>
     <string name="settings_edit_widgets_error">Es ist nicht möglich, Widgets zum Startbildschirm hinzuzufügen</string>
 
+    <!-- Free layout -->
+    <string name="workspace_free_mode_title">Freies Layout</string>
+    <string name="workspace_free_mode_description">Widgets und Symbole auf dem Startbildschirm frei platzieren, ohne am Raster einzurasten</string>
+    <string name="workspace_free_mode_clear_title">Daten des freien Layouts löschen</string>
+    <string name="workspace_free_mode_clear_description">Löscht alle Änderungen im freien Layout. Der normale Startbildschirm bleibt unverändert.</string>
+    <string name="workspace_free_mode_clear_warning">Änderungen im freien Layout werden gelöscht und können nicht rückgängig gemacht werden. Der normale Startbildschirm ist nicht betroffen.</string>
+    <string name="workspace_free_mode_clear_confirm">Löschen</string>
+
     <!-- Two-line labels in app drawer -->
     <string name="two_line_labels_title">Zweizeilige Beschriftungen</string>
     <string name="two_line_labels_summary">Lange App-Namen in der App-Übersicht auf zwei Zeilen umbrechen</string>
@@ -154,6 +162,7 @@
     <string name="pref_homescreen_gestures_powermenu">Ein-/Aus-Menü</string>
     <string name="pref_homescreen_gestures_clear_all_apps">Alle Apps schließen</string>
     <string name="recents_shake_clear_all_title">Telefon schütteln zum Schließen aller Apps</string>
+    <string name="recents_shake_clear_all_summary">Alle Apps schließen, wenn du das Telefon schüttelst</string>
     <string name="restarting_launcher_changes">Launcher wird neu gestartet, um die Änderungen anzuwenden…</string>
 
     <!-- Memory info -->
@@ -206,9 +215,13 @@
     <string name="recents_chips_title">Kompaktes Aktionsdesign verwenden</string>
     <string name="recents_chips_summary">Kann bei vielen Aktionen erforderlich sein, damit alle angezeigt werden</string>
     <string name="recents_screenshot_title">Screenshot</string>
+    <string name="recents_screenshot_summary">Screenshot-Schaltfläche im App-Verlauf anzeigen</string>
     <string name="recents_clear_all_title">Alle Apps schließen</string>
+    <string name="recents_clear_all_summary">Schaltfläche zum Schließen aller Apps im App-Verlauf anzeigen</string>
     <string name="recents_lens_title">Lens</string>
+    <string name="recents_lens_summary">Google-Lens-Schaltfläche im App-Verlauf anzeigen</string>
     <string name="recents_split_screen_title">Geteilter Bildschirm</string>
+    <string name="recents_split_screen_summary">Schaltfläche für den geteilten Bildschirm im App-Verlauf anzeigen</string>
 
     <!-- A widget category label for grouping widgets related to battery. [CHAR_LIMIT=30] -->
     <string name="widget_category_battery">Akku</string>
